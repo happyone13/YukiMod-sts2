@@ -1,0 +1,11 @@
+{
+  "id": "YukiMod",
+  "name": "YukiMod",
+  "author": "lozalia",
+  "description": "Template playable character mod for Slay the Spire 2, based on MeiLinMod.",
+  "version": "v0.1.0",
+  "has_pck": true,
+  "has_dll": true,
+  "dependencies": ["BaseLib"],
+  "affects_gameplay": true
+}

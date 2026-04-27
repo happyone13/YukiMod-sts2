@@ -1,0 +1,6 @@
+{
+  "YUKIMOD-STRIKE_YUKI.title": "打击",
+  "YUKIMOD-STRIKE_YUKI.description": "造成 {Damage:diff()} 点伤害。",
+  "YUKIMOD-DEFEND_YUKI.title": "防御",
+  "YUKIMOD-DEFEND_YUKI.description": "获得 {Block:diff()} 点格挡。"
+}

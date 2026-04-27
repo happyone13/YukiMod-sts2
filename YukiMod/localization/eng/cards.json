@@ -1,0 +1,6 @@
+{
+  "YUKIMOD-STRIKE_YUKI.title": "Strike",
+  "YUKIMOD-STRIKE_YUKI.description": "Deal {Damage:diff()} damage.",
+  "YUKIMOD-DEFEND_YUKI.title": "Defend",
+  "YUKIMOD-DEFEND_YUKI.description": "Gain {Block:diff()} Block."
+}
