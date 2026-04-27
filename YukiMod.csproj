@@ -7,6 +7,9 @@
     <DefaultItemExcludes>packages/**</DefaultItemExcludes>
     <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
     <PathMap>$(AppOutputBase)=.\</PathMap>
+    <Sts2TargetVersion Condition="'$(Sts2TargetVersion)' == ''">104</Sts2TargetVersion>
+    <BaseLibVersion Condition="'$(BaseLibVersion)' == '' and '$(Sts2TargetVersion)' == '103'">3.0.8</BaseLibVersion>
+    <BaseLibVersion Condition="'$(BaseLibVersion)' == '' and '$(Sts2TargetVersion)' != '103'">3.0.9</BaseLibVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -23,7 +26,11 @@
     <SteamLibraryPath Condition="Exists('$(AutoSteamPath)/common/Slay the Spire 2')">$(AutoSteamPath)</SteamLibraryPath>
     <GodotPath>E:\SOFT\godot\Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
     <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">C:/Program Files (x86)/Steam/steamapps</SteamLibraryPath>
-    <Sts2Path>$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+    <Sts2Path104 Condition="'$(Sts2Path104)' == '' and '$(STS2_104_PATH)' != ''">$(STS2_104_PATH)</Sts2Path104>
+    <Sts2Path104 Condition="'$(Sts2Path104)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path104>
+    <Sts2Path103 Condition="'$(Sts2Path103)' == '' and '$(STS2_103_PATH)' != ''">$(STS2_103_PATH)</Sts2Path103>
+    <Sts2Path Condition="'$(Sts2TargetVersion)' == '103'">$(Sts2Path103)</Sts2Path>
+    <Sts2Path Condition="'$(Sts2TargetVersion)' != '103'">$(Sts2Path104)</Sts2Path>
     <ModsPath>$(Sts2Path)/mods/</ModsPath>
     <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
@@ -71,7 +78,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.0.9" GeneratePathProperty="true" PrivateAssets="All" />
+    <PackageReference Include="Alchyr.Sts2.BaseLib" Version="$(BaseLibVersion)" GeneratePathProperty="true" PrivateAssets="All" />
     <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*" />
     <AdditionalFiles Include="YukiMod/localization/**/*.json" />
   </ItemGroup>
@@ -103,7 +110,13 @@
 
   <Target Name="CheckDependencyPaths">
     <Error
-      Text=" Slay the Spire 2 data not found at path '$(Sts2DataDir)'"
+      Text=" Unsupported Sts2TargetVersion '$(Sts2TargetVersion)'. Use 103 or 104."
+      Condition="'$(Sts2TargetVersion)' != '103' and '$(Sts2TargetVersion)' != '104'" />
+    <Error
+      Text=" Sts2Path103 is not configured. Pass -p:Sts2Path103=&lt;path&gt; or set STS2_103_PATH when building 103."
+      Condition="'$(Sts2TargetVersion)' == '103' and '$(Sts2Path103)' == ''" />
+    <Error
+      Text=" Slay the Spire 2 $(Sts2TargetVersion) data not found at path '$(Sts2DataDir)'"
       Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
     <Error
       Text=" Godot not found at path '$(GodotPath)'"

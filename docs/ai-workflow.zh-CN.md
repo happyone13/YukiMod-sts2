@@ -36,6 +36,8 @@
 
 - 先确认改动是模板迁移，还是友纪新内容，还是工程修复
 - 先看已有代码和路径，不用记忆代替检查
+- 涉及 `YukiMod.csproj`、构建目标版本、BaseLib 版本或导出流程时，先对照兄弟仓库 `E:\DATA\GODOT\MyMod\MeiLinMod-sts2` 中的 `MeiLinMod.csproj`，再决定 YukiMod 是否需要同步适配
+- 涉及原版 `104` 的卡牌、能力、遗物、动作链或 Hook 时，优先查看解包目录 `E:\DATA\GODOT\MyMod\sts104`
 - 如果碰到 `meilin` 命名的资源，先判断它是暂时沿用还是准备迁移，不要自动重命名
 - 运行时报错优先查看 `C:\Users\lozalia\AppData\Roaming\SlayTheSpire2\logs` 下最新的 `godot.log` 或时间戳日志，再决定修复方向
 

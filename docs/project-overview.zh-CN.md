@@ -101,6 +101,7 @@
 
 - Windows 下默认依赖本机 `Slay the Spire 2` 安装目录
 - Windows 下 `GodotPath` 固定指向 `E:\SOFT\godot\Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe`
+- 当前版本 `104` 的原游戏解包参考目录为 `E:\DATA\GODOT\MyMod\sts104`
 - 构建后会尝试把 `.dll`、`YukiMod.json`、`.pck` 复制或导出到游戏 `mods/YukiMod/`
 
 因此后续凡是涉及“可构建”或“可导出”的任务，都要同时考虑：
@@ -108,6 +109,7 @@
 - 本机游戏目录是否存在
 - Godot 路径是否仍然有效
 - 资源导出是否跟代码版本一致
+- 如需核对原版能力、遗物、卡牌、动作或 Hook 行为，应优先在 `E:\DATA\GODOT\MyMod\sts104` 中查对应实现
 
 ## 6. 当前已知空缺与风险
 

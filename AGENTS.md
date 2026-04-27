@@ -3,6 +3,7 @@
 ## Project Identity
 
 - This repository was copied from `MeiLinMod-sts2` and is now the working project for the character `友纪 / Yuki`.
+- The sibling reference workspace for build and engine adaptation is `E:\DATA\GODOT\MyMod\MeiLinMod-sts2`; when checking version bumps or build-script behavior, compare against `MeiLinMod.csproj` there before assuming YukiMod should diverge.
 - Treat the current codebase as a playable template, not finished canon. Existing placeholder data must not be mistaken for final character design.
 - Keep the code-facing project id, namespace, and manifest id as `YukiMod` unless the user explicitly requests a broad rename.
 
@@ -16,6 +17,7 @@
 ## Working Rules
 
 - Inspect the relevant code and docs before editing. Do not assume MeiLin behavior still applies unchanged in YukiMod.
+- Current-version base-game unpacked reference is `E:\DATA\GODOT\MyMod\sts104`. When checking vanilla card, power, relic, action, or hook behavior for version `104`, inspect that workspace before reimplementing by guesswork.
 - Keep three workstreams separate in reasoning and implementation: template cleanup, new Yuki content, and engine/build fixes.
 - Do not silently rename placeholder `meilin` assets or paths across the repo unless the task explicitly includes migration work.
 - Use UTF-8 for newly created or edited text files whenever possible.
