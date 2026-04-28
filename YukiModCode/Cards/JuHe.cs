@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.ValueProps;
+using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.Powers;
+
+namespace YukiMod.YukiModCode.Cards;
+
+[Pool(typeof(YukiModCardPool))]
+public class JuHe() : YukiModCard(0, CardType.Attack, CardRarity.Token, TargetType.AllEnemies)
+{
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DamageVar(33m, ValueProp.Move)];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        var combatState = CombatState;
+        if (combatState == null)
+        {
+            return;
+        }
+
+        foreach (var enemy in combatState.HittableEnemies.ToList())
+        {
+            var damage = DynamicVars.Damage.BaseValue + GetTenPercent(enemy.CurrentHp);
+            await CreatureCmd.Damage(choiceContext, enemy, damage, ValueProp.Move, Owner.Creature, this);
+        }
+
+        await PowerCmd.Apply<JuHeEndTurnDamagePower>(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars.Damage.BaseValue,
+            Owner.Creature,
+            this);
+    }
+
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(33m);
+    }
+
+    public static async Task<CardModel?> CreateInHand(Player owner, ICombatState combatState, bool upgraded = false)
+    {
+        return (await CreateInHand(owner, 1, combatState, upgraded)).FirstOrDefault();
+    }
+
+    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, ICombatState combatState, bool upgraded = false)
+    {
+        if (count <= 0 || CombatManager.Instance.IsOverOrEnding)
+        {
+            return Array.Empty<CardModel>();
+        }
+
+        var cards = new List<CardModel>(count);
+        for (var i = 0; i < count; i++)
+        {
+            var card = combatState.CreateCard<JuHe>(owner);
+            if (upgraded)
+            {
+                CardCmd.Upgrade(card, CardPreviewStyle.None);
+            }
+
+            cards.Add(card);
+        }
+
+        await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, owner);
+        return cards;
+    }
+
+    private static decimal GetTenPercent(int hp)
+    {
+        return Math.Ceiling(hp * 0.1m);
+    }
+}
