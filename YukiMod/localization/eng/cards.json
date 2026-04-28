@@ -2,5 +2,7 @@
   "YUKIMOD-STRIKE_YUKI.title": "Strike",
   "YUKIMOD-STRIKE_YUKI.description": "Deal {Damage:diff()} damage.",
   "YUKIMOD-DEFEND_YUKI.title": "Defend",
-  "YUKIMOD-DEFEND_YUKI.description": "Gain {Block:diff()} Block."
+  "YUKIMOD-DEFEND_YUKI.description": "Gain {Block:diff()} Block.",
+  "YUKIMOD-SHEN_YA_ZHI_ZHUN_BEI.title": "Godly Preparation",
+  "YUKIMOD-SHEN_YA_ZHI_ZHUN_BEI.description": "Draw until your hand is full.\nExhaust."
 }

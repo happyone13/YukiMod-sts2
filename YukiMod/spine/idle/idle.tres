@@ -1,7 +1,7 @@
-[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://cp67ocggdvb3j"]
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://yuki_idle_1057_tres"]
 
-[ext_resource type="SpineAtlasResource" path="res://YukiMod/spine/idle/1027.atlas" id="1_4bv8d"]
-[ext_resource type="SpineSkeletonFileResource" path="res://YukiMod/spine/idle/1027.skel" id="2_tgmyf"]
+[ext_resource type="SpineAtlasResource" path="res://YukiMod/spine/idle/1057.atlas" id="1_4bv8d"]
+[ext_resource type="SpineSkeletonFileResource" path="res://YukiMod/spine/idle/1057.skel" id="2_tgmyf"]
 
 [resource]
 atlas_res = ExtResource("1_4bv8d")
