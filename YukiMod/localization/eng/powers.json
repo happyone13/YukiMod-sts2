@@ -1,0 +1,23 @@
+﻿{
+    "YUKIMOD-YI_SHI_NEXT_ATTACK_COST_DOWN_POWER.title":  "First Form",
+    "YUKIMOD-YI_SHI_NEXT_ATTACK_COST_DOWN_POWER.description":  "Your next [gold]Attack[/gold] costs {Amount} less.",
+    "YUKIMOD-YI_SHI_NEXT_ATTACK_COST_DOWN_POWER.smartDescription":  "Your next [gold]Attack[/gold] costs {Amount} less.",
+    "YUKIMOD-REN_JIAN_HE_YI_POWER.title":  "Unity of Sword and Self",
+    "YUKIMOD-REN_JIAN_HE_YI_POWER.description":  "At the start of your turn, draw 1 extra card. {Amount} turn(s) remaining.",
+    "YUKIMOD-REN_JIAN_HE_YI_POWER.smartDescription":  "At the start of your turn, draw 1 extra card. {Amount} turn(s) remaining.",
+    "YUKIMOD-BI_AN_HUA_DELAYED_DAMAGE_POWER.title":  "Red Spider Lily",
+    "YUKIMOD-BI_AN_HUA_DELAYED_DAMAGE_POWER.description":  "At the start of your turn, take {Amount} damage.",
+    "YUKIMOD-BI_AN_HUA_DELAYED_DAMAGE_POWER.smartDescription":  "At the start of your turn, take {Amount} damage.",
+    "YUKIMOD-MAN_YI_POWER.title":  "Overflow",
+    "YUKIMOD-MAN_YI_POWER.description":  "The first time each turn you draw to a full hand, gain 1 Energy.",
+    "YUKIMOD-MAN_YI_POWER.smartDescription":  "The first time each turn you draw to a full hand, gain 1 Energy.",
+    "YUKIMOD-ZHEN_DAO_POWER.title":  "Blade Resonance",
+    "YUKIMOD-ZHEN_DAO_POWER.description":  "Whenever you spend {Amount} Energy, draw 1 card. Stacks show Energy remaining.",
+    "YUKIMOD-ZHEN_DAO_POWER.smartDescription":  "Whenever you spend {Amount} Energy, draw 1 card. Stacks show Energy remaining.",
+    "YUKIMOD-TIAN_DAO_XING_TAI_POWER.smartDescription":  "The first [gold]Attack[/gold] you play each turn is played {Amount} additional time(s).",
+    "YUKIMOD-TIAN_DAO_XING_TAI_POWER.title":  "Heavenblade Form",
+    "YUKIMOD-TIAN_DAO_XING_TAI_POWER.description":  "The first [gold]Attack[/gold] you play each turn is played {Amount} additional time(s).",
+    "YUKIMOD-NU_TAO_ZHAN_POWER.title":  "Raging Tide Slash",
+    "YUKIMOD-NU_TAO_ZHAN_POWER.description":  "When you play your {Amount}th [gold]Attack[/gold] each turn, draw 1 card. Stacks show Attacks remaining.",
+    "YUKIMOD-NU_TAO_ZHAN_POWER.smartDescription":  "When you play your {Amount}th [gold]Attack[/gold] each turn, draw 1 card. Stacks show Attacks remaining."
+}
