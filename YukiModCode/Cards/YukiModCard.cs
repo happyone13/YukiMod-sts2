@@ -12,6 +12,8 @@ namespace YukiMod.YukiModCode.Cards;
 public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, TargetType target) :
     CustomCardModel(cost, type, rarity, target)
 {
+    public virtual YukiCardSchool School => YukiCardSchool.Other;
+
     protected string IdPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePathOrDefault();
     protected string IdBigPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePathOrDefault();
 

@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://dg28pnli4urlk"]
 
-[ext_resource type="Texture2D" path="res://YukiMod/images/charui/meilin_icon.png" id="1_yuki_icon"]
+[ext_resource type="Texture2D" uid="uid://d2kql4cymdwk4" path="res://YukiMod/images/charui/face_character_sd_1057.png" id="1_hbsh4"]
 
 [node name="YukiIcon" type="TextureRect"]
 anchors_preset = 15
@@ -9,6 +9,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("1_yuki_icon")
+texture = ExtResource("1_hbsh4")
 expand_mode = 1
 stretch_mode = 5

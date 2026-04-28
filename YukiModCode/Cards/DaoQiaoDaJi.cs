@@ -5,20 +5,25 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class StrikeYuki() : YukiModCard(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public class DaoQiaoDaJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override HashSet<CardTag> CanonicalTags =>
         [CardTag.Strike];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(6m, ValueProp.Move)];
+        [new DamageVar(8m, ValueProp.Move), new EnergyVar(1)];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [EnergyHoverTip];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -29,6 +34,13 @@ public class StrikeYuki() : YukiModCard(1, CardType.Attack, CardRarity.Basic, Ta
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        await PowerCmd.Apply<EnergyNextTurnPower>(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars.Energy.BaseValue,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()

@@ -1,8 +1,8 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://dne58bvfqisfp"]
 
-[ext_resource type="Texture2D" path="res://YukiMod/images/charui/154056.png" id="1_bg_texture"]
-[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/idle/idle.tres" id="2_idle_spine"]
-[ext_resource type="Script" path="res://YukiMod/scripts/spine_auto_player.gd" id="3_auto_player"]
+[ext_resource type="Texture2D" uid="uid://2v3a4a277amv" path="res://YukiMod/images/charui/portrait_character_class_1057.png" id="1_5bvpw"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/idle/idle.tres" id="2_kgy4e"]
+[ext_resource type="Script" uid="uid://cj6sempo3jmix" path="res://YukiMod/scripts/spine_auto_player.gd" id="3_auto_player"]
 
 [node name="YukiBg" type="Control"]
 layout_mode = 3
@@ -26,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.1254902, 0.14117648, 0.1882353, 1)
+color = Color(0.20392157, 0.023529412, 0.5176471, 1)
 metadata/_edit_lock_ = true
 
 [node name="Icon" type="TextureRect" parent="."]
@@ -40,11 +40,11 @@ offset_right = -676.0
 offset_bottom = -512.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_bg_texture")
+texture = ExtResource("1_5bvpw")
 stretch_mode = 6
 
 [node name="SpineSprite" type="SpineSprite" parent="."]
-skeleton_data_res = ExtResource("2_idle_spine")
+skeleton_data_res = ExtResource("2_kgy4e")
 preview_skin = "normal"
 preview_animation = "idle"
 preview_frame = false
@@ -56,7 +56,6 @@ script = ExtResource("3_auto_player")
 AnimationName = "touch"
 Loop = false
 FollowUpAnimationName = "idle"
-FollowUpLoop = true
 SkinName = "normal"
 ResetSlotsToSetupPose = true
 ResetSlotsBeforeFollowUp = true

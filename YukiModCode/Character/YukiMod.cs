@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Animation;

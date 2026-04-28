@@ -40,13 +40,23 @@
 - 涉及原版 `104` 的卡牌、能力、遗物、动作链或 Hook 时，优先查看解包目录 `E:\DATA\GODOT\MyMod\sts104`
 - 如果碰到 `meilin` 命名的资源，先判断它是暂时沿用还是准备迁移，不要自动重命名
 - 运行时报错优先查看 `C:\Users\lozalia\AppData\Roaming\SlayTheSpire2\logs` 下最新的 `godot.log` 或时间戳日志，再决定修复方向
+- 如果 Godot 编辑器里出现 `SpineAtlasResource` / `SpineSkeletonFileResource` 依赖损坏，先检查仓库根目录 `bin/spine_godot_extension.gdextension` 及对应 `bin/windows/libspine_godot...dll` 是否存在；缺这层时，编辑器会把 `.atlas/.skel` 误判成坏依赖
+- 如果本地场景引用了原版工程里的 `res://src/...` 或 `res://scenes/...` 路径，而当前仓库没有这些文件，优先补最小本地桥接文件；对 C# 脚本优先使用继承原版类型的薄包装器，避免直接复制同名原版类导致与 `sts2.dll` 类型冲突
 
 ### 4.2 修改时
 
 - 优先做闭环改动，不留“代码加了但资源/本地化/注册没跟上”的半成品
 - 新规则要落文档，尤其是命名规则、机制规则、流程规则
+- 卡牌描述里的通用关键词（如 `消耗`、`固有`、`保留`）默认依赖原版/框架自动追加；除非效果正文确实需要提到它们，否则不要在 `cards.json` 手写重复一遍
+- 需要选牌的卡，如果代码里使用 `SelectionScreenPrompt`，必须同时在 `cards.json` 中补上 `<CARD_ID>.selectionScreenPrompt`；缺这个键会在运行时抛 `No selection screen prompt for CARD...`，并表现为选牌界面卡住
+- 动态数值描述按原版格式写占位符；会升级或会被动态变量修改的数值默认使用 `:diff()`，例如 `{Damage:diff()}`、`{Block:diff()}`、`{Repeat:diff()}`、`{Cards:diff()}`
+- 中文 `cards.json` 中，数值与中文量词、标点之间默认不留多余空格，例如 `造成{Damage:diff()}点伤害。`
+- 卡牌效果里的“消耗一张手牌/消耗若干牌”等结算，优先复用原版方法，如 `CardCmd.Exhaust(...)` 与原版选牌流程；不要手动移牌来模拟消耗
+- 从抽牌堆/弃牌堆/手牌选择牌时，优先找原版同类卡做参照；例如从抽牌堆选牌进手优先对照 `sts104` 中的 `SecretTechnique`
+- 卡牌效果、费用、稀有度、种类以 `docs/yuki-card-table.xlsx` 为第一权威来源；若旧 md、旧代码、旧对话记录与表格冲突，以当前 xlsx 为准
 - 当前默认占位资源约定为：卡牌缺图回退到 `YukiMod/images/card_portraits/card.png` 与 `big/card.png`，力量缺图回退到 `YukiMod/images/powers/power.png` 与 `big/power.png`，遗物缺图回退到 `YukiMod/images/relics/relic.png`、`relic_outline.png` 与 `big/relic.png`
 - 新文本文件默认使用 `UTF-8`
+- 对 `Task`、`IEnumerable` 这类基础类型，尽量在源码里显式写 `using System.Threading.Tasks;`、`using System.Collections.Generic;`，不要只依赖 `ImplicitUsings` 或 `.godot/mono/temp/obj/...GlobalUsings.g.cs`，否则 IDE/编辑器索引异常时容易出现“缺少引用”的假报错
 
 ### 4.3 修改后
 
