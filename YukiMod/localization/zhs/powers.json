@@ -15,8 +15,8 @@
     "YUKIMOD-MAN_YI_POWER.description": "每回合第一次抽满手牌时，获得1费。",
     "YUKIMOD-MAN_YI_POWER.smartDescription": "每回合第一次抽满手牌时，获得1费。",
     "YUKIMOD-XIAN_JIAN_ZHI_MING_POWER.title": "先见之明",
-    "YUKIMOD-XIAN_JIAN_ZHI_MING_POWER.description": "回合开始时，预见{Amount}。",
-    "YUKIMOD-XIAN_JIAN_ZHI_MING_POWER.smartDescription": "回合开始时，预见{Amount}。",
+    "YUKIMOD-XIAN_JIAN_ZHI_MING_POWER.description": "回合开始时，[gold]预见[/gold]{Amount}。",
+    "YUKIMOD-XIAN_JIAN_ZHI_MING_POWER.smartDescription": "回合开始时，[gold]预见[/gold]{Amount}。",
     "YUKIMOD-XIAN_JIAN_ZHI_MING_POWER.selectionScreenPrompt": "选择至多{MaxCount}张牌置入弃牌堆。",
     "YUKIMOD-HUANG_HUN_DE_JI_BAN_POWER.title": "黄昏的羁绊",
     "YUKIMOD-HUANG_HUN_DE_JI_BAN_POWER.description": "你不能额外获得费用。\n回合开始时，随机2张[gold]手牌[/gold]下次使用前费用减少1。",
@@ -25,9 +25,12 @@
     "YUKIMOD-TIAN_JI_ZHAN_JI_POWER.description": "回合开始时，将[gold]手中所有牌[/gold]放到[gold]抽牌堆[/gold]顶部并抽出。",
     "YUKIMOD-TIAN_JI_ZHAN_JI_POWER.smartDescription": "回合开始时，将[gold]手中所有牌[/gold]放到[gold]抽牌堆[/gold]顶部并抽出。",
     "YUKIMOD-ZHAN_GANG_SHAN_POWER.title": "斩钢闪",
-    "YUKIMOD-ZHAN_GANG_SHAN_POWER.description": "连续3回合打出斩钢闪，3回合后将一张[gold]居合[/gold]加入手牌。层数表示当前连续回合数。",
-    "YUKIMOD-ZHAN_GANG_SHAN_POWER.smartDescription": "连续3回合打出斩钢闪，3回合后将一张[gold]居合[/gold]加入手牌。层数表示当前连续回合数。",
-    "YUKIMOD-ZHAO_JIA_POWER.title": "??",
-    "YUKIMOD-ZHAO_JIA_POWER.description": "????????????????????????[gold]??[/gold]?",
-    "YUKIMOD-ZHAO_JIA_POWER.smartDescription": "????????????????????????[gold]??[/gold]?"
+    "YUKIMOD-ZHAN_GANG_SHAN_POWER.description": "连续3回合打出斩钢闪，将一张[gold]居合[/gold]加入手牌。层数表示当前连续回合数。",
+    "YUKIMOD-ZHAN_GANG_SHAN_POWER.smartDescription": "连续3回合打出斩钢闪，将一张[gold]居合[/gold]加入手牌。层数表示当前连续回合数。",
+    "YUKIMOD-TA_QIAN_ZHAN_MARKED_POWER.title": "踏前斩",
+    "YUKIMOD-TA_QIAN_ZHAN_MARKED_POWER.description": "本回合已被[gold]踏前斩[/gold]命中过。",
+    "YUKIMOD-TA_QIAN_ZHAN_MARKED_POWER.smartDescription": "本回合已被[gold]踏前斩[/gold]命中过。",
+    "YUKIMOD-ZHAO_JIA_POWER.title": "招架",
+    "YUKIMOD-ZHAO_JIA_POWER.description": "如果本回合刚好抵挡全部伤害，下回合开始时获得一张[gold]居合[/gold]。",
+    "YUKIMOD-ZHAO_JIA_POWER.smartDescription": "如果本回合刚好抵挡全部伤害，下回合开始时获得一张[gold]居合[/gold]。"
 }

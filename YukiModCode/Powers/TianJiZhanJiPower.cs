@@ -17,7 +17,7 @@ public class TianJiZhanJiPower : YukiModPower
 
     public override bool IsInstanced => true;
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player)
         {

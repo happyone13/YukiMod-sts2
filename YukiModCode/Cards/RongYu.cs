@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -23,7 +24,7 @@ public class RongYu() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetT
         [new DamageVar(9m, ValueProp.Move)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.Static(StaticHoverTip.Fatal)];
+        [HoverTipFactory.Static(StaticHoverTip.Fatal), .. YukiHoverTipFactory.FromIai()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

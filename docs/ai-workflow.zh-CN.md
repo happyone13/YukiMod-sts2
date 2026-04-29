@@ -48,6 +48,9 @@
 - 优先做闭环改动，不留“代码加了但资源/本地化/注册没跟上”的半成品
 - 新规则要落文档，尤其是命名规则、机制规则、流程规则
 - 卡牌描述里的通用关键词（如 `消耗`、`固有`、`保留`）默认依赖原版/框架自动追加；除非效果正文确实需要提到它们，否则不要在 `cards.json` 手写重复一遍
+- 衍生牌 / Token 牌优先对照原版 `SovereignBlade` 实现：使用 `CardRarity.Token`，并挂到 `TokenCardPool`，不要继续放在角色主卡池里
+- 自定义词条（如 `预见`）如果不是原版内置 `CardKeyword`，正文里要手动写成 `[gold]关键词[/gold]`，并在 `ExtraHoverTips` 里补对应侧边说明
+- 如果卡牌或能力描述里直接提到了会生成、加入或关联的另一张具体卡牌，优先用 `HoverTipFactory.FromCardWithCardHoverTips<T>()` 补侧边卡牌预览，做法对照原版 `Forge -> SovereignBlade`
 - 需要选牌的卡，如果代码里使用 `SelectionScreenPrompt`，必须同时在 `cards.json` 中补上 `<CARD_ID>.selectionScreenPrompt`；缺这个键会在运行时抛 `No selection screen prompt for CARD...`，并表现为选牌界面卡住
 - 动态数值描述按原版格式写占位符；会升级或会被动态变量修改的数值默认使用 `:diff()`，例如 `{Damage:diff()}`、`{Block:diff()}`、`{Repeat:diff()}`、`{Cards:diff()}`
 - 中文 `cards.json` 中，数值与中文量词、标点之间默认不留多余空格，例如 `造成{Damage:diff()}点伤害。`

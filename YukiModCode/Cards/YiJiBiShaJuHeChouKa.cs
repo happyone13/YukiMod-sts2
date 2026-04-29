@@ -4,14 +4,19 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
 public class YiJiBiShaJuHeChouKa() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        YukiHoverTipFactory.FromIai();
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new CardsVar(1)];
 

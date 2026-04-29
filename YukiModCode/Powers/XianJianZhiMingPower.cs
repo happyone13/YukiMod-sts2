@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Powers;
@@ -12,6 +15,9 @@ namespace YukiMod.YukiModCode.Powers;
 public class XianJianZhiMingPower : YukiModPower
 {
     private LocString SelectionPrompt => new("powers", $"{Id.Entry}.selectionScreenPrompt");
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [YukiHoverTipFactory.FromForesee()];
 
     public override PowerType Type => PowerType.Buff;
 
