@@ -15,6 +15,7 @@
 
 - 角色设定、文案、视觉语义：读 `docs/character-brief.zh-CN.md`
 - 模板清理、命名迁移、发布前整理：读 `docs/template-cleanup-checklist.zh-CN.md`
+- 运行时 Hook、回合开始/抽牌时序、递归 Hover Tip 排错：读 `docs/runtime-hook-notes.zh-CN.md`
 - 纯工程或构建问题：以上两份可按需跳读，但项目概览仍应先读
 
 ## 3. 任务分类原则
@@ -38,6 +39,7 @@
 - 先看已有代码和路径，不用记忆代替检查
 - 涉及 `YukiMod.csproj`、构建目标版本、BaseLib 版本或导出流程时，先对照兄弟仓库 `E:\DATA\GODOT\MyMod\MeiLinMod-sts2` 中的 `MeiLinMod.csproj`，再决定 YukiMod 是否需要同步适配
 - 涉及原版 `104` 的卡牌、能力、遗物、动作链或 Hook 时，优先查看解包目录 `E:\DATA\GODOT\MyMod\sts104`
+- 涉及“回合开始”“抽牌前/后”“重抽整手牌”“是否计入起手抽牌”等效果时，先对照 `sts104/src/Core/Combat/CombatManager.cs` 的实际调用顺序，再决定使用 `BeforeHandDraw`、`AfterPlayerTurnStart` 或历史记录字段如 `CardDrawnEntry.FromHandDraw`
 - 如果碰到 `meilin` 命名的资源，先判断它是暂时沿用还是准备迁移，不要自动重命名
 - 运行时报错优先查看 `C:\Users\lozalia\AppData\Roaming\SlayTheSpire2\logs` 下最新的 `godot.log` 或时间戳日志，再决定修复方向
 - 如果 Godot 编辑器里出现 `SpineAtlasResource` / `SpineSkeletonFileResource` 依赖损坏，先检查仓库根目录 `bin/spine_godot_extension.gdextension` 及对应 `bin/windows/libspine_godot...dll` 是否存在；缺这层时，编辑器会把 `.atlas/.skel` 误判成坏依赖
@@ -51,6 +53,7 @@
 - 衍生牌 / Token 牌优先对照原版 `SovereignBlade` 实现：使用 `CardRarity.Token`，并挂到 `TokenCardPool`，不要继续放在角色主卡池里
 - 自定义词条（如 `预见`）如果不是原版内置 `CardKeyword`，正文里要手动写成 `[gold]关键词[/gold]`，并在 `ExtraHoverTips` 里补对应侧边说明
 - 如果卡牌或能力描述里直接提到了会生成、加入或关联的另一张具体卡牌，优先用 `HoverTipFactory.FromCardWithCardHoverTips<T>()` 补侧边卡牌预览，做法对照原版 `Forge -> SovereignBlade`
+- 如果两张或多张卡会互相预览，至少一侧改用 `HoverTipFactory.FromCard<T>()`，避免 `FromCardWithCardHoverTips<T>()` 递归展开造成卡牌生成或悬浮说明卡死
 - 需要选牌的卡，如果代码里使用 `SelectionScreenPrompt`，必须同时在 `cards.json` 中补上 `<CARD_ID>.selectionScreenPrompt`；缺这个键会在运行时抛 `No selection screen prompt for CARD...`，并表现为选牌界面卡住
 - 动态数值描述按原版格式写占位符；会升级或会被动态变量修改的数值默认使用 `:diff()`，例如 `{Damage:diff()}`、`{Block:diff()}`、`{Repeat:diff()}`、`{Cards:diff()}`
 - 中文 `cards.json` 中，数值与中文量词、标点之间默认不留多余空格，例如 `造成{Damage:diff()}点伤害。`

@@ -9,5 +9,6 @@ This project keeps the playable-character scaffolding and placeholder visuals, b
 - Start with `AGENTS.md`
 - Project context: `docs/project-overview.zh-CN.md`
 - Workflow rules: `docs/ai-workflow.zh-CN.md`
+- Runtime hook notes: `docs/runtime-hook-notes.zh-CN.md`
 - Character brief: `docs/character-brief.zh-CN.md`
 - Template cleanup list: `docs/template-cleanup-checklist.zh-CN.md`

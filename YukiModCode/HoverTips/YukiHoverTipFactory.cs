@@ -9,12 +9,39 @@ public static class YukiHoverTipFactory
 {
     private const string ForeseeTitleKey = "YUKIMOD-FORESEE.title";
     private const string ForeseeDescriptionKey = "YUKIMOD-FORESEE.description";
+    private const string NingJuTitleKey = "YUKIMOD-NING_JU.title";
+    private const string NingJuDescriptionKey = "YUKIMOD-NING_JU.description";
+    private const string BlackCloudTitleKey = "YUKIMOD-BLACK_CLOUD.title";
+    private const string BlackCloudDescriptionKey = "YUKIMOD-BLACK_CLOUD.description";
+    private const string CountsAsMoonshadowTitleKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.title";
+    private const string CountsAsMoonshadowDescriptionKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.description";
 
     public static IHoverTip FromForesee()
     {
         return new HoverTip(
             new LocString("cards", ForeseeTitleKey),
             new LocString("cards", ForeseeDescriptionKey));
+    }
+
+    public static IHoverTip FromNingJu()
+    {
+        return new HoverTip(
+            new LocString("cards", NingJuTitleKey),
+            new LocString("cards", NingJuDescriptionKey));
+    }
+
+    public static IHoverTip FromBlackCloud()
+    {
+        return new HoverTip(
+            new LocString("cards", BlackCloudTitleKey),
+            new LocString("cards", BlackCloudDescriptionKey));
+    }
+
+    public static IHoverTip FromCountsAsMoonshadow()
+    {
+        return new HoverTip(
+            new LocString("cards", CountsAsMoonshadowTitleKey),
+            new LocString("cards", CountsAsMoonshadowDescriptionKey));
     }
 
     public static IEnumerable<IHoverTip> FromIai()

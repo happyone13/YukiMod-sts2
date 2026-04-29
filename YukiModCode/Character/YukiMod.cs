@@ -31,7 +31,9 @@ public class YukiMod : PlaceholderCharacterModel
         ModelDb.Card<DefendYuki>(),
         ModelDb.Card<DefendYuki>(),
         ModelDb.Card<DefendYuki>(),
-        ModelDb.Card<DefendYuki>()
+        ModelDb.Card<DefendYuki>(),
+        ModelDb.Card<YaZhiZhunBei>(),
+        ModelDb.Card<BaDao>()
     ];
 
     public override IReadOnlyList<RelicModel> StartingRelics =>

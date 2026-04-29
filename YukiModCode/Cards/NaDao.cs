@@ -24,8 +24,10 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(TokenCardPool))]
 public class NaDao() : YukiModTokenCard(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
 {
+    public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        YukiHoverTipFactory.FromIai();
+        [.. YukiHoverTipFactory.FromIai(), YukiHoverTipFactory.FromBlackCloud()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(5m, ValueProp.Move)];
