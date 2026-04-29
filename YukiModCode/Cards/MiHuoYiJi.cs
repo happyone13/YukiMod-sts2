@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using BaseLib.Utils;
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
+using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Services;
+
+namespace YukiMod.YukiModCode.Cards;
+
+[Pool(typeof(YukiModCardPool))]
+public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+{
+    public override YukiCardSchool School => YukiCardSchool.Inspiration;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [YukiHoverTipFactory.FromInspiration()];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DamageVar(4m, ValueProp.Move), new RepeatVar(2)];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
+
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
+            .FromCard(this)
+            .Targeting(cardPlay.Target)
+            .WithHitFx("vfx/vfx_attack_slash")
+            .Execute(choiceContext);
+
+        var candidates = YukiInspirationService.GetInspirableCards(Owner, PileType.Hand)
+            .Where(card => !YukiInspirationService.IsInspired(card))
+            .ToList();
+        if (candidates.Count == 0)
+        {
+            return;
+        }
+
+        CardModel? selectedCard;
+        if (IsUpgraded)
+        {
+            var prefs = new CardSelectorPrefs(SelectionScreenPrompt, 1);
+            selectedCard = (await CardSelectCmd.FromHand(
+                    choiceContext,
+                    Owner,
+                    prefs,
+                    card => YukiInspirationService.CanReceiveInspiration(card) && !YukiInspirationService.IsInspired(card),
+                    this))
+                .FirstOrDefault();
+        }
+        else
+        {
+            selectedCard = Owner.RunState.Rng.CombatCardSelection.NextItem(candidates);
+        }
+
+        if (selectedCard != null)
+        {
+            YukiInspirationService.ActivateInspiration(selectedCard);
+        }
+    }
+
+    protected override void OnUpgrade() { }
+}

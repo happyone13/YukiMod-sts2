@@ -1,20 +1,22 @@
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Powers;
 
-public class LanYuePower : YukiModPower
+public class LanYuePower : YukiModPower, IInspiredTriggeredListener
 {
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public Task OnInspiredTriggered(CardModel sourceCard)
+    public Task OnInspiredTriggered(PlayerChoiceContext choiceContext, Player player, CardModel sourceCard)
     {
-        if (Owner.Player == null)
+        if (player != Owner.Player)
         {
             return Task.CompletedTask;
         }

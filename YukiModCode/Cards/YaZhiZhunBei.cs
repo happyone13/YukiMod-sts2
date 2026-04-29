@@ -5,8 +5,11 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -14,6 +17,10 @@ namespace YukiMod.YukiModCode.Cards;
 public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
+    public override bool HasOwnInspirationEffect => true;
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [YukiHoverTipFactory.FromInspiration()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -25,10 +32,17 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
             return;
         }
 
-        var selectedAttack = drawPile.Cards
+        var eligibleAttacks = drawPile.Cards
             .Where(IsEligibleAttack)
-            .OrderByDescending(IsInspiredAttack)
-            .FirstOrDefault();
+            .ToList();
+        if (eligibleAttacks.Count == 0)
+        {
+            return;
+        }
+
+        var selectedAttack = YukiInspirationService.WillTriggerOnPlay(this)
+            ? eligibleAttacks.FirstOrDefault(IsInspiredAttack) ?? eligibleAttacks.First()
+            : eligibleAttacks.First();
         if (selectedAttack == null)
         {
             return;

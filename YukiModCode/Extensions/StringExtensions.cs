@@ -63,6 +63,12 @@ public static class StringExtensions
         return $"{MainFile.ModId}/images/potions/{path}";
     }
 
+    public static string PotionImagePathOrDefault(this string path)
+    {
+        var targetPath = path.PotionImagePath();
+        return ResourceExists(targetPath) ? targetPath : "potion.png".PotionImagePath();
+    }
+
     public static string RelicImagePath(this string path)
     {
         return $"{MainFile.ModId}/images/relics/{path}";

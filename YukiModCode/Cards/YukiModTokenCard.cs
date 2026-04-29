@@ -17,6 +17,7 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
     CustomCardModel(cost, type, rarity, target)
 {
     public virtual YukiCardSchool School => YukiCardSchool.Other;
+    public virtual bool HasOwnInspirationEffect => false;
     public virtual bool IsRealMoonshadow => false;
     public virtual bool CountsAsMoonshadow => IsRealMoonshadow;
 
@@ -32,7 +33,7 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
     public override string BetaPortraitPath => $"beta/{Id.Entry.ToLowerInvariant()}.png".CardImagePath();
 
     protected override bool ShouldGlowGoldInternal =>
-        School == YukiCardSchool.Inspiration && IsInspired;
+        IsInspired && YukiInspirationService.CanReceiveInspiration(this);
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
@@ -68,18 +69,16 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
         return Task.CompletedTask;
     }
 
-    public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card == this)
         {
-            if (School == YukiCardSchool.Inspiration && IsInspired)
+            if (YukiInspirationService.WillTriggerOnPlay(this))
             {
-                YukiInspirationService.NotifyInspiredTriggered(Owner, this);
+                await YukiInspirationService.NotifyInspiredTriggered(choiceContext, Owner, this);
             }
 
             IsInspired = false;
         }
-
-        return Task.CompletedTask;
     }
 }

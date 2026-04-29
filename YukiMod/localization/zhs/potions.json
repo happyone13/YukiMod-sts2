@@ -1,0 +1,8 @@
+{
+  "YUKIMOD-NING_JU_POTION.title": "凝聚药水",
+  "YUKIMOD-NING_JU_POTION.description": "[gold]凝聚[/gold]{Amount:diff()}。",
+  "YUKIMOD-RU_YUN_POTION.title": "入云药水",
+  "YUKIMOD-RU_YUN_POTION.description": "进入[gold]黑云姿态[/gold]。",
+  "YUKIMOD-LING_SI_POTION.title": "灵思药水",
+  "YUKIMOD-LING_SI_POTION.description": "使你手中随机{Amount:diff()}张牌的[gold]灵感[/gold]被激活。"
+}

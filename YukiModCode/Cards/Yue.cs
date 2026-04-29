@@ -23,14 +23,33 @@ public class Yue() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
+        var hitCount = 1;
+        if (YukiSnowMoonFlowerService.ShouldGrantBlackCloud(this))
+        {
+            await YukiBlackCloudService.Resolve(
+                choiceContext,
+                this,
+                () =>
+                {
+                    hitCount++;
+                    return Task.CompletedTask;
+                });
+        }
+
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(hitCount)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<YuePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiSnowMoonFlowerService.ApplyYue(choiceContext, Owner, CombatState, this);
         YukiMoonshadowService.GainMoonshadowDamageInHand(Owner, DynamicVars["MoonshadowDamage"].BaseValue);
+
+        if (YukiInspirationService.WillTriggerOnPlay(this))
+        {
+            await CardPileCmd.Draw(choiceContext, 1m, Owner);
+        }
     }
 
     protected override void OnUpgrade()

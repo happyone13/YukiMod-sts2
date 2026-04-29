@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -40,13 +41,13 @@ public class BingXue() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Ta
             return;
         }
 
-        var inspiredCard = drawPile.Cards.FirstOrDefault(IsInspiredCard);
-        if (inspiredCard == null)
+        var inspirationCard = drawPile.Cards.FirstOrDefault(YukiInspirationService.IsInspirationSchoolCard);
+        if (inspirationCard == null)
         {
             return;
         }
 
-        await CardPileCmd.Add(inspiredCard, PileType.Draw, CardPilePosition.Top, this, skipVisuals: true);
+        await CardPileCmd.Add(inspirationCard, PileType.Draw, CardPilePosition.Top, this, skipVisuals: true);
         await CardPileCmd.Draw(choiceContext, Owner);
     }
 
@@ -54,7 +55,4 @@ public class BingXue() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Ta
     {
         DynamicVars[RepeatKey].UpgradeValueBy(1m);
     }
-
-    private static bool IsInspiredCard(CardModel card) =>
-        card is YukiModCard yukiCard && yukiCard.School == YukiCardSchool.Inspiration;
 }

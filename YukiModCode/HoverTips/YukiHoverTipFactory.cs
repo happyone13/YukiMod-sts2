@@ -9,6 +9,8 @@ public static class YukiHoverTipFactory
 {
     private const string ForeseeTitleKey = "YUKIMOD-FORESEE.title";
     private const string ForeseeDescriptionKey = "YUKIMOD-FORESEE.description";
+    private const string InspirationTitleKey = "YUKIMOD-INSPIRATION.title";
+    private const string InspirationDescriptionKey = "YUKIMOD-INSPIRATION.description";
     private const string NingJuTitleKey = "YUKIMOD-NING_JU.title";
     private const string NingJuDescriptionKey = "YUKIMOD-NING_JU.description";
     private const string BlackCloudTitleKey = "YUKIMOD-BLACK_CLOUD.title";
@@ -21,6 +23,13 @@ public static class YukiHoverTipFactory
         return new HoverTip(
             new LocString("cards", ForeseeTitleKey),
             new LocString("cards", ForeseeDescriptionKey));
+    }
+
+    public static IHoverTip FromInspiration()
+    {
+        return new HoverTip(
+            new LocString("cards", InspirationTitleKey),
+            new LocString("cards", InspirationDescriptionKey));
     }
 
     public static IHoverTip FromNingJu()
