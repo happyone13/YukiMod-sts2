@@ -20,7 +20,7 @@ public enum SpinePortraitSlot
 
 [Pool(typeof(YukiModCardPool))]
 public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, TargetType target) :
-    CustomCardModel(cost, type, rarity, target), IYukiCardVisualProfile
+    CustomCardModel(cost, type, rarity, target)
 {
     public virtual bool UseDynamicPortrait => false;
     public virtual string? CustomSpinePortraitScenePath => null;

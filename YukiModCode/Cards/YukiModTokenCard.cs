@@ -14,7 +14,7 @@ namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
 public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarity, TargetType target) :
-    CustomCardModel(cost, type, rarity, target), IYukiCardVisualProfile
+    CustomCardModel(cost, type, rarity, target)
 {
     public virtual bool UseDynamicPortrait => false;
     public virtual string? CustomSpinePortraitScenePath => null;
