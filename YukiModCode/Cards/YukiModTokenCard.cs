@@ -17,6 +17,7 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
     CustomCardModel(cost, type, rarity, target)
 {
     public virtual bool UseDynamicPortrait => false;
+    public virtual bool UseCustomFrame => UseDynamicPortrait;
     public virtual string? CustomSpinePortraitScenePath => null;
     public virtual SpinePortraitSlot CustomSpinePortraitSlot => SpinePortraitSlot.Ancient;
 
@@ -33,7 +34,7 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
 
     public override string CustomPortraitPath => IdPortraitPath;
     public override string PortraitPath => IdPortraitPath;
-    public override string BetaPortraitPath => $"beta/{Id.Entry.ToLowerInvariant()}.png".CardImagePath();
+    public override string BetaPortraitPath => PortraitPath;
 
     protected override bool ShouldGlowGoldInternal =>
         IsInspired && YukiInspirationService.CanReceiveInspiration(this);
