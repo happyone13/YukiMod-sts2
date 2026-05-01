@@ -15,6 +15,8 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunAoYiCan() : YukiModCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/hei_yun_ao_yi_can_dynamic.tscn";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud()];

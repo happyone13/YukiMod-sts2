@@ -25,6 +25,8 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
     private const string CurrentDamageKey = "CurrentDamage";
 
     public override YukiCardSchool School => YukiCardSchool.Moonshadow;
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/yue_ying_dynamic.tscn";
     public override bool IsRealMoonshadow => true;
     public override bool CountsAsMoonshadow => true;
 

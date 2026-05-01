@@ -58,6 +58,7 @@
 - 动态数值描述按原版格式写占位符；会升级或会被动态变量修改的数值默认使用 `:diff()`，例如 `{Damage:diff()}`、`{Block:diff()}`、`{Repeat:diff()}`、`{Cards:diff()}`
 - 中文 `cards.json` 中，数值与中文量词、标点之间默认不留多余空格，例如 `造成{Damage:diff()}点伤害。`
 - 卡牌效果里的“消耗一张手牌/消耗若干牌”等结算，优先复用原版方法，如 `CardCmd.Exhaust(...)` 与原版选牌流程；不要手动移牌来模拟消耗
+- 卡牌外观要拆开处理：默认卡牌优先走统一卡框资源，动态肖像只对单卡开启；不要把“有动态卡图”当成“必须有特殊卡框”的前提
 - 从抽牌堆/弃牌堆/手牌选择牌时，优先找原版同类卡做参照；例如从抽牌堆选牌进手优先对照 `sts104` 中的 `SecretTechnique`
 - 卡牌效果、费用、稀有度、种类以 `docs/yuki-card-table.xlsx` 为第一权威来源；若旧 md、旧代码、旧对话记录与表格冲突，以当前 xlsx 为准
 - 当前默认占位资源约定为：卡牌缺图回退到 `YukiMod/images/card_portraits/card.png` 与 `big/card.png`，力量缺图回退到 `YukiMod/images/powers/power.png` 与 `big/power.png`，遗物缺图回退到 `YukiMod/images/relics/relic.png`、`relic_outline.png` 与 `big/relic.png`

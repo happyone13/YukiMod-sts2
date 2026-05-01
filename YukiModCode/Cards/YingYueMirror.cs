@@ -13,6 +13,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class YingYueMirror() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/ying_yue_mirror_dynamic.tscn";
+
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
 

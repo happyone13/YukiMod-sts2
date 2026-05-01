@@ -21,6 +21,8 @@ namespace YukiMod.YukiModCode.Cards;
 public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/mi_huo_yi_ji_dynamic.tscn";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];

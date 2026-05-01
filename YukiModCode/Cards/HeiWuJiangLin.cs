@@ -14,6 +14,8 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiWuJiangLin() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/hei_wu_jiang_lin_dynamic.tscn";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<BlackCloudStancePower>()];

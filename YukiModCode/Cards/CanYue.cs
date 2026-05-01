@@ -13,6 +13,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class CanYue() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/can_yue_dynamic.tscn";
+
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
 

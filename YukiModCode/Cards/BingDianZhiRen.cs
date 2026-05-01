@@ -17,6 +17,8 @@ namespace YukiMod.YukiModCode.Cards;
 public class BingDianZhiRen() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/bing_dian_zhi_ren_dynamic.tscn";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];

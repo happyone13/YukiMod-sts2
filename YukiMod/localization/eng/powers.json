@@ -1,4 +1,4 @@
-{
+﻿{
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.title": "Black Cloud Stance",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.description": "While in [gold]Black Cloud Stance[/gold], playing a non-[gold]Attack[/gold] exits it unless an effect says to keep it.",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.smartDescription": "While in [gold]Black Cloud Stance[/gold], playing a non-[gold]Attack[/gold] exits it unless an effect says to keep it.",
@@ -134,5 +134,13 @@
     "YUKIMOD-YUE_POWER.smartDescription": "You have [gold]Moon[/gold].\nYour [gold]Snow[/gold] and [gold]Flower[/gold] make your [gold]Moonshadow[/gold] in hand gain +2 damage.\nIf you have [gold]Snow[/gold], [gold]Moon[/gold], and [gold]Flower[/gold], remove all 3 and add 1 [gold]Iai[/gold] to your [gold]Hand[/gold].",
     "YUKIMOD-SHANG_XIAN_ZHI_YUE_POWER.title": "First Quarter Moon",
     "YUKIMOD-SHANG_XIAN_ZHI_YUE_POWER.description": "Whenever a single hit from a played [gold]Moonshadow[/gold] deals at least {Amount} damage, add an [gold]Iai[/gold] to your [gold]Hand[/gold].",
-    "YUKIMOD-SHANG_XIAN_ZHI_YUE_POWER.smartDescription": "Whenever a single hit from a played [gold]Moonshadow[/gold] deals at least {Amount} damage, add an [gold]Iai[/gold] to your [gold]Hand[/gold]."
+    "YUKIMOD-SHANG_XIAN_ZHI_YUE_POWER.smartDescription": "Whenever a single hit from a played [gold]Moonshadow[/gold] deals at least {Amount} damage, add an [gold]Iai[/gold] to your [gold]Hand[/gold].",
+    "YUKIMOD-YUE_DU_POWER.title": "Moon Reading",
+    "YUKIMOD-YUE_DU_POWER.description": "This turn, whenever your attacks hit, your [gold]Moonshadow[/gold] in hand gain {Amount:diff()} damage.",
+    "YUKIMOD-YUE_DU_POWER.smartDescription": "This turn, whenever your attacks hit, your [gold]Moonshadow[/gold] in hand gain {Amount:diff()} damage.",
+    "YUKIMOD-YE_HUO_MARKED_POWER.title": "Hellfire",
+    "YUKIMOD-YE_HUO_MARKED_POWER.description": "Whenever you attack this creature, your [gold]Moonshadow[/gold] in hand gain {Amount} damage.",
+    "YUKIMOD-YE_HUO_MARKED_POWER.smartDescription": "Whenever you attack this creature, your [gold]Moonshadow[/gold] in hand gain {Amount} damage."
 }
+
+

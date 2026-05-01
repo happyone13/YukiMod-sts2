@@ -199,4 +199,11 @@
     "YUKIMOD-GAO_SU_ZHAN_JI.description": "对所有敌人造成{Damage:diff()}点伤害。\n[gold]灵感[/gold]：抽{Cards}张牌。",
     "YUKIMOD-LING_DU.title": "零度",
     "YUKIMOD-LING_DU.description": "当你触发{Threshold:diff()}次[gold]灵感[/gold]时，将1张[gold]居合[/gold]加入手中。"
+    ,
+    "YUKIMOD-YUE_DU.title": "月读",
+    "YUKIMOD-YUE_DU.description": "本回合内，你的攻击命中时，手中[gold]月影[/gold]伤害+{MoonshadowDamage:diff()}。",
+    "YUKIMOD-YE_HUO.title": "业火",
+    "YUKIMOD-YE_HUO.description": "造成{Damage:diff()}点伤害。\n[gold]固有[/gold]。\n每当你攻击该目标时，手中[gold]月影[/gold]伤害+1。",
+    "YUKIMOD-YAO_GUAI_SHOU_LIE.title": "妖怪狩猎",
+    "YUKIMOD-YAO_GUAI_SHOU_LIE.description": "造成{Damage:diff()}点伤害2次。\n[gold]凝聚[/gold]1。"
 }

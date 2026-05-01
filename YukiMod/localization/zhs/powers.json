@@ -126,4 +126,11 @@
     "YUKIMOD-SHANG_XIAN_ZHI_YUE_POWER.title": "上弦之月",
     "YUKIMOD-SHANG_XIAN_ZHI_YUE_POWER.description": "当你打出的[gold]月影[/gold]单次命中伤害达到{Amount}或更高时，将1张[gold]居合[/gold]加入手中。",
     "YUKIMOD-SHANG_XIAN_ZHI_YUE_POWER.smartDescription": "当你打出的[gold]月影[/gold]单次命中伤害达到{Amount}或更高时，将1张[gold]居合[/gold]加入手中。"
+    ,
+    "YUKIMOD-YUE_DU_POWER.title": "月读",
+    "YUKIMOD-YUE_DU_POWER.description": "本回合内，你的攻击命中时，手中[gold]月影[/gold]伤害+{Amount:diff()}。",
+    "YUKIMOD-YUE_DU_POWER.smartDescription": "本回合内，你的攻击命中时，手中[gold]月影[/gold]伤害+{Amount:diff()}。",
+    "YUKIMOD-YE_HUO_MARKED_POWER.title": "业火",
+    "YUKIMOD-YE_HUO_MARKED_POWER.description": "每当你攻击该目标时，手中[gold]月影[/gold]伤害+{Amount}。",
+    "YUKIMOD-YE_HUO_MARKED_POWER.smartDescription": "每当你攻击该目标时，手中[gold]月影[/gold]伤害+{Amount}。"
 }

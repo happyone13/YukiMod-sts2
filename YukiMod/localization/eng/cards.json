@@ -1,4 +1,4 @@
-{
+﻿{
     "YUKIMOD-STRIKE_YUKI.title": "Strike",
     "YUKIMOD-STRIKE_YUKI.description": "Deal {Damage:diff()} damage.",
     "YUKIMOD-FORESEE.title": "Foresee",
@@ -198,5 +198,13 @@
     "YUKIMOD-GAO_SU_ZHAN_JI.title": "High-Speed Slash",
     "YUKIMOD-GAO_SU_ZHAN_JI.description": "Deal {Damage:diff()} damage to all enemies.\n[gold]Inspiration[/gold]: Draw {Cards} cards.",
     "YUKIMOD-LING_DU.title": "Absolute Zero",
-    "YUKIMOD-LING_DU.description": "Whenever you trigger [gold]Inspiration[/gold] {Threshold:diff()} times, add an [gold]Iai[/gold] to your [gold]Hand[/gold]."
+    "YUKIMOD-LING_DU.description": "Whenever you trigger [gold]Inspiration[/gold] {Threshold:diff()} times, add an [gold]Iai[/gold] to your [gold]Hand[/gold].",
+    "YUKIMOD-YUE_DU.title": "Moon Reading",
+    "YUKIMOD-YUE_DU.description": "This turn, whenever your attacks hit, your [gold]Moonshadow[/gold] in hand gain {MoonshadowDamage:diff()} damage.",
+    "YUKIMOD-YE_HUO.title": "Hellfire",
+    "YUKIMOD-YE_HUO.description": "Deal {Damage:diff()} damage.\n[gold]Innate[/gold].\nWhenever you attack this target, your [gold]Moonshadow[/gold] in hand gain +1 damage.",
+    "YUKIMOD-YAO_GUAI_SHOU_LIE.title": "Youkai Hunt",
+    "YUKIMOD-YAO_GUAI_SHOU_LIE.description": "Deal {Damage:diff()} damage twice.\n[gold]Converge[/gold] 1."
 }
+
+

@@ -16,6 +16,9 @@ public class YueGuang() : YukiModCard(1, CardType.Skill, CardRarity.Common, Targ
 {
     private const string MoonshadowDamageKey = "MoonshadowDamage";
 
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/yue_guang_dynamic.tscn";
+
     public override YukiCardSchool School => YukiCardSchool.Moonshadow;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

@@ -12,10 +12,21 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
+public enum SpinePortraitSlot
+{
+    Normal,
+    Ancient
+}
+
 [Pool(typeof(YukiModCardPool))]
 public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, TargetType target) :
-    CustomCardModel(cost, type, rarity, target)
+    CustomCardModel(cost, type, rarity, target), IYukiCardVisualProfile
 {
+    public virtual bool UseCustomFrame => true;
+    public virtual bool UseDynamicPortrait => false;
+    public virtual string? CustomSpinePortraitScenePath => null;
+    public virtual SpinePortraitSlot CustomSpinePortraitSlot => SpinePortraitSlot.Normal;
+
     public virtual YukiCardSchool School => YukiCardSchool.Other;
     public virtual bool HasOwnInspirationEffect => false;
     public virtual bool IsRealMoonshadow => false;

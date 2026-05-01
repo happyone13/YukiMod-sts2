@@ -18,6 +18,8 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunXinFa() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool UseDynamicPortrait => true;
+    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/hei_yun_xin_fa_dynamic.tscn";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<BlackCloudStancePower>()];

@@ -56,6 +56,8 @@
 
 - `YukiMod/scenes`
   - 已有友纪场景骨架和商店场景路径
+- `YukiMod/images/cards/chaos_frame` 与 `YukiMod/images/cards/card_effects`
+  - 已接入一套可复用的 Yuki 卡框资源，默认卡牌可直接走静态图 + 统一框体，动态肖像仅对个别卡按需开启
 - `YukiMod/images/charui`
   - 仍保留多张 `meilin` 命名的模板图片
 - `YukiMod/localization`
