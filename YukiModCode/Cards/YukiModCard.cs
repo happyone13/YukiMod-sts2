@@ -23,7 +23,7 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
     CustomCardModel(cost, type, rarity, target)
 {
     public virtual bool UseDynamicPortrait => false;
-    public virtual bool UseCustomFrame => UseDynamicPortrait;
+    public virtual bool UseCustomFrame => true;
     public virtual string? CustomSpinePortraitScenePath => null;
     public virtual SpinePortraitSlot CustomSpinePortraitSlot => SpinePortraitSlot.Ancient;
 

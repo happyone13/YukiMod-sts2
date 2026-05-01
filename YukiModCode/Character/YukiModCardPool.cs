@@ -3,7 +3,6 @@ using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Models;
 using YukiMod.YukiModCode.Cards;
-using YukiMod.YukiModCode.Config;
 using YukiMod.YukiModCode.Patches;
 
 namespace YukiMod.YukiModCode.Character;
@@ -23,9 +22,6 @@ public class YukiModCardPool : CustomCardPoolModel
 
     public override Texture2D? CustomFrame(CustomCardModel card)
     {
-        if (!YukiModConfig.UseYukiCardDynamicPortraits)
-            return null;
-
         if (card is YukiModCard { UseCustomFrame: true } or YukiModTokenCard { UseCustomFrame: true })
             return _customFrameTexture ??= GD.Load<Texture2D>(YukiCardFramePaths.CustomFrameTexturePath);
 
