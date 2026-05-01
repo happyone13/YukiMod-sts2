@@ -6,8 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bjsmtpro7aqre" path="res://YukiMod/images/cards/card_effects/card_frame_spark.png" id="6_spark"]
 [ext_resource type="FontFile" uid="uid://b0mn1fm7anxvw" path="res://YukiMod/images/cards/card_effects/card_normal.fnt" id="9_t21jw"]
 [ext_resource type="SpineSkeletonDataResource" uid="uid://dc6wlhgkl3a03" path="res://YukiMod/spine/card/unique_1057_03.tres" id="10_spine"]
-[ext_resource type="Script" uid="uid://ulv7r824rm8i" path="res://YukiModCode/Nodes/SpineAutoPlayer.cs" id="11_player"]
-[ext_resource type="Texture2D" uid="uid://dnlnfh5aatgdn" path="res://YukiMod/images/cards/card_effects/card_ego_basic.png" id="12_ego"]
+[ext_resource type="Texture2D" uid="uid://dnlnfh5aatgdn" path="res://YukiMod/images/cards/card_effects/card_ego_narcissism.png" id="12_ego"]
 [ext_resource type="Texture2D" uid="uid://d04l72ca2vorv" path="res://YukiMod/images/cards/card_effects/energy_line_default.png" id="13_energy"]
 [ext_resource type="Texture2D" uid="uid://dxd6stfuold37" path="res://YukiMod/images/cards/card_effects/icon_category_card_atk.png" id="14_category"]
 [ext_resource type="Texture2D" uid="uid://cb8gl2peajoes" path="res://YukiMod/images/cards/card_effects/icon_card_battle_expand_default.png" id="15_upgrade"]
@@ -70,9 +69,6 @@ preview_frame = false
 preview_time = 0.0
 position = Vector2(279, 398)
 scale = Vector2(1.44, 1.44)
-
-[node name="SpineAutoPlayer" type="Node" parent="CardContainer/DynamicPortraitViewport/SubViewport/SpineSprite"]
-script = ExtResource("11_player")
 
 [node name="DescriptionMask" type="TextureRect" parent="CardContainer"]
 z_index = -1

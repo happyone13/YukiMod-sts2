@@ -60,6 +60,8 @@ public static class YukiCardDynamicPortraitEnterTreePatch
 internal static class YukiCardDynamicPortraitPatch
 {
     public const string OverlayNodeName = "YukiDynamicPortraitOverlay";
+    private const string SpineSpriteNodeName = "SpineSprite";
+    private const string DefaultSpineAnimationName = "animation";
 
     private static readonly FieldInfo? PortraitField =
         typeof(NCard).GetField("_portrait", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -125,6 +127,7 @@ internal static class YukiCardDynamicPortraitPatch
         {
             Name = OverlayNodeName,
             MouseFilter = Control.MouseFilterEnum.Ignore,
+            ZIndex = -100,
             AnchorLeft = 0f,
             AnchorTop = 0f,
             AnchorRight = 1f,
@@ -139,7 +142,10 @@ internal static class YukiCardDynamicPortraitPatch
         var attachedContainer = viewportContainer ?? CreateViewportContainer(subViewport);
         overlay.AddChild(attachedContainer);
         portrait.AddChild(overlay);
-        portrait.Texture = null;
+        portrait.MoveChild(overlay, 0);
+        SyncOverlayLayout(cardNode, portrait, overlay, attachedContainer);
+        TryStartSpineAnimation(attachedContainer);
+        portrait.Hide();
         sceneInstance.QueueFree();
     }
 
@@ -178,6 +184,41 @@ internal static class YukiCardDynamicPortraitPatch
         }
     }
 
+    private static void SyncOverlayLayout(NCard cardNode, TextureRect portrait, Control overlay, SubViewportContainer viewportContainer)
+    {
+        if (!GodotObject.IsInstanceValid(cardNode) ||
+            !GodotObject.IsInstanceValid(portrait) ||
+            !GodotObject.IsInstanceValid(overlay) ||
+            !GodotObject.IsInstanceValid(viewportContainer))
+        {
+            return;
+        }
+
+        overlay.Position = Vector2.Zero;
+        overlay.Size = portrait.Size;
+        overlay.Scale = Vector2.One;
+        overlay.Rotation = 0f;
+        overlay.PivotOffset = Vector2.Zero;
+
+        viewportContainer.Position = Vector2.Zero;
+        viewportContainer.Size = overlay.Size;
+        viewportContainer.Scale = Vector2.One;
+        viewportContainer.Rotation = 0f;
+        viewportContainer.PivotOffset = Vector2.Zero;
+    }
+
+    private static void TryStartSpineAnimation(Node root)
+    {
+        if (root.FindChild(SpineSpriteNodeName, true, false) is not GodotObject spineSprite)
+            return;
+
+        var animationState = GetAnimationState(spineSprite);
+        if (animationState == null)
+            return;
+
+        TrySetAnimation(animationState, DefaultSpineAnimationName, true, 0);
+    }
+
     private static TextureRect? GetTargetPortrait(NCard cardNode, SpinePortraitSlot slot)
     {
         return slot == SpinePortraitSlot.Ancient
@@ -210,12 +251,16 @@ internal static class YukiCardDynamicPortraitPatch
         {
             RemoveOverlayNode(portrait);
             RestorePortraitTexture(cardNode, portrait);
+            portrait.ClipContents = false;
+            portrait.Show();
         }
 
         if (AncientPortraitField?.GetValue(cardNode) is TextureRect ancientPortrait)
         {
             RemoveOverlayNode(ancientPortrait);
             RestorePortraitTexture(cardNode, ancientPortrait);
+            ancientPortrait.ClipContents = false;
+            ancientPortrait.Show();
         }
     }
 
@@ -269,6 +314,44 @@ internal static class YukiCardDynamicPortraitPatch
         }
 
         return scene.Instantiate<Node>();
+    }
+
+    private static GodotObject? GetAnimationState(GodotObject spineSprite)
+    {
+        if (TryCall(spineSprite, "get_animation_state", out Variant snakeResult))
+            return snakeResult.AsGodotObject();
+
+        if (TryCall(spineSprite, "GetAnimationState", out Variant pascalResult))
+            return pascalResult.AsGodotObject();
+
+        return null;
+    }
+
+    private static bool TrySetAnimation(GodotObject animationState, string animation, bool loop, int track)
+    {
+        return TryCall(animationState, "set_animation", animation, loop, track) ||
+               TryCall(animationState, "SetAnimation", animation, loop, track);
+    }
+
+    private static bool TryCall(GodotObject obj, string methodName, params Variant[] args)
+    {
+        if (!obj.HasMethod(methodName))
+            return false;
+
+        args ??= [];
+        obj.Callv(methodName, new Godot.Collections.Array(args));
+        return true;
+    }
+
+    private static bool TryCall(GodotObject obj, string methodName, out Variant result, params Variant[] args)
+    {
+        result = default;
+        if (!obj.HasMethod(methodName))
+            return false;
+
+        args ??= [];
+        result = obj.Callv(methodName, new Godot.Collections.Array(args));
+        return true;
     }
 
     private static T? FindNodeByType<T>(Node root) where T : Node

@@ -22,10 +22,9 @@ public enum SpinePortraitSlot
 public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, TargetType target) :
     CustomCardModel(cost, type, rarity, target), IYukiCardVisualProfile
 {
-    public virtual bool UseCustomFrame => true;
     public virtual bool UseDynamicPortrait => false;
     public virtual string? CustomSpinePortraitScenePath => null;
-    public virtual SpinePortraitSlot CustomSpinePortraitSlot => SpinePortraitSlot.Normal;
+    public virtual SpinePortraitSlot CustomSpinePortraitSlot => SpinePortraitSlot.Ancient;
 
     public virtual YukiCardSchool School => YukiCardSchool.Other;
     public virtual bool HasOwnInspirationEffect => false;
@@ -37,9 +36,8 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
     public decimal MoonshadowBlackCloudDamageMultiplierBonus { get; set; }
 
     protected string IdPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePathOrDefault();
-    protected string IdBigPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigCardImagePathOrDefault();
 
-    public override string CustomPortraitPath => IdBigPortraitPath;
+    public override string CustomPortraitPath => IdPortraitPath;
     public override string PortraitPath => IdPortraitPath;
     public override string BetaPortraitPath => $"beta/{Id.Entry.ToLowerInvariant()}.png".CardImagePath();
 

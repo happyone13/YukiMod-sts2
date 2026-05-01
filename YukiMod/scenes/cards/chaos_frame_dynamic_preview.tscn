@@ -8,7 +8,6 @@
 [ext_resource type="Material" path="res://YukiMod/materials/cards/frames/card_frame_chaos_mat.tres" id="6_frame_mat"]
 [ext_resource type="Material" path="res://YukiMod/materials/cards/banners/card_banner_chaos_mat.tres" id="7_banner_mat"]
 [ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/card/unique_1057_03.tres" id="8_spine"]
-[ext_resource type="Script" path="res://YukiModCode/Nodes/SpineAutoPlayer.cs" id="9_player"]
 
 [node name="ChaosFrameDynamicPreview" type="Control"]
 layout_mode = 3
@@ -80,11 +79,6 @@ preview_frame = false
 preview_time = 0.0
 position = Vector2(279, 398)
 scale = Vector2(1.44, 1.44)
-
-[node name="SpineAutoPlayer" type="Node" parent="CardContainer/DynamicPortraitViewport/SubViewport/SpineSprite"]
-script = ExtResource("9_player")
-AnimationName = "animation"
-Loop = true
 
 [node name="AncientHighlight" type="TextureRect" parent="CardContainer"]
 modulate = Color(1, 1, 1, 0.753)

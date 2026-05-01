@@ -1,7 +1,6 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/card/unique_1060_01.tres" id="1_spine"]
-[ext_resource type="Script" path="res://YukiModCode/Nodes/SpineAutoPlayer.cs" id="2_player"]
 
 [node name="XueYueDynamicPortrait" type="Node2D"]
 
@@ -36,6 +35,3 @@ preview_frame = false
 preview_time = 0.0
 position = Vector2(279, 398)
 scale = Vector2(1.44, 1.44)
-
-[node name="SpineAutoPlayer" type="Node" parent="ViewportContainer/SubViewport/SpineSprite"]
-script = ExtResource("2_player")
