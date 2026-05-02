@@ -106,7 +106,6 @@ public static class YukiCardCustomFramePatch
         Material? bannerMaterial = LoadResource<Material>(YukiCardFramePaths.BannerMaterialPath);
 
         CaptureOriginalState(cardNode!);
-        bool hasActiveSpineOverlay = YukiCardDynamicPortraitPatch.HasActiveSpineOverlay(cardNode);
 
         frame?.Hide();
         portrait?.Hide();
@@ -116,8 +115,7 @@ public static class YukiCardCustomFramePatch
         if (ancientPortrait != null)
         {
             ancientPortrait.Show();
-            if (!hasActiveSpineOverlay)
-                ancientPortrait.Texture = cardNode!.Model?.Portrait;
+            ancientPortrait.Texture = cardNode!.Model?.Portrait;
         }
 
         ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);

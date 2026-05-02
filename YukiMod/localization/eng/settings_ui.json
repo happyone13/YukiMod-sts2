@@ -1,6 +1,3 @@
-{
-  "YUKIMOD.mod_title": "YukiMod",
-  "YUKIMOD-CARD_VISUALS.title": "Card Visuals",
-  "YUKIMOD-USE_YUKI_CARD_DYNAMIC_PORTRAITS.title": "Enable Animated Card Art",
-  "YUKIMOD-USE_YUKI_CARD_DYNAMIC_PORTRAITS.hover.desc": "On by default. When enabled, eligible Yuki cards use the animated portrait and custom frame. When disabled, they fall back to the static version."
+﻿{
+  "YUKIMOD.mod_title": "YukiMod"
 }

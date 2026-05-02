@@ -21,8 +21,6 @@ public class TouXiZhan() : YukiModCard(2, CardType.Attack, CardRarity.Common, Ta
 
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
-    public override bool UseDynamicPortrait => true;
-    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/tou_xi_zhan_dynamic.tscn";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];

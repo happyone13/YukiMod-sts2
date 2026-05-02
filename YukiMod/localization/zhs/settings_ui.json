@@ -1,6 +1,3 @@
-{
-  "YUKIMOD.mod_title": "友纪 Mod",
-  "YUKIMOD-CARD_VISUALS.title": "卡牌显示",
-  "YUKIMOD-USE_YUKI_CARD_DYNAMIC_PORTRAITS.title": "启用动图卡面",
-  "YUKIMOD-USE_YUKI_CARD_DYNAMIC_PORTRAITS.hover.desc": "默认开启。开启后，符合条件的友纪卡牌会使用动图立绘和自定义卡框；关闭后回退为静态版本。"
+﻿{
+  "YUKIMOD.mod_title": "友纪 Mod"
 }

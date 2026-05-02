@@ -14,9 +14,6 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class XueYue() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    public override bool UseDynamicPortrait => true;
-    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/xue_yue_dynamic.tscn";
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromCard<YueYing>()];
 

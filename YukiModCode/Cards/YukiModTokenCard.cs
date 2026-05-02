@@ -16,10 +16,7 @@ namespace YukiMod.YukiModCode.Cards;
 public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarity, TargetType target) :
     CustomCardModel(cost, type, rarity, target)
 {
-    public virtual bool UseDynamicPortrait => false;
     public virtual bool UseCustomFrame => true;
-    public virtual string? CustomSpinePortraitScenePath => null;
-    public virtual SpinePortraitSlot CustomSpinePortraitSlot => SpinePortraitSlot.Ancient;
 
     public virtual YukiCardSchool School => YukiCardSchool.Other;
     public virtual bool HasOwnInspirationEffect => false;

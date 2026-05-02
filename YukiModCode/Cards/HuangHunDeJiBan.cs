@@ -12,8 +12,6 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class HuangHunDeJiBan() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
-    public override bool UseDynamicPortrait => true;
-    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/huang_hun_de_ji_ban_dynamic.tscn";
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Innate];

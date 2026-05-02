@@ -17,8 +17,6 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class YaoGuaiShouLie() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    public override bool UseDynamicPortrait => true;
-    public override string? CustomSpinePortraitScenePath => "res://YukiMod/scenes/cards/yao_guai_shou_lie_dynamic.tscn";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromNingJu()];
