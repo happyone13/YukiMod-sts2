@@ -45,10 +45,10 @@ public class YukiMod : PlaceholderCharacterModel
     public override RelicPoolModel RelicPool => ModelDb.RelicPool<YukiModRelicPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<YukiModPotionPool>();
 
-    public override string CustomIconTexturePath => "res://YukiMod/images/charui/character_icon_meilin_name.png";
-    public override string CustomCharacterSelectIconPath => "res://YukiMod/images/charui/char_select_char_meilin.png";
+    public override string CustomIconTexturePath => "res://YukiMod/images/charui/character_icon_yuki_name.png";
+    public override string CustomCharacterSelectIconPath => "res://YukiMod/images/charui/char_select_char_yuki.png";
     public override string CustomCharacterSelectLockedIconPath => "res://YukiMod/images/charui/char_select_char_name_locked.png";
-    public override string CustomMapMarkerPath => "res://YukiMod/images/charui/map_marker_meilin_name.png";
+    public override string CustomMapMarkerPath => "res://YukiMod/images/charui/map_marker_yuki_name.png";
     public override Color EnergyLabelOutlineColor => Color.Color8(120, 190, 185);
 
     public override string CustomIconPath => "res://YukiMod/scenes/yuki_icon.tscn";

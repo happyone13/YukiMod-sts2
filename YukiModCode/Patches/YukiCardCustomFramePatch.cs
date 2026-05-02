@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using YukiMod.YukiModCode.Cards;
+using YukiMod.YukiModCode.Config;
 
 namespace YukiMod.YukiModCode.Patches;
 
@@ -81,6 +82,12 @@ public static class YukiCardCustomFramePatch
     {
         YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
 
+        if (!YukiModConfig.UseDynamicCardPortraits)
+        {
+            RemoveChaosEffects(cardNode, restoreOriginalState: true);
+            return;
+        }
+
         if (TryGetCustomFrameCard(cardNode, out _))
             return;
 
@@ -89,9 +96,16 @@ public static class YukiCardCustomFramePatch
 
     public static void Apply(NCard? cardNode)
     {
+        if (!YukiModConfig.UseDynamicCardPortraits)
+        {
+            RemoveChaosEffects(cardNode, restoreOriginalState: true);
+            YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
+            return;
+        }
+
         if (!TryGetCustomFrameCard(cardNode, out CardModel? cardModel))
         {
-            RemoveChaosEffects(cardNode, restoreOriginalState: false);
+            RemoveChaosEffects(cardNode, restoreOriginalState: true);
             YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
             return;
         }
@@ -222,7 +236,7 @@ public static class YukiCardCustomFramePatch
         {
             ApplyTemplateLayout(control, "EgoBadge", EgoBadgeLayout);
             if (control is TextureRect textureRect)
-                ApplyTextureRect(textureRect, $"{ChaosEffectsBasePath}card_ego_love.png", material: null, show: true);
+                ApplyTextureRect(textureRect, YukiCardFramePaths.EgoBadgeTexturePath, material: null, show: true);
         });
 
         EnsureTemplateOverlay(cardNode, RarityBaseNodeName, "RarityBase", () => CreateTextureOverlay(RarityBaseLayout), control =>

@@ -27,7 +27,7 @@ public class NaDao() : YukiModTokenCard(1, CardType.Attack, CardRarity.Token, Ta
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [.. YukiHoverTipFactory.FromIai(), YukiHoverTipFactory.FromBlackCloud()];
+        [YukiHoverTipFactory.FromBlackCloud()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(5m, ValueProp.Move)];

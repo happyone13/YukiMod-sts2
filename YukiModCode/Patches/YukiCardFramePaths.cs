@@ -4,7 +4,8 @@ namespace YukiMod.YukiModCode.Patches;
 
 public static class YukiCardFramePaths
 {
-    public const string CustomFrameTexturePath = "res://YukiMod/images/cards/chaos_frame/card_frame_chaos_s.tres";
+    public const string CustomFrameTexturePath = "res://YukiMod/images/cards/card_effects/card_ego_narcissism.png";
+    public const string EgoBadgeTexturePath = "res://YukiMod/images/cards/card_effects/card_ego_narcissism.png";
     public const string FrameMaterialPath = "res://YukiMod/materials/cards/frames/card_frame_chaos_mat.tres";
     public const string BannerMaterialPath = "res://YukiMod/materials/cards/banners/card_banner_chaos_mat.tres";
     public const string AncientBorderTexturePath = "res://YukiMod/images/cards/chaos_frame/ancient_card_border.tres";

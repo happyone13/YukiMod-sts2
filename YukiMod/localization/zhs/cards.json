@@ -176,7 +176,7 @@
     "YUKIMOD-CHEN_SI.description": "当[gold]灵感[/gold]触发时，获得{Block:diff()}点格挡。",
     "YUKIMOD-BA_DAO_ZHAN.title": "拔刀斩",
     "YUKIMOD-BA_DAO_ZHAN.description": "抽1张牌并打出。\n[gold]灵感[/gold]：这张牌费用减少1。",
-    "YUKIMOD-HEI_YUN_MI_JI_HUI_ZHUAN.title": "黑云秘技：回转",
+    "YUKIMOD-HEI_YUN_MI_JI_HUI_ZHUAN.title": "黑云秘法：回转",
     "YUKIMOD-HEI_YUN_MI_JI_HUI_ZHUAN.description": "获得{Block:diff()}点格挡。\n抽1张牌。\n[gold]灵感[/gold]：进入[gold]黑云姿态[/gold]。",
     "YUKIMOD-PO_BING_ZHAN.title": "破冰斩",
     "YUKIMOD-PO_BING_ZHAN.description": "对所有敌人造成{Damage:diff()}点伤害。\n[gold]灵感[/gold]：额外攻击1次。",
