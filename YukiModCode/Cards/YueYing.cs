@@ -22,6 +22,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(TokenCardPool))]
 public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/yue_ying_dynamic.tscn";
+
     private const string CurrentDamageKey = "CurrentDamage";
 
     public override YukiCardSchool School => YukiCardSchool.Moonshadow;

@@ -17,6 +17,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class TouXiZhan() : YukiModCard(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/tou_xi_zhan_dynamic.tscn";
+
     private const string CostDownKey = "CostDown";
 
     public override YukiCardSchool School => YukiCardSchool.Inspiration;

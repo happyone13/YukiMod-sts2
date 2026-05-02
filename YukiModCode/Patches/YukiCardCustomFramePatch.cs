@@ -79,6 +79,8 @@ public static class YukiCardCustomFramePatch
 
     public static void PrepareForBaseVisuals(NCard? cardNode)
     {
+        YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
+
         if (TryGetCustomFrameCard(cardNode, out _))
             return;
 
@@ -90,6 +92,7 @@ public static class YukiCardCustomFramePatch
         if (!TryGetCustomFrameCard(cardNode, out CardModel? cardModel))
         {
             RemoveChaosEffects(cardNode, restoreOriginalState: false);
+            YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
             return;
         }
 
@@ -131,6 +134,7 @@ public static class YukiCardCustomFramePatch
         }
 
         ApplyChaosEffects(cardNode!, cardModel);
+        YukiCardSpinePortraitPatch.Apply(cardNode);
     }
 
     private static bool TryGetCustomFrameCard(NCard? cardNode, out CardModel? cardModel)

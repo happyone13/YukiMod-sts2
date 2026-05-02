@@ -17,6 +17,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class HeiYunXinFa() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/hei_yun_xin_fa_dynamic.tscn";
+
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

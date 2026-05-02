@@ -18,6 +18,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/hei_yun_ao_yi_hei_wu_dynamic.tscn";
+
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

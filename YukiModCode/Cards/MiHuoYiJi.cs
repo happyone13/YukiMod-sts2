@@ -20,6 +20,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/mi_huo_yi_ji_dynamic.tscn";
+
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

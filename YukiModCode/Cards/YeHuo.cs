@@ -16,6 +16,8 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class YeHuo() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/ye_huo_dynamic.tscn";
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Innate];

@@ -16,6 +16,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class ZhaoJia() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/zhao_jia_dynamic.tscn";
+
     public override bool GainsBlock => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

@@ -14,11 +14,14 @@ namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
 public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarity, TargetType target) :
-    CustomCardModel(cost, type, rarity, target)
+    CustomCardModel(cost, type, rarity, target),
+    IYukiCardVisualProfile
 {
     public virtual bool UseCustomFrame => true;
 
     public virtual YukiCardSchool School => YukiCardSchool.Other;
+    public virtual string? CustomSpinePortraitScenePath => null;
+    public virtual YukiSpinePortraitSlot CustomSpinePortraitSlot => YukiSpinePortraitSlot.Ancient;
     public virtual bool HasOwnInspirationEffect => false;
     public virtual bool IsRealMoonshadow => false;
     public virtual bool CountsAsMoonshadow => IsRealMoonshadow;

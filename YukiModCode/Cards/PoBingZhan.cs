@@ -16,6 +16,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 {
+    public override string? CustomSpinePortraitScenePath =>
+        "res://YukiMod/scenes/cards/po_bing_zhan_dynamic.tscn";
+
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
 
