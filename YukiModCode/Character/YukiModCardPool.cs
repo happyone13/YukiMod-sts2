@@ -24,9 +24,6 @@ public class YukiModCardPool : CustomCardPoolModel
 
     public override Texture2D? CustomFrame(CustomCardModel card)
     {
-        if (!YukiModConfig.UseDynamicCardPortraits)
-            return null;
-
         if (card is YukiModCard { UseCustomFrame: true } or YukiModTokenCard { UseCustomFrame: true })
         {
             string texturePath = YukiCardFramePaths.GetCustomFrameTexturePath(card.Rarity);

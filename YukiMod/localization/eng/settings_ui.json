@@ -1,3 +1,7 @@
-﻿{
-  "YUKIMOD.mod_title": "YukiMod"
+{
+  "YUKIMOD.mod_title": "YukiMod",
+  "YUKIMOD-CARD_VISUALS.title": "Card Visuals",
+  "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.title": "Use Dynamic Card Portraits",
+  "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.hover.title": "Dynamic Card Portraits",
+  "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.hover.desc": "Enable Spine animated portraits on supported cards. Turning this off keeps Yuki's custom card frame and uses static portraits instead."
 }

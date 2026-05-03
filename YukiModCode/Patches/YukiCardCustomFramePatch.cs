@@ -88,12 +88,6 @@ public static class YukiCardCustomFramePatch
 
         YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
 
-        if (!YukiModConfig.UseDynamicCardPortraits)
-        {
-            RemoveChaosEffects(cardNode, restoreOriginalState: true);
-            return;
-        }
-
         if (TryGetCustomFrameCard(cardNode, out _))
             return;
 
@@ -104,13 +98,6 @@ public static class YukiCardCustomFramePatch
     {
         if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsNodeReady())
             return;
-
-        if (!YukiModConfig.UseDynamicCardPortraits)
-        {
-            RemoveChaosEffects(cardNode, restoreOriginalState: true);
-            YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
-            return;
-        }
 
         if (!TryGetCustomFrameCard(cardNode, out CardModel? cardModel))
         {
@@ -131,7 +118,8 @@ public static class YukiCardCustomFramePatch
         var portraitCanvasGroup = Get<CanvasGroup>(PortraitCanvasGroupField, cardNode!);
         Material? frameMaterial = LoadResource<Material>(YukiCardFramePaths.FrameMaterialPath);
         Material? bannerMaterial = LoadResource<Material>(YukiCardFramePaths.BannerMaterialPath);
-        bool hasDynamicSpineScene = YukiCardSpinePortraitPatch.TryGetSpineScenePath(cardNode, out _);
+        bool hasDynamicSpineScene = YukiModConfig.UseDynamicCardPortraits &&
+                                    YukiCardSpinePortraitPatch.TryGetSpineScenePath(cardNode, out _);
         if (hasDynamicSpineScene)
             YukiCardSpinePortraitPatch.Apply(cardNode);
 
