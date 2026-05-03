@@ -246,10 +246,20 @@ public static class YukiCardCustomFramePatch
             ApplyTextureRect(energyIcon, $"{ChaosEffectsBasePath}energy_line_default.png", material: null, show: true);
 
         Get<Control>(TitleLabelField, cardNode)?.Show();
-        Get<Control>(EnergyLabelField, cardNode)?.Show();
         Get<Control>(DescriptionLabelField, cardNode)?.Show();
-        Get<Control>(TypeLabelField, cardNode)?.Show();
-        Get<Control>(TypePlaqueField, cardNode)?.Show();
+
+        var energyLabel = Get<Control>(EnergyLabelField, cardNode);
+        var typeLabel = Get<Control>(TypeLabelField, cardNode);
+        var typePlaque = Get<Control>(TypePlaqueField, cardNode);
+        if (energyLabel != null)
+            energyLabel.Hide();
+        if (typeLabel != null)
+            typeLabel.Hide();
+        if (typePlaque != null)
+            typePlaque.Hide();
+        RemoveNode(cardNode, CostTextNodeName);
+        RemoveNode(cardNode, CategoryTextNodeName);
+        RemoveNode(cardNode, CategoryIconNodeName);
 
         if (cardNode.Model is not IYukiCardVisualProfile profile)
         {

@@ -32,7 +32,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
     public override bool CountsAsMoonshadow => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Retain];
+        [CardKeyword.Retain, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(5m, ValueProp.Move)];
