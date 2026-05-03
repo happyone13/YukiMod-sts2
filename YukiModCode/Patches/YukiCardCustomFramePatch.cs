@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.UI;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using YukiMod.YukiModCode.Cards;
@@ -59,6 +60,8 @@ public static class YukiCardCustomFramePatch
         typeof(NCard).GetField("_ancientHighlight", BindingFlags.Instance | BindingFlags.NonPublic);
     private static readonly FieldInfo? AncientPortraitField =
         typeof(NCard).GetField("_ancientPortrait", BindingFlags.Instance | BindingFlags.NonPublic);
+    private static readonly FieldInfo? PortraitCanvasGroupField =
+        typeof(NCard).GetField("_portraitCanvasGroup", BindingFlags.Instance | BindingFlags.NonPublic);
     private static readonly FieldInfo? EnergyIconField =
         typeof(NCard).GetField("_energyIcon", BindingFlags.Instance | BindingFlags.NonPublic);
     private static readonly FieldInfo? EnergyLabelField =
@@ -80,6 +83,9 @@ public static class YukiCardCustomFramePatch
 
     public static void PrepareForBaseVisuals(NCard? cardNode)
     {
+        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsNodeReady())
+            return;
+
         YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
 
         if (!YukiModConfig.UseDynamicCardPortraits)
@@ -96,6 +102,9 @@ public static class YukiCardCustomFramePatch
 
     public static void Apply(NCard? cardNode)
     {
+        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsNodeReady())
+            return;
+
         if (!YukiModConfig.UseDynamicCardPortraits)
         {
             RemoveChaosEffects(cardNode, restoreOriginalState: true);
@@ -119,6 +128,7 @@ public static class YukiCardCustomFramePatch
         var ancientTextBg = Get<TextureRect>(AncientTextBgField, cardNode!);
         var ancientBanner = Get<Control>(AncientBannerField, cardNode!);
         var ancientHighlight = Get<TextureRect>(AncientHighlightField, cardNode!);
+        var portraitCanvasGroup = Get<CanvasGroup>(PortraitCanvasGroupField, cardNode!);
         Material? frameMaterial = LoadResource<Material>(YukiCardFramePaths.FrameMaterialPath);
         Material? bannerMaterial = LoadResource<Material>(YukiCardFramePaths.BannerMaterialPath);
         bool hasDynamicSpineScene = YukiCardSpinePortraitPatch.TryGetSpineScenePath(cardNode, out _);
@@ -139,6 +149,7 @@ public static class YukiCardCustomFramePatch
             ancientTextBg?.Hide();
             ancientBanner?.Hide();
             ancientHighlight?.Hide();
+            portraitCanvasGroup?.Show();
             return;
         }
 
@@ -173,6 +184,7 @@ public static class YukiCardCustomFramePatch
             ancientPortrait.Show();
             ancientPortrait.Texture = cardNode!.Model?.Portrait;
         }
+        portraitCanvasGroup?.Show();
 
         ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);
         ApplyTextureRect(ancientTextBg, YukiCardFramePaths.GetAncientTextBgTexturePath(cardModel!.Type), frameMaterial, show: true);
@@ -222,6 +234,7 @@ public static class YukiCardCustomFramePatch
             ancientPortrait.Show();
             ancientPortrait.Texture = cardNode.Model?.Portrait;
         }
+        Get<CanvasGroup>(PortraitCanvasGroupField, cardNode)?.Show();
         portraitBorder?.Hide();
         ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), bannerMaterial, show: true);
         ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);
@@ -309,14 +322,15 @@ public static class YukiCardCustomFramePatch
         ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), material: null, show: true);
         ApplyTextureRect(energyIcon, $"{ChaosEffectsBasePath}energy_line_default.png", material: null, show: true);
 
-        string energyText = GetControlText(energyLabel);
+        string energyText = GetDisplayEnergyText(cardNode, cardModel);
+        bool showEnergyText = ShouldShowEnergyText(cardNode, cardModel);
         if (energyLabel != null)
             energyLabel.Hide();
 
         EnsureTemplateOverlay(cardNode, CostTextNodeName, "CostText", () => CreateLabelOverlay(CostTextLayout), control =>
         {
             ApplyTemplateLayout(control, "CostText", CostTextLayout);
-            SetOverlayText(control, energyText, !string.IsNullOrWhiteSpace(energyText), energyLabel);
+            SetOverlayText(control, energyText, showEnergyText, energyLabel);
             BringToFront(control);
         });
 
@@ -326,7 +340,7 @@ public static class YukiCardCustomFramePatch
         if (typePlaque != null)
             typePlaque.Visible = false;
 
-        string typeText = GetControlText(typeLabel);
+        string typeText = GetDisplayTypeText(cardModel);
         if (typeLabel != null)
             typeLabel.Hide();
 
@@ -419,7 +433,7 @@ public static class YukiCardCustomFramePatch
         Func<Control?> fallbackCreate,
         Action<Control>? configure = null)
     {
-        Control? control = cardNode.GetNodeOrNull<Control>(runtimeNodeName);
+        Control? control = GetOverlayNode(cardNode, runtimeNodeName);
         if (control == null)
         {
             control = DuplicateTemplateNode(templateNodeName) ?? fallbackCreate();
@@ -552,7 +566,31 @@ public static class YukiCardCustomFramePatch
 
     private static void RemoveNode(Node parent, string nodeName)
     {
-        parent.GetNodeOrNull<Node>(nodeName)?.QueueFree();
+        DestroyNodeImmediately(parent.GetNodeOrNull<Node>(nodeName));
+    }
+
+    private static Control? GetOverlayNode(Node parent, string nodeName)
+    {
+        Control? control = parent.GetNodeOrNull<Control>(nodeName);
+        if (control == null)
+            return null;
+
+        if (!GodotObject.IsInstanceValid(control) || control.IsQueuedForDeletion())
+        {
+            DestroyNodeImmediately(control);
+            return null;
+        }
+
+        return control;
+    }
+
+    private static void DestroyNodeImmediately(Node? node)
+    {
+        if (node == null || !GodotObject.IsInstanceValid(node))
+            return;
+
+        node.GetParent()?.RemoveChild(node);
+        node.Free();
     }
 
     private static void CaptureOriginalState(NCard cardNode)
@@ -763,8 +801,36 @@ public static class YukiCardCustomFramePatch
         {
             Label label => label.Text,
             RichTextLabel richTextLabel => richTextLabel.Text,
-            _ => string.Empty
+            _ => (string?)control?.Get("text") ?? string.Empty
         };
+    }
+
+    private static string GetDisplayEnergyText(NCard cardNode, CardModel cardModel)
+    {
+        if (cardNode.Visibility != ModelVisibility.Visible)
+            return "?";
+
+        if (cardModel.EnergyCost.CostsX)
+            return "X";
+
+        int withModifiers = cardModel.EnergyCost.GetWithModifiers(CostModifiers.All);
+        return withModifiers >= 0 ? withModifiers.ToString() : string.Empty;
+    }
+
+    private static bool ShouldShowEnergyText(NCard cardNode, CardModel cardModel)
+    {
+        if (cardNode.Visibility != ModelVisibility.Visible)
+            return true;
+
+        if (cardModel.EnergyCost.CostsX)
+            return true;
+
+        return cardModel.EnergyCost.GetWithModifiers(CostModifiers.All) >= 0;
+    }
+
+    private static string GetDisplayTypeText(CardModel cardModel)
+    {
+        return cardModel.Type.ToLocString().GetFormattedText();
     }
 
     private static void SetOverlayText(Control control, string text, bool sourceVisible, Control? source = null)
@@ -890,6 +956,11 @@ public static class YukiCardCustomFramePatch
         return field?.GetValue(cardNode) as T;
     }
 
+    private static bool IsCustomFrameCard(NCard? cardNode)
+    {
+        return TryGetCustomFrameCard(cardNode, out _);
+    }
+
     [HarmonyPatch(typeof(NCard), "Reload")]
     public static class ReloadPatch
     {
@@ -933,7 +1004,33 @@ public static class YukiCardCustomFramePatch
         [HarmonyPriority(Priority.Last)]
         public static void Postfix(NCard __instance)
         {
+            if (!__instance.IsNodeReady())
+                return;
+
             Apply(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(NCard), nameof(NCard.OnFreedToPool))]
+    public static class OnFreedToPoolPatch
+    {
+        [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
+        public static void Postfix(NCard __instance)
+        {
+            RemoveChaosEffects(__instance, restoreOriginalState: false);
+            YukiCardSpinePortraitPatch.RemoveSpineOverlay(__instance);
+            OriginalStates.Remove(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(NCard), "UpdateTypePlaqueSizeAndPosition")]
+    public static class UpdateTypePlaqueSizeAndPositionPatch
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(NCard __instance)
+        {
+            return !IsCustomFrameCard(__instance);
         }
     }
 
