@@ -121,6 +121,45 @@ public static class YukiCardCustomFramePatch
         var ancientHighlight = Get<TextureRect>(AncientHighlightField, cardNode!);
         Material? frameMaterial = LoadResource<Material>(YukiCardFramePaths.FrameMaterialPath);
         Material? bannerMaterial = LoadResource<Material>(YukiCardFramePaths.BannerMaterialPath);
+        bool hasDynamicSpineScene = YukiCardSpinePortraitPatch.TryGetSpineScenePath(cardNode, out _);
+        if (hasDynamicSpineScene)
+            YukiCardSpinePortraitPatch.Apply(cardNode);
+
+        bool shouldDisplayCustomUi = YukiCardSpinePortraitPatch.ShouldDisplayDynamicOverlays(cardNode);
+
+        if (hasDynamicSpineScene && !YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
+        {
+            RemoveChaosEffects(cardNode, restoreOriginalState: true);
+            frame?.Show();
+            portrait?.Show();
+            portraitBorder?.Show();
+            banner?.Show();
+            ancientPortrait?.Hide();
+            ancientBorder?.Hide();
+            ancientTextBg?.Hide();
+            ancientBanner?.Hide();
+            ancientHighlight?.Hide();
+            return;
+        }
+
+        if (!shouldDisplayCustomUi)
+        {
+            ApplyTransitionDynamicPortraitState(
+                cardNode!,
+                cardModel!,
+                frame,
+                portrait,
+                ancientPortrait,
+                portraitBorder,
+                banner,
+                ancientBorder,
+                ancientTextBg,
+                ancientBanner,
+                ancientHighlight,
+                frameMaterial,
+                bannerMaterial);
+            return;
+        }
 
         CaptureOriginalState(cardNode!);
 
@@ -148,7 +187,84 @@ public static class YukiCardCustomFramePatch
         }
 
         ApplyChaosEffects(cardNode!, cardModel);
-        YukiCardSpinePortraitPatch.Apply(cardNode);
+
+        if (hasDynamicSpineScene && cardNode!.Model is IYukiCardVisualProfile profile)
+        {
+            YukiCardSpinePortraitPatch.ForcePortraitSlot(cardNode, portrait, ancientPortrait, profile.CustomSpinePortraitSlot);
+            YukiCardSpinePortraitPatch.UpdateOverlay(
+                cardNode,
+                profile.CustomSpinePortraitSlot == YukiSpinePortraitSlot.Ancient ? ancientPortrait : portrait);
+        }
+    }
+
+    private static void ApplyTransitionDynamicPortraitState(
+        NCard cardNode,
+        CardModel cardModel,
+        TextureRect? frame,
+        TextureRect? portrait,
+        TextureRect? ancientPortrait,
+        TextureRect? portraitBorder,
+        TextureRect? banner,
+        TextureRect? ancientBorder,
+        TextureRect? ancientTextBg,
+        Control? ancientBanner,
+        TextureRect? ancientHighlight,
+        Material? frameMaterial,
+        Material? bannerMaterial)
+    {
+        CaptureOriginalState(cardNode);
+        RemoveChaosEffects(cardNode, restoreOriginalState: true);
+
+        frame?.Hide();
+        portrait?.Hide();
+        if (ancientPortrait != null)
+        {
+            ancientPortrait.Show();
+            ancientPortrait.Texture = cardNode.Model?.Portrait;
+        }
+        portraitBorder?.Hide();
+        ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), bannerMaterial, show: true);
+        ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);
+        ancientTextBg?.Hide();
+        ancientBanner?.Hide();
+        ApplyTextureRect(ancientHighlight, YukiCardFramePaths.AncientHighlightTexturePath, material: null, show: true);
+
+        if (Get<TextureRect>(EnergyIconField, cardNode) is { } energyIcon)
+            ApplyTextureRect(energyIcon, $"{ChaosEffectsBasePath}energy_line_default.png", material: null, show: true);
+
+        Get<Control>(TitleLabelField, cardNode)?.Show();
+        Get<Control>(EnergyLabelField, cardNode)?.Show();
+        Get<Control>(DescriptionLabelField, cardNode)?.Show();
+        Get<Control>(TypeLabelField, cardNode)?.Show();
+        Get<Control>(TypePlaqueField, cardNode)?.Show();
+
+        if (cardNode.Model is not IYukiCardVisualProfile profile)
+        {
+            if (portrait != null)
+                portrait.Hide();
+            if (ancientPortrait != null)
+                ancientPortrait.Show();
+            return;
+        }
+
+        if (!YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
+        {
+            if (portrait != null)
+                portrait.Hide();
+            if (ancientPortrait != null)
+                ancientPortrait.Show();
+            return;
+        }
+
+        YukiCardSpinePortraitPatch.ForcePortraitSlot(cardNode, portrait, ancientPortrait, profile.CustomSpinePortraitSlot);
+        if (portrait != null && profile.CustomSpinePortraitSlot == YukiSpinePortraitSlot.Ancient)
+            portrait.Hide();
+        if (ancientPortrait != null && profile.CustomSpinePortraitSlot == YukiSpinePortraitSlot.Ancient)
+            ancientPortrait.Show();
+
+        YukiCardSpinePortraitPatch.UpdateOverlay(
+            cardNode,
+            profile.CustomSpinePortraitSlot == YukiSpinePortraitSlot.Ancient ? ancientPortrait : portrait);
     }
 
     private static bool TryGetCustomFrameCard(NCard? cardNode, out CardModel? cardModel)

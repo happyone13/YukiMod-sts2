@@ -1,5 +1,8 @@
 {
   "YUKIMOD-YUKI_STARTER_RELIC.title": "Starter Keepsake",
   "YUKIMOD-YUKI_STARTER_RELIC.description": "At the start of combat, [gold]Converge[/gold] 1.",
-  "YUKIMOD-YUKI_STARTER_RELIC.flavor": "She begins each fight by drawing one quiet blade into reach."
+  "YUKIMOD-YUKI_STARTER_RELIC.flavor": "She begins each fight by drawing one quiet blade into reach.",
+  "YUKIMOD-YUKI_STARTER_RELIC_PLUS.title": "Starter Keepsake+",
+  "YUKIMOD-YUKI_STARTER_RELIC_PLUS.description": "At the start of combat, [gold]Converge[/gold] 2.\nYour [gold]Moonshadow[/gold] costs 1 less.",
+  "YUKIMOD-YUKI_STARTER_RELIC_PLUS.flavor": "Once the rhythm settles in, the second blade is already waiting."
 }
