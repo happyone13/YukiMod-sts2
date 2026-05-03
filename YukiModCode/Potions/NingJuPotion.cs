@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Potions;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Potions;
 
+[Pool(typeof(YukiModPotionPool))]
 public class NingJuPotion : YukiModPotion
 {
     public override PotionRarity Rarity => PotionRarity.Common;

@@ -1,8 +1,8 @@
 {
-  "YUKIMOD-YUKI_STARTER_RELIC.title": "起始信物",
+  "YUKIMOD-YUKI_STARTER_RELIC.title": "月影",
   "YUKIMOD-YUKI_STARTER_RELIC.description": "战斗开始时，[gold]凝聚[/gold]1。",
   "YUKIMOD-YUKI_STARTER_RELIC.flavor": "她总会在开战前先把那柄静默的影刃握进手里。",
-  "YUKIMOD-YUKI_STARTER_RELIC_PLUS.title": "起始信物+",
+  "YUKIMOD-YUKI_STARTER_RELIC_PLUS.title": "月影+",
   "YUKIMOD-YUKI_STARTER_RELIC_PLUS.description": "战斗开始时，[gold]凝聚[/gold]2。\n你的[gold]月影[/gold]费用-1。",
-  "YUKIMOD-YUKI_STARTER_RELIC_PLUS.flavor": "一旦节奏定下，第二柄影刃就会自行入手。"
+  "YUKIMOD-YUKI_STARTER_RELIC_PLUS.flavor": "一刀不够，那就两刀。"
 }

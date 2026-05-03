@@ -1,14 +1,14 @@
 {
-  "YUKIMOD-YUKI_MOD.aromaPrinciple": "一个安静而未完成的身影。",
+  "YUKIMOD-YUKI_MOD.aromaPrinciple": "一个身影。",
   "YUKIMOD-YUKI_MOD.banter.alive.endTurnPing": "轮到你了。",
   "YUKIMOD-YUKI_MOD.banter.dead.endTurnPing": "还没有结束。",
-  "YUKIMOD-YUKI_MOD.cardsModifierDescription": "__ 角色卡现在会出现在奖励和商店中。",
-  "YUKIMOD-YUKI_MOD.cardsModifierTitle": "__ 卡牌",
-  "YUKIMOD-YUKI_MOD.description": "基于 MeiLinMod 模板构建的占位角色。",
-  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-0r.char": "这个角色目前仍然只是模板。",
-  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-0r.next": "下一步该补机制了。",
-  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-1r.ancient": "即使只是骨架，也能慢慢长成角色。",
-  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-attack": "占位攻击语音。",
+  "YUKIMOD-YUKI_MOD.cardsModifierDescription": "友纪角色卡现在会出现在奖励和商店中。",
+  "YUKIMOD-YUKI_MOD.cardsModifierTitle": "友纪卡牌",
+  "YUKIMOD-YUKI_MOD.description": "不只是友纪，还有琳与千鹤的精神寄托。怀揣着太刀三侠的希望。",
+  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-0r.char": "你是，卡厄斯么。",
+  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-0r.next": "继续。",
+  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-1r.ancient": "你怎么也提卡厄斯。",
+  "THE_ARCHITECT.talk.YUKIMOD-YUKI_MOD.0-attack": "哈！",
   "YUKIMOD-YUKI_MOD.eventDeathPrevention": "这次旅程还没有结束。",
   "YUKIMOD-YUKI_MOD.goldMonologue": "有用，但不是目的。",
   "YUKIMOD-YUKI_MOD.possessiveAdjective": "她的",
@@ -17,5 +17,5 @@
   "YUKIMOD-YUKI_MOD.pronounSubject": "她",
   "YUKIMOD-YUKI_MOD.title": "友纪",
   "YUKIMOD-YUKI_MOD.titleObject": "友纪",
-  "YUKIMOD-YUKI_MOD.unlockText": "模板阶段的占位角色。"
+  "YUKIMOD-YUKI_MOD.unlockText": "友纪角色。"
 }

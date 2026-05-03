@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
@@ -10,7 +11,7 @@ namespace YukiMod.YukiModCode.Character;
 
 public class YukiModCardPool : CustomCardPoolModel
 {
-    private static Texture2D? _customFrameTexture;
+    private static readonly Dictionary<string, Texture2D?> CustomFrameTextures = new();
 
     public override string Title => YukiMod.CharacterId;
     public override string EnergyColorName => "ironclad";
@@ -27,7 +28,16 @@ public class YukiModCardPool : CustomCardPoolModel
             return null;
 
         if (card is YukiModCard { UseCustomFrame: true } or YukiModTokenCard { UseCustomFrame: true })
-            return _customFrameTexture ??= GD.Load<Texture2D>(YukiCardFramePaths.CustomFrameTexturePath);
+        {
+            string texturePath = YukiCardFramePaths.GetCustomFrameTexturePath(card.Rarity);
+            if (!CustomFrameTextures.TryGetValue(texturePath, out Texture2D? texture))
+            {
+                texture = GD.Load<Texture2D>(texturePath);
+                CustomFrameTextures[texturePath] = texture;
+            }
+
+            return texture;
+        }
 
         return null;
     }

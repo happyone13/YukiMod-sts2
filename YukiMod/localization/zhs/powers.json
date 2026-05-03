@@ -1,7 +1,7 @@
 {
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.title": "黑云姿态",
-    "YUKIMOD-BLACK_CLOUD_STANCE_POWER.description": "处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云，除非效果明确写着保留它。",
-    "YUKIMOD-BLACK_CLOUD_STANCE_POWER.smartDescription": "处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云，除非效果明确写着保留它。",
+    "YUKIMOD-BLACK_CLOUD_STANCE_POWER.description": "处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云。",
+    "YUKIMOD-BLACK_CLOUD_STANCE_POWER.smartDescription": "处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云。",
     "YUKIMOD-BLACK_CLOUD_KEEP_STANCE_ONCE_POWER.title": "保留黑云",
     "YUKIMOD-BLACK_CLOUD_KEEP_STANCE_ONCE_POWER.description": "本回合你接下来使用的下一张非[gold]攻击[/gold]牌不会让你退出[gold]黑云姿态[/gold]。",
     "YUKIMOD-BLACK_CLOUD_KEEP_STANCE_ONCE_POWER.smartDescription": "本回合你接下来使用的下一张非[gold]攻击[/gold]牌不会让你退出[gold]黑云姿态[/gold]。",

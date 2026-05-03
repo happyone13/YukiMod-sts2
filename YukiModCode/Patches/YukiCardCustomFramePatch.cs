@@ -187,6 +187,7 @@ public static class YukiCardCustomFramePatch
         portraitCanvasGroup?.Show();
 
         ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);
+        ancientBorder?.Hide();
         ApplyTextureRect(ancientTextBg, YukiCardFramePaths.GetAncientTextBgTexturePath(cardModel!.Type), frameMaterial, show: true);
         ApplyTextureRect(ancientHighlight, YukiCardFramePaths.AncientHighlightTexturePath, material: null, show: true);
 
@@ -238,6 +239,7 @@ public static class YukiCardCustomFramePatch
         portraitBorder?.Hide();
         ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), bannerMaterial, show: true);
         ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);
+        ancientBorder?.Hide();
         ancientTextBg?.Hide();
         ancientBanner?.Hide();
         ApplyTextureRect(ancientHighlight, YukiCardFramePaths.AncientHighlightTexturePath, material: null, show: true);
@@ -376,7 +378,7 @@ public static class YukiCardCustomFramePatch
         {
             ApplyTemplateLayout(control, "EgoBadge", EgoBadgeLayout);
             if (control is TextureRect textureRect)
-                ApplyTextureRect(textureRect, YukiCardFramePaths.EgoBadgeTexturePath, material: null, show: true);
+                ApplyTextureRect(textureRect, YukiCardFramePaths.GetEgoBadgeTexturePath(cardModel.Rarity), material: null, show: true);
         });
 
         EnsureTemplateOverlay(cardNode, RarityBaseNodeName, "RarityBase", () => CreateTextureOverlay(RarityBaseLayout), control =>
