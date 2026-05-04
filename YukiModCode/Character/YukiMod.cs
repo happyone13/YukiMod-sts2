@@ -61,18 +61,27 @@ public class YukiMod : PlaceholderCharacterModel
     public override string CustomDeathSfx => "yuki_die";
     public override string CharacterSelectSfx => "yuki_select";
 
-    public override CreatureAnimator GenerateAnimator(MegaSprite controller) =>
-        SetupAnimationState(
-            controller,
-            idleName: "idle",
-            deadName: "death",
-            deadLoop: false,
-            hitName: "hit",
-            hitLoop: false,
-            attackName: "attack_play1",
-            attackLoop: false,
-            castName: "buff_play",
-            castLoop: false,
-            relaxedName: "camping",
-            relaxedLoop: true);
+    public override CreatureAnimator GenerateAnimator(MegaSprite controller)
+    {
+        AnimState idle = new("b_idle", isLooping: true);
+        AnimState attack = new("attack_play1");
+        AnimState cast = new("buff_play");
+        AnimState hit = new("hit");
+        AnimState dead = new("death");
+        AnimState relaxed = new("camping", isLooping: true);
+
+        attack.NextState = idle;
+        cast.NextState = idle;
+        hit.NextState = idle;
+
+        CreatureAnimator animator = new(idle, controller);
+        animator.AddAnyState("Idle", idle);
+        animator.AddAnyState("Dead", dead);
+        animator.AddAnyState("Hit", hit);
+        animator.AddAnyState("Attack", attack);
+        animator.AddAnyState("Cast", cast);
+        animator.AddAnyState("Relaxed", relaxed);
+        animator.AddAnyState("Revive", idle);
+        return animator;
+    }
 }
