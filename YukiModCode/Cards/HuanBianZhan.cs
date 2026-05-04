@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.CardSelection;
@@ -46,22 +45,7 @@ public class HuanBianZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommo
             }
         }
 
-        var drawPile = PileType.Draw.GetPile(Owner);
-        if (drawPile.Cards.Count == 0)
-        {
-            return;
-        }
-
-        var selected = (await CardSelectCmd.FromSimpleGrid(
-                choiceContext,
-                drawPile.Cards,
-                Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 1)))
-            .FirstOrDefault();
-        if (selected != null)
-        {
-            await CardPileCmd.Add(selected, PileType.Hand, source: this);
-        }
+        await CardPileCmd.Draw(choiceContext, 1m, Owner);
     }
 
     protected override void OnUpgrade()

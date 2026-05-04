@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -114,9 +115,30 @@ public static class YukiInspirationService
             .Where(IsInspired);
     }
 
+    public static async Task<CardModel?> DrawPrioritizedInspirationCard(
+        PlayerChoiceContext choiceContext,
+        Player player,
+        AbstractModel? source = null,
+        bool fromHandDraw = false)
+    {
+        await CardPileCmd.ShuffleIfNecessary(choiceContext, player);
+
+        var drawPile = PileType.Draw.GetPile(player);
+        var prioritizedCard = drawPile.Cards.FirstOrDefault(IsInspirationSchoolCard);
+        if (prioritizedCard != null && drawPile.Cards.FirstOrDefault() != prioritizedCard)
+        {
+            await CardPileCmd.Add(prioritizedCard, PileType.Draw, CardPilePosition.Top, source, skipVisuals: true);
+        }
+
+        return (await CardPileCmd.Draw(choiceContext, 1m, player, fromHandDraw)).FirstOrDefault();
+    }
+
     public static async Task NotifyInspiredTriggered(PlayerChoiceContext choiceContext, Player owner, CardModel sourceCard)
     {
-        var listeners = owner.Creature.Powers.OfType<IInspiredTriggeredListener>().ToList();
+        var listeners = owner.Creature.Powers
+            .OfType<IInspiredTriggeredListener>()
+            .Concat(owner.Relics.OfType<IInspiredTriggeredListener>())
+            .ToList();
         foreach (var listener in listeners)
         {
             await listener.OnInspiredTriggered(choiceContext, owner, sourceCard);

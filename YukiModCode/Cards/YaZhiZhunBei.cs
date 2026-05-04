@@ -27,16 +27,19 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        YukiAudioService.SuppressNextDefaultCastSfx(Owner);
+        YukiAudioService.TryPlayCustomCardClip("ya_zhi_zhun_bei", Owner);
+
         var hand = PileType.Hand.GetPile(Owner);
-        var drawPile = PileType.Draw.GetPile(Owner);
         var drawLimit = CardPile.MaxCardsInHand - hand.Cards.Count;
-        if (drawLimit <= 0 || drawPile.Cards.Count == 0)
+        if (drawLimit <= 0)
         {
             return;
         }
 
-        var eligibleAttacks = drawPile.Cards
-            .Where(IsEligibleAttack)
+        var eligibleAttacks = PileType.Draw.GetPile(Owner).Cards
+            .Concat(PileType.Discard.GetPile(Owner).Cards)
+            .Where(IsEligibleAttackForCurrentState)
             .ToList();
         if (eligibleAttacks.Count == 0)
         {
@@ -51,15 +54,21 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
             return;
         }
 
-        await CardPileCmd.Add(selectedAttack, PileType.Draw, CardPilePosition.Top, this, skipVisuals: true);
+        var drawPile = PileType.Draw.GetPile(Owner);
+        if (selectedAttack.Pile?.Type != PileType.Draw || drawPile.Cards.FirstOrDefault() != selectedAttack)
+        {
+            await CardPileCmd.Add(selectedAttack, PileType.Draw, CardPilePosition.Top, this, skipVisuals: true);
+        }
+
         await CardPileCmd.Draw(choiceContext, Owner);
     }
 
     protected override void OnUpgrade() { }
 
-    private static bool IsEligibleAttack(CardModel card) =>
-        card.Type == CardType.Attack && !card.Tags.Contains(CardTag.Strike);
+    private bool IsEligibleAttackForCurrentState(CardModel card) =>
+        card.Type == CardType.Attack &&
+        (!IsUpgraded || !card.Tags.Contains(CardTag.Strike));
 
     private static bool IsInspiredAttack(CardModel card) =>
-        card is YukiModCard yukiCard && yukiCard.School == YukiCardSchool.Inspiration;
+        YukiInspirationService.IsInspirationSchoolCard(card);
 }

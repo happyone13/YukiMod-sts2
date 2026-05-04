@@ -15,22 +15,20 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class HeiYunMiFaHunYou() : YukiModCard(2, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    private const string EnergyKey = "Energy";
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(9m, ValueProp.Move), new DynamicVar(EnergyKey, 2m)];
+        [new BlockVar(9m, ValueProp.Move), new EnergyVar(2)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<BlackCloudStancePower>()];
+        [HoverTipFactory.FromPower<BlackCloudStancePower>(), EnergyHoverTip];
 
     public override bool GainsBlock => true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars[EnergyKey].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

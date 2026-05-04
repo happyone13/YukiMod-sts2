@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HeiYunMiFaXuXiang() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
+public class HeiYunMiFaXuXiang() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new PowerVar<WeakPower>(2m)];

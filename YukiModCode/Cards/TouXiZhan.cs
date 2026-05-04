@@ -33,6 +33,8 @@ public class TouXiZhan() : YukiModCard(2, CardType.Attack, CardRarity.Common, Ta
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
+        YukiAudioService.TryPlayCustomCardClip("tou_xi_zhan", Owner);
         return DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .TargetingAllOpponents(CombatState!)

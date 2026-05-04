@@ -30,6 +30,8 @@ public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon,
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
+        YukiAudioService.TryPlayCustomCardClip("po_bing_zhan", Owner);
         var hitCount = YukiInspirationService.WillTriggerOnPlay(this) ? 2 : 1;
         return DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)

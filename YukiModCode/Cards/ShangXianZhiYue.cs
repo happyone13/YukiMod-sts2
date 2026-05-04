@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -15,7 +16,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class ShangXianZhiYue() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromCard<YueYing>(), HoverTipFactory.FromCard<JuHe>()];
+        [HoverTipFactory.FromCard<YueYing>(), .. YukiHoverTipFactory.FromIai()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("Threshold", 99m)];

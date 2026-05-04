@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using YukiMod.YukiModCode.Cards;
-
 namespace YukiMod.YukiModCode.HoverTips;
 
 public static class YukiHoverTipFactory
@@ -17,6 +16,8 @@ public static class YukiHoverTipFactory
     private const string BlackCloudDescriptionKey = "YUKIMOD-BLACK_CLOUD.description";
     private const string CountsAsMoonshadowTitleKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.title";
     private const string CountsAsMoonshadowDescriptionKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.description";
+    private const string JuHeTitleKey = "YUKIMOD-JU_HE_KEYWORD.title";
+    private const string JuHeDescriptionKey = "YUKIMOD-JU_HE_KEYWORD.description";
 
     public static IHoverTip FromForesee()
     {
@@ -56,6 +57,13 @@ public static class YukiHoverTipFactory
     public static IEnumerable<IHoverTip> FromIai()
     {
         return [HoverTipFactory.FromCard<JuHe>()];
+    }
+
+    public static IHoverTip FromJuHeKeyword()
+    {
+        return new HoverTip(
+            new LocString("cards", JuHeTitleKey),
+            new LocString("cards", JuHeDescriptionKey));
     }
 
     public static IEnumerable<IHoverTip> FromSheathe()

@@ -16,12 +16,12 @@ public static class YukiCardFramePaths
 
     public static string GetCustomFrameTexturePath(CardRarity rarity)
     {
-        return rarity == CardRarity.Ancient ? AncientCustomFrameTexturePath : CustomFrameTexturePath;
+        return rarity is CardRarity.Ancient or CardRarity.Token ? AncientCustomFrameTexturePath : CustomFrameTexturePath;
     }
 
     public static string GetEgoBadgeTexturePath(CardRarity rarity)
     {
-        return rarity == CardRarity.Ancient ? AncientEgoBadgeTexturePath : EgoBadgeTexturePath;
+        return rarity is CardRarity.Ancient or CardRarity.Token ? AncientEgoBadgeTexturePath : EgoBadgeTexturePath;
     }
 
     public static string GetAncientTextBgTexturePath(CardType type)

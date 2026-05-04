@@ -20,6 +20,7 @@ public class BingDianZhiRen() : YukiModCard(1, CardType.Power, CardRarity.Rare, 
         "res://YukiMod/scenes/cards/bing_dian_zhi_ren_dynamic.tscn";
 
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
+    protected override string? CustomPowerCastClipKey => "bing_dian_zhi_ren";
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];

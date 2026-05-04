@@ -12,6 +12,8 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class TianJiZhanJi() : YukiModCard(1, CardType.Power, CardRarity.Ancient, TargetType.Self)
 {
+    protected override string? CustomPowerCastClipKey => "tian_ji_zhan_ji";
+
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Innate];
 

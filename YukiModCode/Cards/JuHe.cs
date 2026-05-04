@@ -25,7 +25,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AllEnemies)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [];
+        [YukiHoverTipFactory.FromJuHeKeyword()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(33m, ValueProp.Move)];

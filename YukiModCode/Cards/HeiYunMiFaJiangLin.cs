@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HeiYunMiFaJiangLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public class HeiYunMiFaJiangLin() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new BlockVar(8m, ValueProp.Move), new PowerVar<VulnerablePower>(1m)];

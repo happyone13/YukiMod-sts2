@@ -173,7 +173,10 @@ public static class YukiBlackCloudService
 
     private static async Task NotifyEntered(PlayerChoiceContext choiceContext, Player player)
     {
-        var listeners = player.Creature.Powers.OfType<IBlackCloudEnteredListener>().ToList();
+        var listeners = player.Creature.Powers
+            .OfType<IBlackCloudEnteredListener>()
+            .Concat(player.Relics.OfType<IBlackCloudEnteredListener>())
+            .ToList();
         foreach (var listener in listeners)
         {
             await listener.OnBlackCloudEntered(choiceContext, player);
@@ -182,7 +185,10 @@ public static class YukiBlackCloudService
 
     private static async Task NotifyExited(PlayerChoiceContext choiceContext, Player player)
     {
-        var listeners = player.Creature.Powers.OfType<IBlackCloudExitedListener>().ToList();
+        var listeners = player.Creature.Powers
+            .OfType<IBlackCloudExitedListener>()
+            .Concat(player.Relics.OfType<IBlackCloudExitedListener>())
+            .ToList();
         foreach (var listener in listeners)
         {
             await listener.OnBlackCloudExited(choiceContext, player);

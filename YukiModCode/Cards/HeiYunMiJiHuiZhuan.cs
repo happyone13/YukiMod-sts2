@@ -30,7 +30,7 @@ public class HeiYunMiJiHuiZhuan() : YukiModCard(1, CardType.Skill, CardRarity.Ra
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await CardPileCmd.Draw(choiceContext, 1m, Owner);
+        await YukiBlackCloudService.DrawPrioritizedBlackCloudCard(choiceContext, Owner, this);
 
         if (YukiInspirationService.WillTriggerOnPlay(this))
         {

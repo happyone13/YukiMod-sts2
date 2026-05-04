@@ -47,7 +47,7 @@ public class ManYiPower : YukiModPower
 
         data.TriggeredThisTurn = true;
         Flash();
-        await PlayerCmd.GainEnergy(1m, player);
+        await PlayerCmd.GainEnergy(2m, player);
     }
 
     public override Task AfterSideTurnStart(CombatSide side, ICombatState combatState)

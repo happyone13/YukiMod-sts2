@@ -18,7 +18,7 @@ public class LingDu() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetTy
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromInspiration(), HoverTipFactory.FromCard<JuHe>()];
+        [YukiHoverTipFactory.FromInspiration(), .. YukiHoverTipFactory.FromIai()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("Threshold", 33m)];

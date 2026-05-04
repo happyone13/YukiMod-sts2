@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.Services;
@@ -35,21 +33,7 @@ public class BingXue() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Ta
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        var hand = PileType.Hand.GetPile(Owner);
-        var drawPile = PileType.Draw.GetPile(Owner);
-        if (hand.Cards.Count >= CardPile.MaxCardsInHand)
-        {
-            return;
-        }
-
-        var inspirationCard = drawPile.Cards.FirstOrDefault(YukiInspirationService.IsInspirationSchoolCard);
-        if (inspirationCard == null)
-        {
-            return;
-        }
-
-        await CardPileCmd.Add(inspirationCard, PileType.Draw, CardPilePosition.Top, this, skipVisuals: true);
-        await CardPileCmd.Draw(choiceContext, Owner);
+        await YukiInspirationService.DrawPrioritizedInspirationCard(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()

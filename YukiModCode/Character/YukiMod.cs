@@ -56,6 +56,10 @@ public class YukiMod : PlaceholderCharacterModel
     public override string CustomRestSiteAnimPath => "res://YukiMod/scenes/yuki_character_camp.tscn";
     public override string CustomMerchantAnimPath => "res://YukiMod/scenes/merchant/characters/yukimod_merchant.tscn";
     public override string CustomCharacterSelectBg => "res://YukiMod/scenes/yuki_bg.tscn";
+    public override string CustomAttackSfx => "yuki_attack";
+    public override string CustomCastSfx => "yuki_cast";
+    public override string CustomDeathSfx => "yuki_die";
+    public override string CharacterSelectSfx => "yuki_select";
 
     public override CreatureAnimator GenerateAnimator(MegaSprite controller) =>
         SetupAnimationState(

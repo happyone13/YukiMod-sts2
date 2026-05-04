@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
@@ -26,6 +27,7 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
     public virtual bool HasOwnInspirationEffect => false;
     public virtual bool IsRealMoonshadow => false;
     public virtual bool CountsAsMoonshadow => IsRealMoonshadow;
+    protected virtual string? CustomPowerCastClipKey => null;
 
     public bool IsInspired { get; set; }
 
@@ -43,6 +45,30 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
     protected override void AddExtraArgsToDescription(LocString description)
     {
         DynamicVars.AddTo(description);
+    }
+
+    protected Task PlayPowerCastAnim()
+    {
+        if (Type != CardType.Power || Owner?.Creature == null || Owner.Character == null)
+            return Task.CompletedTask;
+
+        return CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
+    }
+
+    public override async Task BeforeCardPlayed(CardPlay cardPlay)
+    {
+        if (cardPlay.Card != this || Type != CardType.Power)
+        {
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(CustomPowerCastClipKey))
+        {
+            YukiAudioService.SuppressNextDefaultCastSfx(Owner);
+            YukiAudioService.TryPlayCustomCardClip(CustomPowerCastClipKey, Owner);
+        }
+
+        await PlayPowerCastAnim();
     }
 
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source)
