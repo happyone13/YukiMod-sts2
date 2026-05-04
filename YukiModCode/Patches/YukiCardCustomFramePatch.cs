@@ -125,7 +125,7 @@ public static class YukiCardCustomFramePatch
         if (hasDynamicSpineScene)
             YukiCardSpinePortraitPatch.Apply(cardNode);
 
-        bool shouldDisplayCustomUi = YukiCardSpinePortraitPatch.ShouldDisplayDynamicOverlays(cardNode);
+        bool shouldDisplayCustomUi = YukiCardSpinePortraitPatch.ShouldDisplayCustomUi(cardNode);
 
         if (hasDynamicSpineScene && !YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
         {

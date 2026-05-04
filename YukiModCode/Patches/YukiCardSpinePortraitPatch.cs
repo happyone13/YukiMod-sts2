@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
+using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using YukiMod.YukiModCode.Cards;
 using YukiMod.YukiModCode.Config;
 
@@ -208,6 +209,26 @@ public static class YukiCardSpinePortraitPatch
         return false;
     }
 
+    public static bool ShouldDisplayCustomUi(NCard? cardNode)
+    {
+        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsInsideTree())
+            return false;
+
+        bool hasHolderAncestor = false;
+        bool isHolderActive = false;
+        bool isInCardPlay = false;
+        bool isPreviewHolder = false;
+        bool isHoverTipCard = false;
+
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard);
+
+        if (isInCardPlay)
+            return false;
+
+        bool isEnlarged = ((Control)cardNode).GetGlobalTransform().Scale.Y > 1.1f;
+        return hasHolderAncestor || isPreviewHolder || isHoverTipCard || isEnlarged;
+    }
+
     public static bool ShouldDisplayDynamicOverlays(NCard? cardNode)
     {
         if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsInsideTree())
@@ -222,7 +243,7 @@ public static class YukiCardSpinePortraitPatch
         CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard);
 
         bool isEnlarged = ((Control)cardNode).GetGlobalTransform().Scale.Y > 1.1f;
-        return hasHolderAncestor || isPreviewHolder || isHoverTipCard || isHolderActive || isInCardPlay || isEnlarged;
+        return isHolderActive || isPreviewHolder || isHoverTipCard || isInCardPlay || isEnlarged;
     }
 
     public static bool IsPreviewHolderContext(NCard? cardNode)
@@ -535,6 +556,10 @@ public static class YukiCardSpinePortraitPatch
                         }
                     }
                 }
+            }
+            else if (current is NMerchantSlot)
+            {
+                hasHolderAncestor = true;
             }
             else if (current is NHoverTipCardContainer or NHoverTipSet)
             {
