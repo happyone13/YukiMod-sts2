@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bs33qpy2ufy75"]
 
-[ext_resource type="SpineSkeletonDataResource" uid="uid://yuki_q_1057_tres" path="res://YukiMod/spine/q/q.tres" id="1_yuki_spine"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/q/q.tres" id="1_yuki_spine"]
 
 [node name="YukiCharacter" type="Node2D"]
 metadata/_edit_group_ = true

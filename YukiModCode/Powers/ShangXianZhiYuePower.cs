@@ -15,6 +15,8 @@ public class ShangXianZhiYuePower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override bool IsInstanced => true;
+
     public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
         if (dealer != Owner || Owner.Player == null || cardSource == null || !YukiMoonshadowService.CountsAsMoonshadow(cardSource) || result.TotalDamage < Amount || CombatState == null)

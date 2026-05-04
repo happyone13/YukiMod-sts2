@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -12,7 +14,7 @@ using YukiMod.YukiModCode.HoverTips;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class YiJiBiShaJuHeChouKa() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public class YiJiBiShaJuHeChouKa() : YukiModCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         YukiHoverTipFactory.FromIai();
@@ -22,10 +24,24 @@ public class YiJiBiShaJuHeChouKa() : YukiModCard(1, CardType.Skill, CardRarity.R
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var discardedCard = (await CardSelectCmd.FromHandForDiscard(
+                choiceContext,
+                Owner,
+                new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1),
+                null,
+                this))
+            .FirstOrDefault();
+        if (discardedCard != null)
+        {
+            await CardCmd.Discard(choiceContext, discardedCard);
+        }
+
         var drawnCard = await CardPileCmd.Draw(choiceContext, Owner);
         if (drawnCard?.Id == Id && CombatState != null)
         {
-            await JuHe.CreateInHand(Owner, CombatState, upgraded: true);
+            await JuHe.CreateInHand(Owner, CombatState, upgraded: IsUpgraded);
         }
     }
+
+    protected override void OnUpgrade() { }
 }

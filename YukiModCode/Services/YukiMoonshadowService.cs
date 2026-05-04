@@ -59,7 +59,8 @@ public static class YukiMoonshadowService
 
         foreach (var moonshadowCard in GetMoonshadowCardsInHand(owner))
         {
-            if (moonshadowCard.CostsEnergyOrStars(includeGlobalModifiers: false))
+            if (!moonshadowCard.EnergyCost.CostsX
+                && moonshadowCard.EnergyCost.GetWithModifiers(CostModifiers.None) >= 0)
             {
                 moonshadowCard.EnergyCost.AddThisCombat(delta);
             }

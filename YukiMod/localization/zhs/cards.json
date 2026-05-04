@@ -130,7 +130,7 @@
     "YUKIMOD-TIAN_DAO_XING_TAI.description": "每回合打出的第一张攻击牌额外打出一次。",
     "YUKIMOD-TIAN_DAO_XING_TAI.title": "天刀形态",
     "YUKIMOD-RONG_YU.title": "荣誉",
-    "YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA.description": "抽1张牌。\n如果这张牌是[gold]一击必杀！居合抽卡[/gold]，则将一张升级的[gold]居合[/gold]加入手中。",
+    "YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA.description": "??1??????\n?1???\n??????[gold]?????????[/gold]???{IfUpgraded:show:1????|1?}[gold]??[/gold]?????",
     "YUKIMOD-NA_DAO.description": "造成{Damage:diff()}点伤害。\n本回合每释放一张攻击牌额外攻击一次。\n手里没有其他攻击牌时费用-1。",
     "YUKIMOD-JU_HE.description": "发动[gold]居合[/gold]。",
     "YUKIMOD-RONG_YU.description": "造成{Damage:diff()}点伤害。\n如果击杀目标，则将一张[gold]居合[/gold]加入手中。",

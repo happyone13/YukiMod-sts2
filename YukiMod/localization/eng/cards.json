@@ -130,7 +130,7 @@
     "YUKIMOD-TIAN_DAO_XING_TAI.description": "The first [gold]Attack[/gold] you play each turn is played an additional time.",
     "YUKIMOD-TIAN_DAO_XING_TAI.title": "Heavenblade Form",
     "YUKIMOD-RONG_YU.title": "Honor",
-    "YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA.description": "Draw 1 card.\\nIf it is [gold]One-Hit Kill! Iai Draw[/gold], add an upgraded [gold]Iai[/gold] to your [gold]Hand[/gold].",
+    "YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA.description": "Choose 1 card in your [gold]Hand[/gold] to discard.\\nDraw 1 card.\\nIf it is [gold]One-Hit Kill! Iai Draw[/gold], add {IfUpgraded:show:an upgraded |an }[gold]Iai[/gold] to your [gold]Hand[/gold].",
     "YUKIMOD-NA_DAO.description": "Deal {Damage:diff()} damage.\\nFor each [gold]Attack[/gold] played this turn, attack 1 additional time.\\nCosts 1 less if your [gold]Hand[/gold] has no other [gold]Attacks[/gold].",
     "YUKIMOD-JU_HE.description": "Perform [gold]Iai[/gold].",
     "YUKIMOD-RONG_YU.description": "Deal {Damage:diff()} damage.\\nIf this kills the target, add an [gold]Iai[/gold] to your [gold]Hand[/gold].",
