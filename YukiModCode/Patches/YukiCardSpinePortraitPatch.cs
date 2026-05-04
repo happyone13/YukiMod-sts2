@@ -326,10 +326,8 @@ public static class YukiCardSpinePortraitPatch
             return;
         }
 
-        bool shouldAnimate = ShouldDisplayDynamicOverlays(cardNode) || IsHoverTipContext(cardNode);
-        var targetMode = shouldAnimate ? SubViewport.UpdateMode.Always : SubViewport.UpdateMode.Once;
-        if (subViewport.RenderTargetUpdateMode != targetMode)
-            subViewport.RenderTargetUpdateMode = targetMode;
+        if (subViewport.RenderTargetUpdateMode != SubViewport.UpdateMode.Always)
+            subViewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
     }
 
     public static void UpdateOverlay(NCard cardNode, TextureRect? portrait)
