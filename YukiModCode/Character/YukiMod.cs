@@ -20,7 +20,7 @@ public class YukiMod : PlaceholderCharacterModel
 
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
-    public override int StartingHp => 72;
+    public override int StartingHp => 70;
 
     public override IEnumerable<CardModel> StartingDeck =>
     [
@@ -49,7 +49,9 @@ public class YukiMod : PlaceholderCharacterModel
     public override string CustomCharacterSelectIconPath => "res://YukiMod/images/charui/char_select_char_yuki.png";
     public override string CustomCharacterSelectLockedIconPath => "res://YukiMod/images/charui/char_select_char_name_locked.png";
     public override string CustomMapMarkerPath => "res://YukiMod/images/charui/map_marker_yuki_name.png";
+    public override string CustomEnergyCounterPath => "res://scenes/combat/energy_counters/defect_energy_counter.tscn";
     public override Color EnergyLabelOutlineColor => Color.Color8(120, 190, 185);
+    public override Color MapDrawingColor => Color.Color8(120, 190, 185);
 
     public override string CustomIconPath => "res://YukiMod/scenes/yuki_icon.tscn";
     public override string CustomVisualPath => "res://YukiMod/scenes/yuki_character.tscn";
@@ -60,6 +62,7 @@ public class YukiMod : PlaceholderCharacterModel
     public override string CustomCastSfx => "yuki_cast";
     public override string CustomDeathSfx => "yuki_die";
     public override string CharacterSelectSfx => "yuki_select";
+
 
     public override CreatureAnimator GenerateAnimator(MegaSprite controller)
     {

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://YukiModCode/StanceVfx/YukiBlackCloudStreakSpawner.cs" id="1"]
+[ext_resource type="Script" path="res://YukiModCode/StanceVfx/YukiAuraBlobEmitter.cs" id="2"]
+
+[node name="BlackCloudAura" type="Node2D"]
+
+[node name="BlackCloudStreaks" type="Node2D" parent="."]
+position = Vector2(0, -100)
+script = ExtResource("1")
+
+[node name="AuraBlobs" type="Node2D" parent="."]
+position = Vector2(0, -188)
+script = ExtResource("2")
+BlobColor = Color(0.18, 0.08, 0.3, 1)

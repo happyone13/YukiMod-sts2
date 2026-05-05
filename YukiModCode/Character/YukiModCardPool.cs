@@ -14,7 +14,7 @@ public class YukiModCardPool : CustomCardPoolModel
     private static readonly Dictionary<string, Texture2D?> CustomFrameTextures = new();
 
     public override string Title => YukiMod.CharacterId;
-    public override string EnergyColorName => "ironclad";
+    public override string EnergyColorName => "defect";
     public override float H => 1f;
     public override float S => 1f;
     public override float V => 1f;
