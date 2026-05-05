@@ -1035,7 +1035,7 @@ public static class YukiCardCustomFramePatch
         [HarmonyPriority(Priority.Last)]
         public static void Postfix(NCard __instance)
         {
-            RemoveChaosEffects(__instance, restoreOriginalState: false);
+            RemoveChaosEffects(__instance, restoreOriginalState: true);
             YukiCardSpinePortraitPatch.RemoveSpineOverlay(__instance);
             OriginalStates.Remove(__instance);
         }
