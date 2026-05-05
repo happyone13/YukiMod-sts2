@@ -244,11 +244,11 @@ public static class YukiCardCustomFramePatch
         var typeLabel = Get<Control>(TypeLabelField, cardNode);
         var typePlaque = Get<Control>(TypePlaqueField, cardNode);
         if (energyLabel != null)
-            energyLabel.Hide();
+            energyLabel.Show();
         if (typeLabel != null)
-            typeLabel.Hide();
+            typeLabel.Show();
         if (typePlaque != null)
-            typePlaque.Hide();
+            typePlaque.Show();
         RemoveNode(cardNode, CostTextNodeName);
         RemoveNode(cardNode, CategoryTextNodeName);
         RemoveNode(cardNode, CategoryIconNodeName);
@@ -859,8 +859,6 @@ public static class YukiCardCustomFramePatch
             return;
 
         control.ZIndex = source.ZIndex;
-        control.Modulate = source.Modulate;
-        control.SelfModulate = source.SelfModulate;
     }
 
     private static void EnsureControlVisible(Control? control)
