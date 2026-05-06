@@ -3,6 +3,7 @@ using BaseLib.Config;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 using YukiMod.YukiModCode.Config;
+using YukiMod.YukiModCode.Patches;
 
 namespace YukiMod;
 
@@ -14,6 +15,7 @@ public partial class MainFile : Node
     public static void Initialize()
     {
         ModConfigRegistry.Register(ModId, new YukiModConfig());
+        YukiCardSpinePortraitPatch.PreloadDynamicPortraitScenes();
 
         Harmony harmony = new(ModId);
         harmony.PatchAll();

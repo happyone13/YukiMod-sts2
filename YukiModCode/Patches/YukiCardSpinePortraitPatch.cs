@@ -34,6 +34,27 @@ public static class YukiCardSpinePortraitPatch
     public static readonly FieldInfo? AncientPortraitField =
         typeof(NCard).GetField("_ancientPortrait", BindingFlags.Instance | BindingFlags.NonPublic);
 
+    private static readonly string[] DynamicPortraitScenePaths =
+    {
+        "res://YukiMod/scenes/cards/ba_dao_dynamic.tscn",
+        "res://YukiMod/scenes/cards/bing_dian_zhi_ren_dynamic.tscn",
+        "res://YukiMod/scenes/cards/hei_yun_ao_yi_can_dynamic.tscn",
+        "res://YukiMod/scenes/cards/hei_yun_ao_yi_hei_wu_dynamic.tscn",
+        "res://YukiMod/scenes/cards/hei_yun_ao_yi_mie_dynamic.tscn",
+        "res://YukiMod/scenes/cards/hei_yun_xin_fa_dynamic.tscn",
+        "res://YukiMod/scenes/cards/huang_hun_de_ji_ban_dynamic.tscn",
+        "res://YukiMod/scenes/cards/mi_huo_yi_ji_dynamic.tscn",
+        "res://YukiMod/scenes/cards/po_bing_zhan_dynamic.tscn",
+        "res://YukiMod/scenes/cards/tou_xi_zhan_dynamic.tscn",
+        "res://YukiMod/scenes/cards/ya_zhi_zhun_bei_dynamic.tscn",
+        "res://YukiMod/scenes/cards/yao_guai_shou_lie_dynamic.tscn",
+        "res://YukiMod/scenes/cards/ye_huo_dynamic.tscn",
+        "res://YukiMod/scenes/cards/yue_du_dynamic.tscn",
+        "res://YukiMod/scenes/cards/yue_ying_dynamic.tscn",
+        "res://YukiMod/scenes/cards/zhao_jia_dynamic.tscn"
+    };
+
+    private static readonly Dictionary<string, PackedScene> SceneCache = new();
     private static readonly HashSet<string> MissingResourceWarnings = new();
     private static readonly ConditionalWeakTable<NCard, PortraitVisibilityState> VisibilityStates = new();
     private static readonly FieldInfo? NCardHolderIsHoveredField =
@@ -90,7 +111,7 @@ public static class YukiCardSpinePortraitPatch
         if (HasActiveSpineOverlay(cardNode))
             return true;
 
-        PackedScene? scene = LoadSpineScene(scenePath);
+        PackedScene? scene = GetOrCreateSpineScene(scenePath);
         if (scene == null)
             return false;
 
@@ -153,6 +174,15 @@ public static class YukiCardSpinePortraitPatch
         updater.Initialize(cardNode, overlay, subViewport);
         overlay.AddChild(updater);
         return true;
+    }
+
+    public static void PreloadDynamicPortraitScenes()
+    {
+        if (!YukiModConfig.UseDynamicCardPortraits)
+            return;
+
+        foreach (string scenePath in DynamicPortraitScenePaths)
+            GetOrCreateSpineScene(scenePath);
     }
 
     public static void PrepareForBaseVisuals(NCard? cardNode)
@@ -402,9 +432,20 @@ public static class YukiCardSpinePortraitPatch
         return int.TryParse(meta, out int value) ? value : null;
     }
 
-    private static PackedScene? LoadSpineScene(string scenePath)
+    private static PackedScene? GetOrCreateSpineScene(string scenePath)
     {
-        return ResourceLoader.Load<PackedScene>(scenePath, "", ResourceLoader.CacheMode.ReplaceDeep);
+        if (SceneCache.TryGetValue(scenePath, out PackedScene? cachedScene))
+            return cachedScene;
+
+        PackedScene? scene = GD.Load<PackedScene>(scenePath);
+        if (scene == null)
+        {
+            GD.PushWarning($"[YukiCardSpinePortrait] Failed to load PackedScene: {scenePath}");
+            return null;
+        }
+
+        SceneCache[scenePath] = scene;
+        return scene;
     }
 
     private static SubViewportContainer? GetViewportContainer(Node root)
