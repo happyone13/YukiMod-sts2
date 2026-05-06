@@ -30,7 +30,11 @@ public class YukiStarterRelicPlus : YukiModRelic
 
     public override async Task BeforeCombatStart()
     {
+#if STS2_104
         var combatState = Owner.Creature.CombatState;
+#else
+        var combatState = CombatState;
+#endif
         if (combatState == null)
         {
             return;
@@ -40,7 +44,7 @@ public class YukiStarterRelicPlus : YukiModRelic
         await YukiMoonshadowService.NingJu(Owner, combatState, 2);
     }
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         if (card is not YueYing || card.Owner != Owner)

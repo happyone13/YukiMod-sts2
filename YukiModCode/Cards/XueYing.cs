@@ -33,7 +33,7 @@ public class XueYing() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetT
         return CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         if (card != this || originalCost <= 0m || !YukiInspirationService.WillTriggerOnPlay(this))

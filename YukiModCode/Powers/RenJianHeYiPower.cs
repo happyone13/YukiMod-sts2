@@ -24,7 +24,7 @@ public class RenJianHeYiPower : YukiModPower
         return count + 1m;
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, YukiCombatState combatState)
     {
         if (side == Owner.Side && AmountOnTurnStart > 0)
         {

@@ -24,7 +24,7 @@ public class HongChen() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, Ta
     {
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-        await PowerCmd.Apply<NoDrawPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<NoDrawPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -29,7 +29,7 @@ public class ShenYaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Anci
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var hand = PileType.Hand.GetPile(Owner);
-        var drawLimit = CardPile.MaxCardsInHand - hand.Cards.Count;
+        var drawLimit = YukiCardPileService.MaxCardsInHand - hand.Cards.Count;
         if (drawLimit <= 0)
         {
             return;

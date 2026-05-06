@@ -21,7 +21,7 @@ public class YingYueMirror() : YukiModCard(1, CardType.Skill, CardRarity.Uncommo
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<YingYueMirrorPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YingYueMirrorPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

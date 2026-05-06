@@ -12,7 +12,7 @@ public class YiShiNextAttackCostDownPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         if (!IsValidTarget(card, originalCost))

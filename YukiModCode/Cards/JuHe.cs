@@ -18,6 +18,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Powers;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -47,7 +48,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
             await CreatureCmd.Damage(choiceContext, enemy, damage, ValueProp.Move, Owner.Creature, this);
         }
 
-        await PowerCmd.Apply<JuHeEndTurnDamagePower>(
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<JuHeEndTurnDamagePower>(
             choiceContext,
             Owner.Creature,
             DynamicVars.Damage.BaseValue,
@@ -60,12 +61,12 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
         DynamicVars.Damage.UpgradeValueBy(33m);
     }
 
-    public static async Task<CardModel?> CreateInHand(Player owner, ICombatState combatState, bool upgraded = false)
+    public static async Task<CardModel?> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded = false)
     {
         return (await CreateInHand(owner, 1, combatState, upgraded)).FirstOrDefault();
     }
 
-    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, ICombatState combatState, bool upgraded = false)
+    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, YukiCombatState combatState, bool upgraded = false)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding)
         {
@@ -84,7 +85,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
             cards.Add(card);
         }
 
-        await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, owner);
+        await YukiCardPileService.AddGeneratedCardsToCombat(cards, PileType.Hand, owner);
         return cards;
     }
 

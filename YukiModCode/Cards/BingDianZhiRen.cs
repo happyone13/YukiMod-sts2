@@ -30,7 +30,7 @@ public class BingDianZhiRen() : YukiModCard(1, CardType.Power, CardRarity.Rare, 
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<BingDianZhiRenPower>(choiceContext, Owner.Creature, DynamicVars.Damage.BaseValue, Owner.Creature, this);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<BingDianZhiRenPower>(choiceContext, Owner.Creature, DynamicVars.Damage.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

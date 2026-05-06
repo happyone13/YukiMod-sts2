@@ -23,7 +23,7 @@ public class ShangXianZhiYue() : YukiModCard(1, CardType.Power, CardRarity.Rare,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ShangXianZhiYuePower>(choiceContext, Owner.Creature, DynamicVars["Threshold"].BaseValue, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<ShangXianZhiYuePower>(choiceContext, Owner.Creature, DynamicVars["Threshold"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

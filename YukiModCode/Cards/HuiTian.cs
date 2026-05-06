@@ -25,7 +25,7 @@ public class HuiTian() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetT
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<NextAttackPlayCountPower>(choiceContext, Owner.Creature, DynamicVars["Repeat"].BaseValue, Owner.Creature, this);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<NextAttackPlayCountPower>(choiceContext, Owner.Creature, DynamicVars["Repeat"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

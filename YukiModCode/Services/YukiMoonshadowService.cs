@@ -12,7 +12,7 @@ namespace YukiMod.YukiModCode.Services;
 
 public static class YukiMoonshadowService
 {
-    public static async Task NingJu(Player owner, ICombatState combatState, int amount)
+    public static async Task NingJu(Player owner, YukiCombatState combatState, int amount)
     {
         if (amount <= 0)
         {
@@ -121,7 +121,7 @@ public static class YukiMoonshadowService
         }
 
         var clone = card.CreateClone();
-        await CardPileCmd.AddGeneratedCardsToCombat([clone], PileType.Hand, card.Owner);
+        await YukiCardPileService.AddGeneratedCardsToCombat([clone], PileType.Hand, card.Owner);
         return clone;
     }
 

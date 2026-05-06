@@ -28,7 +28,7 @@ public class BiAnHua() : YukiModCard(1, CardType.Attack, CardRarity.Common, Targ
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<BiAnHuaDelayedDamagePower>(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BiAnHuaDelayedDamagePower>(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

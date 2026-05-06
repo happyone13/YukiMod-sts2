@@ -25,7 +25,7 @@ public class YueDu() : YukiModCard(0, CardType.Skill, CardRarity.Rare, TargetTyp
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<YueDuPower>(choiceContext, Owner.Creature, DynamicVars["MoonshadowDamage"].BaseValue, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YueDuPower>(choiceContext, Owner.Creature, DynamicVars["MoonshadowDamage"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

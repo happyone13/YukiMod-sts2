@@ -19,7 +19,7 @@ public class TianJiZhanJi() : YukiModCard(1, CardType.Power, CardRarity.Ancient,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<TianJiZhanJiPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<TianJiZhanJiPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade() { }

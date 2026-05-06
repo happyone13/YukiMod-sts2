@@ -28,7 +28,7 @@ public class YiShi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Target
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<YiShiNextAttackCostDownPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YiShiNextAttackCostDownPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

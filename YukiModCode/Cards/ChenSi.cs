@@ -26,7 +26,7 @@ public class ChenSi() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetTy
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<ChenSiPower>(choiceContext, Owner.Creature, DynamicVars.Block.BaseValue, Owner.Creature, this);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<ChenSiPower>(choiceContext, Owner.Creature, DynamicVars.Block.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

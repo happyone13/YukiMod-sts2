@@ -45,7 +45,7 @@ public class HeiYunAoYiMie() : YukiModCard(1, CardType.Attack, CardRarity.Common
 
         if (!isBlackCloudActive)
         {
-            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
         }
     }
 

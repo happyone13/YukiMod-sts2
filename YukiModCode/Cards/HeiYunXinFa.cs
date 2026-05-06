@@ -34,7 +34,7 @@ public class HeiYunXinFa() : YukiModCard(1, CardType.Skill, CardRarity.Rare, Tar
 
         if (YukiBlackCloudService.IsActive(Owner))
         {
-            await PowerCmd.Apply<HeiYunXinFaTemporaryStrengthPower>(
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunXinFaTemporaryStrengthPower>(
                 choiceContext,
                 Owner.Creature,
                 DynamicVars.Strength.BaseValue,

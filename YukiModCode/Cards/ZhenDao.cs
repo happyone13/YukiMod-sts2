@@ -20,7 +20,7 @@ public class ZhenDao() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetT
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ZhenDaoPower>(choiceContext, Owner.Creature, DynamicVars[ThresholdKey].BaseValue, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<ZhenDaoPower>(choiceContext, Owner.Creature, DynamicVars[ThresholdKey].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

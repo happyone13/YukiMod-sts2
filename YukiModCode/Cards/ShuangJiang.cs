@@ -25,7 +25,7 @@ public class ShuangJiang() : YukiModCard(1, CardType.Power, CardRarity.Rare, Tar
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<ShuangJiangPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<ShuangJiangPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

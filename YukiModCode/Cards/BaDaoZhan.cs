@@ -36,7 +36,7 @@ public class BaDaoZhan() : YukiModCard(1, CardType.Skill, CardRarity.Rare, Targe
         await CardCmd.AutoPlay(choiceContext, drawnCard, null);
     }
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         if (card != this || !YukiInspirationService.WillTriggerOnPlay(this) || originalCost <= 0m)

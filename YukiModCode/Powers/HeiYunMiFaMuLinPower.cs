@@ -27,7 +27,7 @@ public class HeiYunMiFaMuLinPower : YukiModPower, IBlackCloudEnteredListener
         }
 
         Flash();
-        await PowerCmd.Apply<HeiYunMiFaMuLinTemporaryStrengthPower>(choiceContext, Owner, Amount, Owner, null);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaMuLinTemporaryStrengthPower>(choiceContext, Owner, Amount, Owner, null);
         await PowerCmd.Remove(this);
     }
 }

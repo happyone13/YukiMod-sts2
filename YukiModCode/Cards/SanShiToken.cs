@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -48,7 +49,7 @@ public class SanShiToken() : YukiModTokenCard(3, CardType.Attack, CardRarity.Tok
         DynamicVars.Damage.UpgradeValueBy(8m);
     }
 
-    public static async Task<CardModel> CreateInHand(Player owner, ICombatState combatState, bool upgraded)
+    public static async Task<CardModel> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded)
     {
         var card = combatState.CreateCard<SanShiToken>(owner);
         if (upgraded)
@@ -56,7 +57,7 @@ public class SanShiToken() : YukiModTokenCard(3, CardType.Attack, CardRarity.Tok
             CardCmd.Upgrade(card, CardPreviewStyle.None);
         }
 
-        await CardPileCmd.AddGeneratedCardsToCombat([card], PileType.Hand, owner);
+        await YukiCardPileService.AddGeneratedCardsToCombat([card], PileType.Hand, owner);
         return card;
     }
 }

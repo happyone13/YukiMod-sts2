@@ -31,7 +31,12 @@ public class LingGanBingXie : YukiModRelic
 
     public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (player != Owner || Owner.Creature.CombatState?.RoundNumber != 1 || _triggeredThisCombat)
+#if STS2_104
+        var combatState = Owner.Creature.CombatState;
+#else
+        var combatState = CombatState;
+#endif
+        if (player != Owner || combatState?.RoundNumber != 1 || _triggeredThisCombat)
         {
             return Task.CompletedTask;
         }

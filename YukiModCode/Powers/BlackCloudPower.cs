@@ -20,7 +20,9 @@ public class BlackCloudPower : YukiModPower, IBlackCloudEnteredListener, IBlackC
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterPowerAmountChanged(
+#if STS2_104
         PlayerChoiceContext choiceContext,
+#endif
         PowerModel power,
         decimal amount,
         Creature? applier,
@@ -32,7 +34,10 @@ public class BlackCloudPower : YukiModPower, IBlackCloudEnteredListener, IBlackC
         }
 
         _grantedStrength += amount;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, amount, applier, cardSource, silent: true);
+#if STS2_103
+        var choiceContext = new ThrowingPlayerChoiceContext();
+#endif
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, amount, applier, cardSource, silent: true);
     }
 
     public async Task OnBlackCloudEntered(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
@@ -44,7 +49,7 @@ public class BlackCloudPower : YukiModPower, IBlackCloudEnteredListener, IBlackC
 
         Flash();
         _grantedStrength = Amount;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null, silent: true);
     }
 
     public async Task OnBlackCloudExited(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
@@ -56,7 +61,7 @@ public class BlackCloudPower : YukiModPower, IBlackCloudEnteredListener, IBlackC
 
         var strengthToRemove = _grantedStrength;
         _grantedStrength = 0;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, -strengthToRemove, Owner, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, -strengthToRemove, Owner, null, silent: true);
         await PowerCmd.Remove(this);
     }
 
@@ -69,6 +74,6 @@ public class BlackCloudPower : YukiModPower, IBlackCloudEnteredListener, IBlackC
 
         var strengthToRemove = _grantedStrength;
         _grantedStrength = 0;
-        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), oldOwner, -strengthToRemove, oldOwner, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), oldOwner, -strengthToRemove, oldOwner, null, silent: true);
     }
 }

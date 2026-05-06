@@ -40,7 +40,7 @@ public class ManYiPower : YukiModPower
             return;
         }
 
-        if (player.PlayerCombatState.Hand.Cards.Count < CardPile.MaxCardsInHand)
+        if (player.PlayerCombatState.Hand.Cards.Count < YukiMod.YukiModCode.Services.YukiCardPileService.MaxCardsInHand)
         {
             return;
         }
@@ -50,7 +50,7 @@ public class ManYiPower : YukiModPower
         await PlayerCmd.GainEnergy(2m, player);
     }
 
-    public override Task AfterSideTurnStart(CombatSide side, ICombatState combatState)
+    public override Task AfterSideTurnStart(CombatSide side, YukiCombatState combatState)
     {
         if (side == Owner.Side)
         {

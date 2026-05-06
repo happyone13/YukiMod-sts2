@@ -60,12 +60,12 @@ public static class YukiBlackCloudService
             return;
         }
 
-        await PowerCmd.Apply<BlackCloudPower>(choiceContext, source.Owner.Creature, 1m, source.Owner.Creature, source);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudPower>(choiceContext, source.Owner.Creature, 1m, source.Owner.Creature, source);
     }
 
     public static Task GainBlackCloud(PlayerChoiceContext choiceContext, Player player, decimal amount, CardModel? source = null)
     {
-        return PowerCmd.Apply<BlackCloudPower>(choiceContext, player.Creature, amount, player.Creature, source);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudPower>(choiceContext, player.Creature, amount, player.Creature, source);
     }
 
     public static async Task<bool> TryConsumeBlackCloud(PlayerChoiceContext choiceContext, Player player, decimal amount, CardModel? source = null)
@@ -76,7 +76,7 @@ public static class YukiBlackCloudService
             return false;
         }
 
-        await PowerCmd.ModifyAmount(choiceContext, blackCloudPower, -amount, player.Creature, source);
+        await YukiPowerService.ModifyAmount(choiceContext, blackCloudPower, -amount, player.Creature, source);
         return true;
     }
 
@@ -92,7 +92,7 @@ public static class YukiBlackCloudService
             await GrantKeepStanceOnce(choiceContext, player, cardSource);
         }
 
-        await PowerCmd.Apply<BlackCloudStancePower>(choiceContext, player.Creature, 1m, player.Creature, source as CardModel);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudStancePower>(choiceContext, player.Creature, 1m, player.Creature, source as CardModel);
         await NotifyEntered(choiceContext, player);
     }
 
@@ -170,12 +170,12 @@ public static class YukiBlackCloudService
 
     public static Task GrantKeepStanceOnce(PlayerChoiceContext choiceContext, Player player, CardModel source)
     {
-        return PowerCmd.Apply<BlackCloudKeepStanceOncePower>(choiceContext, player.Creature, 1m, player.Creature, source, silent: true);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudKeepStanceOncePower>(choiceContext, player.Creature, 1m, player.Creature, source, silent: true);
     }
 
     public static Task GrantKeepStanceThisTurn(PlayerChoiceContext choiceContext, Player player, CardModel source)
     {
-        return PowerCmd.Apply<BlackCloudKeepStanceThisTurnPower>(choiceContext, player.Creature, 1m, player.Creature, source, silent: true);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudKeepStanceThisTurnPower>(choiceContext, player.Creature, 1m, player.Creature, source, silent: true);
     }
 
     private static Task ApplyKeepMode(PlayerChoiceContext choiceContext, Player player, CardModel source, BlackCloudKeepMode keepMode)

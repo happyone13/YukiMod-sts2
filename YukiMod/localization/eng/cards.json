@@ -47,7 +47,7 @@
     "YUKIMOD-HEI_YUN_MI_FA_XU_XIANG.title": "Black Cloud Art: Mirage",
     "YUKIMOD-HEI_YUN_MI_FA_XU_XIANG.description": "Apply {WeakPower:diff()} [gold]Weak[/gold].\nEnter [gold]Black Cloud Stance[/gold] at the start of your next turn.",
     "YUKIMOD-HEI_YUN_MI_FA_MU_LIN.title": "Black Cloud Art: Veilfall",
-    "YUKIMOD-HEI_YUN_MI_FA_MU_LIN.description": "[gold]Black Cloud[/gold]: Gain {Energy:energyIcons()}, draw {Cards:diff()} cards, and keep [gold]Black Cloud Stance[/gold]. Otherwise, consume 2 [gold]Black Cloud[/gold]; the next time you enter [gold]Black Cloud Stance[/gold], gain {DelayedEnergy:energyIcons()} and draw {DelayedCards:diff()} cards.",
+    "YUKIMOD-HEI_YUN_MI_FA_MU_LIN.description": "[gold]Black Cloud[/gold]: Gain {Energy:energyIcons()}, draw {Cards:diff()} cards, and keep [gold]Black Cloud Stance[/gold]. Otherwise, consume 2 [gold]Black Cloud[/gold]; the next time you enter [gold]Black Cloud Stance[/gold], gain 2 Energy and draw {DelayedCards} cards.",
     "YUKIMOD-HUA.title": "Flower",
     "YUKIMOD-HUA.description": "Deal {Damage:diff()} damage.\nGain 1 [gold]Flower[/gold].\n[gold]Black Cloud[/gold]: Attack 1 additional time.",
     "YUKIMOD-HEI_YUN_MI_FA_HUN_YOU.title": "Black Cloud Art: Soulguard",

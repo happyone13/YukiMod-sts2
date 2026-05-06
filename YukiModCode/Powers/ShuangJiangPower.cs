@@ -14,7 +14,7 @@ public class ShuangJiangPower : YukiModPower
 
     public override bool IsInstanced => true;
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         if (card.Owner?.Creature != Owner || originalCost <= 0m || !YukiInspirationService.WillTriggerOnPlay(card))

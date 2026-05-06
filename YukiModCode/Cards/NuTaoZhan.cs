@@ -20,7 +20,7 @@ public class NuTaoZhan() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, T
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<NuTaoZhanPower>(
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<NuTaoZhanPower>(
             choiceContext,
             Owner.Creature,
             DynamicVars[ThresholdKey].BaseValue,

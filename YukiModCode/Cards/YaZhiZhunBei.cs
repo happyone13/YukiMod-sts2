@@ -30,7 +30,7 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
         YukiAudioService.TryPlayCustomCastCardClip("ya_zhi_zhun_bei", Owner);
 
         var hand = PileType.Hand.GetPile(Owner);
-        var drawLimit = CardPile.MaxCardsInHand - hand.Cards.Count;
+        var drawLimit = YukiCardPileService.MaxCardsInHand - hand.Cards.Count;
         if (drawLimit <= 0)
         {
             return;

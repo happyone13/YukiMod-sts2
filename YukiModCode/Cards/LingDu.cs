@@ -25,7 +25,7 @@ public class LingDu() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetTy
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<LingDuPower>(choiceContext, Owner.Creature, DynamicVars["Threshold"].BaseValue, Owner.Creature, this);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<LingDuPower>(choiceContext, Owner.Creature, DynamicVars["Threshold"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

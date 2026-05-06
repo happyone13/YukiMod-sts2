@@ -19,7 +19,9 @@ public class YinLeiTianYunPower : YukiModPower, IBlackCloudEnteredListener, IBla
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterPowerAmountChanged(
+#if STS2_104
         PlayerChoiceContext choiceContext,
+#endif
         PowerModel power,
         decimal amount,
         Creature? applier,
@@ -31,7 +33,10 @@ public class YinLeiTianYunPower : YukiModPower, IBlackCloudEnteredListener, IBla
         }
 
         _grantedStrength += (int)amount;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, amount, Owner, cardSource, silent: true);
+#if STS2_103
+        var choiceContext = new ThrowingPlayerChoiceContext();
+#endif
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, amount, Owner, cardSource, silent: true);
     }
 
     public async Task OnBlackCloudEntered(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
@@ -43,7 +48,7 @@ public class YinLeiTianYunPower : YukiModPower, IBlackCloudEnteredListener, IBla
 
         Flash();
         _grantedStrength = Amount;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, Amount, Owner, null, silent: true);
     }
 
     public async Task OnBlackCloudExited(PlayerChoiceContext choiceContext, MegaCrit.Sts2.Core.Entities.Players.Player player)
@@ -53,7 +58,7 @@ public class YinLeiTianYunPower : YukiModPower, IBlackCloudEnteredListener, IBla
             return;
         }
 
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, -_grantedStrength, Owner, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, -_grantedStrength, Owner, null, silent: true);
         _grantedStrength = 0;
     }
 
@@ -64,7 +69,7 @@ public class YinLeiTianYunPower : YukiModPower, IBlackCloudEnteredListener, IBla
             return;
         }
 
-        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), oldOwner, -_grantedStrength, oldOwner, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), oldOwner, -_grantedStrength, oldOwner, null, silent: true);
         _grantedStrength = 0;
     }
 }

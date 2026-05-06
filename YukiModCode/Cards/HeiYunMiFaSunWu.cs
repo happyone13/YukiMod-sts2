@@ -20,7 +20,7 @@ public class HeiYunMiFaSunWu() : YukiModCard(1, CardType.Skill, CardRarity.Commo
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>()];
+        [YukiHoverTipFactory.FromBlackCloud()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new BlockVar(5m, ValueProp.Move), new CardsVar(2)];
@@ -36,7 +36,7 @@ public class HeiYunMiFaSunWu() : YukiModCard(1, CardType.Skill, CardRarity.Commo
         }
         else if (await YukiBlackCloudService.TryConsumeBlackCloud(choiceContext, Owner, 1m, this))
         {
-            await PowerCmd.Apply<HeiYunMiFaYingFuPower>(choiceContext, Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaYingFuPower>(choiceContext, Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this);
         }
     }
 

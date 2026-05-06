@@ -35,7 +35,7 @@ public class DaoQiaoDaJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, 
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<EnergyNextTurnPower>(
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<EnergyNextTurnPower>(
             choiceContext,
             Owner.Creature,
             DynamicVars.Energy.BaseValue,

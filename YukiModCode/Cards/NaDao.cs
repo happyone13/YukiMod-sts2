@@ -18,6 +18,7 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -57,7 +58,7 @@ public class NaDao() : YukiModTokenCard(1, CardType.Attack, CardRarity.Token, Ta
             .Execute(choiceContext);
     }
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         if (card != this)
@@ -85,12 +86,12 @@ public class NaDao() : YukiModTokenCard(1, CardType.Attack, CardRarity.Token, Ta
         DynamicVars.Damage.UpgradeValueBy(2m);
     }
 
-    public static async Task<CardModel?> CreateInHand(Player owner, ICombatState combatState, bool upgraded = false)
+    public static async Task<CardModel?> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded = false)
     {
         return (await CreateInHand(owner, 1, combatState, upgraded)).FirstOrDefault();
     }
 
-    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, ICombatState combatState, bool upgraded = false)
+    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, YukiCombatState combatState, bool upgraded = false)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding)
         {
@@ -109,7 +110,7 @@ public class NaDao() : YukiModTokenCard(1, CardType.Attack, CardRarity.Token, Ta
             cards.Add(card);
         }
 
-        await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, owner);
+        await YukiCardPileService.AddGeneratedCardsToCombat(cards, PileType.Hand, owner);
         return cards;
     }
 }

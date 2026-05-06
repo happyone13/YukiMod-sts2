@@ -29,6 +29,7 @@
     <Sts2Path104 Condition="'$(Sts2Path104)' == '' and '$(STS2_104_PATH)' != ''">$(STS2_104_PATH)</Sts2Path104>
     <Sts2Path104 Condition="'$(Sts2Path104)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path104>
     <Sts2Path103 Condition="'$(Sts2Path103)' == '' and '$(STS2_103_PATH)' != ''">$(STS2_103_PATH)</Sts2Path103>
+    <Sts2Path103 Condition="'$(Sts2Path103)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path103>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '103'">$(Sts2Path103)</Sts2Path>
     <Sts2Path Condition="'$(Sts2TargetVersion)' != '103'">$(Sts2Path104)</Sts2Path>
     <ModsPath>$(Sts2Path)/mods/</ModsPath>
@@ -53,6 +54,8 @@
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
+    <DefineConstants Condition="'$(Sts2TargetVersion)' == '103'">$(DefineConstants);STS2_103</DefineConstants>
+    <DefineConstants Condition="'$(Sts2TargetVersion)' == '104'">$(DefineConstants);STS2_104</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(Sts2DataDir)') and '$(Configuration)' == 'Debug'">

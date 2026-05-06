@@ -32,7 +32,7 @@ public class TaQianZhan() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon,
 
         if (cardPlay.Target.IsAlive && !wasTargetHitByThisCardThisTurn)
         {
-            await PowerCmd.Apply<TaQianZhanMarkedPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<TaQianZhanMarkedPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
         }
 
         if (!wasTargetHitByThisCardThisTurn)

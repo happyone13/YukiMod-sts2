@@ -27,11 +27,13 @@ public abstract class YukiTemporaryStrengthPower : YukiModPower
     public override async Task BeforeApplied(Creature target, decimal amount, Creature? applier, CardModel? cardSource)
     {
         _shouldIgnoreNextInstance = true;
-        await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), target, amount, applier, cardSource, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), target, amount, applier, cardSource, silent: true);
     }
 
     public override async Task AfterPowerAmountChanged(
+#if STS2_104
         PlayerChoiceContext choiceContext,
+#endif
         PowerModel power,
         decimal amount,
         Creature? applier,
@@ -45,7 +47,10 @@ public abstract class YukiTemporaryStrengthPower : YukiModPower
             }
             else
             {
-                await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, amount, applier, cardSource, silent: true);
+#if STS2_103
+                var choiceContext = new ThrowingPlayerChoiceContext();
+#endif
+                await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, amount, applier, cardSource, silent: true);
             }
         }
     }
@@ -56,7 +61,7 @@ public abstract class YukiTemporaryStrengthPower : YukiModPower
         {
             Flash();
             await PowerCmd.Remove(this);
-            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, -Amount, Owner, null);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, -Amount, Owner, null);
         }
     }
 }

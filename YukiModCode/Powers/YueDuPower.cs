@@ -17,7 +17,11 @@ public class YueDuPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
+    public override Task AfterAttack(
+#if STS2_104
+        PlayerChoiceContext choiceContext,
+#endif
+        AttackCommand command)
     {
         if (command.Attacker != Owner)
         {

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Powers;
 using YukiMod.YukiModCode.Services;
 
@@ -18,7 +19,7 @@ public class HeiYunMiFaXiaZhen() : YukiModCard(1, CardType.Skill, CardRarity.Unc
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<BlackCloudPower>()];
+        [YukiHoverTipFactory.FromBlackCloud()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("BlackCloud", 2m)];

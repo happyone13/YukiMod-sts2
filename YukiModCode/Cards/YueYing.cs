@@ -56,7 +56,11 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
 
     protected override void OnUpgrade() { }
 
-    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
+    public override Task AfterAttack(
+#if STS2_104
+        PlayerChoiceContext choiceContext,
+#endif
+        AttackCommand command)
     {
         if (command.Attacker != Owner.Creature)
         {
@@ -83,12 +87,12 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
         return Task.CompletedTask;
     }
 
-    public static async Task<CardModel?> CreateInHand(Player owner, ICombatState combatState)
+    public static async Task<CardModel?> CreateInHand(Player owner, YukiCombatState combatState)
     {
         return (await CreateInHand(owner, 1, combatState)).FirstOrDefault();
     }
 
-    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, ICombatState combatState)
+    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, YukiCombatState combatState)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding)
         {
@@ -101,7 +105,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
             cards.Add(combatState.CreateCard<YueYing>(owner));
         }
 
-        await CardPileCmd.AddGeneratedCardsToCombat(cards, PileType.Hand, owner);
+        await YukiCardPileService.AddGeneratedCardsToCombat(cards, PileType.Hand, owner);
         return cards;
     }
 }

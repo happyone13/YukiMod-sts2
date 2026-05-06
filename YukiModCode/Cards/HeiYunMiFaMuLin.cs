@@ -25,7 +25,7 @@ public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare,
         [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>(), EnergyHoverTip];
+        [YukiHoverTipFactory.FromBlackCloud(), EnergyHoverTip];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -37,8 +37,8 @@ public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare,
         }
         else if (await YukiBlackCloudService.TryConsumeBlackCloud(choiceContext, Owner, 2m, this))
         {
-            await PowerCmd.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars["DelayedEnergy"].BaseValue, Owner.Creature, this);
-            await PowerCmd.Apply<HeiYunMiFaYingFuPower>(choiceContext, Owner.Creature, DynamicVars["DelayedCards"].BaseValue, Owner.Creature, this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars["DelayedEnergy"].BaseValue, Owner.Creature, this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaYingFuPower>(choiceContext, Owner.Creature, DynamicVars["DelayedCards"].BaseValue, Owner.Creature, this);
         }
     }
 

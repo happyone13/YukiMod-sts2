@@ -25,7 +25,7 @@ public class YinLeiTianYun() : YukiModCard(1, CardType.Power, CardRarity.Rare, T
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<YinLeiTianYunPower>(
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<YinLeiTianYunPower>(
             choiceContext,
             Owner.Creature,
             DynamicVars.Strength.BaseValue,

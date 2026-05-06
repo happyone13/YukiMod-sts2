@@ -38,6 +38,7 @@ public static class YukiCharacterAnimationFallbackPatch
         if (!IsYukiScene(__instance))
             return;
 
+        RegisteredRestSiteAnimationStates.Clear();
         RegisterRestSiteAnimationStates(__instance);
     }
 
@@ -55,6 +56,7 @@ public static class YukiCharacterAnimationFallbackPatch
         }
     }
 
+#if !STS2_103
     [HarmonyPatch(typeof(NRestSiteCharacter), nameof(NRestSiteCharacter._ExitTree))]
     [HarmonyPrefix]
     public static void RestSiteExitTreePrefix(NRestSiteCharacter __instance)
@@ -64,6 +66,7 @@ public static class YukiCharacterAnimationFallbackPatch
 
         UnregisterRestSiteAnimationStates(__instance);
     }
+#endif
 
     [HarmonyPatch(typeof(MegaAnimationState), nameof(MegaAnimationState.SetAnimation), [typeof(string), typeof(bool), typeof(int)])]
     [HarmonyPrefix]

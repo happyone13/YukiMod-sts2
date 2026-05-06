@@ -40,7 +40,7 @@ public class YueGuang() : YukiModCard(1, CardType.Skill, CardRarity.Common, Targ
         DynamicVars[MoonshadowDamageKey].UpgradeValueBy(3m);
     }
 
-    private async Task ResolveMoonlight(MegaCrit.Sts2.Core.Combat.ICombatState combatState)
+    private async Task ResolveMoonlight(YukiCombatState combatState)
     {
         await YukiMoonshadowService.NingJu(Owner, combatState, 1);
         YukiMoonshadowService.GainMoonshadowDamageInHand(Owner, DynamicVars[MoonshadowDamageKey].BaseValue);

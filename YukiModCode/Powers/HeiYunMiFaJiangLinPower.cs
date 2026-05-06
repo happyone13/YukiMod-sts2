@@ -29,7 +29,7 @@ public class HeiYunMiFaJiangLinPower : YukiModPower, IBlackCloudEnteredListener
         Flash();
         if (CombatState.HittableEnemies.Count > 0)
         {
-            await PowerCmd.Apply<VulnerablePower>(choiceContext, CombatState.HittableEnemies, Amount, Owner, null);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<VulnerablePower>(choiceContext, CombatState.HittableEnemies, Amount, Owner, null);
         }
 
         await PowerCmd.Remove(this);

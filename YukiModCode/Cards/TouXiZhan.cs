@@ -41,7 +41,7 @@ public class TouXiZhan() : YukiModCard(2, CardType.Attack, CardRarity.Common, Ta
             .Execute(choiceContext);
     }
 
-    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
         if (card != this || !YukiInspirationService.WillTriggerOnPlay(this) || originalCost <= 0m)

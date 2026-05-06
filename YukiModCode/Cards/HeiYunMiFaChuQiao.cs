@@ -27,7 +27,7 @@ public class HeiYunMiFaChuQiao() : YukiModCard(1, CardType.Skill, CardRarity.Rar
         }
 
         await YukiBlackCloudService.Enter(choiceContext, Owner, this);
-        await PowerCmd.Apply<HeiYunMiFaChuQiaoPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaChuQiaoPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

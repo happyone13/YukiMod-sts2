@@ -17,16 +17,14 @@ public class RuYingSuiXing() : YukiModCard(1, CardType.Power, CardRarity.Rare, T
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromPower<BlackCloudStancePower>()];
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Innate];
-
+    
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<RuYingSuiXingPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<RuYingSuiXingPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
+        AddKeyword(CardKeyword.Innate);
     }
 }

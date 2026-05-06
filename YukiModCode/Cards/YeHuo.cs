@@ -38,7 +38,7 @@ public class YeHuo() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetTy
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await PowerCmd.Apply<YeHuoMarkedPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YeHuoMarkedPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -47,7 +47,7 @@
     "YUKIMOD-HEI_YUN_MI_FA_XU_XIANG.title": "黑云秘法：虚像",
     "YUKIMOD-HEI_YUN_MI_FA_XU_XIANG.description": "施加{WeakPower:diff()}层[gold]虚弱[/gold]。\n在你的下回合开始时，进入[gold]黑云姿态[/gold]。",
     "YUKIMOD-HEI_YUN_MI_FA_MU_LIN.title": "黑云秘法：幕临",
-    "YUKIMOD-HEI_YUN_MI_FA_MU_LIN.description": "[gold]黑云[/gold]：获得{Energy:energyIcons()}，抽{Cards:diff()}张牌，保留[gold]黑云姿态[/gold]；否则，消耗2层[gold]黑云[/gold]，下次进入[gold]黑云姿态[/gold]时额外获得{DelayedEnergy:energyIcons()}，抽{DelayedCards:diff()}张牌。",
+    "YUKIMOD-HEI_YUN_MI_FA_MU_LIN.description": "[gold]黑云[/gold]：获得{Energy:energyIcons()}，抽{Cards:diff()}张牌，保留[gold]黑云姿态[/gold]；否则，消耗2层[gold]黑云[/gold]，下次进入[gold]黑云姿态[/gold]时额外获得2点能量，抽{DelayedCards}张牌。",
     "YUKIMOD-HUA.title": "花",
     "YUKIMOD-HUA.description": "造成{Damage:diff()}点伤害。\n获得1层[gold]花[/gold]。\n[gold]黑云[/gold]：额外攻击1次。",
     "YUKIMOD-HEI_YUN_MI_FA_HUN_YOU.title": "黑云秘法：魂佑",

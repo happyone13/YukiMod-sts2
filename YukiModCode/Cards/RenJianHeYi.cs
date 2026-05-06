@@ -20,7 +20,7 @@ public class RenJianHeYi() : YukiModCard(1, CardType.Skill, CardRarity.Common, T
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<RenJianHeYiPower>(choiceContext, Owner.Creature, 2m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<RenJianHeYiPower>(choiceContext, Owner.Creature, 2m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

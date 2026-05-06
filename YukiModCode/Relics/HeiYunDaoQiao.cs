@@ -39,7 +39,7 @@ public class HeiYunDaoQiao : YukiModRelic, IBlackCloudEnteredListener, IBlackClo
 
         Flash();
         _grantedStrength = 2;
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, _grantedStrength, Owner.Creature, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner.Creature, _grantedStrength, Owner.Creature, null, silent: true);
     }
 
     public async Task OnBlackCloudExited(PlayerChoiceContext choiceContext, Player player)
@@ -49,7 +49,7 @@ public class HeiYunDaoQiao : YukiModRelic, IBlackCloudEnteredListener, IBlackClo
             return;
         }
 
-        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, -_grantedStrength, Owner.Creature, null, silent: true);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner.Creature, -_grantedStrength, Owner.Creature, null, silent: true);
         _grantedStrength = 0;
     }
 }

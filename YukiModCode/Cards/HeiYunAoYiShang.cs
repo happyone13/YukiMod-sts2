@@ -40,7 +40,7 @@ public class HeiYunAoYiShang() : YukiModCard(1, CardType.Attack, CardRarity.Comm
 
         if (applyVulnerable)
         {
-            await PowerCmd.Apply<VulnerablePower>(
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<VulnerablePower>(
                 choiceContext,
                 cardPlay.Target,
                 DynamicVars.Vulnerable.BaseValue,
@@ -49,7 +49,7 @@ public class HeiYunAoYiShang() : YukiModCard(1, CardType.Attack, CardRarity.Comm
         }
         else
         {
-            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
         }
     }
 

@@ -14,7 +14,7 @@ public class BlackCloudEnterAndDrawNextTurnPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, YukiCombatState combatState)
     {
         if (player != Owner.Player || AmountOnTurnStart <= 0)
         {

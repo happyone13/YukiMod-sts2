@@ -23,7 +23,7 @@ public class HeiWuJiangLin() : YukiModCard(1, CardType.Power, CardRarity.Rare, T
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        return PowerCmd.Apply<HeiWuJiangLinPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        return YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiWuJiangLinPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

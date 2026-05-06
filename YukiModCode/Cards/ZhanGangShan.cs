@@ -42,7 +42,7 @@ public class ZhanGangShan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommo
         var power = Owner.Creature.GetPower<ZhanGangShanPower>();
         if (power == null)
         {
-            await PowerCmd.Apply<ZhanGangShanPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<ZhanGangShanPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
             power = Owner.Creature.GetPower<ZhanGangShanPower>();
         }
 

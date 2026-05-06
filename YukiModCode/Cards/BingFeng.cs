@@ -45,7 +45,7 @@ public class BingFeng() : YukiModCard(1, CardType.Attack, CardRarity.Common, Tar
             weakAmount += DynamicVars[InspiredWeakKey].BaseValue;
         }
 
-        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, weakAmount, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<WeakPower>(choiceContext, cardPlay.Target, weakAmount, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
