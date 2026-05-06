@@ -6,36 +6,45 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Powers;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
 public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
-    private const string StrengthKey = "StrengthPower";
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(7m, ValueProp.Move), new DynamicVar(StrengthKey, 3m)];
+        [new EnergyVar(1), new CardsVar(1), new DynamicVar("DelayedEnergy", 2m), new DynamicVar("DelayedCards", 2m)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<BlackCloudStancePower>(), HoverTipFactory.FromPower<StrengthPower>()];
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
 
-    public override bool GainsBlock => true;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>(), EnergyHoverTip];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<HeiYunMiFaMuLinPower>(choiceContext, Owner.Creature, DynamicVars[StrengthKey].BaseValue, Owner.Creature, this);
+        if (YukiBlackCloudService.IsActive(Owner))
+        {
+            await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+            await YukiBlackCloudService.GrantKeepStanceOnce(choiceContext, Owner, this);
+        }
+        else if (await YukiBlackCloudService.TryConsumeBlackCloud(choiceContext, Owner, 2m, this))
+        {
+            await PowerCmd.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars["DelayedEnergy"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<HeiYunMiFaYingFuPower>(choiceContext, Owner.Creature, DynamicVars["DelayedCards"].BaseValue, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
+        DynamicVars["DelayedCards"].UpgradeValueBy(1m);
     }
 }

@@ -32,6 +32,6 @@ public class TianJiZhanJiPower : YukiModPower
 
         Flash();
         await CardPileCmd.Add(handCards, PileType.Draw, CardPilePosition.Top, this);
-        await CardPileCmd.Draw(choiceContext, handCards.Length, player);
+        await CardPileCmd.Draw(choiceContext, handCards.Length + 2, player);
     }
 }

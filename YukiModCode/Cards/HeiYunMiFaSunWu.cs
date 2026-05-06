@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Powers;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -19,29 +20,23 @@ public class HeiYunMiFaSunWu() : YukiModCard(1, CardType.Skill, CardRarity.Commo
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud()];
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(9m, ValueProp.Move), new CardsVar(2)];
+        [new BlockVar(5m, ValueProp.Move), new CardsVar(2)];
 
     public override bool GainsBlock => true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var shouldDraw = false;
-        await YukiBlackCloudService.Resolve(
-            choiceContext,
-            this,
-            () =>
-            {
-                shouldDraw = true;
-                return Task.CompletedTask;
-            });
-
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        if (shouldDraw)
+        if (YukiBlackCloudService.IsActive(Owner))
         {
-            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        }
+        else if (await YukiBlackCloudService.TryConsumeBlackCloud(choiceContext, Owner, 1m, this))
+        {
+            await PowerCmd.Apply<HeiYunMiFaYingFuPower>(choiceContext, Owner.Creature, DynamicVars.Cards.BaseValue, Owner.Creature, this);
         }
     }
 

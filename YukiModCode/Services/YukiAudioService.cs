@@ -86,6 +86,24 @@ public static class YukiAudioService
         return TryPlay(path, linearVolume);
     }
 
+    public static bool TryPlayCustomAttackCardClip(string clipKey, Player? player = null, float linearVolume = 1f)
+    {
+        if (!IsYukiPlayer(player) || !CustomCardClipMap.ContainsKey(clipKey))
+            return false;
+
+        SuppressNextDefaultAttackSfx(player);
+        return TryPlayCustomCardClip(clipKey, player, linearVolume);
+    }
+
+    public static bool TryPlayCustomCastCardClip(string clipKey, Player? player = null, float linearVolume = 1f)
+    {
+        if (!IsYukiPlayer(player) || !CustomCardClipMap.ContainsKey(clipKey))
+            return false;
+
+        SuppressNextDefaultCastSfx(player);
+        return TryPlayCustomCardClip(clipKey, player, linearVolume);
+    }
+
     public static void SuppressNextDefaultAttackSfx(Player? player = null)
     {
         if (!IsYukiPlayer(player))

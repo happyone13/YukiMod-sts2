@@ -19,6 +19,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(TokenCardPool))]
 public class ErShiToken() : YukiModTokenCard(2, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromCard<SanShiToken>()];
 

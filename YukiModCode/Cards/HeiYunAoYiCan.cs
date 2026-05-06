@@ -27,13 +27,8 @@ public class HeiYunAoYiCan() : YukiModCard(0, CardType.Skill, CardRarity.Common,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await YukiBlackCloudService.Resolve(
-            choiceContext,
-            this,
-            () => Task.CompletedTask,
-            BlackCloudKeepMode.ThisCard);
-
         await CardPileCmd.Draw(choiceContext, 1m, Owner);
+        await YukiBlackCloudService.Enter(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()

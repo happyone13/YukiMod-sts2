@@ -27,8 +27,7 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        YukiAudioService.SuppressNextDefaultCastSfx(Owner);
-        YukiAudioService.TryPlayCustomCardClip("ya_zhi_zhun_bei", Owner);
+        YukiAudioService.TryPlayCustomCastCardClip("ya_zhi_zhun_bei", Owner);
 
         var hand = PileType.Hand.GetPile(Owner);
         var drawLimit = CardPile.MaxCardsInHand - hand.Cards.Count;

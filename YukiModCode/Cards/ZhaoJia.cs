@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class ZhaoJia() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public class ZhaoJia() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/zhao_jia_dynamic.tscn";

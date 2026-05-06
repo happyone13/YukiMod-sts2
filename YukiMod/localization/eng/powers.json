@@ -1,4 +1,4 @@
-﻿{
+{
     "YUKIMOD-BLACK_CLOUD_POWER.title": "Black Cloud",
     "YUKIMOD-BLACK_CLOUD_POWER.description": "The next time you enter [gold]Black Cloud Stance[/gold], gain {Amount} [gold]Strength[/gold]. When you leave [gold]Black Cloud Stance[/gold], remove that [gold]Strength[/gold].",
     "YUKIMOD-BLACK_CLOUD_POWER.smartDescription": "The next time you enter [gold]Black Cloud Stance[/gold], gain {Amount} [gold]Strength[/gold]. When you leave [gold]Black Cloud Stance[/gold], remove that [gold]Strength[/gold].",
@@ -145,7 +145,8 @@
     "YUKIMOD-YUE_DU_POWER.smartDescription": "This turn, whenever your attacks hit, your [gold]Moonshadow[/gold] in hand gain {Amount:diff()} damage.",
     "YUKIMOD-YE_HUO_MARKED_POWER.title": "Hellfire",
     "YUKIMOD-YE_HUO_MARKED_POWER.description": "Whenever you attack this creature, your [gold]Moonshadow[/gold] in hand gain {Amount} damage.",
-    "YUKIMOD-YE_HUO_MARKED_POWER.smartDescription": "Whenever you attack this creature, your [gold]Moonshadow[/gold] in hand gain {Amount} damage."
+    "YUKIMOD-YE_HUO_MARKED_POWER.smartDescription": "Whenever you attack this creature, your [gold]Moonshadow[/gold] in hand gain {Amount} damage.",
+    "YUKIMOD-NEXT_ATTACK_PLAY_COUNT_POWER.title": "Heaven Return",
+    "YUKIMOD-NEXT_ATTACK_PLAY_COUNT_POWER.description": "Your next [gold]Attack[/gold] plays {Amount} additional time.",
+    "YUKIMOD-NEXT_ATTACK_PLAY_COUNT_POWER.smartDescription": "Your next [gold]Attack[/gold] plays {Amount} additional time."
 }
-
-

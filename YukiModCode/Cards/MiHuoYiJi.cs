@@ -34,8 +34,7 @@ public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Ta
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
-        YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
-        YukiAudioService.TryPlayCustomCardClip("mi_huo_yi_ji", Owner);
+        YukiAudioService.TryPlayCustomAttackCardClip("mi_huo_yi_ji", Owner);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars.Repeat.IntValue)

@@ -65,8 +65,7 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
 
         if (!string.IsNullOrWhiteSpace(CustomPowerCastClipKey))
         {
-            YukiAudioService.SuppressNextDefaultCastSfx(Owner);
-            YukiAudioService.TryPlayCustomCardClip(CustomPowerCastClipKey, Owner);
+            YukiAudioService.TryPlayCustomCastCardClip(CustomPowerCastClipKey, Owner);
         }
 
         await PlayPowerCastAnim();

@@ -8,31 +8,40 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Powers;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HeiYunMiFaHunYou() : YukiModCard(2, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class HeiYunMiFaHunYou() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(9m, ValueProp.Move), new EnergyVar(2)];
+        [new BlockVar(5m, ValueProp.Move), new EnergyVar(1)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<BlackCloudStancePower>(), EnergyHoverTip];
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>(), EnergyHoverTip];
 
     public override bool GainsBlock => true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await PowerCmd.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
+        if (YukiBlackCloudService.IsActive(Owner))
+        {
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        }
+        else if (await YukiBlackCloudService.TryConsumeBlackCloud(choiceContext, Owner, 1m, this))
+        {
+            await PowerCmd.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

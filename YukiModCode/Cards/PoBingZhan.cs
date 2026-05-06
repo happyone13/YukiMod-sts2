@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -31,19 +32,21 @@ public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon,
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var exhaustedCard = (await CardSelectCmd.FromHand(
-            choiceContext,
-            Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1),
-            null,
-            this)).FirstOrDefault();
-        if (exhaustedCard != null)
+        if (PileType.Hand.GetPile(Owner).Cards.Count > 0)
         {
-            await CardCmd.Exhaust(choiceContext, exhaustedCard);
+            var exhaustedCard = (await CardSelectCmd.FromHand(
+                choiceContext,
+                Owner,
+                new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1),
+                null,
+                this)).FirstOrDefault();
+            if (exhaustedCard != null)
+            {
+                await CardCmd.Exhaust(choiceContext, exhaustedCard);
+            }
         }
 
-        YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
-        YukiAudioService.TryPlayCustomCardClip("po_bing_zhan", Owner);
+        YukiAudioService.TryPlayCustomAttackCardClip("po_bing_zhan", Owner);
         var hitCount = YukiInspirationService.WillTriggerOnPlay(this) ? 2 : 1;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)

@@ -31,6 +31,6 @@ public class MingDing() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, Ta
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        DynamicVars.Cards.UpgradeValueBy(2m);
     }
 }

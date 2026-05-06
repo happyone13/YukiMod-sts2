@@ -8,6 +8,10 @@
 
 - `BlackCloudStancePower`
   - 是“当前是否处于黑云姿态”的唯一状态源。
+- `BlackCloudPower`
+  - 是“黑云层数”的唯一状态源。
+  - 下次进入黑云姿态时转换为等量力量。
+  - 退出黑云姿态时移除这些力量和自身。
 - 不再允许每张黑云牌自己各写一套 `if/else` 来判断姿态。
 
 ## 2. 统一入口
@@ -19,6 +23,15 @@
   - 否则，获得 1 层 `BlackCloudPower`。
   - `BlackCloudPower` 会在下次进入黑云姿态时转换为等量力量，并在退出黑云姿态时移除这些力量和自身。
   - 如果某张牌还写有“否则进入黑云姿态”，该进入姿态效果由单卡在 `Resolve(...)` 之后显式调用 `Enter(...)`，例如 `拔刀`。
+  - 如果某张牌写有“否则消耗 N 层黑云”，只有当前 `BlackCloudPower.Amount >= N` 时才触发；层数不足时该否则分支不触发。
+
+## 2.1 黑云层数辅助入口
+
+- 获得黑云层：
+  - `YukiBlackCloudService.GainBlackCloud(...)`
+- 消耗黑云层：
+  - `YukiBlackCloudService.TryConsumeBlackCloud(...)`
+  - 返回 `false` 时，调用方不要结算后续延迟收益。
 
 ## 3. 退出规则
 

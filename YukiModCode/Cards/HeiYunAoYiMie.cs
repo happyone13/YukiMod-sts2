@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
@@ -23,24 +24,17 @@ public class HeiYunAoYiMie() : YukiModCard(1, CardType.Attack, CardRarity.Common
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud()];
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<WeakPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move)];
+        [new DamageVar(9m, ValueProp.Move), new PowerVar<WeakPower>(1m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
-        var hitCount = 1;
-        await YukiBlackCloudService.Resolve(
-            choiceContext,
-            this,
-            () =>
-            {
-                hitCount++;
-                return Task.CompletedTask;
-            });
+        var isBlackCloudActive = YukiBlackCloudService.IsActive(Owner);
+        var hitCount = isBlackCloudActive ? 2 : 1;
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
@@ -48,6 +42,11 @@ public class HeiYunAoYiMie() : YukiModCard(1, CardType.Attack, CardRarity.Common
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        if (!isBlackCloudActive)
+        {
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()
