@@ -60,7 +60,24 @@ public static class YukiBlackCloudService
             return;
         }
 
-        await Enter(choiceContext, source.Owner, source);
+        await PowerCmd.Apply<BlackCloudPower>(choiceContext, source.Owner.Creature, 1m, source.Owner.Creature, source);
+    }
+
+    public static Task GainBlackCloud(PlayerChoiceContext choiceContext, Player player, decimal amount, CardModel? source = null)
+    {
+        return PowerCmd.Apply<BlackCloudPower>(choiceContext, player.Creature, amount, player.Creature, source);
+    }
+
+    public static async Task<bool> TryConsumeBlackCloud(PlayerChoiceContext choiceContext, Player player, decimal amount, CardModel? source = null)
+    {
+        var blackCloudPower = player.Creature.Powers.OfType<BlackCloudPower>().FirstOrDefault();
+        if (blackCloudPower == null || blackCloudPower.Amount < amount)
+        {
+            return false;
+        }
+
+        await PowerCmd.ModifyAmount(choiceContext, blackCloudPower, -amount, player.Creature, source);
+        return true;
     }
 
     public static async Task Enter(PlayerChoiceContext choiceContext, Player player, AbstractModel? source = null)

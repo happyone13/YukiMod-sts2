@@ -73,12 +73,13 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
             return Task.CompletedTask;
         }
 
-        if (!command.Results.Any(result => result.TotalDamage > 0))
+        var hitCount = command.Results.Count(result => result.TotalDamage > 0);
+        if (hitCount <= 0)
         {
             return Task.CompletedTask;
         }
 
-        DynamicVars.Damage.BaseValue += 1m;
+        DynamicVars.Damage.BaseValue += hitCount;
         return Task.CompletedTask;
     }
 

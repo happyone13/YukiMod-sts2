@@ -23,7 +23,7 @@ public class GaoSuZhanJi() : YukiModCard(2, CardType.Attack, CardRarity.Common, 
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(15m, ValueProp.Move), new CardsVar(2)];
+        [new DamageVar(12m, ValueProp.Move), new CardsVar(2)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -33,14 +33,23 @@ public class GaoSuZhanJi() : YukiModCard(2, CardType.Attack, CardRarity.Common, 
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        if (YukiInspirationService.WillTriggerOnPlay(this))
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+    }
+
+    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this || originalCost <= 0m || !YukiInspirationService.WillTriggerOnPlay(this))
         {
-            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+            return false;
         }
+
+        modifiedCost = originalCost - 1m;
+        return true;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(5m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

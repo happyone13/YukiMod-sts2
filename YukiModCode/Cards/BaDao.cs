@@ -32,6 +32,7 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
         var hitCount = 1;
+        var shouldEnterBlackCloud = !YukiBlackCloudService.IsActive(Owner);
         await YukiBlackCloudService.Resolve(
             choiceContext,
             this,
@@ -40,6 +41,11 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
                 hitCount++;
                 return Task.CompletedTask;
             });
+
+        if (shouldEnterBlackCloud)
+        {
+            await YukiBlackCloudService.Enter(choiceContext, Owner, this);
+        }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
@@ -51,6 +57,6 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

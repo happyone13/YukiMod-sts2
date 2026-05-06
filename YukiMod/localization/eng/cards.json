@@ -8,7 +8,7 @@
     "YUKIMOD-NING_JU.title": "Converge",
     "YUKIMOD-NING_JU.description": "If you have no [gold]Moonshadow[/gold] in hand, add 1 to your hand. Otherwise, your [gold]Moonshadow[/gold] in hand cost 1 more and gain 1 Replay.",
     "YUKIMOD-BLACK_CLOUD.title": "Black Cloud",
-    "YUKIMOD-BLACK_CLOUD.description": "If you are already in [gold]Black Cloud Stance[/gold], trigger this card's [gold]Black Cloud[/gold] effect. Otherwise, enter [gold]Black Cloud Stance[/gold]. While in [gold]Black Cloud Stance[/gold], playing a non-[gold]Attack[/gold] exits it unless an effect says to keep it.",
+    "YUKIMOD-BLACK_CLOUD.description": "If you are already in [gold]Black Cloud Stance[/gold], trigger this card's [gold]Black Cloud[/gold] effect. Otherwise, gain 1 [gold]Black Cloud[/gold]. While in [gold]Black Cloud Stance[/gold], playing a non-[gold]Attack[/gold] exits it unless an effect says to keep it.",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.title": "Counts as Moonshadow",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.description": "This is treated as [gold]Moonshadow[/gold] for in-hand damage and Replay effects, but it does not prevent [gold]Converge[/gold] from creating a real [gold]Moonshadow[/gold].",
     "YUKIMOD-DEFEND_YUKI.title": "Defend",
@@ -16,7 +16,7 @@
     "YUKIMOD-YA_ZHI_ZHUN_BEI.title": "Suppression Prep",
     "YUKIMOD-YA_ZHI_ZHUN_BEI.description": "Draw 1 {IfUpgraded:show:non-[gold]Strike[/gold] |}[gold]Attack[/gold] from your [gold]Draw Pile[/gold] or [gold]Discard Pile[/gold].\n[gold]Inspiration[/gold]: Prioritize [gold]Inspiration[/gold] [gold]Attacks[/gold].",
     "YUKIMOD-BA_DAO.title": "Draw Blade",
-    "YUKIMOD-BA_DAO.description": "Deal {Damage:diff()} damage.\n[gold]Black Cloud[/gold]: Attack 1 additional time.",
+    "YUKIMOD-BA_DAO.description": "Deal {Damage:diff()} damage.\n[gold]Black Cloud[/gold]: Attack 1 additional time. Otherwise, enter [gold]Black Cloud Stance[/gold].",
     "YUKIMOD-HEI_YUN_AO_YI_MIE.title": "Black Cloud Secret: Extinguish",
     "YUKIMOD-HEI_YUN_AO_YI_MIE.description": "Deal {Damage:diff()} damage.\n[gold]Black Cloud[/gold]: Attack 1 additional time.",
     "YUKIMOD-HEI_YUN_AO_YI_SHANG.title": "Black Cloud Secret: Scar",
@@ -206,7 +206,7 @@
     "YUKIMOD-YE_HUO.title": "Hellfire",
     "YUKIMOD-YE_HUO.description": "Deal {Damage:diff()} damage.\nWhenever you attack this target, your [gold]Moonshadow[/gold] in hand gain +1 damage.",
     "YUKIMOD-YAO_GUAI_SHOU_LIE.title": "Youkai Hunt",
-    "YUKIMOD-YAO_GUAI_SHOU_LIE.description": "Deal {Damage:diff()} damage twice.\n[gold]Converge[/gold] 1."
+    "YUKIMOD-YAO_GUAI_SHOU_LIE.description": "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Converge[/gold] 1."
 }
 
 

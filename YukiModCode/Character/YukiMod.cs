@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Relics;
 using YukiMod.YukiModCode.Cards;
+using YukiMod.YukiModCode.Extensions;
 using YukiMod.YukiModCode.Relics;
 
 namespace YukiMod.YukiModCode.Character;
@@ -58,6 +59,10 @@ public class YukiMod : PlaceholderCharacterModel
     public override string CustomRestSiteAnimPath => "res://YukiMod/scenes/yuki_character_camp.tscn";
     public override string CustomMerchantAnimPath => "res://YukiMod/scenes/merchant/characters/yukimod_merchant.tscn";
     public override string CustomCharacterSelectBg => "res://YukiMod/scenes/yuki_bg.tscn";
+    public override string CustomArmPointingTexturePath => "multiplayer_hand_yuki_point.png".CharacterUiPath();
+    public override string CustomArmRockTexturePath => "multiplayer_hand_yuki_rock.png".CharacterUiPath();
+    public override string CustomArmPaperTexturePath => "multiplayer_hand_yuki_paper.png".CharacterUiPath();
+    public override string CustomArmScissorsTexturePath => "multiplayer_hand_yuki_scissors.png".CharacterUiPath();
     public override string CustomAttackSfx => "yuki_attack";
     public override string CustomCastSfx => "yuki_cast";
     public override string CustomDeathSfx => "yuki_die";

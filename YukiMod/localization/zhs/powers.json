@@ -1,4 +1,7 @@
 {
+    "YUKIMOD-BLACK_CLOUD_POWER.title": "黑云",
+    "YUKIMOD-BLACK_CLOUD_POWER.description": "下次进入[gold]黑云姿态[/gold]时，获得{Amount}点[gold]力量[/gold]。退出[gold]黑云姿态[/gold]时，移除这些[gold]力量[/gold]。",
+    "YUKIMOD-BLACK_CLOUD_POWER.smartDescription": "下次进入[gold]黑云姿态[/gold]时，获得{Amount}点[gold]力量[/gold]。退出[gold]黑云姿态[/gold]时，移除这些[gold]力量[/gold]。",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.title": "黑云姿态",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.description": "处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云。",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.smartDescription": "处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云。",

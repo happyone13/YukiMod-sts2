@@ -92,7 +92,12 @@ public static class YukiInspirationService
 
     public static bool WillTriggerOnPlay(CardModel card)
     {
-        return CanReceiveInspiration(card) && IsInspired(card);
+        return card switch
+        {
+            YukiModCard { IsInspirationTriggeredForCurrentPlay: true } => true,
+            YukiModTokenCard { IsInspirationTriggeredForCurrentPlay: true } => true,
+            _ => CanReceiveInspiration(card) && IsInspired(card)
+        };
     }
 
     public static IEnumerable<CardModel> GetInspirationSchoolCards(Player owner, params PileType[] piles)

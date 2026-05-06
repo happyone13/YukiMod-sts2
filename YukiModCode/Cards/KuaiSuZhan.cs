@@ -17,8 +17,6 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class KuaiSuZhan() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
-    private const string InspiredRepeatKey = "InspiredRepeat";
-
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
 
@@ -26,24 +24,30 @@ public class KuaiSuZhan() : YukiModCard(1, CardType.Attack, CardRarity.Common, T
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(2m, ValueProp.Move), new RepeatVar(3), new DynamicVar(InspiredRepeatKey, 2m)];
+        [new DamageVar(2m, ValueProp.Move), new RepeatVar(3)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
-        var hitCount = DynamicVars.Repeat.IntValue;
-        if (YukiInspirationService.WillTriggerOnPlay(this))
-        {
-            hitCount += DynamicVars[InspiredRepeatKey].IntValue;
-        }
-
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(hitCount)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+    }
+
+    public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this || originalCost <= 0m || !YukiInspirationService.WillTriggerOnPlay(this))
+        {
+            return false;
+        }
+
+        modifiedCost = originalCost - 1m;
+        return true;
     }
 
     protected override void OnUpgrade()

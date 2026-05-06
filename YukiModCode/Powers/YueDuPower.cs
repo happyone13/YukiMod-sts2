@@ -34,13 +34,14 @@ public class YueDuPower : YukiModPower
             return Task.CompletedTask;
         }
 
-        if (!command.Results.Any(result => result.TotalDamage > 0))
+        var hitCount = command.Results.Count(result => result.TotalDamage > 0);
+        if (hitCount <= 0)
         {
             return Task.CompletedTask;
         }
 
         Flash();
-        YukiMoonshadowService.GainMoonshadowDamageInHand(Owner.Player, Amount);
+        YukiMoonshadowService.GainMoonshadowDamageInHand(Owner.Player, Amount * hitCount);
         return Task.CompletedTask;
     }
 

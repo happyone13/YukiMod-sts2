@@ -30,6 +30,7 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
     protected virtual string? CustomPowerCastClipKey => null;
 
     public bool IsInspired { get; set; }
+    public bool IsInspirationTriggeredForCurrentPlay { get; private set; }
 
     public decimal MoonshadowBlackCloudDamageMultiplierBonus { get; set; }
 
@@ -80,10 +81,17 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
 
         if (Pile?.Type == PileType.Hand && oldPileType != PileType.Hand)
         {
+            IsInspirationTriggeredForCurrentPlay = false;
             IsInspired = true;
+        }
+        else if (Pile?.Type == PileType.Play && oldPileType == PileType.Hand)
+        {
+            IsInspirationTriggeredForCurrentPlay = YukiInspirationService.CanReceiveInspiration(this) && IsInspired;
+            IsInspired = false;
         }
         else if (Pile?.Type != PileType.Hand)
         {
+            IsInspirationTriggeredForCurrentPlay = false;
             IsInspired = false;
         }
 
@@ -110,6 +118,7 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
             }
 
             IsInspired = false;
+            IsInspirationTriggeredForCurrentPlay = false;
         }
     }
 }

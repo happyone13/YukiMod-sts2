@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.HoverTips;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class YiJiBiShaJuHeChouKa() : YukiModCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public class YiJiBiShaJuHeChouKa() : YukiModCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         YukiHoverTipFactory.FromIai();

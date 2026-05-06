@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -26,14 +27,25 @@ public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon,
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(8m, ValueProp.Move)];
+        [new DamageVar(7m, ValueProp.Move)];
 
-    protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var exhaustedCard = (await CardSelectCmd.FromHand(
+            choiceContext,
+            Owner,
+            new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1),
+            null,
+            this)).FirstOrDefault();
+        if (exhaustedCard != null)
+        {
+            await CardCmd.Exhaust(choiceContext, exhaustedCard);
+        }
+
         YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
         YukiAudioService.TryPlayCustomCardClip("po_bing_zhan", Owner);
         var hitCount = YukiInspirationService.WillTriggerOnPlay(this) ? 2 : 1;
-        return DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
             .FromCard(this)
             .TargetingAllOpponents(CombatState!)
@@ -43,6 +55,6 @@ public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

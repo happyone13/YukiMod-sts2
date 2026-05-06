@@ -1,4 +1,7 @@
 ﻿{
+    "YUKIMOD-BLACK_CLOUD_POWER.title": "Black Cloud",
+    "YUKIMOD-BLACK_CLOUD_POWER.description": "The next time you enter [gold]Black Cloud Stance[/gold], gain {Amount} [gold]Strength[/gold]. When you leave [gold]Black Cloud Stance[/gold], remove that [gold]Strength[/gold].",
+    "YUKIMOD-BLACK_CLOUD_POWER.smartDescription": "The next time you enter [gold]Black Cloud Stance[/gold], gain {Amount} [gold]Strength[/gold]. When you leave [gold]Black Cloud Stance[/gold], remove that [gold]Strength[/gold].",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.title": "Black Cloud Stance",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.description": "While in [gold]Black Cloud Stance[/gold], playing a non-[gold]Attack[/gold] exits it unless an effect says to keep it.",
     "YUKIMOD-BLACK_CLOUD_STANCE_POWER.smartDescription": "While in [gold]Black Cloud Stance[/gold], playing a non-[gold]Attack[/gold] exits it unless an effect says to keep it.",

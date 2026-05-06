@@ -8,7 +8,7 @@
     "YUKIMOD-NING_JU.title": "凝聚",
     "YUKIMOD-NING_JU.description": "若你的手中没有[gold]月影[/gold]，将1张加入手中；否则，你手中的[gold]月影[/gold]费用+1并获得1次重放。",
     "YUKIMOD-BLACK_CLOUD.title": "黑云",
-    "YUKIMOD-BLACK_CLOUD.description": "处于[gold]黑云姿态[/gold]时，触发[gold]黑云[/gold]效果；否则，进入[gold]黑云姿态[/gold]。处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云。",
+    "YUKIMOD-BLACK_CLOUD.description": "处于[gold]黑云姿态[/gold]时，触发[gold]黑云[/gold]效果；否则，获得1层[gold]黑云[/gold]。处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云。",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.title": "视为月影",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.description": "这张卡视为[gold]月影[/gold]。",
     "YUKIMOD-DEFEND_YUKI.title": "防御",
@@ -16,7 +16,7 @@
     "YUKIMOD-YA_ZHI_ZHUN_BEI.title": "压制准备",
     "YUKIMOD-YA_ZHI_ZHUN_BEI.description": "从抽牌堆或弃牌堆抽1张{IfUpgraded:show:非[gold]打击[/gold]的|}[gold]攻击[/gold]牌。\n[gold]灵感[/gold]：优先抽灵感攻击牌。",
     "YUKIMOD-BA_DAO.title": "拔刀",
-    "YUKIMOD-BA_DAO.description": "造成{Damage:diff()}点伤害。\n[gold]黑云[/gold]：额外攻击1次。",
+    "YUKIMOD-BA_DAO.description": "造成{Damage:diff()}点伤害。\n[gold]黑云[/gold]：额外攻击1次；否则，进入[gold]黑云姿态[/gold]。",
     "YUKIMOD-HEI_YUN_AO_YI_MIE.title": "黑云奥义：灭",
     "YUKIMOD-HEI_YUN_AO_YI_MIE.description": "造成{Damage:diff()}点伤害。\n[gold]黑云[/gold]：额外攻击1次。",
     "YUKIMOD-HEI_YUN_AO_YI_SHANG.title": "黑云奥义：殇",
@@ -130,7 +130,7 @@
     "YUKIMOD-TIAN_DAO_XING_TAI.description": "每回合打出的第一张攻击牌额外打出一次。",
     "YUKIMOD-TIAN_DAO_XING_TAI.title": "天刀形态",
     "YUKIMOD-RONG_YU.title": "荣誉",
-    "YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA.description": "??1??????\n?1???\n??????[gold]?????????[/gold]???{IfUpgraded:show:1????|1?}[gold]??[/gold]?????",
+    "YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA.description": "选择1张[gold]手牌[/gold]弃掉。\n抽1张牌。\n如果抽到的是[gold]一击必杀！居合抽卡[/gold]，将{IfUpgraded:show:1张升级后的|1张}[gold]居合[/gold]加入手中。",
     "YUKIMOD-NA_DAO.description": "造成{Damage:diff()}点伤害。\n本回合每释放一张攻击牌额外攻击一次。\n手里没有其他攻击牌时费用-1。",
     "YUKIMOD-JU_HE.description": "发动[gold]居合[/gold]。",
     "YUKIMOD-RONG_YU.description": "造成{Damage:diff()}点伤害。\n如果击杀目标，则将一张[gold]居合[/gold]加入手中。",
@@ -207,5 +207,5 @@
     "YUKIMOD-YE_HUO.title": "业火",
     "YUKIMOD-YE_HUO.description": "造成{Damage:diff()}点伤害。\n每当你攻击该目标时，手中[gold]月影[/gold]伤害+1。",
     "YUKIMOD-YAO_GUAI_SHOU_LIE.title": "妖怪狩猎",
-    "YUKIMOD-YAO_GUAI_SHOU_LIE.description": "造成{Damage:diff()}点伤害2次。\n[gold]凝聚[/gold]1。"
+    "YUKIMOD-YAO_GUAI_SHOU_LIE.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]凝聚[/gold]1。"
 }

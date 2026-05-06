@@ -27,6 +27,7 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
     public virtual bool CountsAsMoonshadow => IsRealMoonshadow;
 
     public bool IsInspired { get; set; }
+    public bool IsInspirationTriggeredForCurrentPlay { get; private set; }
 
     public decimal MoonshadowBlackCloudDamageMultiplierBonus { get; set; }
 
@@ -53,10 +54,17 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
 
         if (Pile?.Type == PileType.Hand && oldPileType != PileType.Hand)
         {
+            IsInspirationTriggeredForCurrentPlay = false;
             IsInspired = true;
+        }
+        else if (Pile?.Type == PileType.Play && oldPileType == PileType.Hand)
+        {
+            IsInspirationTriggeredForCurrentPlay = YukiInspirationService.CanReceiveInspiration(this) && IsInspired;
+            IsInspired = false;
         }
         else if (Pile?.Type != PileType.Hand)
         {
+            IsInspirationTriggeredForCurrentPlay = false;
             IsInspired = false;
         }
 
@@ -83,6 +91,7 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
             }
 
             IsInspired = false;
+            IsInspirationTriggeredForCurrentPlay = false;
         }
     }
 }
