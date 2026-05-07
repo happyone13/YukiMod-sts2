@@ -88,7 +88,15 @@ public static class YukiCardCustomFramePatch
         if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsNodeReady())
             return;
 
-        YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
+        if (!TryGetCustomFrameCard(cardNode, out _) && !HasYukiVisualState(cardNode))
+            return;
+
+        if (YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode) ||
+            cardNode.Model is IYukiCardVisualProfile)
+        {
+            YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
+        }
+
         RemoveChaosEffects(cardNode, restoreOriginalState: true);
     }
 
@@ -99,8 +107,12 @@ public static class YukiCardCustomFramePatch
 
         if (!TryGetCustomFrameCard(cardNode, out CardModel? cardModel))
         {
-            RemoveChaosEffects(cardNode, restoreOriginalState: true);
-            YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
+            if (HasYukiVisualState(cardNode))
+            {
+                RemoveChaosEffects(cardNode, restoreOriginalState: true);
+                YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
+            }
+
             return;
         }
 
@@ -972,6 +984,26 @@ public static class YukiCardCustomFramePatch
     private static bool IsCustomFrameCard(NCard? cardNode)
     {
         return TryGetCustomFrameCard(cardNode, out _);
+    }
+
+    private static bool HasYukiVisualState(NCard cardNode)
+    {
+        if (OriginalStates.TryGetValue(cardNode, out OriginalCardVisualState? state) && state.HasSnapshot)
+            return true;
+
+        if (YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
+            return true;
+
+        return GetOverlayNode(cardNode, RarityBaseNodeName) != null ||
+               GetOverlayNode(cardNode, RaritySubNodeName) != null ||
+               GetOverlayNode(cardNode, EgoBadgeNodeName) != null ||
+               GetOverlayNode(cardNode, EgoBadge2NodeName) != null ||
+               GetOverlayNode(cardNode, FrameSparkNodeName) != null ||
+               GetOverlayNode(cardNode, CategoryIconNodeName) != null ||
+               GetOverlayNode(cardNode, CategoryTextNodeName) != null ||
+               GetOverlayNode(cardNode, CostTextNodeName) != null ||
+               GetOverlayNode(cardNode, UpgradeIconNodeName) != null ||
+               GetOverlayNode(cardNode, DescriptionMaskNodeName) != null;
     }
 
     [HarmonyPatch(typeof(NCard), "Reload")]
