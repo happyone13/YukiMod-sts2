@@ -9,6 +9,8 @@
     "YUKIMOD-NING_JU.description": "If you have no [gold]Moonshadow[/gold] in hand, add 1 to your hand. Otherwise, your [gold]Moonshadow[/gold] in hand cost 1 more and gain 1 Replay.",
     "YUKIMOD-BLACK_CLOUD.title": "Black Cloud",
     "YUKIMOD-BLACK_CLOUD.description": "If you are already in [gold]Black Cloud Stance[/gold], trigger this card's [gold]Black Cloud[/gold] effect. Otherwise, gain 1 [gold]Black Cloud[/gold]. While in [gold]Black Cloud Stance[/gold], playing a non-[gold]Attack[/gold] exits it unless an effect says to keep it.",
+    "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.title": "Heaven Return",
+    "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.description": "Your next [gold]Attack[/gold] plays an additional time.",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.title": "Counts as Moonshadow",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.description": "This is treated as [gold]Moonshadow[/gold] for in-hand damage and Replay effects, but it does not prevent [gold]Converge[/gold] from creating a real [gold]Moonshadow[/gold].",
     "YUKIMOD-DEFEND_YUKI.title": "Defend",

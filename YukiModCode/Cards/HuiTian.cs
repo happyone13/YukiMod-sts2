@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -18,7 +19,7 @@ public class HuiTian() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetT
         [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<NextAttackPlayCountPower>()];
+        [YukiHoverTipFactory.FromNextAttackPlayCount()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("Repeat", 1m)];

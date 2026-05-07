@@ -16,6 +16,8 @@ public static class YukiHoverTipFactory
     private const string BlackCloudDescriptionKey = "YUKIMOD-BLACK_CLOUD.description";
     private const string CountsAsMoonshadowTitleKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.title";
     private const string CountsAsMoonshadowDescriptionKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.description";
+    private const string NextAttackPlayCountTitleKey = "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.title";
+    private const string NextAttackPlayCountDescriptionKey = "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.description";
     private const string JuHeTitleKey = "YUKIMOD-JU_HE_KEYWORD.title";
     private const string JuHeDescriptionKey = "YUKIMOD-JU_HE_KEYWORD.description";
 
@@ -52,6 +54,13 @@ public static class YukiHoverTipFactory
         return new HoverTip(
             new LocString("cards", CountsAsMoonshadowTitleKey),
             new LocString("cards", CountsAsMoonshadowDescriptionKey));
+    }
+
+    public static IHoverTip FromNextAttackPlayCount()
+    {
+        return new HoverTip(
+            new LocString("cards", NextAttackPlayCountTitleKey),
+            new LocString("cards", NextAttackPlayCountDescriptionKey));
     }
 
     public static IEnumerable<IHoverTip> FromIai()

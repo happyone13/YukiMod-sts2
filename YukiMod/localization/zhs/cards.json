@@ -9,6 +9,8 @@
     "YUKIMOD-NING_JU.description": "若你的手中没有[gold]月影[/gold]，将1张加入手中；否则，你手中的[gold]月影[/gold]费用+1并获得1次重放。",
     "YUKIMOD-BLACK_CLOUD.title": "黑云",
     "YUKIMOD-BLACK_CLOUD.description": "处于[gold]黑云姿态[/gold]时，触发[gold]黑云[/gold]效果；否则，获得1层[gold]黑云[/gold]。处于[gold]黑云姿态[/gold]时，使用非[gold]攻击[/gold]牌会退出黑云。",
+    "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.title": "回天",
+    "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.description": "下一张[gold]攻击[/gold]牌会额外释放。",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.title": "视为月影",
     "YUKIMOD-COUNTS_AS_MOONSHADOW.description": "这张卡视为[gold]月影[/gold]。",
     "YUKIMOD-DEFEND_YUKI.title": "防御",
