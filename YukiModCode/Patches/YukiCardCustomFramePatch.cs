@@ -180,7 +180,7 @@ public static class YukiCardCustomFramePatch
         if (ancientPortrait != null)
         {
             ancientPortrait.Show();
-            ancientPortrait.Texture = cardNode!.Model?.Portrait;
+            SetPortraitTextureForOverlayState(ancientPortrait, cardNode!.Model?.Portrait);
         }
         portraitCanvasGroup?.Show();
 
@@ -232,7 +232,7 @@ public static class YukiCardCustomFramePatch
         if (ancientPortrait != null)
         {
             ancientPortrait.Show();
-            ancientPortrait.Texture = cardNode.Model?.Portrait;
+            SetPortraitTextureForOverlayState(ancientPortrait, cardNode.Model?.Portrait);
         }
         Get<CanvasGroup>(PortraitCanvasGroupField, cardNode)?.Show();
         portraitBorder?.Hide();
@@ -1004,6 +1004,11 @@ public static class YukiCardCustomFramePatch
                GetOverlayNode(cardNode, CostTextNodeName) != null ||
                GetOverlayNode(cardNode, UpgradeIconNodeName) != null ||
                GetOverlayNode(cardNode, DescriptionMaskNodeName) != null;
+    }
+
+    private static void SetPortraitTextureForOverlayState(TextureRect portrait, Texture2D? fallbackTexture)
+    {
+        portrait.Texture = fallbackTexture;
     }
 
     [HarmonyPatch(typeof(NCard), "Reload")]

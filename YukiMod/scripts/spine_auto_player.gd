@@ -1,3 +1,4 @@
+@tool
 extends Node
 
 @export var AnimationName: String = "animation"
@@ -102,6 +103,8 @@ func _apply_configured_slot_fixes() -> void:
         "attack_defense_unity":
             _hide_slot_attachment(skeleton, "face_shadow_1")
             _hide_slot_attachment(skeleton, "face_shadow_2")
+        "huang_hun_de_ji_ban":
+            _hide_slot_attachment(skeleton, "effect_yellow")
 
 
 func _try_set_animation(animation_state: Object, animation: String, loop: bool, track: int) -> bool:

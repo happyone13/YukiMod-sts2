@@ -139,6 +139,7 @@ public static class YukiCardSpinePortraitPatch
             viewportContainer.GetParent()?.RemoveChild(viewportContainer);
 
         RemoveOverlayFromPortrait(portrait);
+        portrait.Texture = cardNode.Model?.Portrait;
 
         var overlay = new Control
         {
@@ -164,9 +165,9 @@ public static class YukiCardSpinePortraitPatch
         portrait.ClipContents = true;
         overlay.AddChild(viewportContainer);
         portrait.AddChild(overlay);
+        portrait.MoveChild(overlay, portrait.GetChildCount() - 1);
         spineInstance.QueueFree();
 
-        portrait.Texture = null;
         SyncOverlayLayout(cardNode, portrait, overlay, subViewport);
         subViewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
 
