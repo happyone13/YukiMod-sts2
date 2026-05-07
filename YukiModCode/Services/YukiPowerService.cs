@@ -18,13 +18,8 @@ public static class YukiPowerService
         bool silent = false)
         where T : PowerModel, new()
     {
-#if STS2_103
         var power = await PowerCmd.Apply<T>(target, amount, applier!, cardSource!, silent);
         return power!;
-#else
-        var power = await PowerCmd.Apply<T>(choiceContext, target, amount, applier, cardSource, silent);
-        return power!;
-#endif
     }
 
     public static Task<IReadOnlyList<T>> Apply<T>(
@@ -36,11 +31,7 @@ public static class YukiPowerService
         bool silent = false)
         where T : PowerModel, new()
     {
-#if STS2_103
         return PowerCmd.Apply<T>(targets, amount, applier!, cardSource!, silent);
-#else
-        return PowerCmd.Apply<T>(choiceContext, targets, amount, applier, cardSource, silent);
-#endif
     }
 
     public static Task Apply(
@@ -52,11 +43,7 @@ public static class YukiPowerService
         CardModel? cardSource,
         bool silent = false)
     {
-#if STS2_103
         return PowerCmd.Apply(power, target, amount, applier!, cardSource!, silent);
-#else
-        return PowerCmd.Apply(choiceContext, power, target, amount, applier, cardSource, silent);
-#endif
     }
 
     public static Task<int> ModifyAmount(
@@ -67,10 +54,6 @@ public static class YukiPowerService
         CardModel? cardSource,
         bool silent = false)
     {
-#if STS2_103
         return PowerCmd.ModifyAmount(power, offset, applier!, cardSource!, silent);
-#else
-        return PowerCmd.ModifyAmount(choiceContext, power, offset, applier, cardSource, silent);
-#endif
     }
 }

@@ -19,9 +19,6 @@ public class YinLeiTianYunPower : YukiModPower, IBlackCloudEnteredListener, IBla
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterPowerAmountChanged(
-#if STS2_104
-        PlayerChoiceContext choiceContext,
-#endif
         PowerModel power,
         decimal amount,
         Creature? applier,
@@ -33,9 +30,7 @@ public class YinLeiTianYunPower : YukiModPower, IBlackCloudEnteredListener, IBla
         }
 
         _grantedStrength += (int)amount;
-#if STS2_103
         var choiceContext = new ThrowingPlayerChoiceContext();
-#endif
         await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, amount, Owner, cardSource, silent: true);
     }
 

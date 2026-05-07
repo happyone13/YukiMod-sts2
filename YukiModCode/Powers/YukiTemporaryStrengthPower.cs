@@ -31,9 +31,6 @@ public abstract class YukiTemporaryStrengthPower : YukiModPower
     }
 
     public override async Task AfterPowerAmountChanged(
-#if STS2_104
-        PlayerChoiceContext choiceContext,
-#endif
         PowerModel power,
         decimal amount,
         Creature? applier,
@@ -47,9 +44,7 @@ public abstract class YukiTemporaryStrengthPower : YukiModPower
             }
             else
             {
-#if STS2_103
                 var choiceContext = new ThrowingPlayerChoiceContext();
-#endif
                 await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, amount, applier, cardSource, silent: true);
             }
         }

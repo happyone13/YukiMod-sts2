@@ -56,11 +56,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
 
     protected override void OnUpgrade() { }
 
-    public override Task AfterAttack(
-#if STS2_104
-        PlayerChoiceContext choiceContext,
-#endif
-        AttackCommand command)
+    public override Task AfterAttack(AttackCommand command)
     {
         if (command.Attacker != Owner.Creature)
         {
