@@ -89,10 +89,6 @@ public static class YukiCardCustomFramePatch
             return;
 
         YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
-
-        if (TryGetCustomFrameCard(cardNode, out _))
-            return;
-
         RemoveChaosEffects(cardNode, restoreOriginalState: true);
     }
 
@@ -216,7 +212,8 @@ public static class YukiCardCustomFramePatch
         Material? bannerMaterial)
     {
         CaptureOriginalState(cardNode);
-        RemoveChaosEffects(cardNode, restoreOriginalState: true);
+        RemoveChaosEffects(cardNode, restoreOriginalState: false);
+        RestoreOriginalState(cardNode, removeState: false);
 
         frame?.Hide();
         portrait?.Hide();
@@ -627,7 +624,7 @@ public static class YukiCardCustomFramePatch
         state.HasSnapshot = true;
     }
 
-    private static void RestoreOriginalState(NCard cardNode)
+    private static void RestoreOriginalState(NCard cardNode, bool removeState = true)
     {
         if (!OriginalStates.TryGetValue(cardNode, out OriginalCardVisualState? state) || !state.HasSnapshot)
             return;
@@ -648,7 +645,8 @@ public static class YukiCardCustomFramePatch
         RestoreControlSnapshot(Get<Control>(EnergyLabelField, cardNode), state.EnergyLabel, restoreTextures);
         RestoreControlSnapshot(Get<Control>(TypeLabelField, cardNode), state.TypeLabel, restoreTextures);
         RestoreControlSnapshot(Get<Control>(TypePlaqueField, cardNode), state.TypePlaque, restoreTextures);
-        OriginalStates.Remove(cardNode);
+        if (removeState)
+            OriginalStates.Remove(cardNode);
     }
 
     private static ControlSnapshot? CaptureControlSnapshot(Control? control)
