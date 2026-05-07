@@ -40,6 +40,7 @@ public static class YukiCharacterAnimationFallbackPatch
 
         RegisteredRestSiteAnimationStates.Clear();
         RegisterRestSiteAnimationStates(__instance);
+        __instance.Connect(Node.SignalName.TreeExiting, Callable.From(() => UnregisterRestSiteAnimationStates(__instance)));
     }
 
     [HarmonyPatch(typeof(NRestSiteCharacter), nameof(NRestSiteCharacter._Ready))]
@@ -55,18 +56,6 @@ public static class YukiCharacterAnimationFallbackPatch
                 TryPlayFirstAvailable(node2D, RestFallbacks, loop: true);
         }
     }
-
-#if !STS2_103
-    [HarmonyPatch(typeof(NRestSiteCharacter), nameof(NRestSiteCharacter._ExitTree))]
-    [HarmonyPrefix]
-    public static void RestSiteExitTreePrefix(NRestSiteCharacter __instance)
-    {
-        if (!IsYukiScene(__instance))
-            return;
-
-        UnregisterRestSiteAnimationStates(__instance);
-    }
-#endif
 
     [HarmonyPatch(typeof(MegaAnimationState), nameof(MegaAnimationState.SetAnimation), [typeof(string), typeof(bool), typeof(int)])]
     [HarmonyPrefix]
