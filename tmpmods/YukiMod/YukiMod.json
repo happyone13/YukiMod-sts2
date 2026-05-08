@@ -2,10 +2,16 @@
   "id": "YukiMod",
   "name": "YukiMod",
   "author": "lozalia",
-  "description": "Template playable character mod for Slay the Spire 2, based on MeiLinMod.",
-  "version": "v0.0.1",
+  "description": "太刀三姐妹,友纪不是区",
+  "version": "v0.0.2",
   "has_pck": true,
   "has_dll": true,
-  "dependencies": ["BaseLib"],
+  "dependencies": [
+    {
+      "id": "BaseLib",
+      "min_version": "v3.0.8"
+    }
+  ],
+  "min_game_version": "v0.103.2",
   "affects_gameplay": true
 }

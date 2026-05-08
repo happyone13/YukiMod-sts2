@@ -26,11 +26,7 @@ public class NingJuPotion : YukiModPotion
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {
-#if STS2_104
         var combatState = Owner.Creature.CombatState;
-#else
-        var combatState = CombatState;
-#endif
         if (combatState == null)
         {
             return;

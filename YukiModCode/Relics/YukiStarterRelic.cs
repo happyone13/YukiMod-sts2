@@ -20,11 +20,7 @@ public class YukiStarterRelic : YukiModRelic
 
     public override async Task BeforeCombatStart()
     {
-#if STS2_104
         var combatState = Owner.Creature.CombatState;
-#else
-        var combatState = CombatState;
-#endif
         if (combatState == null)
         {
             return;

@@ -9,15 +9,15 @@
 
 默认原则：
 
-1. 先看 `sts104` 原版调用链，再决定覆盖哪个 Hook
+1. 可先看 `sts104` 原版调用链，再用目标 103 的 `sts2.dll` 校验 Hook 签名
 2. 先确认效果要作用于“当前手牌”“将要抽到的牌”还是“刚抽到的牌”
 3. 如果文案里提到具体卡牌预览，先检查是否会递归展开对方的 Hover Tip
 4. 如果改动了 `NCard` 原始控件，默认把它当成“必须可恢复的临时状态”
 
 ## 2. 回合开始与抽牌的实际顺序
 
-当前版本 `104` 的玩家回合开始流程，核心顺序在
-`sts104/src/Core/Combat/CombatManager.cs` 已确认：
+当前可参考的玩家回合开始流程，核心顺序在
+`sts104/src/Core/Combat/CombatManager.cs` 中已确认；用于 103 正式版时还需要以目标版本 API 校验签名：
 
 1. `Hook.BeforeHandDraw(...)`
 2. `Hook.ModifyHandDraw(...)`

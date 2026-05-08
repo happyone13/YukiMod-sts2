@@ -2,10 +2,13 @@
   "id": "YukiMod",
   "name": "YukiMod",
   "author": "lozalia",
-  "description": "太刀三姐妹,友纪不是区",
+  "description": "Yuki playable character mod for Slay the Spire 2 (0.103.x only).",
   "version": "v0.0.2",
   "has_pck": true,
   "has_dll": true,
-  "dependencies": ["BaseLib"],
+  "dependencies": [
+    "BaseLib"
+  ],
+  "min_game_version": "v0.103.2",
   "affects_gameplay": true
 }
