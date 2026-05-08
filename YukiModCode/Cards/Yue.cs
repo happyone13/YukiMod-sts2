@@ -17,7 +17,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class Yue() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(6m, ValueProp.Move), new DynamicVar("MoonshadowDamage", 2m)];
+        [new DamageVar(6m, ValueProp.Move), new DynamicVar("MoonshadowDamage", 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

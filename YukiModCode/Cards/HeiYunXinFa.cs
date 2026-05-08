@@ -21,6 +21,7 @@ public class HeiYunXinFa() : YukiModCard(1, CardType.Skill, CardRarity.Rare, Tar
         "res://YukiMod/scenes/cards/hei_yun_xin_fa_dynamic.tscn";
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<BlackCloudStancePower>()];

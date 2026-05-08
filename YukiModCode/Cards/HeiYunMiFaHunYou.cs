@@ -21,6 +21,7 @@ public class HeiYunMiFaHunYou() : YukiModCard(1, CardType.Skill, CardRarity.Comm
         [new BlockVar(5m, ValueProp.Move), new EnergyVar(1)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), EnergyHoverTip];
@@ -34,7 +35,7 @@ public class HeiYunMiFaHunYou() : YukiModCard(1, CardType.Skill, CardRarity.Comm
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         }
-        else if (await YukiBlackCloudService.TryConsumeBlackCloud(choiceContext, Owner, 1m, this))
+        else
         {
             await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
         }

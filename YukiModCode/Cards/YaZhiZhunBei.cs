@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Services;
@@ -23,7 +24,10 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
     public override bool HasOwnInspirationEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromInspiration()];
+        [YukiHoverTipFactory.FromInspiration(), HoverTipFactory.FromPower<VigorPower>()];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new PowerVar<VigorPower>(2m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -31,43 +35,28 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
 
         var hand = PileType.Hand.GetPile(Owner);
         var drawLimit = YukiCardPileService.MaxCardsInHand - hand.Cards.Count;
-        if (drawLimit <= 0)
+        if (drawLimit > 0)
         {
-            return;
+            if (YukiInspirationService.WillTriggerOnPlay(this))
+            {
+                await YukiInspirationService.DrawPrioritizedInspirationCard(choiceContext, Owner, this);
+            }
+            else
+            {
+                await CardPileCmd.Draw(choiceContext, Owner);
+            }
         }
 
-        var eligibleAttacks = PileType.Draw.GetPile(Owner).Cards
-            .Concat(PileType.Discard.GetPile(Owner).Cards)
-            .Where(IsEligibleAttackForCurrentState)
-            .ToList();
-        if (eligibleAttacks.Count == 0)
-        {
-            return;
-        }
-
-        var selectedAttack = YukiInspirationService.WillTriggerOnPlay(this)
-            ? eligibleAttacks.FirstOrDefault(IsInspiredAttack) ?? eligibleAttacks.First()
-            : eligibleAttacks.First();
-        if (selectedAttack == null)
-        {
-            return;
-        }
-
-        var drawPile = PileType.Draw.GetPile(Owner);
-        if (selectedAttack.Pile?.Type != PileType.Draw || drawPile.Cards.FirstOrDefault() != selectedAttack)
-        {
-            await CardPileCmd.Add(selectedAttack, PileType.Draw, CardPilePosition.Top, this, skipVisuals: true);
-        }
-
-        await CardPileCmd.Draw(choiceContext, Owner);
+        await YukiPowerService.Apply<VigorPower>(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars["VigorPower"].BaseValue,
+            Owner.Creature,
+            this);
     }
 
-    protected override void OnUpgrade() { }
-
-    private bool IsEligibleAttackForCurrentState(CardModel card) =>
-        card.Type == CardType.Attack &&
-        (!IsUpgraded || !card.Tags.Contains(CardTag.Strike));
-
-    private static bool IsInspiredAttack(CardModel card) =>
-        YukiInspirationService.IsInspirationSchoolCard(card);
+    protected override void OnUpgrade()
+    {
+        DynamicVars["VigorPower"].UpgradeValueBy(3m);
+    }
 }

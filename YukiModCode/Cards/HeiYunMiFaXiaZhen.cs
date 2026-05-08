@@ -14,19 +14,24 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HeiYunMiFaXiaZhen() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public class HeiYunMiFaXiaZhen() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud()];
+        [HoverTipFactory.FromPower<BlackCloudPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar("BlackCloud", 2m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["BlackCloud"].BaseValue, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaXiaZhenPower>(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars["BlackCloud"].BaseValue,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 
 namespace YukiMod.YukiModCode.Powers;
 
@@ -14,20 +14,11 @@ public class RenJianHeYiPower : YukiModPower
 
     public override bool IsInstanced => true;
 
-    public override decimal ModifyHandDraw(Player player, decimal count)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (player != Owner.Player || AmountOnTurnStart <= 0)
+        if (player == Owner.Player && AmountOnTurnStart > 0)
         {
-            return count;
-        }
-
-        return count + 1m;
-    }
-
-    public override async Task AfterSideTurnStart(CombatSide side, YukiCombatState combatState)
-    {
-        if (side == Owner.Side && AmountOnTurnStart > 0)
-        {
+            await CardPileCmd.Draw(choiceContext, 1m, player);
             await PowerCmd.Decrement(this);
         }
     }

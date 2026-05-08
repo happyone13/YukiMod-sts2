@@ -13,7 +13,7 @@ namespace YukiMod.YukiModCode.Services;
 
 public static class YukiSnowMoonFlowerService
 {
-    public const decimal SharedMoonshadowDamageBonus = 2m;
+    public const decimal SharedMoonshadowDamageBonus = 3m;
 
     public static bool HasXue(Player? player) => GetXuePower(player) != null;
     public static bool HasYue(Player? player) => GetYuePower(player) != null;

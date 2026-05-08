@@ -22,6 +22,7 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
         "res://YukiMod/scenes/cards/hei_yun_ao_yi_hei_wu_dynamic.tscn";
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud()];

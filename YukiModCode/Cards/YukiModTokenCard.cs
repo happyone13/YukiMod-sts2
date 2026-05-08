@@ -23,6 +23,7 @@ public abstract class YukiModTokenCard(int cost, CardType type, CardRarity rarit
     public virtual string? CustomSpinePortraitScenePath => null;
     public virtual YukiSpinePortraitSlot CustomSpinePortraitSlot => YukiSpinePortraitSlot.Ancient;
     public virtual bool HasOwnInspirationEffect => false;
+    public virtual bool HasOwnBlackCloudEffect => false;
     public virtual bool IsRealMoonshadow => false;
     public virtual bool CountsAsMoonshadow => IsRealMoonshadow;
 

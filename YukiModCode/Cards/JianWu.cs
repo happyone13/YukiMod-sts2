@@ -62,6 +62,7 @@ public class JianWu() : YukiModCard(2, CardType.Attack, CardRarity.Uncommon, Tar
             .OfType<CardDrawnEntry>()
             .Count(entry =>
                 entry.Actor == Owner.Creature &&
-                entry.HappenedThisTurn(combatState));
+                entry.HappenedThisTurn(combatState) &&
+                !entry.FromHandDraw);
     }
 }

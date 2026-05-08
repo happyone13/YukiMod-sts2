@@ -21,6 +21,7 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
         "res://YukiMod/scenes/cards/ba_dao_dynamic.tscn";
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud()];

@@ -19,6 +19,7 @@ public class HeiYunMiJiHuiZhuan() : YukiModCard(1, CardType.Skill, CardRarity.Ra
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromInspiration(), YukiHoverTipFactory.FromBlackCloud()];

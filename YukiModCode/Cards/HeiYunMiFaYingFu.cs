@@ -21,6 +21,7 @@ public class HeiYunMiFaYingFu() : YukiModCard(1, CardType.Attack, CardRarity.Com
         [new DamageVar(3m, ValueProp.Move), new RepeatVar(2)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud()];
@@ -42,7 +43,7 @@ public class HeiYunMiFaYingFu() : YukiModCard(1, CardType.Attack, CardRarity.Com
 
         if (!wasActive)
         {
-            await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, 1m, this);
+            await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, 2m, this);
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

@@ -16,7 +16,7 @@ public class NuTaoZhan() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, T
     private const string ThresholdKey = "Threshold";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar(ThresholdKey, 4m)];
+        [new DynamicVar(ThresholdKey, 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -30,6 +30,6 @@ public class NuTaoZhan() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, T
 
     protected override void OnUpgrade()
     {
-        DynamicVars[ThresholdKey].UpgradeValueBy(-1m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

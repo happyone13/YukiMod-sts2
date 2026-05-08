@@ -61,7 +61,7 @@
 - 卡牌外观要拆开处理：默认卡牌优先走统一卡框资源，动态肖像只对单卡开启；不要把“有动态卡图”当成“必须有特殊卡框”的前提
 - 从抽牌堆/弃牌堆/手牌选择牌时，优先找原版同类卡做参照；例如从抽牌堆选牌进手优先对照 `sts104` 中的 `SecretTechnique`
 - 卡牌效果、费用、稀有度、种类以 `docs/yuki-card-table.xlsx` 为第一权威来源；若旧 md、旧代码、旧对话记录与表格冲突，以当前 xlsx 为准
-- 当前默认占位资源约定为：卡牌缺图回退到 `YukiMod/images/card_portraits/card.png` 与 `big/card.png`，力量缺图回退到 `YukiMod/images/powers/power.png` 与 `big/power.png`，遗物缺图回退到 `YukiMod/images/relics/relic.png`、`relic_outline.png` 与 `big/relic.png`
+- 当前默认占位资源约定为：卡牌缺图回退到 `YukiMod/images/card_portraits/card.png`，力量缺图回退到 `YukiMod/images/powers/power.png`，遗物缺图回退到 `YukiMod/images/relics/relic.png` 与 `relic_outline.png`；卡牌、力量、遗物的大图路径均复用小图路径
 - 新文本文件默认使用 `UTF-8`
 - 对 `Task`、`IEnumerable` 这类基础类型，尽量在源码里显式写 `using System.Threading.Tasks;`、`using System.Collections.Generic;`，不要只依赖 `ImplicitUsings` 或 `.godot/mono/temp/obj/...GlobalUsings.g.cs`，否则 IDE/编辑器索引异常时容易出现“缺少引用”的假报错
 

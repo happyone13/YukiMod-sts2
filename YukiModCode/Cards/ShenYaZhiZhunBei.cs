@@ -24,7 +24,7 @@ public class ShenYaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Anci
 
     private static bool IsInspiredAttack(CardModel card) =>
         card.Type == CardType.Attack &&
-        YukiInspirationService.IsInspirationSchoolCard(card);
+        YukiInspirationService.IsInspirationCard(card);
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

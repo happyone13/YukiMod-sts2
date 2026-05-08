@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
@@ -25,7 +26,13 @@ public class ZhaoJia() : YukiModCard(1, CardType.Skill, CardRarity.Common, Targe
         YukiHoverTipFactory.FromIai();
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(8m, ValueProp.Move)];
+        [new BlockVar(5m, ValueProp.Move)];
+
+    protected override void AddExtraArgsToDescription(LocString description)
+    {
+        base.AddExtraArgsToDescription(description);
+        description.Add("CurrentBlock", 0);
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -18,7 +18,7 @@ public class XueYue() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, Targ
         [HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("MoonshadowDamage", 2m)];
+        [new DynamicVar("MoonshadowDamage", 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -27,6 +27,6 @@ public class XueYue() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, Targ
 
     protected override void OnUpgrade()
     {
-        DynamicVars["MoonshadowDamage"].UpgradeValueBy(1m);
+        DynamicVars["MoonshadowDamage"].UpgradeValueBy(2m);
     }
 }

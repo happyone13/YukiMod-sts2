@@ -14,5 +14,5 @@ public abstract class YukiModRelic : CustomRelicModel
     protected override string PackedIconOutlinePath =>
         $"{Id.Entry.RemovePrefix().ToLowerInvariant()}_outline.png".RelicOutlineImagePathOrDefault();
 
-    protected override string BigIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigRelicImagePathOrDefault();
+    protected override string BigIconPath => PackedIconPath;
 }

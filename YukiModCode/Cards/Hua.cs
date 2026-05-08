@@ -19,6 +19,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class Hua() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<HuaPower>()];

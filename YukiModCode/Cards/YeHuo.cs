@@ -26,7 +26,7 @@ public class YeHuo() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetTy
         [HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move)];
+        [new DamageVar(5m, ValueProp.Move), new DynamicVar("MoonshadowDamage", 1m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -38,11 +38,16 @@ public class YeHuo() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetTy
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YeHuoMarkedPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YeHuoMarkedPower>(
+            choiceContext,
+            cardPlay.Target,
+            DynamicVars["MoonshadowDamage"].BaseValue,
+            Owner.Creature,
+            this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["MoonshadowDamage"].UpgradeValueBy(1m);
     }
 }

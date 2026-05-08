@@ -38,7 +38,7 @@ public class WeiYuChouMou() : YukiModCard(1, CardType.Skill, CardRarity.Common, 
             .FirstOrDefault();
         if (selected != null)
         {
-            await CardPileCmd.Add(selected, PileType.Draw, CardPilePosition.Bottom);
+            await CardPileCmd.Add(selected, PileType.Draw, CardPilePosition.Top);
         }
     }
 

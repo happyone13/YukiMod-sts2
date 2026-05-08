@@ -18,6 +18,9 @@ public class ZhaoJiaPower : YukiModPower
 {
     private sealed class Data
     {
+        public int ExtraBlockGained;
+        public CardModel? SourceCard;
+        public bool IgnoredSourcePlay;
         public bool Triggered;
     }
 
@@ -26,13 +29,22 @@ public class ZhaoJiaPower : YukiModPower
 
     public override PowerType Type => PowerType.Buff;
 
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override bool IsInstanced => true;
+
+    public override int DisplayAmount => GetInternalData<Data>().ExtraBlockGained;
 
     protected override object InitInternalData()
     {
         return new Data();
+    }
+
+    public override Task AfterApplied(Creature? applier, CardModel? cardSource)
+    {
+        GetInternalData<Data>().SourceCard = cardSource;
+        InvokeDisplayAmountChanged();
+        return Task.CompletedTask;
     }
 
     public override Task AfterDamageReceived(
@@ -61,6 +73,26 @@ public class ZhaoJiaPower : YukiModPower
         }
 
         return Task.CompletedTask;
+    }
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        if (cardPlay.Card.Owner != Owner.Player)
+        {
+            return;
+        }
+
+        var data = GetInternalData<Data>();
+        if (!data.IgnoredSourcePlay && cardPlay.Card == data.SourceCard)
+        {
+            data.IgnoredSourcePlay = true;
+            return;
+        }
+
+        data.ExtraBlockGained++;
+        Flash();
+        InvokeDisplayAmountChanged();
+        await CreatureCmd.GainBlock(Owner, 1m, ValueProp.Move, cardPlay);
     }
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)

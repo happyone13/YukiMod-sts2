@@ -20,6 +20,9 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class RongYu() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(9m, ValueProp.Move)];
 

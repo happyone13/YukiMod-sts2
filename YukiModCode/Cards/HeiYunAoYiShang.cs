@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Powers;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -19,12 +20,13 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunAoYiShang() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>()];
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<BlackCloudPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move), new PowerVar<VulnerablePower>(2m), new PowerVar<WeakPower>(1m)];
+        [new DamageVar(9m, ValueProp.Move), new PowerVar<VulnerablePower>(2m), new DynamicVar("BlackCloud", 2m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -49,7 +51,7 @@ public class HeiYunAoYiShang() : YukiModCard(1, CardType.Attack, CardRarity.Comm
         }
         else
         {
-            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+            await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["BlackCloud"].BaseValue, this);
         }
     }
 

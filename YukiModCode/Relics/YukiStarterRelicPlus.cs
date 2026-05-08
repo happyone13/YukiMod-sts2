@@ -26,7 +26,7 @@ public class YukiStarterRelicPlus : YukiModRelic
 
     protected override string PackedIconOutlinePath => SharedIconFileName.RelicOutlineImagePathOrDefault();
 
-    protected override string BigIconPath => SharedIconFileName.BigRelicImagePathOrDefault();
+    protected override string BigIconPath => PackedIconPath;
 
     public override async Task BeforeCombatStart()
     {

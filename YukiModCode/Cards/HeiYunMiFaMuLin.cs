@@ -20,6 +20,7 @@ public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare,
         [new EnergyVar(1), new CardsVar(1), new DynamicVar("DelayedEnergy", 2m), new DynamicVar("DelayedCards", 2m)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
@@ -35,7 +36,7 @@ public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare,
             await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
             await YukiBlackCloudService.GrantKeepStanceOnce(choiceContext, Owner, this);
         }
-        else if (await YukiBlackCloudService.TryConsumeBlackCloud(choiceContext, Owner, 2m, this))
+        else
         {
             await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaHunYouPower>(choiceContext, Owner.Creature, DynamicVars["DelayedEnergy"].BaseValue, Owner.Creature, this);
             await YukiMod.YukiModCode.Services.YukiPowerService.Apply<HeiYunMiFaYingFuPower>(choiceContext, Owner.Creature, DynamicVars["DelayedCards"].BaseValue, Owner.Creature, this);
@@ -44,7 +45,6 @@ public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1m);
-        DynamicVars["DelayedCards"].UpgradeValueBy(1m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

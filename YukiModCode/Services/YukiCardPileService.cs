@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -14,8 +15,19 @@ public static class YukiCardPileService
         get { return CardPile.maxCardsInHand; }
     }
 
-    public static Task AddGeneratedCardsToCombat(IEnumerable<CardModel> cards, PileType pileType, Player owner)
+    public static async Task AddGeneratedCardsToCombat(IEnumerable<CardModel> cards, PileType pileType, Player owner)
     {
-        return CardPileCmd.AddGeneratedCardsToCombat(cards, pileType, addedByPlayer: owner != null);
+        var cardList = cards.ToList();
+        await CardPileCmd.AddGeneratedCardsToCombat(cardList, pileType, addedByPlayer: owner != null);
+
+        if (pileType != PileType.Hand)
+        {
+            return;
+        }
+
+        foreach (var card in cardList)
+        {
+            YukiInspirationService.ActivateInspiration(card);
+        }
     }
 }

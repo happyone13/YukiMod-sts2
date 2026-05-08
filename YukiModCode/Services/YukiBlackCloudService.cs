@@ -60,7 +60,7 @@ public static class YukiBlackCloudService
             return;
         }
 
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudPower>(choiceContext, source.Owner.Creature, 1m, source.Owner.Creature, source);
+        return;
     }
 
     public static Task GainBlackCloud(PlayerChoiceContext choiceContext, Player player, decimal amount, CardModel? source = null)
@@ -144,8 +144,8 @@ public static class YukiBlackCloudService
     {
         return card switch
         {
-            YukiModCard yukiCard => yukiCard.School == YukiCardSchool.BlackCloud,
-            YukiModTokenCard yukiTokenCard => yukiTokenCard.School == YukiCardSchool.BlackCloud,
+            YukiModCard yukiCard => yukiCard.HasOwnBlackCloudEffect,
+            YukiModTokenCard yukiTokenCard => yukiTokenCard.HasOwnBlackCloudEffect,
             _ => false
         };
     }

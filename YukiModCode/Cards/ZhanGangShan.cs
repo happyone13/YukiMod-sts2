@@ -15,7 +15,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class ZhanGangShan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public class ZhanGangShan() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         YukiHoverTipFactory.FromIai();

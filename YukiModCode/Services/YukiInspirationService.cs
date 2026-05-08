@@ -20,10 +20,15 @@ public static class YukiInspirationService
 {
     public static bool IsInspirationSchoolCard(CardModel card)
     {
+        return IsInspirationCard(card);
+    }
+
+    public static bool IsInspirationCard(CardModel card)
+    {
         return card switch
         {
-            YukiModCard yukiCard => yukiCard.School == YukiCardSchool.Inspiration,
-            YukiModTokenCard yukiTokenCard => yukiTokenCard.School == YukiCardSchool.Inspiration,
+            YukiModCard yukiCard => yukiCard.HasOwnInspirationEffect,
+            YukiModTokenCard yukiTokenCard => yukiTokenCard.HasOwnInspirationEffect,
             _ => false
         };
     }
@@ -104,7 +109,7 @@ public static class YukiInspirationService
     {
         return piles
             .SelectMany(pileType => pileType.GetPile(owner).Cards)
-            .Where(IsInspirationSchoolCard);
+            .Where(IsInspirationCard);
     }
 
     public static IEnumerable<CardModel> GetInspirableCards(Player owner, params PileType[] piles)
@@ -129,7 +134,7 @@ public static class YukiInspirationService
         await CardPileCmd.ShuffleIfNecessary(choiceContext, player);
 
         var drawPile = PileType.Draw.GetPile(player);
-        var prioritizedCard = drawPile.Cards.FirstOrDefault(IsInspirationSchoolCard);
+        var prioritizedCard = drawPile.Cards.FirstOrDefault(IsInspirationCard);
         if (prioritizedCard != null && drawPile.Cards.FirstOrDefault() != prioritizedCard)
         {
             await CardPileCmd.Add(prioritizedCard, PileType.Draw, CardPilePosition.Top, source, skipVisuals: true);
