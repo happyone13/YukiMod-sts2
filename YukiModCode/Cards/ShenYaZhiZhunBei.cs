@@ -6,7 +6,9 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Services;
@@ -20,7 +22,10 @@ public class ShenYaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Anci
     public override bool HasOwnInspirationEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromInspiration()];
+        [YukiHoverTipFactory.FromInspiration(), HoverTipFactory.FromPower<VigorPower>()];
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new PowerVar<VigorPower>(2m)];
 
     private static bool IsInspiredAttack(CardModel card) =>
         card.Type == CardType.Attack &&
@@ -28,22 +33,21 @@ public class ShenYaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Anci
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        var hand = PileType.Hand.GetPile(Owner);
-        var drawLimit = YukiCardPileService.MaxCardsInHand - hand.Cards.Count;
-        if (drawLimit <= 0)
+        while (true)
         {
-            return;
-        }
+            var hand = PileType.Hand.GetPile(Owner);
+            if (YukiCardPileService.MaxCardsInHand - hand.Cards.Count <= 0)
+            {
+                break;
+            }
 
-        for (var i = 0; i < drawLimit; i++)
-        {
             var candidates = PileType.Draw.GetPile(Owner).Cards
                 .Concat(PileType.Discard.GetPile(Owner).Cards)
-                .Where(IsEligibleAttackForCurrentState)
+                .Where(card => card.Type == CardType.Attack)
                 .ToList();
             if (candidates.Count == 0)
             {
-                return;
+                break;
             }
 
             var selectedAttack = YukiInspirationService.WillTriggerOnPlay(this)
@@ -51,26 +55,22 @@ public class ShenYaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Anci
                 : candidates.First();
             if (selectedAttack == null)
             {
-                return;
+                break;
             }
 
-            var drawPile = PileType.Draw.GetPile(Owner);
-            if (selectedAttack.Pile?.Type != PileType.Draw || drawPile.Cards.FirstOrDefault() != selectedAttack)
-            {
-                await CardPileCmd.Add(selectedAttack, PileType.Draw, CardPilePosition.Top, this, skipVisuals: true);
-            }
-
-            var drawnCards = await CardPileCmd.Draw(choiceContext, 1m, Owner);
-            if (!drawnCards.Any())
-            {
-                return;
-            }
+            await CardPileCmd.Add(selectedAttack, PileType.Hand, source: this);
         }
+
+        await YukiPowerService.Apply<VigorPower>(
+            choiceContext,
+            Owner.Creature,
+            DynamicVars["VigorPower"].BaseValue,
+            Owner.Creature,
+            this);
     }
 
-    protected override void OnUpgrade() { }
-
-    private bool IsEligibleAttackForCurrentState(CardModel card) =>
-        card.Type == CardType.Attack &&
-        (!IsUpgraded || !card.Tags.Contains(CardTag.Strike));
+    protected override void OnUpgrade()
+    {
+        DynamicVars["VigorPower"].UpgradeValueBy(3m);
+    }
 }

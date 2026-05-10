@@ -119,6 +119,8 @@
     "YUKIMOD-SHUN_NIAN_POWER.title": "瞬念",
     "YUKIMOD-SHUN_NIAN_POWER.description": "回合开始时，将{Amount}张随机的[gold]灵感[/gold]牌加入手中。",
     "YUKIMOD-SHUN_NIAN_POWER.smartDescription": "回合开始时，将{Amount}张随机的[gold]灵感[/gold]牌加入手中。",
+    "YUKIMOD-SHUN_NIAN_POWER.descriptionUpgraded": "回合开始时，将{Amount}张随机的升级过的[gold]灵感[/gold]牌加入手中。",
+    "YUKIMOD-SHUN_NIAN_POWER.smartDescriptionUpgraded": "回合开始时，将{Amount}张随机的升级过的[gold]灵感[/gold]牌加入手中。",
     "YUKIMOD-YING_YUE_POWER.title": "盈月",
     "YUKIMOD-YING_YUE_POWER.description": "回合结束时，你手中的[gold]月影[/gold]伤害增加{Amount}。",
     "YUKIMOD-YING_YUE_POWER.smartDescription": "回合结束时，你手中的[gold]月影[/gold]伤害增加{Amount}。",

@@ -19,7 +19,7 @@ public class ShangXianZhiYue() : YukiModCard(1, CardType.Power, CardRarity.Rare,
         [HoverTipFactory.FromCard<YueYing>(), .. YukiHoverTipFactory.FromIai()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Threshold", 99m)];
+        [new DynamicVar("Threshold", 50m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -28,6 +28,6 @@ public class ShangXianZhiYue() : YukiModCard(1, CardType.Power, CardRarity.Rare,
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Threshold"].BaseValue = 66m;
+        DynamicVars["Threshold"].BaseValue = 33m;
     }
 }

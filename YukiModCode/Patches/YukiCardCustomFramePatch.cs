@@ -952,7 +952,7 @@ public static class YukiCardCustomFramePatch
 
     private static bool UsesAllFrameBadge(CardRarity rarity)
     {
-        return rarity is CardRarity.Ancient or CardRarity.Token;
+        return rarity == CardRarity.Ancient;
     }
 
     private static T? LoadResource<T>(string? path) where T : Resource

@@ -14,13 +14,17 @@ public class TianJiZhanJi() : YukiModCard(1, CardType.Power, CardRarity.Ancient,
 {
     protected override string? CustomPowerCastClipKey => "tian_ji_zhan_ji";
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Innate];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => IsUpgraded
+        ? [CardKeyword.Innate]
+        : [];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await YukiMod.YukiModCode.Services.YukiPowerService.Apply<TianJiZhanJiPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        AddKeyword(CardKeyword.Innate);
+    }
 }

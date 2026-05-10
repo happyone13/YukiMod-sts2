@@ -21,7 +21,7 @@ public class LingDu() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetTy
         [YukiHoverTipFactory.FromInspiration(), .. YukiHoverTipFactory.FromIai()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("Threshold", 33m)];
+        [new DynamicVar("Threshold", 12m)];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -30,6 +30,6 @@ public class LingDu() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetTy
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Threshold"].UpgradeValueBy(-11m);
+        DynamicVars["Threshold"].UpgradeValueBy(-3m);
     }
 }

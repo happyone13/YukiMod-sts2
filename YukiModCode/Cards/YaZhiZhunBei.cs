@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -33,19 +34,7 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
     {
         YukiAudioService.TryPlayCustomCastCardClip("ya_zhi_zhun_bei", Owner);
 
-        var hand = PileType.Hand.GetPile(Owner);
-        var drawLimit = YukiCardPileService.MaxCardsInHand - hand.Cards.Count;
-        if (drawLimit > 0)
-        {
-            if (YukiInspirationService.WillTriggerOnPlay(this))
-            {
-                await YukiInspirationService.DrawPrioritizedInspirationCard(choiceContext, Owner, this);
-            }
-            else
-            {
-                await CardPileCmd.Draw(choiceContext, Owner);
-            }
-        }
+        await TryAddRandomAttackToHand();
 
         await YukiPowerService.Apply<VigorPower>(
             choiceContext,
@@ -53,10 +42,37 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
             DynamicVars["VigorPower"].BaseValue,
             Owner.Creature,
             this);
+
+        if (YukiInspirationService.WillTriggerOnPlay(this))
+        {
+            await TryAddRandomAttackToHand();
+        }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars["VigorPower"].UpgradeValueBy(3m);
+    }
+
+    private async Task<bool> TryAddRandomAttackToHand()
+    {
+        var hand = PileType.Hand.GetPile(Owner);
+        if (YukiCardPileService.MaxCardsInHand - hand.Cards.Count <= 0)
+        {
+            return false;
+        }
+
+        var attackCards = PileType.Draw.GetPile(Owner).Cards
+            .Concat(PileType.Discard.GetPile(Owner).Cards)
+            .Where(card => card.Type == CardType.Attack)
+            .ToList();
+        var selectedAttack = Owner.RunState.Rng.CombatCardSelection.NextItem(attackCards);
+        if (selectedAttack == null)
+        {
+            return false;
+        }
+
+        await CardPileCmd.Add(selectedAttack, PileType.Hand, source: this);
+        return true;
     }
 }
