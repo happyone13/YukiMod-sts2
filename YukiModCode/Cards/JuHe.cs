@@ -29,7 +29,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
         [YukiHoverTipFactory.FromJuHeKeyword()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(33m, ValueProp.Move)];
+        [new DamageVar(50m, ValueProp.Move)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
@@ -58,7 +58,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(33m);
+        DynamicVars.Damage.UpgradeValueBy(16m);
     }
 
     public static async Task<CardModel?> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded = false)

@@ -25,6 +25,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/yue_ying_dynamic.tscn";
 
+    private const string AttackHitDamageKey = "AttackHitDamage";
     private const string CurrentDamageKey = "CurrentDamage";
 
     public override YukiCardSchool School => YukiCardSchool.Moonshadow;
@@ -35,7 +36,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
         [CardKeyword.Retain, CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move)];
+        [new DamageVar(5m, ValueProp.Move), new DynamicVar(AttackHitDamageKey, 1m)];
 
     protected override void AddExtraArgsToDescription(LocString description)
     {
@@ -54,7 +55,10 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
             .Execute(choiceContext);
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        DynamicVars[AttackHitDamageKey].UpgradeValueBy(1m);
+    }
 
     public override Task AfterAttack(AttackCommand command)
     {
@@ -79,7 +83,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
             return Task.CompletedTask;
         }
 
-        DynamicVars.Damage.BaseValue += hitCount;
+        DynamicVars.Damage.BaseValue += hitCount * DynamicVars[AttackHitDamageKey].BaseValue;
         return Task.CompletedTask;
     }
 

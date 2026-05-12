@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using YukiMod.YukiModCode.Cards;
 
 namespace YukiMod.YukiModCode.Services;
@@ -46,6 +47,17 @@ public static class YukiMoonshadowService
             if (moonshadowCard.DynamicVars.ContainsKey("Damage"))
             {
                 moonshadowCard.DynamicVars.Damage.BaseValue += amount;
+            }
+        }
+    }
+
+    public static void UpgradeMoonshadowInHand(Player owner)
+    {
+        foreach (var moonshadowCard in GetMoonshadowCardsInHand(owner))
+        {
+            if (moonshadowCard.IsUpgradable && !moonshadowCard.IsUpgraded)
+            {
+                CardCmd.Upgrade(moonshadowCard, CardPreviewStyle.None);
             }
         }
     }

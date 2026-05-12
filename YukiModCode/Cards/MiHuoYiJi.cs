@@ -29,7 +29,7 @@ public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Ta
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(4m, ValueProp.Move), new RepeatVar(2)];
+        [new DamageVar(8m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -37,7 +37,6 @@ public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Ta
         YukiAudioService.TryPlayCustomAttackCardClip("mi_huo_yi_ji", Owner);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
