@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bs33qpy2ufy75"]
+[gd_scene load_steps=3 format=3 uid="uid://bs33qpy2ufy75"]
 
 [ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/q/q.tres" id="1_yuki_spine"]
+[ext_resource type="Script" path="res://src/Core/Nodes/Combat/NCreatureVisuals.cs" id="2_visuals"]
 
 [node name="YukiCharacter" type="Node2D"]
+script = ExtResource("2_visuals")
 metadata/_edit_group_ = true
 
 [node name="Visuals" type="SpineSprite" parent="."]

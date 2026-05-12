@@ -8,6 +8,8 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
+using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Screens;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using YukiMod.YukiModCode.Cards;
 using YukiMod.YukiModCode.Config;
@@ -23,10 +25,10 @@ public static class YukiCardSpinePortraitPatch
     private const string OverlayTargetSlotMetaKey = "yuki_target_slot";
     private const string OverlayTargetSlotAncient = "ancient";
     private const string OverlayTargetSlotNormal = "normal";
-    private const float AncientOverlayInsetLeft = 7.0f;
-    private const float AncientOverlayInsetTop = 7.0f;
-    private const float AncientOverlayInsetRight = 7.0f;
-    private const float AncientOverlayInsetBottom = 10.0f;
+    private const float AncientOverlayInsetLeft = 0.0f;
+    private const float AncientOverlayInsetTop = 0.0f;
+    private const float AncientOverlayInsetRight = 0.0f;
+    private const float AncientOverlayInsetBottom = 0.0f;
     private const int WarmUpFrames = 3;
 
     public static readonly FieldInfo? PortraitField =
@@ -250,14 +252,16 @@ public static class YukiCardSpinePortraitPatch
         bool isInCardPlay = false;
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
+        bool isInspectScreenCard = false;
 
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard);
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
 
-        if (isInCardPlay)
+        bool isTargetingSelection = NRun.Instance != null && NTargetManager.Instance.IsInSelection;
+        if (isInCardPlay && !isTargetingSelection)
             return false;
 
         bool isEnlarged = ((Control)cardNode).GetGlobalTransform().Scale.Y > 1.1f;
-        return hasHolderAncestor || isPreviewHolder || isHoverTipCard || isEnlarged;
+        return hasHolderAncestor || isPreviewHolder || isHoverTipCard || isInspectScreenCard || isEnlarged;
     }
 
     public static bool ShouldDisplayDynamicOverlays(NCard? cardNode)
@@ -270,11 +274,12 @@ public static class YukiCardSpinePortraitPatch
         bool isInCardPlay = false;
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
+        bool isInspectScreenCard = false;
 
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard);
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
 
         bool isEnlarged = ((Control)cardNode).GetGlobalTransform().Scale.Y > 1.1f;
-        return isHolderActive || isPreviewHolder || isHoverTipCard || isInCardPlay || isEnlarged;
+        return isHolderActive || isPreviewHolder || isHoverTipCard || isInspectScreenCard || isInCardPlay || isEnlarged;
     }
 
     public static bool IsPreviewHolderContext(NCard? cardNode)
@@ -287,7 +292,8 @@ public static class YukiCardSpinePortraitPatch
         bool isInCardPlay = false;
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard);
+        bool isInspectScreenCard = false;
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
         return isPreviewHolder;
     }
 
@@ -301,7 +307,8 @@ public static class YukiCardSpinePortraitPatch
         bool isInCardPlay = false;
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard);
+        bool isInspectScreenCard = false;
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
         return isHoverTipCard;
     }
 
@@ -566,7 +573,8 @@ public static class YukiCardSpinePortraitPatch
         ref bool isHolderActive,
         ref bool isInCardPlay,
         ref bool isPreviewHolder,
-        ref bool isHoverTipCard)
+        ref bool isHoverTipCard,
+        ref bool isInspectScreenCard)
     {
         Node? current = cardNode.GetParent();
         while (current != null)
@@ -604,6 +612,10 @@ public static class YukiCardSpinePortraitPatch
             else if (current is NHoverTipCardContainer or NHoverTipSet)
             {
                 isHoverTipCard = true;
+            }
+            else if (current is NInspectCardScreen)
+            {
+                isInspectScreenCard = true;
             }
 
             current = current.GetParent();

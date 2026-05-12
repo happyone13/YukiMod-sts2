@@ -1,0 +1,6 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://de83efkr2ch3c"]
+
+[ext_resource type="FontFile" uid="uid://b0mn1fm7anxvw" path="res://YukiMod/images/cards/card_effects/card_normal.fnt" id="1_font"]
+
+[resource]
+base_font = ExtResource("1_font")

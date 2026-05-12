@@ -6,6 +6,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.UI;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using YukiMod.YukiModCode.Cards;
@@ -23,12 +24,13 @@ public static class YukiCardCustomFramePatch
     private const string EgoBadgeNodeName = "YukiChaosEgoBadge";
     private const string EgoBadge2NodeName = "YukiChaosEgoBadge2";
     private const string FrameSparkNodeName = "YukiChaosFrameSpark";
+    private const string CostLineNodeName = "YukiChaosCostLine";
     private const string CategoryIconNodeName = "YukiChaosCategoryIcon";
     private const string CategoryTextNodeName = "YukiChaosCategoryText";
     private const string CostTextNodeName = "YukiChaosCostText";
+    private const string CostTextFallbackNodeName = "YukiChaosCostTextFallback";
     private const string UpgradeIconNodeName = "YukiChaosUpgradeIcon";
     private const string DescriptionMaskNodeName = "YukiChaosDescriptionMask";
-
     private static readonly NodeLayout TitleRibbonLayout = new(-146.0f, -214.0f, 292.0f, 82.0f);
     private static readonly NodeLayout CardTitleLayout = new(-151.0f, -209.0f, 201.0f, 58.0f);
     private static readonly NodeLayout CostLineLayout = new(-145.0f, -200.0f, 68.0f, 115.0f);
@@ -43,6 +45,45 @@ public static class YukiCardCustomFramePatch
     private static readonly NodeLayout RaritySubLayout = new(120.0f, -199.0f, 56.0f, 90.0f);
     private static readonly NodeLayout FrameSparkLayout = new(-91.0f, -83.0f, 157.0f, 218.0f);
     private static readonly NodeLayout UpgradeIconLayout = new(-131.0f, -138.0f, 32.0f, 32.0f, Visible: false);
+    private static readonly Dictionary<char, Rect2> NormalDigitRegions = new()
+    {
+        ['0'] = new Rect2(79.0f, 4.0f, 78.0f, 87.0f),
+        ['1'] = new Rect2(158.0f, 4.0f, 78.0f, 87.0f),
+        ['2'] = new Rect2(237.0f, 4.0f, 78.0f, 87.0f),
+        ['3'] = new Rect2(316.0f, 4.0f, 78.0f, 87.0f),
+        ['4'] = new Rect2(395.0f, 4.0f, 78.0f, 87.0f),
+        ['5'] = new Rect2(0.0f, 96.0f, 78.0f, 87.0f),
+        ['6'] = new Rect2(79.0f, 96.0f, 78.0f, 87.0f),
+        ['7'] = new Rect2(158.0f, 96.0f, 78.0f, 87.0f),
+        ['8'] = new Rect2(237.0f, 96.0f, 78.0f, 87.0f),
+        ['9'] = new Rect2(316.0f, 96.0f, 78.0f, 87.0f)
+    };
+    private static readonly Dictionary<char, Rect2> GreenDigitRegions = new()
+    {
+        ['0'] = new Rect2(0.0f, 4.0f, 78.0f, 87.0f),
+        ['1'] = new Rect2(79.0f, 4.0f, 78.0f, 87.0f),
+        ['2'] = new Rect2(158.0f, 4.0f, 78.0f, 87.0f),
+        ['3'] = new Rect2(237.0f, 4.0f, 78.0f, 87.0f),
+        ['4'] = new Rect2(316.0f, 4.0f, 78.0f, 87.0f),
+        ['5'] = new Rect2(395.0f, 4.0f, 78.0f, 87.0f),
+        ['6'] = new Rect2(0.0f, 96.0f, 78.0f, 87.0f),
+        ['7'] = new Rect2(79.0f, 96.0f, 78.0f, 87.0f),
+        ['8'] = new Rect2(158.0f, 96.0f, 78.0f, 87.0f),
+        ['9'] = new Rect2(237.0f, 96.0f, 78.0f, 87.0f)
+    };
+    private static readonly Dictionary<char, Rect2> RedDigitRegions = new()
+    {
+        ['0'] = new Rect2(0.0f, 4.0f, 78.0f, 87.0f),
+        ['1'] = new Rect2(79.0f, 4.0f, 78.0f, 87.0f),
+        ['2'] = new Rect2(158.0f, 4.0f, 78.0f, 87.0f),
+        ['3'] = new Rect2(237.0f, 4.0f, 78.0f, 87.0f),
+        ['4'] = new Rect2(316.0f, 4.0f, 78.0f, 87.0f),
+        ['5'] = new Rect2(395.0f, 4.0f, 78.0f, 87.0f),
+        ['6'] = new Rect2(0.0f, 96.0f, 78.0f, 87.0f),
+        ['7'] = new Rect2(79.0f, 96.0f, 78.0f, 87.0f),
+        ['8'] = new Rect2(158.0f, 96.0f, 78.0f, 87.0f),
+        ['9'] = new Rect2(237.0f, 96.0f, 78.0f, 87.0f)
+    };
 
     private static readonly FieldInfo? FrameField =
         typeof(NCard).GetField("_frame", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -79,6 +120,7 @@ public static class YukiCardCustomFramePatch
 
     private static readonly Dictionary<string, Resource?> ResourceCache = new();
     private static readonly HashSet<string> MissingResourceWarnings = new();
+    private static readonly Dictionary<CostAtlasVariant, Texture2D?> CostAtlasTextures = new();
     private static readonly ConditionalWeakTable<NCard, OriginalCardVisualState> OriginalStates = new();
     private static Control? _templateRoot;
     private static Control? _templateCardContainer;
@@ -187,7 +229,7 @@ public static class YukiCardCustomFramePatch
         ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);
         ancientBorder?.Hide();
         ApplyTextureRect(ancientTextBg, YukiCardFramePaths.GetAncientTextBgTexturePath(cardModel!.Type), frameMaterial, show: true);
-        ApplyTextureRect(ancientHighlight, YukiCardFramePaths.AncientHighlightTexturePath, material: null, show: true);
+        ancientHighlight?.Hide();
 
         if (ancientBanner != null)
         {
@@ -241,7 +283,7 @@ public static class YukiCardCustomFramePatch
         ancientBorder?.Hide();
         ancientTextBg?.Hide();
         ancientBanner?.Hide();
-        ApplyTextureRect(ancientHighlight, YukiCardFramePaths.AncientHighlightTexturePath, material: null, show: true);
+        ancientHighlight?.Hide();
 
         if (Get<TextureRect>(EnergyIconField, cardNode) is { } energyIcon)
             ApplyTextureRect(energyIcon, $"{ChaosEffectsBasePath}energy_line_default.png", material: null, show: true);
@@ -258,7 +300,9 @@ public static class YukiCardCustomFramePatch
             typeLabel.Show();
         if (typePlaque != null)
             typePlaque.Show();
+        RemoveNode(cardNode, CostLineNodeName);
         RemoveNode(cardNode, CostTextNodeName);
+        RemoveNode(cardNode, CostTextFallbackNodeName);
         RemoveNode(cardNode, CategoryTextNodeName);
         RemoveNode(cardNode, CategoryIconNodeName);
 
@@ -320,30 +364,15 @@ public static class YukiCardCustomFramePatch
 
         ApplyTemplateLayout(banner, "TitleRibbon", TitleRibbonLayout);
         ApplyTemplateLayout(titleLabel, "CardTitle", CardTitleLayout);
-        ApplyTemplateLayout(energyIcon, "CostLine", CostLineLayout);
-        ApplyTemplateLayout(energyLabel, "CostText", CostTextLayout);
         ApplyTemplateLayout(descriptionLabel, "DescriptionText", DescriptionTextLayout);
         ApplyTemplateLayout(typeLabel, "CategoryText", CategoryTextLayout);
 
         EnsureControlVisible(banner);
         EnsureControlVisible(titleLabel);
-        EnsureControlVisible(energyIcon);
         EnsureControlVisible(descriptionLabel);
 
         ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), material: null, show: true);
-        ApplyTextureRect(energyIcon, $"{ChaosEffectsBasePath}energy_line_default.png", material: null, show: true);
-
-        string energyText = GetDisplayEnergyText(cardNode, cardModel);
-        bool showEnergyText = ShouldShowEnergyText(cardNode, cardModel);
-        if (energyLabel != null)
-            energyLabel.Hide();
-
-        EnsureTemplateOverlay(cardNode, CostTextNodeName, "CostText", () => CreateLabelOverlay(CostTextLayout), control =>
-        {
-            ApplyTemplateLayout(control, "CostText", CostTextLayout);
-            SetOverlayText(control, energyText, showEnergyText, energyLabel);
-            BringToFront(control);
-        });
+        ConfigureCostOverlay(cardNode, energyIcon, energyLabel);
 
         if (Get<Control>(AncientBannerField, cardNode) is { } activeAncientBanner)
             activeAncientBanner.Hide();
@@ -364,8 +393,6 @@ public static class YukiCardCustomFramePatch
 
         if (banner != null)
             BringToFront(banner);
-        if (energyIcon != null)
-            BringToFront(energyIcon);
         if (titleLabel != null)
             BringToFront(titleLabel);
         if (descriptionLabel != null)
@@ -424,6 +451,244 @@ public static class YukiCardCustomFramePatch
         });
     }
 
+    private static void ConfigureCostOverlay(NCard cardNode, TextureRect? energyIcon, Control? energyLabelControl)
+    {
+        EnsureTemplateOverlay(cardNode, CostLineNodeName, "CostLine", () => CreateTextureOverlay(CostLineLayout), control =>
+        {
+            ApplyTemplateLayout(control, "CostLine", CostLineLayout);
+            BringToFront(control);
+        });
+
+        if (GetOverlayNode(cardNode, CostTextNodeName) is Label)
+        {
+            RemoveNode(cardNode, CostTextNodeName);
+        }
+
+        EnsureTemplateOverlay(cardNode, CostTextNodeName, "CostTextAtlasPreview", () => new Control
+        {
+            MouseFilter = Control.MouseFilterEnum.Ignore
+        }, control =>
+        {
+            ApplyTemplateLayout(control, "CostTextAtlasPreview", CostTextLayout);
+            BringToFront(control);
+        });
+
+        if (GetOverlayNode(cardNode, CostTextFallbackNodeName) is { } existingFallback && existingFallback is not Label)
+        {
+            RemoveNode(cardNode, CostTextFallbackNodeName);
+        }
+
+        EnsureTemplateOverlay(cardNode, CostTextFallbackNodeName, "CostText", () => CreateLabelOverlay(CostTextLayout), control =>
+        {
+            ApplyTemplateLayout(control, "CostText", CostTextLayout);
+            BringToFront(control);
+        });
+
+        if (energyIcon != null)
+            energyIcon.Hide();
+        if (energyLabelControl != null)
+            energyLabelControl.Hide();
+
+        string displayText = GetControlText(energyLabelControl);
+        var preview = GetOverlayNode(cardNode, CostTextNodeName);
+        var fallbackLabel = GetOverlayNode(cardNode, CostTextFallbackNodeName) as Label;
+        if (preview == null || fallbackLabel == null)
+            return;
+
+        if (!string.IsNullOrWhiteSpace(displayText) && IsDigitsOnly(displayText))
+        {
+            RenderCostDigits(preview, displayText, GetCostAtlasVariant(energyLabelControl));
+            preview.Show();
+            fallbackLabel.Hide();
+            return;
+        }
+
+        ClearCostDigits(preview);
+        preview.Hide();
+
+        if (string.IsNullOrWhiteSpace(displayText))
+        {
+            fallbackLabel.Hide();
+            return;
+        }
+
+        fallbackLabel.Text = displayText;
+        SyncFallbackCostTheme(fallbackLabel, energyLabelControl as Label);
+        fallbackLabel.Show();
+    }
+
+    private static string GetControlText(Control? control)
+    {
+        return control switch
+        {
+            Label label => label.Text ?? string.Empty,
+            RichTextLabel richText => richText.Text ?? string.Empty,
+            _ => string.Empty
+        };
+    }
+
+    private static bool IsDigitsOnly(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            return false;
+
+        foreach (char c in text)
+        {
+            if (!char.IsDigit(c))
+                return false;
+        }
+
+        return true;
+    }
+
+    private static void SyncFallbackCostTheme(Label target, Label? source)
+    {
+        if (source == null)
+            return;
+
+        target.AddThemeColorOverride("font_color", GetThemeColor(source, "font_color"));
+        target.AddThemeColorOverride("font_outline_color", GetThemeColor(source, "font_outline_color"));
+        target.AddThemeConstantOverride("outline_size", GetThemeConstant(source, "outline_size"));
+    }
+
+    private static Color GetThemeColor(Control control, string name)
+    {
+        return control.GetThemeColor(name);
+    }
+
+    private static int GetThemeConstant(Control control, string name)
+    {
+        return control.GetThemeConstant(name);
+    }
+
+    private static CostAtlasVariant GetCostAtlasVariant(Control? energyLabelControl)
+    {
+        if (energyLabelControl is not Label label)
+            return CostAtlasVariant.Normal;
+
+        Color fontColor = GetThemeColor(label, "font_color");
+        Color outlineColor = GetThemeColor(label, "font_outline_color");
+        if (LooksLikeGreen(fontColor) || LooksLikeGreen(outlineColor))
+            return CostAtlasVariant.Green;
+        if (LooksLikeRed(fontColor) || LooksLikeRed(outlineColor))
+            return CostAtlasVariant.Red;
+
+        return CostAtlasVariant.Normal;
+    }
+
+    private static bool LooksLikeGreen(Color color)
+    {
+        return color.G >= 0.6f && color.G >= color.R + 0.08f && color.G >= color.B + 0.08f;
+    }
+
+    private static bool LooksLikeRed(Color color)
+    {
+        return color.R >= 0.6f && color.R >= color.G + 0.15f && color.R >= color.B + 0.15f;
+    }
+
+    private static void RenderCostDigits(Control preview, string text, CostAtlasVariant variant)
+    {
+        ClearCostDigits(preview);
+
+        Dictionary<char, Rect2> digitRegions = GetDigitRegions(variant);
+        Texture2D? texture = LoadCostAtlasTexture(variant);
+        if (texture == null)
+        {
+            preview.Hide();
+            return;
+        }
+
+        var visibleDigits = new List<char>(text.Length);
+        float totalSourceWidth = 0.0f;
+        float maxSourceHeight = 0.0f;
+
+        foreach (char c in text)
+        {
+            if (!digitRegions.TryGetValue(c, out Rect2 region))
+                continue;
+
+            visibleDigits.Add(c);
+            totalSourceWidth += region.Size.X;
+            maxSourceHeight = MathF.Max(maxSourceHeight, region.Size.Y);
+        }
+
+        if (visibleDigits.Count == 0 || totalSourceWidth <= 0.0f || maxSourceHeight <= 0.0f)
+        {
+            preview.Hide();
+            return;
+        }
+
+        float scale = MathF.Min(preview.Size.Y / maxSourceHeight, preview.Size.X / totalSourceWidth);
+        if (scale <= 0.0f || float.IsNaN(scale) || float.IsInfinity(scale))
+        {
+            preview.Hide();
+            return;
+        }
+
+        float startX = (preview.Size.X - totalSourceWidth * scale) * 0.5f;
+        float startY = (preview.Size.Y - maxSourceHeight * scale) * 0.5f;
+        float cursorX = startX;
+
+        for (int i = 0; i < visibleDigits.Count; i++)
+        {
+            Rect2 region = digitRegions[visibleDigits[i]];
+            var rect = new TextureRect
+            {
+                Name = $"CostDigit{i}",
+                MouseFilter = Control.MouseFilterEnum.Ignore,
+                Texture = new AtlasTexture
+                {
+                    Atlas = texture,
+                    Region = region
+                },
+                ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+                StretchMode = TextureRect.StretchModeEnum.Scale,
+                Position = new Vector2(cursorX, startY),
+                Size = region.Size * scale
+            };
+            preview.AddChild(rect);
+            cursorX += region.Size.X * scale;
+        }
+
+        preview.Show();
+    }
+
+    private static void ClearCostDigits(Control preview)
+    {
+        foreach (Node child in preview.GetChildren())
+        {
+            if (child.Name.ToString().StartsWith("CostDigit", StringComparison.Ordinal))
+                DestroyNodeImmediately(child);
+        }
+    }
+
+    private static Texture2D? LoadCostAtlasTexture(CostAtlasVariant variant)
+    {
+        if (CostAtlasTextures.TryGetValue(variant, out Texture2D? cached) && cached != null && GodotObject.IsInstanceValid(cached))
+            return cached;
+
+        string path = variant switch
+        {
+            CostAtlasVariant.Green => $"{ChaosEffectsBasePath}card_green_0.png",
+            CostAtlasVariant.Red => $"{ChaosEffectsBasePath}card_red_0.png",
+            _ => $"{ChaosEffectsBasePath}card_normal_0.png"
+        };
+
+        Texture2D? texture = LoadResource<Texture2D>(path);
+        CostAtlasTextures[variant] = texture;
+        return texture;
+    }
+
+    private static Dictionary<char, Rect2> GetDigitRegions(CostAtlasVariant variant)
+    {
+        return variant switch
+        {
+            CostAtlasVariant.Green => GreenDigitRegions,
+            CostAtlasVariant.Red => RedDigitRegions,
+            _ => NormalDigitRegions
+        };
+    }
+
     private static void RemoveChaosEffects(NCard? cardNode, bool restoreOriginalState)
     {
         if (cardNode == null)
@@ -434,9 +699,11 @@ public static class YukiCardCustomFramePatch
         RemoveNode(cardNode, EgoBadgeNodeName);
         RemoveNode(cardNode, EgoBadge2NodeName);
         RemoveNode(cardNode, FrameSparkNodeName);
+        RemoveNode(cardNode, CostLineNodeName);
         RemoveNode(cardNode, CategoryIconNodeName);
         RemoveNode(cardNode, CategoryTextNodeName);
         RemoveNode(cardNode, CostTextNodeName);
+        RemoveNode(cardNode, CostTextFallbackNodeName);
         RemoveNode(cardNode, UpgradeIconNodeName);
         RemoveNode(cardNode, DescriptionMaskNodeName);
 
@@ -814,39 +1081,6 @@ public static class YukiCardCustomFramePatch
         return label;
     }
 
-    private static string GetControlText(Control? control)
-    {
-        return control switch
-        {
-            Label label => label.Text,
-            RichTextLabel richTextLabel => richTextLabel.Text,
-            _ => (string?)control?.Get("text") ?? string.Empty
-        };
-    }
-
-    private static string GetDisplayEnergyText(NCard cardNode, CardModel cardModel)
-    {
-        if (cardNode.Visibility != ModelVisibility.Visible)
-            return "?";
-
-        if (cardModel.EnergyCost.CostsX)
-            return "X";
-
-        int withModifiers = cardModel.EnergyCost.GetWithModifiers(CostModifiers.All);
-        return withModifiers >= 0 ? withModifiers.ToString() : string.Empty;
-    }
-
-    private static bool ShouldShowEnergyText(NCard cardNode, CardModel cardModel)
-    {
-        if (cardNode.Visibility != ModelVisibility.Visible)
-            return true;
-
-        if (cardModel.EnergyCost.CostsX)
-            return true;
-
-        return cardModel.EnergyCost.GetWithModifiers(CostModifiers.All) >= 0;
-    }
-
     private static string GetDisplayTypeText(CardModel cardModel)
     {
         return cardModel.Type.ToLocString().GetFormattedText();
@@ -999,9 +1233,11 @@ public static class YukiCardCustomFramePatch
                GetOverlayNode(cardNode, EgoBadgeNodeName) != null ||
                GetOverlayNode(cardNode, EgoBadge2NodeName) != null ||
                GetOverlayNode(cardNode, FrameSparkNodeName) != null ||
+               GetOverlayNode(cardNode, CostLineNodeName) != null ||
                GetOverlayNode(cardNode, CategoryIconNodeName) != null ||
                GetOverlayNode(cardNode, CategoryTextNodeName) != null ||
                GetOverlayNode(cardNode, CostTextNodeName) != null ||
+               GetOverlayNode(cardNode, CostTextFallbackNodeName) != null ||
                GetOverlayNode(cardNode, UpgradeIconNodeName) != null ||
                GetOverlayNode(cardNode, DescriptionMaskNodeName) != null;
     }
@@ -1047,20 +1283,6 @@ public static class YukiCardCustomFramePatch
         }
     }
 
-    [HarmonyPatch(typeof(NCard), "_EnterTree")]
-    public static class EnterTreePatch
-    {
-        [HarmonyPostfix]
-        [HarmonyPriority(Priority.Last)]
-        public static void Postfix(NCard __instance)
-        {
-            if (!__instance.IsNodeReady())
-                return;
-
-            Apply(__instance);
-        }
-    }
-
     [HarmonyPatch(typeof(NCard), nameof(NCard.OnFreedToPool))]
     public static class OnFreedToPoolPatch
     {
@@ -1088,6 +1310,13 @@ public static class YukiCardCustomFramePatch
     {
         public Vector2 Position => new(Left, Top);
         public Vector2 Size => new(Width, Height);
+    }
+
+    private enum CostAtlasVariant
+    {
+        Normal,
+        Green,
+        Red
     }
 
     private sealed class OriginalCardVisualState

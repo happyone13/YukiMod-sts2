@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cglbmyvvvdkrn"]
+[gd_scene load_steps=15 format=3 uid="uid://cglbmyvvvdkrn"]
 
 [ext_resource type="Texture2D" uid="uid://ddjlxyb5lwv5f" path="res://YukiMod/images/cards/card_effects/card_rarity_unique.png" id="2_rarity"]
 [ext_resource type="Texture2D" uid="uid://ckw51tqbpopxv" path="res://YukiMod/images/cards/card_effects/deco_card_copy.png" id="2_sk4cg"]
@@ -6,7 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://csry75klmvm81" path="res://YukiMod/images/cards/card_effects/card_title_rarity_unique.png" id="5_title"]
 [ext_resource type="Texture2D" uid="uid://bjsmtpro7aqre" path="res://YukiMod/images/cards/card_effects/card_frame_spark.png" id="6_spark"]
 [ext_resource type="FontFile" uid="uid://b0mn1fm7anxvw" path="res://YukiMod/images/cards/card_effects/card_normal.fnt" id="9_t21jw"]
-[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/card/unique_1057_03.tres" id="10_spine"]
+[ext_resource type="Script" uid="uid://bc4bjw76alaml" path="res://YukiMod/scripts/editor/chaos_card_effects_frame_template_preview.gd" id="10_preview"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/card/unique_1057_03.tres" id="11_spine"]
 [ext_resource type="Texture2D" uid="uid://dnlnfh5aatgdn" path="res://YukiMod/images/cards/card_effects/card_ego_basic.png" id="12_ego"]
 [ext_resource type="Texture2D" uid="uid://d04l72ca2vorv" path="res://YukiMod/images/cards/card_effects/energy_line_default.png" id="13_energy"]
 [ext_resource type="Texture2D" uid="uid://dxd6stfuold37" path="res://YukiMod/images/cards/card_effects/icon_category_card_atk.png" id="14_category"]
@@ -30,6 +31,8 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1200.0
 offset_bottom = 720.0
+script = ExtResource("10_preview")
+preview_mode = 3
 
 [node name="CardContainer" type="Control" parent="."]
 anchors_preset = 0
@@ -63,7 +66,7 @@ grow_vertical = 2
 color = Color(0.04, 0.04, 0.04, 0)
 
 [node name="SpineSprite" type="SpineSprite" parent="CardContainer/DynamicPortraitViewport/SubViewport"]
-skeleton_data_res = ExtResource("10_spine")
+skeleton_data_res = ExtResource("11_spine")
 preview_skin = "default"
 preview_animation = "animation"
 preview_frame = false
@@ -98,10 +101,10 @@ vertical_alignment = 1
 
 [node name="EgoBadge2" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = 92.0
-offset_top = -215.0
-offset_right = 187.0
-offset_bottom = 207.55206
+offset_left = 94.0
+offset_top = -216.0
+offset_right = 189.0
+offset_bottom = 209.0
 mouse_filter = 2
 texture = ExtResource("2_sk4cg")
 expand_mode = 1
@@ -109,9 +112,9 @@ stretch_mode = 5
 
 [node name="EgoBadge" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = -198.0
+offset_left = -204.0
 offset_top = -218.0
-offset_right = -101.0
+offset_right = -107.0
 offset_bottom = 213.4479
 mouse_filter = 2
 texture = ExtResource("12_ego")
@@ -120,23 +123,12 @@ stretch_mode = 5
 
 [node name="RarityBase" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = -168.0
+offset_left = -174.0
 offset_top = -204.0
-offset_right = -135.0
+offset_right = -141.0
 offset_bottom = -126.0
 mouse_filter = 2
 texture = ExtResource("2_rarity")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="RaritySub" type="TextureRect" parent="CardContainer"]
-layout_mode = 0
-offset_left = 118.0
-offset_top = -205.0
-offset_right = 171.0
-offset_bottom = -120.0
-mouse_filter = 2
-texture = ExtResource("3_rarity_sub")
 expand_mode = 1
 stretch_mode = 5
 
@@ -154,10 +146,10 @@ stretch_mode = 5
 
 [node name="TitleRibbon" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = -146.0
-offset_top = -214.0
-offset_right = 146.0
-offset_bottom = -132.0
+offset_left = -161.0
+offset_top = -213.0
+offset_right = 145.0
+offset_bottom = -131.0
 mouse_filter = 2
 texture = ExtResource("5_title")
 expand_mode = 1
@@ -174,7 +166,19 @@ texture = ExtResource("13_energy")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="RaritySub" type="TextureRect" parent="CardContainer"]
+layout_mode = 0
+offset_left = 118.0
+offset_top = -205.0
+offset_right = 171.0
+offset_bottom = -120.0
+mouse_filter = 2
+texture = ExtResource("3_rarity_sub")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="CostText" type="Label" parent="CardContainer"]
+visible = false
 layout_mode = 0
 offset_left = -131.0
 offset_top = -234.0
@@ -188,6 +192,14 @@ theme_override_font_sizes/font_size = 21
 text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="CostTextAtlasPreview" type="Control" parent="CardContainer"]
+anchors_preset = 0
+offset_left = -130.0
+offset_top = -222.0
+offset_right = -75.0
+offset_bottom = -132.0
+mouse_filter = 2
 
 [node name="UpgradeIcon" type="TextureRect" parent="CardContainer"]
 visible = false
