@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.Screens;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using YukiMod.YukiModCode.Cards;
@@ -253,15 +254,16 @@ public static class YukiCardSpinePortraitPatch
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
         bool isInspectScreenCard = false;
+        bool isFlyAnimationCard = false;
 
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard, ref isFlyAnimationCard);
 
         bool isTargetingSelection = NRun.Instance != null && NTargetManager.Instance.IsInSelection;
         if (isInCardPlay && !isTargetingSelection)
             return false;
 
         bool isEnlarged = ((Control)cardNode).GetGlobalTransform().Scale.Y > 1.1f;
-        return hasHolderAncestor || isPreviewHolder || isHoverTipCard || isInspectScreenCard || isEnlarged;
+        return hasHolderAncestor || isPreviewHolder || isHoverTipCard || isInspectScreenCard || isFlyAnimationCard || isEnlarged;
     }
 
     public static bool ShouldDisplayDynamicOverlays(NCard? cardNode)
@@ -275,11 +277,12 @@ public static class YukiCardSpinePortraitPatch
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
         bool isInspectScreenCard = false;
+        bool isFlyAnimationCard = false;
 
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard, ref isFlyAnimationCard);
 
         bool isEnlarged = ((Control)cardNode).GetGlobalTransform().Scale.Y > 1.1f;
-        return isHolderActive || isPreviewHolder || isHoverTipCard || isInspectScreenCard || isInCardPlay || isEnlarged;
+        return isHolderActive || isPreviewHolder || isHoverTipCard || isInspectScreenCard || isFlyAnimationCard || isInCardPlay || isEnlarged;
     }
 
     public static bool IsPreviewHolderContext(NCard? cardNode)
@@ -293,7 +296,8 @@ public static class YukiCardSpinePortraitPatch
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
         bool isInspectScreenCard = false;
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
+        bool isFlyAnimationCard = false;
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard, ref isFlyAnimationCard);
         return isPreviewHolder;
     }
 
@@ -308,7 +312,8 @@ public static class YukiCardSpinePortraitPatch
         bool isPreviewHolder = false;
         bool isHoverTipCard = false;
         bool isInspectScreenCard = false;
-        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard);
+        bool isFlyAnimationCard = false;
+        CollectPresentationState(cardNode, ref hasHolderAncestor, ref isHolderActive, ref isInCardPlay, ref isPreviewHolder, ref isHoverTipCard, ref isInspectScreenCard, ref isFlyAnimationCard);
         return isHoverTipCard;
     }
 
@@ -574,7 +579,8 @@ public static class YukiCardSpinePortraitPatch
         ref bool isInCardPlay,
         ref bool isPreviewHolder,
         ref bool isHoverTipCard,
-        ref bool isInspectScreenCard)
+        ref bool isInspectScreenCard,
+        ref bool isFlyAnimationCard)
     {
         Node? current = cardNode.GetParent();
         while (current != null)
@@ -616,6 +622,14 @@ public static class YukiCardSpinePortraitPatch
             else if (current is NInspectCardScreen)
             {
                 isInspectScreenCard = true;
+            }
+            else if (current.GetParent() is NTopBar && string.Equals(current.Name.ToString(), "TrailContainer", System.StringComparison.Ordinal))
+            {
+                isFlyAnimationCard = true;
+            }
+            else if (current.Name.ToString().EndsWith("VfxContainer", System.StringComparison.Ordinal))
+            {
+                isFlyAnimationCard = true;
             }
 
             current = current.GetParent();

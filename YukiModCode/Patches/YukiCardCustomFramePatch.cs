@@ -9,6 +9,8 @@ using MegaCrit.Sts2.Core.Entities.UI;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using YukiMod.YukiModCode.Cards;
 using YukiMod.YukiModCode.Config;
 
@@ -117,6 +119,8 @@ public static class YukiCardCustomFramePatch
         typeof(NCard).GetField("_typePlaque", BindingFlags.Instance | BindingFlags.NonPublic);
     private static readonly FieldInfo? DescriptionLabelField =
         typeof(NCard).GetField("_descriptionLabel", BindingFlags.Instance | BindingFlags.NonPublic);
+    private static readonly FieldInfo? CardFlyVfxCardField =
+        typeof(NCardFlyVfx).GetField("_card", BindingFlags.Instance | BindingFlags.NonPublic);
 
     private static readonly Dictionary<string, Resource?> ResourceCache = new();
     private static readonly HashSet<string> MissingResourceWarnings = new();
@@ -718,6 +722,7 @@ public static class YukiCardCustomFramePatch
         Func<Control?> fallbackCreate,
         Action<Control>? configure = null)
     {
+        Node overlayParent = GetOverlayParent(cardNode);
         Control? control = GetOverlayNode(cardNode, runtimeNodeName);
         if (control == null)
         {
@@ -726,7 +731,12 @@ public static class YukiCardCustomFramePatch
                 return;
 
             control.Name = runtimeNodeName;
-            cardNode.AddChild(control);
+            overlayParent.AddChild(control);
+        }
+        else if (control.GetParent() != overlayParent)
+        {
+            control.GetParent()?.RemoveChild(control);
+            overlayParent.AddChild(control);
         }
 
         configure?.Invoke(control);
@@ -852,11 +862,30 @@ public static class YukiCardCustomFramePatch
     private static void RemoveNode(Node parent, string nodeName)
     {
         DestroyNodeImmediately(parent.GetNodeOrNull<Node>(nodeName));
+
+        if (parent is NCard cardNode)
+        {
+            Node overlayParent = GetOverlayParent(cardNode);
+            if (overlayParent != parent)
+                DestroyNodeImmediately(overlayParent.GetNodeOrNull<Node>(nodeName));
+        }
     }
 
     private static Control? GetOverlayNode(Node parent, string nodeName)
     {
-        Control? control = parent.GetNodeOrNull<Control>(nodeName);
+        Control? control = null;
+        if (parent is NCard cardNode)
+        {
+            Node overlayParent = GetOverlayParent(cardNode);
+            control = overlayParent.GetNodeOrNull<Control>(nodeName);
+            if (control == null && overlayParent != parent)
+                control = parent.GetNodeOrNull<Control>(nodeName);
+        }
+        else
+        {
+            control = parent.GetNodeOrNull<Control>(nodeName);
+        }
+
         if (control == null)
             return null;
 
@@ -867,6 +896,15 @@ public static class YukiCardCustomFramePatch
         }
 
         return control;
+    }
+
+    private static Node GetOverlayParent(NCard cardNode)
+    {
+        Control? body = cardNode.Body;
+        if (body != null && GodotObject.IsInstanceValid(body) && !body.IsQueuedForDeletion())
+            return body;
+
+        return cardNode;
     }
 
     private static void DestroyNodeImmediately(Node? node)
@@ -1247,6 +1285,14 @@ public static class YukiCardCustomFramePatch
         portrait.Texture = fallbackTexture;
     }
 
+    private static void ApplyDeferredIfValid(NCard? cardNode)
+    {
+        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsInsideTree() || !cardNode.IsNodeReady())
+            return;
+
+        Apply(cardNode);
+    }
+
     [HarmonyPatch(typeof(NCard), "Reload")]
     public static class ReloadPatch
     {
@@ -1283,6 +1329,17 @@ public static class YukiCardCustomFramePatch
         }
     }
 
+    [HarmonyPatch(typeof(NCard), "_Ready")]
+    public static class ReadyPatch
+    {
+        [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
+        public static void Postfix(NCard __instance)
+        {
+            Callable.From(() => ApplyDeferredIfValid(__instance)).CallDeferred();
+        }
+    }
+
     [HarmonyPatch(typeof(NCard), nameof(NCard.OnFreedToPool))]
     public static class OnFreedToPoolPatch
     {
@@ -1293,6 +1350,35 @@ public static class YukiCardCustomFramePatch
             RemoveChaosEffects(__instance, restoreOriginalState: true);
             YukiCardSpinePortraitPatch.RemoveSpineOverlay(__instance);
             OriginalStates.Remove(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(NCardPlay), nameof(NCardPlay.CancelPlayCard))]
+    public static class CancelPlayCardPatch
+    {
+        [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
+        public static void Postfix(NCardPlay __instance)
+        {
+            NCard? cardNode = __instance.Holder?.CardNode;
+            if (cardNode == null)
+                return;
+
+            Callable.From(() => ApplyDeferredIfValid(cardNode)).CallDeferred();
+        }
+    }
+
+    [HarmonyPatch(typeof(NCardFlyVfx), "_Ready")]
+    public static class CardFlyVfxReadyPatch
+    {
+        [HarmonyPostfix]
+        [HarmonyPriority(Priority.Last)]
+        public static void Postfix(NCardFlyVfx __instance)
+        {
+            if (CardFlyVfxCardField?.GetValue(__instance) is not NCard cardNode)
+                return;
+
+            Callable.From(() => ApplyDeferredIfValid(cardNode)).CallDeferred();
         }
     }
 
