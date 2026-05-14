@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.Powers;
 
@@ -16,13 +17,16 @@ public class ManYue() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, Targ
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromCard<YueYing>()];
 
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        [new DynamicVar("MoonshadowDamage", 2m)];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<ManYuePower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<ManYuePower>(choiceContext, Owner.Creature, DynamicVars["MoonshadowDamage"].BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["MoonshadowDamage"].UpgradeValueBy(1m);
     }
 }

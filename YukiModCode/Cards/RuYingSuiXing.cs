@@ -11,7 +11,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class RuYingSuiXing() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+public class RuYingSuiXing() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 

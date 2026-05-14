@@ -19,14 +19,11 @@ public class YeHuo() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetTy
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/ye_huo_dynamic.tscn";
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Innate];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move), new DynamicVar("MoonshadowDamage", 1m)];
+        [new DamageVar(5m, ValueProp.Move), new DynamicVar("MoonshadowDamage", 2m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -35,9 +35,12 @@ public class YanHuiFan() : YukiModCard(1, CardType.Attack, CardRarity.Rare, Targ
             return;
         }
 
-        var replayCard = previousAttack.CardPlay.Card.CreateClone();
-        var target = GetReplayTarget(previousAttack.CardPlay, replayCard);
-        await CardCmd.AutoPlay(choiceContext, replayCard, target);
+        for (var i = 0; i < 2; i++)
+        {
+            var replayCard = previousAttack.CardPlay.Card.CreateClone();
+            var target = GetReplayTarget(previousAttack.CardPlay, replayCard);
+            await CardCmd.AutoPlay(choiceContext, replayCard, target);
+        }
     }
 
     protected override void OnUpgrade()

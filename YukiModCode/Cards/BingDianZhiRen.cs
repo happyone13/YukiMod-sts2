@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class BingDianZhiRen() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+public class BingDianZhiRen() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/bing_dian_zhi_ren_dynamic.tscn";

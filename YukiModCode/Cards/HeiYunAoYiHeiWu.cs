@@ -35,14 +35,10 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
         var hitCount = 1;
-        await YukiBlackCloudService.Resolve(
-            choiceContext,
-            this,
-            () =>
-            {
-                hitCount += PileType.Hand.GetPile(Owner).Cards.Count(card => card.Type == CardType.Skill);
-                return Task.CompletedTask;
-            });
+        var hand = PileType.Hand.GetPile(Owner).Cards;
+        hitCount += YukiBlackCloudService.IsActive(Owner)
+            ? hand.Count(card => card.Type == CardType.Skill)
+            : hand.Count(card => card.Type == CardType.Attack);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
