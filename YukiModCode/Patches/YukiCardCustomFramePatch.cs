@@ -282,20 +282,28 @@ public static class YukiCardCustomFramePatch
         }
         Get<CanvasGroup>(PortraitCanvasGroupField, cardNode)?.Show();
         portraitBorder?.Hide();
-        ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), bannerMaterial, show: true);
+        if (banner != null)
+            banner.Material = null;
+        ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), material: null, show: true);
         ApplyTextureRect(ancientBorder, YukiCardFramePaths.AncientBorderTexturePath, frameMaterial, show: true);
         ancientBorder?.Hide();
         ancientTextBg?.Hide();
         ancientBanner?.Hide();
         ancientHighlight?.Hide();
 
+        var energyLabel = Get<Control>(EnergyLabelField, cardNode);
         if (Get<TextureRect>(EnergyIconField, cardNode) is { } energyIcon)
-            ApplyTextureRect(energyIcon, $"{ChaosEffectsBasePath}energy_line_default.png", material: null, show: true);
+        {
+            ApplyTextureRect(
+                energyIcon,
+                GetEnergyLinePath(GetCostAtlasVariant(energyLabel)),
+                material: null,
+                show: true);
+        }
 
         Get<Control>(TitleLabelField, cardNode)?.Show();
         Get<Control>(DescriptionLabelField, cardNode)?.Show();
 
-        var energyLabel = Get<Control>(EnergyLabelField, cardNode);
         var typeLabel = Get<Control>(TypeLabelField, cardNode);
         var typePlaque = Get<Control>(TypePlaqueField, cardNode);
         if (energyLabel != null)
@@ -375,6 +383,8 @@ public static class YukiCardCustomFramePatch
         EnsureControlVisible(titleLabel);
         EnsureControlVisible(descriptionLabel);
 
+        if (banner != null)
+            banner.Material = null;
         ApplyTextureRect(banner, GetRarityTitlePath(cardModel.Rarity), material: null, show: true);
         ConfigureCostOverlay(cardNode, energyIcon, energyLabel);
 
@@ -401,6 +411,7 @@ public static class YukiCardCustomFramePatch
             BringToFront(titleLabel);
         if (descriptionLabel != null)
             BringToFront(descriptionLabel);
+        BringCostOverlayToFront(cardNode);
 
         RemoveNode(cardNode, DescriptionMaskNodeName);
 
@@ -453,13 +464,18 @@ public static class YukiCardCustomFramePatch
             if (control is TextureRect textureRect)
                 ApplyTextureRect(textureRect, $"{ChaosEffectsBasePath}icon_card_battle_expand_default.png", material: null, show: cardModel.IsUpgraded);
         });
+        BringCostOverlayToFront(cardNode);
     }
 
     private static void ConfigureCostOverlay(NCard cardNode, TextureRect? energyIcon, Control? energyLabelControl)
     {
+        CostAtlasVariant costVariant = GetCostAtlasVariant(energyLabelControl);
+
         EnsureTemplateOverlay(cardNode, CostLineNodeName, "CostLine", () => CreateTextureOverlay(CostLineLayout), control =>
         {
             ApplyTemplateLayout(control, "CostLine", CostLineLayout);
+            if (control is TextureRect textureRect)
+                ApplyTextureRect(textureRect, GetEnergyLinePath(costVariant), material: null, show: true);
             BringToFront(control);
         });
 
@@ -501,7 +517,7 @@ public static class YukiCardCustomFramePatch
 
         if (!string.IsNullOrWhiteSpace(displayText) && IsDigitsOnly(displayText))
         {
-            RenderCostDigits(preview, displayText, GetCostAtlasVariant(energyLabelControl));
+            RenderCostDigits(preview, displayText, costVariant);
             preview.Show();
             fallbackLabel.Hide();
             return;
@@ -1098,6 +1114,16 @@ public static class YukiCardCustomFramePatch
         child.GetParent().MoveChild(child, child.GetParent().GetChildCount() - 1);
     }
 
+    private static void BringCostOverlayToFront(NCard cardNode)
+    {
+        if (GetOverlayNode(cardNode, CostLineNodeName) is { } costLine)
+            BringToFront(costLine);
+        if (GetOverlayNode(cardNode, CostTextNodeName) is { } costText)
+            BringToFront(costText);
+        if (GetOverlayNode(cardNode, CostTextFallbackNodeName) is { } fallbackText)
+            BringToFront(fallbackText);
+    }
+
     private static Control? CreateTextureOverlay(NodeLayout layout)
     {
         var textureRect = new TextureRect
@@ -1186,7 +1212,6 @@ public static class YukiCardCustomFramePatch
         {
             CardRarity.Uncommon => "rare",
             CardRarity.Rare => "legend",
-            CardRarity.Token => "unique",
             CardRarity.Ancient => "unique",
             _ => "common"
         };
@@ -1200,7 +1225,6 @@ public static class YukiCardCustomFramePatch
         {
             CardRarity.Uncommon => "rare",
             CardRarity.Rare => "legend",
-            CardRarity.Token => "unique",
             CardRarity.Ancient => "unique",
             _ => "common"
         };
@@ -1214,12 +1238,23 @@ public static class YukiCardCustomFramePatch
         {
             CardRarity.Uncommon => "rare",
             CardRarity.Rare => "legend",
-            CardRarity.Token => "unique",
             CardRarity.Ancient => "unique",
             _ => "common"
         };
 
         return $"{ChaosEffectsBasePath}card_title_rarity_{suffix}.png";
+    }
+
+    private static string GetEnergyLinePath(CostAtlasVariant variant)
+    {
+        string file = variant switch
+        {
+            CostAtlasVariant.Red => "energy_line_up.png",
+            CostAtlasVariant.Green => "energy_line_down.png",
+            _ => "energy_line_default.png"
+        };
+
+        return $"{ChaosEffectsBasePath}{file}";
     }
 
     private static bool UsesAllFrameBadge(CardRarity rarity)
