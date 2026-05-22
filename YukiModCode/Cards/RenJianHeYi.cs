@@ -12,7 +12,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class RenJianHeYi() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class RenJianHeYi() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new BlockVar(8m, ValueProp.Move)];

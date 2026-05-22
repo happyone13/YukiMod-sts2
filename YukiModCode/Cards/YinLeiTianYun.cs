@@ -12,29 +12,29 @@ using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class YinLeiTianYun() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new PowerVar<StrengthPower>(3m)];
+        [new PowerVar<VigorPower>(5m)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<BlackCloudStancePower>(), HoverTipFactory.FromPower<StrengthPower>()];
+        [HoverTipFactory.FromPower<BlackCloudStancePower>(), HoverTipFactory.FromPower<VigorPower>()];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         return YukiMod.YukiModCode.Services.YukiPowerService.Apply<YinLeiTianYunPower>(
             choiceContext,
             Owner.Creature,
-            DynamicVars.Strength.BaseValue,
+            DynamicVars["VigorPower"].BaseValue,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Strength.UpgradeValueBy(1m);
+        DynamicVars["VigorPower"].UpgradeValueBy(3m);
     }
 }

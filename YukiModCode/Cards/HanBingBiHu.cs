@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HanBingBiHu() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class HanBingBiHu() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;

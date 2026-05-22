@@ -12,7 +12,7 @@ using YukiMod.YukiModCode.Character;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class RenGeQieHuan() : YukiModCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class RenGeQieHuan() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     private const string PutBackKey = "PutBack";
 

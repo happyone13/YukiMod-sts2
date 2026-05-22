@@ -13,7 +13,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class BiAnHua() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public class BiAnHua() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(6m, ValueProp.Move)];

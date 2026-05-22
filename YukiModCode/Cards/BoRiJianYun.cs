@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -14,24 +13,24 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class BoRiJianYun() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class BoRiJianYun() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromForesee(), HoverTipFactory.FromPower<BlackCloudEnterAndDrawNextTurnPower>()];
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudEnterNextTurnPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CardsVar(3)];
+        [new DynamicVar("BlackCloud", 2m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await YukiForeseeService.ForeseeTopCards(choiceContext, Owner, DynamicVars.Cards.IntValue, SelectionScreenPrompt, this);
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudEnterAndDrawNextTurnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["BlackCloud"].BaseValue, this);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudEnterNextTurnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(2m);
+        DynamicVars["BlackCloud"].UpgradeValueBy(1m);
     }
 }

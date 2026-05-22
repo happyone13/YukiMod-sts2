@@ -29,7 +29,7 @@ SCHOOL_CN = {
     "BlackCloud": "黑云",
     "Other": "其他",
 }
-POOL_CN = {"YukiModCardPool": "主牌池", "TokenCardPool": "Token牌池"}
+POOL_CN = {"YukiModCardPool": "主牌池", "TokenCardPool": "Token牌池", "NoneCardPool": "无卡池"}
 
 RARITY_ORDER = ["初始", "通常", "罕见", "稀有", "先古", "Token"]
 TYPE_ORDER = ["攻击", "技能", "能力"]

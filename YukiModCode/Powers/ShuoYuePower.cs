@@ -1,7 +1,5 @@
-using System.Linq;
 using System.Threading.Tasks;
-using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using YukiMod.YukiModCode.Services;
@@ -16,14 +14,14 @@ public class ShuoYuePower : YukiModPower
 
     public override bool IsInstanced => true;
 
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
     {
-        if (player != Owner.Player || CombatState == null || YukiMoonshadowService.GetMoonshadowCardsInHand(player, realOnly: true).Any())
+        if (side != Owner.Side || Owner.Player == null || CombatState == null)
         {
             return;
         }
 
         Flash();
-        await YukiMoonshadowService.NingJu(player, CombatState, 1);
+        await YukiMoonshadowService.NingJu(Owner.Player, CombatState, Amount);
     }
 }

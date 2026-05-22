@@ -15,7 +15,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class YanHan() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public class YanHan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;

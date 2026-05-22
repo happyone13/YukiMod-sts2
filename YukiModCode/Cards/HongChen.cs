@@ -12,7 +12,7 @@ using YukiMod.YukiModCode.Character;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HongChen() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public class HongChen() : YukiModCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new EnergyVar(1), new CardsVar(2)];

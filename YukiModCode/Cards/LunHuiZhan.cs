@@ -13,7 +13,7 @@ using YukiMod.YukiModCode.Character;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class LunHuiZhan() : YukiModCard(3, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public class LunHuiZhan() : YukiModCard(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(5m, ValueProp.Move), new RepeatVar(3)];

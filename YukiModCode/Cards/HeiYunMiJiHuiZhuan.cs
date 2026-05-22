@@ -14,8 +14,8 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
-public class HeiYunMiJiHuiZhuan() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
+[Pool(typeof(NoneCardPool))]
+public class HeiYunMiJiHuiZhuan() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;

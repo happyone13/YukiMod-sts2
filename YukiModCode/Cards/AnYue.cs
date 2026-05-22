@@ -9,7 +9,7 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class AnYue() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>

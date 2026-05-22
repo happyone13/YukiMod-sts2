@@ -15,7 +15,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class GaoSuZhanJi() : YukiModCard(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+public class GaoSuZhanJi() : YukiModCard(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;

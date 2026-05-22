@@ -33,6 +33,6 @@ public class CanYue() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetTy
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

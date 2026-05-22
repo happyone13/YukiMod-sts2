@@ -12,7 +12,7 @@ using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class ShangXianZhiYue() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>

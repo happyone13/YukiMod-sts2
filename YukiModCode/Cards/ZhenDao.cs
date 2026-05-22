@@ -16,7 +16,7 @@ public class ZhenDao() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetT
     private const string ThresholdKey = "Threshold";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new IntVar(ThresholdKey, 4m)];
+        [new IntVar(ThresholdKey, 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

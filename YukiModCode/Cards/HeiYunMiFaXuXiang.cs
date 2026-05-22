@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class HeiYunMiFaXuXiang() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -23,7 +23,7 @@ public class HeiYunMiFaXuXiang() : YukiModCard(1, CardType.Skill, CardRarity.Unc
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromPower<WeakPower>(), HoverTipFactory.FromPower<BlackCloudPower>(), HoverTipFactory.FromPower<BlackCloudEnterNextTurnPower>()];
+        [HoverTipFactory.FromPower<WeakPower>(), HoverTipFactory.FromPower<BlackCloudPower>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -31,7 +31,6 @@ public class HeiYunMiFaXuXiang() : YukiModCard(1, CardType.Skill, CardRarity.Unc
 
         await YukiMod.YukiModCode.Services.YukiPowerService.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
         await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["BlackCloud"].BaseValue, this);
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudEnterNextTurnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

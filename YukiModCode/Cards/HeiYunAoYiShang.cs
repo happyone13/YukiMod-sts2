@@ -16,7 +16,7 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class HeiYunAoYiShang() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;

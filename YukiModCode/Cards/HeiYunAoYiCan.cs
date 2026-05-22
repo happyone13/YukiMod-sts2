@@ -12,7 +12,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HeiYunAoYiCan() : YukiModCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class HeiYunAoYiCan() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/hei_yun_ao_yi_can_dynamic.tscn";

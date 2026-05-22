@@ -65,6 +65,11 @@ public static class YukiBlackCloudService
 
     public static Task GainBlackCloud(PlayerChoiceContext choiceContext, Player player, decimal amount, CardModel? source = null)
     {
+        if (IsActive(player))
+        {
+            return YukiMod.YukiModCode.Services.YukiPowerService.Apply<DelayedBlackCloudPower>(choiceContext, player.Creature, amount, player.Creature, source);
+        }
+
         return YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudPower>(choiceContext, player.Creature, amount, player.Creature, source);
     }
 
@@ -106,6 +111,7 @@ public static class YukiBlackCloudService
 
         await PowerCmd.Remove(stancePower);
         await NotifyExited(choiceContext, player);
+        await ConvertDelayedBlackCloud(choiceContext, player);
     }
 
     public static async Task<bool> TryPreventNonAttackExit(PlayerChoiceContext choiceContext, Player player)
@@ -210,5 +216,18 @@ public static class YukiBlackCloudService
         {
             await listener.OnBlackCloudExited(choiceContext, player);
         }
+    }
+
+    private static async Task ConvertDelayedBlackCloud(PlayerChoiceContext choiceContext, Player player)
+    {
+        var delayedPower = player.Creature.Powers.OfType<DelayedBlackCloudPower>().FirstOrDefault();
+        if (delayedPower == null)
+        {
+            return;
+        }
+
+        var amount = delayedPower.Amount;
+        await PowerCmd.Remove(delayedPower);
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudPower>(choiceContext, player.Creature, amount, player.Creature, null);
     }
 }

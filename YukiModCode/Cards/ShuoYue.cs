@@ -12,7 +12,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class ShuoYue() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+public class ShuoYue() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => IsUpgraded
         ? [CardKeyword.Innate]

@@ -13,7 +13,7 @@ using YukiMod.YukiModCode.Character;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HuiNian() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class HuiNian() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     public override bool GainsBlock => true;
 

@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Character;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class KanPo() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public class KanPo() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(6m, ValueProp.Move)];

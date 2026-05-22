@@ -11,7 +11,7 @@ using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class ShuangJiang() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;

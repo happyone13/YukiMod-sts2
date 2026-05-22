@@ -10,7 +10,7 @@ using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class RuYingSuiXing() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;

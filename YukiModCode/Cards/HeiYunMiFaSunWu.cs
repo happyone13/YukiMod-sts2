@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(NoneCardPool))]
 public class HeiYunMiFaSunWu() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
