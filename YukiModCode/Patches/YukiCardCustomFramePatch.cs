@@ -41,10 +41,10 @@ public static class YukiCardCustomFramePatch
     private static readonly NodeLayout CategoryTextLayout = new(-57.0f, -178.0f, 198.0f, 42.0f);
     private static readonly NodeLayout DescriptionTextLayout = new(-142.0f, 40.0f, 278.0f, 161.0f);
     private static readonly NodeLayout DescriptionMaskLayout = new(-153.0f, -63.0f, 298.0f, 271.0f);
-    private static readonly NodeLayout EgoBadgeLayout = new(-198.0f, -218.0f, 97.0f, 431.4479f);
-    private static readonly NodeLayout EgoBadge2Layout = new(94.0f, -215.0f, 96.0f, 427.0f, Visible: false);
-    private static readonly NodeLayout RarityBaseLayout = new(-174.0f, -194.0f, 35.0f, 78.0f);
-    private static readonly NodeLayout RaritySubLayout = new(120.0f, -199.0f, 56.0f, 90.0f);
+    private static readonly NodeLayout EgoBadgeLayout = new(-196.0f, -218.0f, 97.0f, 431.4479f);
+    private static readonly NodeLayout EgoBadge2Layout = new(96.0f, -215.0f, 96.0f, 427.0f, Visible: false);
+    private static readonly NodeLayout RarityBaseLayout = new(-172.0f, -194.0f, 35.0f, 78.0f);
+    private static readonly NodeLayout RaritySubLayout = new(122.0f, -199.0f, 56.0f, 90.0f);
     private static readonly NodeLayout FrameSparkLayout = new(-91.0f, -83.0f, 157.0f, 218.0f);
     private static readonly NodeLayout UpgradeIconLayout = new(-131.0f, -138.0f, 32.0f, 32.0f, Visible: false);
     private static readonly Dictionary<char, Rect2> NormalDigitRegions = new()

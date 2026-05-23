@@ -49,7 +49,7 @@
 | 一击必杀！居合抽卡 | 0 | 通常 | 技能 | 选择1张手牌弃掉。；抽1张牌。；如果抽到的是一击必杀！居合抽卡，将{IfUpgraded:show:1张居合+\|1张居合}加入手中。 | 其他 | ID: YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA；类: YiJiBiShaJuHeChouKa；牌池: 主牌池 |  |
 | 人剑合一 | 1 | 罕见 | 技能 | 获得8/11点格挡。；在接下来的2个回合开始时，各额外抽1张牌。 | 其他 | ID: YUKIMOD-REN_JIAN_HE_YI；类: RenJianHeYi；牌池: 主牌池 |  |
 | 人格切换 | 0 | 罕见 | 技能 | 将2/1张手牌放回抽牌堆顶部。；抽2张牌。 | 其他 | ID: YUKIMOD-REN_GE_QIE_HUAN；类: RenGeQieHuan；牌池: 主牌池 |  |
-| 剑心 | 0 | 罕见 | 技能 | 抽1张牌。 | 其他 | ID: YUKIMOD-JIAN_XIN；类: JianXin；牌池: 主牌池；源码关键词: Retain |  |
+| 剑心 | 0 | 罕见 | 技能 | 消耗1/2张手牌。；抽等量的牌。 | 其他 | ID: YUKIMOD-JIAN_XIN；类: JianXin；牌池: 主牌池 |  |
 | 回念 | 1 | 罕见 | 技能 | 获得7/10点格挡。；将你弃牌堆中的1张牌放到抽牌堆顶部。 | 其他 | ID: YUKIMOD-HUI_NIAN；类: HuiNian；牌池: 主牌池 |  |
 | 招架 | 1 | 罕见 | 技能 | 获得5/8点格挡。；本回合每打出一张牌，额外获得1点格挡（当前获得{CurrentBlock}点）。；如果刚好抵挡全部伤害，下回合开始时获得一张居合。 | 其他 | ID: YUKIMOD-ZHAO_JIA；类: ZhaoJia；牌池: 主牌池 |  |
 | 未雨绸缪 | 1 | 罕见 | 技能 | 获得5/8点格挡。；抽2张牌。；将1张手牌置于抽牌堆顶部。 | 其他 | ID: YUKIMOD-WEI_YU_CHOU_MOU；类: WeiYuChouMou；牌池: 主牌池 |  |
@@ -75,7 +75,7 @@
 | 红尘 | 0 | 稀有 | 技能 | 获得1。；抽2/3张牌。；你在本回合内不能再抽任何牌。 | 其他 | ID: YUKIMOD-HONG_CHEN；类: HongChen；牌池: 主牌池 |  |
 | 背水 | 0 | 罕见 | 技能 | 获得2/3。；你在本回合内不能再抽任何牌。 | 其他 | ID: YUKIMOD-BEI_SHUI；类: BeiShui；牌池: 主牌池 |  |
 | 起手式 | 0 | 罕见 | 技能 | 获得1。 | 其他 | ID: YUKIMOD-QI_SHOU_SHI；类: QiShouShi；牌池: 主牌池；源码关键词: Retain, Exhaust；升级移除消耗 |  |
-| 黑影斩 | 1 | 罕见 | 能力 | 一回合内首次打出3张攻击牌时，获得3层黑云。 | 其他 | ID: YUKIMOD-NU_TAO_ZHAN；类: NuTaoZhan；牌池: 主牌池；升级费用变化: -1 |  |
+| 怒涛斩 | 1 | 罕见 | 能力 | 一回合内首次打出3张攻击牌时，获得1费。 | 其他 | ID: YUKIMOD-NU_TAO_ZHAN；类: NuTaoZhan；牌池: 主牌池；升级费用变化: -1 |  |
 | 朔月 | 1 | 稀有 | 能力 | 回合结束时，凝聚1。 | 其他 | ID: YUKIMOD-SHUO_YUE；类: ShuoYue；牌池: 主牌池；源码关键词: Innate |  |
 | 满月 | 1 | 罕见 | 能力 | 每当你使用1张牌，你手中的月影伤害+2/3。 | 其他 | ID: YUKIMOD-MAN_YUE；类: ManYue；牌池: 主牌池 |  |
 | 盈月 | 1 | 罕见 | 能力 | 回合结束时，你手中的月影伤害增加5/7。 | 其他 | ID: YUKIMOD-YING_YUE；类: YingYue；牌池: 主牌池 |  |

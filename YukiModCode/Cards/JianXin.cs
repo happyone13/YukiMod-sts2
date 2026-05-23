@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,11 +19,32 @@ public class JianXin() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, Tar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        var selectedCards = (await CardSelectCmd.FromHand(
+                choiceContext,
+                Owner,
+                new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, DynamicVars.Cards.IntValue),
+                null,
+                this))
+            .ToList();
+
+        var exhaustedCount = 0;
+        foreach (var selectedCard in selectedCards)
+        {
+            await CardCmd.Exhaust(choiceContext, selectedCard);
+            if (selectedCard.Pile?.Type == PileType.Exhaust)
+            {
+                exhaustedCount++;
+            }
+        }
+
+        if (exhaustedCount > 0)
+        {
+            await CardPileCmd.Draw(choiceContext, exhaustedCount, Owner);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        AddKeyword(CardKeyword.Retain);
+        DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

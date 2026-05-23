@@ -101,9 +101,9 @@ vertical_alignment = 1
 
 [node name="EgoBadge2" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = 94.0
+offset_left = 96.0
 offset_top = -216.0
-offset_right = 189.0
+offset_right = 191.0
 offset_bottom = 209.0
 mouse_filter = 2
 texture = ExtResource("2_sk4cg")
@@ -112,9 +112,9 @@ stretch_mode = 5
 
 [node name="EgoBadge" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = -204.0
+offset_left = -202.0
 offset_top = -218.0
-offset_right = -107.0
+offset_right = -105.0
 offset_bottom = 213.4479
 mouse_filter = 2
 texture = ExtResource("12_ego")
@@ -123,9 +123,9 @@ stretch_mode = 5
 
 [node name="RarityBase" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = -174.0
+offset_left = -172.0
 offset_top = -204.0
-offset_right = -141.0
+offset_right = -139.0
 offset_bottom = -126.0
 mouse_filter = 2
 texture = ExtResource("2_rarity")
@@ -168,9 +168,9 @@ stretch_mode = 5
 
 [node name="RaritySub" type="TextureRect" parent="CardContainer"]
 layout_mode = 0
-offset_left = 118.0
+offset_left = 120.0
 offset_top = -205.0
-offset_right = 171.0
+offset_right = 173.0
 offset_bottom = -120.0
 mouse_filter = 2
 texture = ExtResource("3_rarity_sub")

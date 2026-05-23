@@ -2,13 +2,13 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
-using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Powers;
 
@@ -60,7 +60,7 @@ public class NuTaoZhanPower : YukiModPower
         }
 
         Flash();
-        await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner.Player, 3m);
+        await PlayerCmd.GainEnergy(1m, Owner.Player);
     }
 
     public override Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
