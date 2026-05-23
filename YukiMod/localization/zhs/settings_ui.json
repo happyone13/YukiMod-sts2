@@ -1,6 +1,6 @@
 {
   "YUKIMOD.mod_title": "友纪 Mod",
-  "YUKIMOD-CARD_VISUALS.title": "卡牌视觉",
+  "YUKIMOD-CARD_VISUALS.title": "卡牌显示",
   "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.title": "启用动态卡图",
   "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.hover.title": "动态卡图",
   "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.hover.desc": "为支持的卡牌启用 Spine 动态卡图。关闭后仍会保留友纪的自定义卡框，只改为使用静态卡图。"
