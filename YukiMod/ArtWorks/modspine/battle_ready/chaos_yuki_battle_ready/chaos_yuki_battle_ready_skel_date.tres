@@ -1,0 +1,8 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://c3riufrx6emp4"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://douybnirf1cne" path="res://Chaos_yuki/ArtWorks/modspine/battle_ready/chaos_yuki_battle_ready/chaos_yuki_battle_ready.atlas" id="1_02avn"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://cyj1id445v563" path="res://Chaos_yuki/ArtWorks/modspine/battle_ready/chaos_yuki_battle_ready/chaos_yuki_battle_ready.skel" id="2_klk3y"]
+
+[resource]
+atlas_res = ExtResource("1_02avn")
+skeleton_file_res = ExtResource("2_klk3y")

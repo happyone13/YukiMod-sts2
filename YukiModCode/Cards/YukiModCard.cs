@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.Extensions;
+using YukiMod.YukiModCode.Mechanics.Animation;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -28,6 +29,7 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
     public virtual bool HasOwnBlackCloudEffect => false;
     public virtual bool IsRealMoonshadow => false;
     public virtual bool CountsAsMoonshadow => IsRealMoonshadow;
+    protected virtual bool UseBuffAnim => true;
     protected virtual string? CustomPowerCastClipKey => null;
 
     public bool IsInspired { get; set; }
@@ -59,14 +61,28 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (cardPlay.Card != this || Type != CardType.Power)
+        if (cardPlay.Card != this)
         {
             return;
         }
 
-        if (!string.IsNullOrWhiteSpace(CustomPowerCastClipKey))
+        if (Type == CardType.Power && !string.IsNullOrWhiteSpace(CustomPowerCastClipKey))
         {
             YukiAudioService.TryPlayCustomCastCardClip(CustomPowerCastClipKey, Owner);
+        }
+
+        if ((Type == CardType.Skill || Type == CardType.Power)
+            && UseBuffAnim
+            && Owner?.Creature != null
+            && Owner.Character != null)
+        {
+            await YukiU1BuffAnim.PlayAsync(Owner.Creature, () => Task.CompletedTask);
+            return;
+        }
+
+        if (Type != CardType.Power)
+        {
+            return;
         }
 
         await PlayPowerCastAnim();

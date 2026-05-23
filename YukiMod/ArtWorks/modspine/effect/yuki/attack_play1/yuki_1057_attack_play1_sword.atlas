@@ -1,0 +1,15 @@
+yuki_1057_attack_play1_sword.png
+size:256,256
+filter:Linear,Linear
+attack_p1_1
+bounds:2,182,164,42
+offsets:6,5,175,52
+attack_p1_2
+bounds:2,143,158,37
+offsets:6,6,175,52
+attack_p1_3
+bounds:2,104,111,37
+offsets:6,6,175,52
+attack_p1_4
+bounds:168,189,56,35
+offsets:6,7,175,52

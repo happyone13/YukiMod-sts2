@@ -1,0 +1,10 @@
+deadcg_chaos_yuki.png
+size:2048,2048
+filter:Linear,Linear
+youji_dead1
+bounds:2,827,1550,902
+offsets:18,1,1597,941
+youji_dead2
+bounds:2,2,823,864
+offsets:1,1,826,867
+rotate:90

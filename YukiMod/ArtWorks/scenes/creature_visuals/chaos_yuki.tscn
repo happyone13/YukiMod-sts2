@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/Core/Nodes/Combat/NCreatureVisuals.cs" id="1"]
+[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/characters/chaos_yuki/chaos_yuki_skel_data.tres" id="2"]
+
+[node name="ChaosYuki" type="Node2D"]
+script = ExtResource("1")
+metadata/_edit_group_ = true
+
+[node name="Visuals" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("2")
+preview_skin = "Default"
+preview_animation = "idle_loop"
+preview_frame = false
+preview_time = 0.0
+unique_name_in_owner = true
+position = Vector2(5, -19)
+scale = Vector2(0.7, 0.7)
+
+[node name="ChaosEff" type="Marker2D" parent="Visuals"]
+unique_name_in_owner = true
+position = Vector2(0, 0)
+scale = Vector2(1.38, 1.38)
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -121.0
+offset_top = -278.0
+offset_right = 121.0
+mouse_filter = 2
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(4, -168)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(30, -310)

@@ -1,0 +1,13 @@
+yuki_attack_play2_b2.png
+size:2048,1024
+filter:Linear,Linear
+frost1
+bounds:2,255,609,566
+offsets:8,15,622,588
+frost2
+bounds:613,238,583,591
+offsets:15,5,606,603
+rotate:90
+glow
+bounds:2,2,251,251
+offsets:22,22,295,296

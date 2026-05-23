@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bap0kmt4myq2j"]
+
+[ext_resource type="SpineSkeletonDataResource" uid="uid://o3rlbwaex33q" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play1/yuki_attack_play1_b_skele_data.tres" id="2_vwj55"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://lbd85gwxpuis" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play1/yuki_attack_play1_b2_skele_data.tres" id="3_4j7ni"]
+
+[node name="YukiAttackPlay1B" type="Node2D"]
+
+[node name="b2" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("3_4j7ni")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="b" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("2_vwj55")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0

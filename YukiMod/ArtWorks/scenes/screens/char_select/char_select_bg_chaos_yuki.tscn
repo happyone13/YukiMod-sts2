@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_bg_skel_data.tres" id="1_1rkft"]
+[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_b2_skel_data.tres" id="1_82jt0"]
+[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_b1_skel_data.tres" id="2_iacxd"]
+[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_f1_skel_data.tres" id="4_juvm1"]
+
+[node name="IroncladBg" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 475.0
+offset_top = 239.0
+offset_right = 3035.0
+offset_bottom = 1439.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.35, 1.35)
+pivot_offset = Vector2(1280, 600)
+
+[node name="SpineSprite4" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_82jt0")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="SpineSprite3" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("2_iacxd")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="SpineSprite" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_1rkft")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="SpineSprite2" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("4_juvm1")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0

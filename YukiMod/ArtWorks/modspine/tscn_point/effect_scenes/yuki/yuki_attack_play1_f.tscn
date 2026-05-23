@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctyt2ukklei0w"]
+
+[ext_resource type="SpineSkeletonDataResource" uid="uid://cflkpkosf18pq" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play1/yuki_attack_play1_sword_skele_data.tres" id="1_ctx3p"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://didyd5ktebpuu" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play1/yuki_attack_play1_2_skele_data.tres" id="2_yu1il"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://dg2ihu0hfeuj5" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play1/yuki_attack_play1_skele_data.tres" id="3_1ngw2"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://k165wy3bw5tj" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play1/yuki_attack_play1_f1_skele_data.tres" id="4_jdlgw"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://cu64b5wbjjse3" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play1/yuki_attack_play1_f2_skele_data.png.tres" id="5_roscv"]
+
+[node name="YukiAttackPlay1F" type="Node2D"]
+
+[node name="sword" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_ctx3p")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="2" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("2_yu1il")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="1" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("3_1ngw2")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="f1" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("4_jdlgw")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
+
+[node name="f2" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("5_roscv")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0
