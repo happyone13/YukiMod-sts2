@@ -173,7 +173,7 @@
     "YUKIMOD-YAN_HUI_FAN.title": "燕回反",
     "YUKIMOD-YAN_HUI_FAN.description": "释放你上一个释放的攻击1次。",
     "YUKIMOD-ZHAO_JIA.title": "招架",
-    "YUKIMOD-ZHAO_JIA.description": "获得{Block:diff()}点格挡。\n本回合每打出一张牌，额外获得1点格挡（当前获得{CurrentBlock}点）。\n如果刚好抵挡全部伤害，下回合开始时获得一张[gold]居合[/gold]。",
+    "YUKIMOD-ZHAO_JIA.description": "获得{Block:diff()}点格挡。\n本回合每打出一张牌，使获得的格挡+1。\n如果刚好抵挡全部伤害，下回合开始时获得一张[gold]居合[/gold]。",
     "YUKIMOD-SHUN_NIAN.title": "瞬念",
     "YUKIMOD-SHUN_NIAN.description": "回合开始时，将1张随机的{IfUpgraded:show:升级过的}[gold]灵感[/gold]牌加入手中。",
     "YUKIMOD-LING_GUANG.title": "灵光",
