@@ -1,7 +1,7 @@
 [gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3]
 
-[ext_resource type="SpineAtlasResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_bg_b_02.atlas" id="1_xl0ie"]
-[ext_resource type="SpineSkeletonFileResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_bg_b_02.skel" id="2_gtexk"]
+[ext_resource type="SpineAtlasResource" path="res://YukiMod/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_bg_b_02.atlas" id="1_xl0ie"]
+[ext_resource type="SpineSkeletonFileResource" path="res://YukiMod/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_bg_b_02.skel" id="2_gtexk"]
 
 [resource]
 atlas_res = ExtResource("1_xl0ie")

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Players;
+using YukiMod.YukiModCode.Mechanics.Settings;
 using YukiCharacterModel = YukiMod.YukiModCode.Character.YukiMod;
 
 namespace YukiMod.YukiModCode.Services;
@@ -31,6 +32,9 @@ public static class YukiAudioService
 
     private const string DiePath = "res://YukiMod/sound/yuki_die.mp3";
     private const string SelectPath = "res://YukiMod/sound/yuki_select.mp3";
+    private const string CombatStartVoicePath = "res://YukiMod/ArtWorks/sound/chaos_yuki_v/vo_chaos_yuki_start_01.ogg";
+    private const string VictoryVoicePath = "res://YukiMod/ArtWorks/sound/chaos_yuki_v/vo_chaos_yuki_victory_01.ogg";
+    private const string RestSiteVoicePath = "res://YukiMod/ArtWorks/sound/chaos_yuki_v/vo_chaos_yuki_rest_01.ogg";
 
     private static readonly Dictionary<string, string> CustomCardClipMap = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -73,6 +77,27 @@ public static class YukiAudioService
             return false;
 
         return TryPlay(DiePath, linearVolume);
+    }
+
+    public static bool TryPlayCombatStartVoice(Player? player, float linearVolume = 1f)
+    {
+        if (!IsYukiPlayer(player))
+            return false;
+
+        return TryPlay(CombatStartVoicePath, linearVolume);
+    }
+
+    public static bool TryPlayVictoryVoice(Player? player, float linearVolume = 1f)
+    {
+        if (!IsYukiPlayer(player))
+            return false;
+
+        return TryPlay(VictoryVoicePath, linearVolume);
+    }
+
+    public static bool TryPlayRestSiteVoice(float linearVolume = 1f)
+    {
+        return TryPlay(RestSiteVoicePath, linearVolume);
     }
 
     public static bool TryPlayCustomCardClip(string clipKey, Player? player = null, float linearVolume = 1f)
@@ -194,7 +219,7 @@ public static class YukiAudioService
         {
             Name = $"YukiSfx_{++_playerCounter}",
             Stream = stream,
-            VolumeDb = LinearToDb(linearVolume * VolumeScale)
+            VolumeDb = LinearToDb(linearVolume * VolumeScale * YukiModSharedSettings.VoiceVolume)
         };
 
         host.AddChild(player);

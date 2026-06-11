@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using YukiMod.YukiModCode.Cards;
 using Godot;
@@ -81,6 +81,28 @@ public static class ChaosTeleportAttackProfiles
 		RandomizePlayAnim: false
 	);
 
+	public static readonly ChaosTeleportAttackProfile U2Attack = new ChaosTeleportAttackProfile(
+		Id: "u2_attack",
+		TeleportDistance: 0f,
+		UniformScaleMultiplier: 1.2f,
+		VanillaTeleportAtRatio: 0.35f,
+		ReadyAnim: "u2_attack_ready",
+		PlayAnim: "u2_attack_play",
+		AltPlayAnim: "",
+		EndAnim: "u2_attack_end",
+		Vfx: Default.Vfx,
+		AltAttackPlayB: "",
+		AltAttackPlayF: "",
+		ReturnVfxTiming: ChaosTeleportReturnVfxTiming.TargetMoveAtPlayEnd,
+		ForceTargetsCenter: false,
+		ForceLeftmostTarget: false,
+		ReadyTeleportEvent: "",
+		ReadyTeleportOffset: default,
+		StepPlayerMoveEvent: "",
+		DamageEvent: "",
+		RandomizePlayAnim: false
+	);
+
 	private static readonly IReadOnlyDictionary<string, ChaosTeleportAttackProfile> ByCardId = new Dictionary<string, ChaosTeleportAttackProfile>(StringComparer.Ordinal)
 	{
 	};
@@ -143,6 +165,12 @@ public static class ChaosTeleportAttackProfiles
 			return true;
 		}
 
+		if (string.Equals(profileId, U2Attack.Id, StringComparison.Ordinal))
+		{
+			profile = U2Attack;
+			return true;
+		}
+
 		profile = default;
 		return false;
 	}
@@ -195,4 +223,3 @@ public readonly record struct ChaosTeleportAttackProfile(
 	string DamageEvent,
 	bool RandomizePlayAnim
 );
-

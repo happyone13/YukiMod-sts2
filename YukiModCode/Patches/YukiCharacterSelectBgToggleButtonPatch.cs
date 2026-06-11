@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
@@ -17,7 +17,13 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 	private const string CharSelectButtonsNodeName = "CharSelectButtons";
 	private const string ToggleButtonNodeName = "YukiBgToggleButton";
 	private const string YukiCharacterId = YukiModInfo.CharacterId;
+	private const string Bg1NodeName = "YukiCharSelectBg1";
+	private const string Bg2NodeName = "YukiCharSelectBg2";
+	private const string Bg1Path = "res://YukiMod/ArtWorks/scenes/screens/char_select/char_select_bg_chaos_yuki.tscn";
+	private const string Bg2Path = "res://YukiMod/ArtWorks/scenes/screens/char_select/char_select_bg_chaos_yuki_2.tscn";
 	private const string LoopAnimName = "animation";
+	private const string FallbackLoopAnimName = "idle";
+	private static bool _forceLoopWarned;
 
 	[HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen._Ready))]
 	[HarmonyPostfix]
@@ -53,7 +59,8 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 			try
 			{
 				YukiCharacterSelectBgToggleState.UseAltBg = !YukiCharacterSelectBgToggleState.UseAltBg;
-				ReloadYukiBackground(__instance);
+				EnsureBgPairInjected(__instance);
+				ApplyBgVisibility(__instance);
 			}
 			catch (Exception ex)
 			{
@@ -82,6 +89,8 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 		if (btn.Visible)
 		{
 			UpdateToggleButtonPosition(btn, charSelectButton);
+			EnsureBgPairInjected(__instance);
+			ApplyBgVisibility(__instance);
 		}
 	}
 
@@ -116,10 +125,16 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 		btn.GlobalPosition = new Vector2(Mathf.Round(x), Mathf.Round(y));
 	}
 
-	private static void ReloadYukiBackground(NCharacterSelectScreen screen)
+	private static void EnsureBgPairInjected(NCharacterSelectScreen screen)
 	{
 		Control? bgContainer = screen.GetNodeOrNull<Control>(BgContainerNodeName);
 		if (bgContainer == null)
+		{
+			return;
+		}
+
+		if (bgContainer.GetNodeOrNull<Control>(Bg1NodeName) != null &&
+		    bgContainer.GetNodeOrNull<Control>(Bg2NodeName) != null)
 		{
 			return;
 		}
@@ -130,23 +145,47 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 			child.QueueFreeSafely();
 		}
 
-		string bgPath = "res://YukiMod/ArtWorks/scenes/screens/char_select/char_select_bg_chaos_yuki" +
-			(YukiCharacterSelectBgToggleState.UseAltBg ? "_2" : "") +
-			".tscn";
+		PackedScene bg1Scene = PreloadManager.Cache.GetScene(Bg1Path);
+		Control bg1 = bg1Scene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
+		bg1.Name = Bg1NodeName;
+		bgContainer.AddChildSafely(bg1);
 
-		PackedScene scene = PreloadManager.Cache.GetScene(bgPath);
-		Control bg = scene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
-		bg.Name = "chaos_yuki_character_bg";
-		bgContainer.AddChildSafely(bg);
+		PackedScene bg2Scene = PreloadManager.Cache.GetScene(Bg2Path);
+		Control bg2 = bg2Scene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
+		bg2.Name = Bg2NodeName;
+		bgContainer.AddChildSafely(bg2);
 
-		if (!YukiCharacterSelectBgToggleState.UseAltBg)
+		StartForceLoopRetry(screen, bg1, maxFrames: 90);
+	}
+
+	private static void ApplyBgVisibility(NCharacterSelectScreen screen)
+	{
+		Control? bgContainer = screen.GetNodeOrNull<Control>(BgContainerNodeName);
+		if (bgContainer == null)
 		{
-			ForceLoopAnimationOnAllSpineSprites(bg);
+			return;
+		}
+
+		Control? bg1 = bgContainer.GetNodeOrNull<Control>(Bg1NodeName);
+		Control? bg2 = bgContainer.GetNodeOrNull<Control>(Bg2NodeName);
+		if (bg1 == null || bg2 == null)
+		{
+			return;
+		}
+
+		bool useAlt = YukiCharacterSelectBgToggleState.UseAltBg;
+		bg1.Visible = !useAlt;
+		bg2.Visible = useAlt;
+
+		if (!useAlt)
+		{
+			StartForceLoopRetry(screen, bg1, maxFrames: 90);
 		}
 	}
 
-	private static void ForceLoopAnimationOnAllSpineSprites(Node root)
+	private static int ForceLoopAnimationOnAllSpineSprites(Node root)
 	{
+		int success = 0;
 		var stack = new System.Collections.Generic.Stack<Node>();
 		stack.Push(root);
 
@@ -169,13 +208,57 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 				if (sprite.HasAnimation(LoopAnimName))
 				{
 					sprite.GetAnimationState().SetAnimation(LoopAnimName, loop: true);
+					success++;
+				}
+				else if (sprite.HasAnimation(FallbackLoopAnimName))
+				{
+					sprite.GetAnimationState().SetAnimation(FallbackLoopAnimName, loop: true);
+					success++;
 				}
 			}
 			catch (Exception ex)
 			{
-				Log.Warn($"[{YukiModInfo.ModId}] Force loop bg anim failed: {ex.Message}");
+				if (!_forceLoopWarned)
+				{
+					_forceLoopWarned = true;
+					Log.Warn($"[{YukiModInfo.ModId}] Force loop bg anim failed: {ex.Message}");
+				}
+			}
+		}
+
+		return success;
+	}
+
+	private static async void StartForceLoopRetry(Node host, Node root, int maxFrames)
+	{
+		if (maxFrames <= 0)
+		{
+			return;
+		}
+
+		for (int i = 0; i < maxFrames; i++)
+		{
+			if (!GodotObject.IsInstanceValid(host) || !GodotObject.IsInstanceValid(root))
+			{
+				return;
+			}
+
+			SceneTree? tree = host.GetTree();
+			if (tree == null)
+			{
+				return;
+			}
+
+			await host.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+			if (!GodotObject.IsInstanceValid(root))
+			{
+				return;
+			}
+
+			if (ForceLoopAnimationOnAllSpineSprites(root) > 0)
+			{
+				return;
 			}
 		}
 	}
 }
-

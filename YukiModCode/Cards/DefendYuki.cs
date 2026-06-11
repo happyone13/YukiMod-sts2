@@ -14,6 +14,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class DefendYuki() : YukiModCard(1, CardType.Skill, CardRarity.Basic, TargetType.Self)
 {
     public override bool GainsBlock => true;
+    protected override bool UseBuffAnim => false;
 
     protected override HashSet<CardTag> CanonicalTags =>
         [CardTag.Defend];

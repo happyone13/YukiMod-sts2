@@ -1,5 +1,9 @@
 .godot/
 *.import
+!YukiMod/images/cards/card_effects/card_disabled_0.png.import
+!YukiMod/images/cards/card_effects/card_green_0.png.import
+!YukiMod/images/cards/card_effects/card_normal_0.png.import
+!YukiMod/images/cards/card_effects/card_red_0.png.import
 bin/
 obj/
 publish/

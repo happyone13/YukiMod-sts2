@@ -3,6 +3,7 @@ using BaseLib.Config;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 using YukiMod.YukiModCode.Config;
+using YukiMod.YukiModCode.Infrastructure;
 using YukiMod.YukiModCode.Mechanics.Vfx;
 using YukiMod.YukiModCode.Patches;
 
@@ -37,5 +38,6 @@ public partial class MainFile : Node
 
         Harmony harmony = new(ModId);
         harmony.PatchAll();
+        ModelIdDeduplicator.DeduplicateForMod("YUKIMOD-");
     }
 }

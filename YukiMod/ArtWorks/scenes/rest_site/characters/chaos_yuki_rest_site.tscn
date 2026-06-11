@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/rest_site/chaos_yuki/rest_site_chaos_yuki_skel_data.tres" id="1_skel"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/rest_site/chaos_yuki/rest_site_chaos_yuki_skel_data.tres" id="1_skel"]
 
 [node name="ChaosYukiRestSite" type="Node2D"]
 position = Vector2(-2, 42)

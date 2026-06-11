@@ -13,13 +13,16 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Mechanics.Animation;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy), IChaosTeleportAttackProfileOverride
 {
+    public string TeleportAttackProfileId => ChaosTeleportAttackProfiles.U3Attack.Id;
+
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/mi_huo_yi_ji_dynamic.tscn";
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -27,6 +27,16 @@ namespace YukiMod.YukiModCode.Mechanics.Animation;
 [HarmonyPatch]
 public static class YukiMeleeTeleportAttackPatch
 {
+	private const string U2AttackId = "u2_attack";
+	private const string U2ReadyAnim = "u2_attack_ready";
+	private const string U2PlayAnim = "u2_attack_play";
+	private const string U2EndAnim = "u2_attack_end";
+	private const string U2VfxAnim = "animation";
+	private const string U2ReadyF = "res://YukiMod/ArtWorks/modspine/tscn_point/effect_scenes/yuki/yuki_u2_attack_ready_f.tscn";
+	private const string U2ReadyTargetF = "res://YukiMod/ArtWorks/modspine/tscn_point/effect_scenes/yuki/yuki_u2_attack_ready_target.tscn";
+	private const string U2PlayTargetB = "res://YukiMod/ArtWorks/modspine/tscn_point/effect_scenes/yuki/yuki_u2_attack_play_target_b.tscn";
+	private const string U2PlayTargetF1 = "res://YukiMod/ArtWorks/modspine/tscn_point/effect_scenes/yuki/yuki_u2_attack_play_target_f1.tscn";
+	private const string U2PlayTargetF2 = "res://YukiMod/ArtWorks/modspine/tscn_point/effect_scenes/yuki/yuki_u2_attack_play_target_f2.tscn";
 	private static readonly HashSet<string> Warned = new HashSet<string>(StringComparer.Ordinal);
 	private static readonly Random Rng = new Random();
 	private static readonly AsyncLocal<MegaCrit.Sts2.Core.Commands.Builders.AttackCommand?> CurrentAttackCommand = new();
@@ -195,6 +205,12 @@ public static class YukiMeleeTeleportAttackPatch
 				return true;
 			}
 
+			if (string.Equals(profile.Value.Id, U2AttackId, StringComparison.Ordinal))
+			{
+				__result = RunWithTeleportProxyGuard(TryRunU2Attack(creature, waitTime, command));
+				return false;
+			}
+
 			__result = RunWithTeleportProxyGuard(TryRunMeleeTeleportAttack(creature, triggerName, waitTime, command, card, profile.Value));
 			return false;
 		}
@@ -242,6 +258,11 @@ public static class YukiMeleeTeleportAttackPatch
 			return CreatureCmd.TriggerAnim(creature, triggerName, waitTime);
 		}
 
+		if (string.Equals(profile.Value.Id, U2AttackId, StringComparison.Ordinal))
+		{
+			return RunWithTeleportProxyGuard(TryRunU2Attack(creature, waitTime, command));
+		}
+
 		try
 		{
 			MeleeSession session = Sessions.GetOrCreateValue(creature);
@@ -263,6 +284,318 @@ public static class YukiMeleeTeleportAttackPatch
 	{
 		return string.Equals(triggerName, "Attack", StringComparison.Ordinal)
 		       || triggerName.StartsWith("Attack", StringComparison.Ordinal);
+	}
+
+	private static Task TryRunU2Attack(Creature attacker, float waitTime, AttackCommand command)
+	{
+		try
+		{
+			if (!TryGetRoomAndNode(attacker, out NCombatRoom room, out NCreature attackerNode))
+			{
+				return CreatureCmd.TriggerAnim(attacker, "Attack", waitTime);
+			}
+
+			Creature? target = TryGetPrimaryTarget(command);
+			if (target == null || !target.IsAlive)
+			{
+				List<Creature> targets = GetAliveTargets(command);
+				if (targets.Count > 0)
+				{
+					target = targets[0];
+				}
+			}
+
+			if (target == null)
+			{
+				return CreatureCmd.TriggerAnim(attacker, "Attack", waitTime);
+			}
+
+			MeleeSession session = Sessions.GetOrCreateValue(attacker);
+			bool pendingReturnToOrigin = session.Teleported && session.HasOrigin;
+			Vector2 pendingOrigin = session.OriginGlobalPos;
+			ChaosTeleportAttackProfile pendingReturnProfile = session.Profile ?? ChaosTeleportAttackProfiles.Default;
+			session.Profile = ChaosTeleportAttackProfiles.U2Attack;
+			session.LastRequestId++;
+			int requestId = session.LastRequestId;
+			session.DamageRequestId = requestId;
+			session.DamageTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+			session.DamageSignaled = false;
+			session.Teleported = false;
+			session.ReadyPlaying = false;
+			session.HasPlannedTeleport = false;
+			session.PlannedTeleportGlobalPos = Vector2.Zero;
+			session.PendingDeferredTeleportForRequestId = 0;
+			session.ReadyTeleportedByEvent = false;
+			session.StepPlayerMovePlayed = false;
+
+			StartU2Sequence(attacker, requestId, room, attackerNode, target, pendingReturnToOrigin, pendingOrigin, pendingReturnProfile);
+			float timeout = Mathf.Max(Mathf.Max(waitTime, attackerNode.GetCurrentAnimationLength()), 0.25f) + 1.0f;
+			return WaitForDamage(attacker, requestId, timeout);
+		}
+		catch
+		{
+			return CreatureCmd.TriggerAnim(attacker, "Attack", waitTime);
+		}
+	}
+
+	private static async void StartU2Sequence(Creature attacker, int requestId, NCombatRoom room, NCreature attackerNode, Creature target, bool pendingReturnToOrigin, Vector2 pendingOrigin, ChaosTeleportAttackProfile pendingReturnProfile)
+	{
+		try
+		{
+			if (!GodotObject.IsInstanceValid(attackerNode))
+			{
+				return;
+			}
+
+			NCreature? targetNode = null;
+			try
+			{
+				targetNode = room.GetCreatureNode(target);
+			}
+			catch
+			{
+				targetNode = null;
+			}
+
+			if (targetNode == null || !GodotObject.IsInstanceValid(targetNode))
+			{
+				return;
+			}
+
+			float attackerScale = GetChaosEffUniformScale(attackerNode, ChaosTeleportAttackProfiles.U2Attack.UniformScaleMultiplier);
+			float targetScale = GetChaosEffUniformScale(targetNode, ChaosTeleportAttackProfiles.U2Attack.UniformScaleMultiplier);
+
+			Vector2 attackerPos = GetFootPos(attackerNode);
+			Vector2 targetPos = GetTargetVfxPos(targetNode);
+
+			attackerNode.SpineAnimation.SetAnimation(U2ReadyAnim, loop: false);
+			PlayU2ReadyVfx(room, attackerPos, attackerScale, targetPos, targetScale);
+
+			float readyLen = Mathf.Max(attackerNode.GetCurrentAnimationLength(), 0.01f);
+			await Cmd.CustomScaledWait(readyLen, readyLen);
+
+			if (!Sessions.TryGetValue(attacker, out MeleeSession? s) || s == null || s.LastRequestId != requestId)
+			{
+				return;
+			}
+
+			attackerNode.SpineAnimation.SetAnimation(U2PlayAnim, loop: false);
+			float playLen = Mathf.Max(attackerNode.GetCurrentAnimationLength(), 0.01f);
+			PlayU2PlayVfxPhase1(room, targetPos, targetScale);
+			TryTriggerTargetHitFx(target);
+			SignalDamage(attacker, requestId);
+
+			float phaseDelay = Mathf.Clamp(playLen * 0.5f, 0.08f, Mathf.Max(0.08f, playLen));
+			await Cmd.CustomScaledWait(phaseDelay, playLen);
+
+			if (!Sessions.TryGetValue(attacker, out s) || s == null || s.LastRequestId != requestId)
+			{
+				return;
+			}
+
+			PlayU2PlayVfxPhase2(room, targetPos, targetScale);
+			TryTriggerTargetHitFx(target);
+
+			float rest = Mathf.Max(playLen - phaseDelay, 0.08f);
+			await Cmd.CustomScaledWait(rest, playLen);
+
+			if (!Sessions.TryGetValue(attacker, out s) || s == null || s.LastRequestId != requestId)
+			{
+				return;
+			}
+
+			attackerNode.SpineAnimation.SetAnimation(U2EndAnim, loop: false);
+			TryAddIdleLoop(attackerNode);
+
+			if (pendingReturnToOrigin && pendingOrigin != Vector2.Zero)
+			{
+				float endLen = Mathf.Max(attackerNode.GetCurrentAnimationLength(), 0.01f);
+				await Cmd.CustomScaledWait(endLen, endLen);
+
+				if (!Sessions.TryGetValue(attacker, out s) || s == null || s.LastRequestId != requestId)
+				{
+					return;
+				}
+
+				if (!TryGetRoomAndNode(attacker, out room, out attackerNode))
+				{
+					YukiVictoryAnimCoordinator.MarkTeleportEnd(attacker);
+					return;
+				}
+
+				attackerNode.GlobalPosition = pendingOrigin;
+				attackerNode.GlobalPosition = pendingOrigin;
+				TryAddIdleLoop(attackerNode);
+
+				float uniformScale = GetChaosEffUniformScale(attackerNode, pendingReturnProfile.UniformScaleMultiplier);
+				Vector2 endFoot = GetFootPos(attackerNode);
+				PlayReturnVfxAtOrigin(room, endFoot, pendingReturnProfile, uniformScale);
+
+				s.Teleported = false;
+				s.HasOrigin = false;
+				s.HasOriginFoot = false;
+				s.OriginFootPos = Vector2.Zero;
+				s.ReadyPlaying = false;
+				s.TargetSignature = 0;
+				s.UseFootAnchor = false;
+				s.HasPlannedTeleport = false;
+				s.PlannedTeleportGlobalPos = Vector2.Zero;
+				s.ReadyTeleportedByEvent = false;
+				s.StepPlayerMovePlayed = false;
+				s.ReadyEventConnected = false;
+				s.ReadyEventCb = default;
+				s.PlayEventConnected = false;
+				s.PlayEventCb = default;
+				s.ActivePlayAnim = "";
+				s.ActiveAttackPlayB = "";
+				s.ActiveAttackPlayF = "";
+				s.PendingDeferredTeleportForRequestId = 0;
+
+				YukiVictoryAnimCoordinator.MarkTeleportEnd(attacker);
+			}
+		}
+		catch
+		{
+		}
+	}
+
+	private static void TryQueueIdleLoop(NCreature creatureNode)
+	{
+		try
+		{
+			if (!GodotObject.IsInstanceValid(creatureNode) || !creatureNode.HasSpineAnimation)
+				return;
+
+			MegaSprite sprite;
+			try
+			{
+				sprite = new MegaSprite(creatureNode);
+			}
+			catch
+			{
+				return;
+			}
+
+			foreach (var anim in new[] { "idle_loop", "b_idle", "idle" })
+			{
+				try
+				{
+					if (!sprite.HasAnimation(anim))
+						continue;
+
+					creatureNode.SpineAnimation.AddAnimation(anim, 0f, loop: true);
+					return;
+				}
+				catch
+				{
+				}
+			}
+		}
+		catch
+		{
+		}
+	}
+
+	private static void PlayU2ReadyVfx(NCombatRoom room, Vector2 attackerPos, float attackerScale, Vector2 targetPos, float targetScale)
+	{
+		Node? front = room.CombatVfxContainer;
+		if (front != null)
+		{
+			ChaosOneShotVfx.PlaySpineOneShot(U2ReadyF, U2VfxAnim, front, attackerPos, zIndex: -1, uniformScale: attackerScale);
+			ChaosOneShotVfx.PlaySpineOneShot(U2ReadyTargetF, U2VfxAnim, front, targetPos, zIndex: -1, uniformScale: targetScale);
+		}
+	}
+
+	private static void PlayU2PlayVfxPhase1(NCombatRoom room, Vector2 targetPos, float targetScale)
+	{
+		PlayOneShotAutoLayer(room, targetPos, U2PlayTargetB, U2VfxAnim, targetScale);
+		Node? front = room.CombatVfxContainer;
+		if (front != null)
+		{
+			ChaosOneShotVfx.PlaySpineOneShot(U2PlayTargetF1, U2VfxAnim, front, targetPos, zIndex: -1, uniformScale: targetScale);
+		}
+	}
+
+	private static void PlayU2PlayVfxPhase2(NCombatRoom room, Vector2 targetPos, float targetScale)
+	{
+		Node? front = room.CombatVfxContainer;
+		if (front != null)
+		{
+			ChaosOneShotVfx.PlaySpineOneShot(U2PlayTargetF2, U2VfxAnim, front, targetPos, zIndex: -1, uniformScale: targetScale);
+		}
+	}
+
+	private static Vector2 GetTargetVfxPos(NCreature targetNode)
+	{
+		try
+		{
+			return targetNode.VfxSpawnPosition;
+		}
+		catch
+		{
+			try
+			{
+				return targetNode.GlobalPosition;
+			}
+			catch
+			{
+				return Vector2.Zero;
+			}
+		}
+	}
+
+	private static Creature? TryGetPrimaryTarget(AttackCommand command)
+	{
+		try
+		{
+			var t = command.GetType();
+			var p = t.GetProperty("Target", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+			if (p?.GetValue(command) is Creature pc && pc.IsAlive)
+			{
+				return pc;
+			}
+			var f = t.GetField("Target", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+			        ?? t.GetField("_target", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+			        ?? t.GetField("target", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+			if (f?.GetValue(command) is Creature fc && fc.IsAlive)
+			{
+				return fc;
+			}
+		}
+		catch
+		{
+		}
+
+		return null;
+	}
+
+	private static bool _hitFxMethodResolved;
+	private static MethodInfo? _hitFxMethod;
+
+	private static void TryTriggerTargetHitFx(Creature target)
+	{
+		try
+		{
+			if (!_hitFxMethodResolved)
+			{
+				_hitFxMethodResolved = true;
+				_hitFxMethod =
+					AccessTools.Method(typeof(CreatureCmd), "TriggerHitFx", new[] { typeof(Creature) }) ??
+					AccessTools.Method(typeof(CreatureCmd), "TriggerHitVfx", new[] { typeof(Creature) }) ??
+					AccessTools.Method(typeof(CreatureCmd), "TriggerHurtFx", new[] { typeof(Creature) }) ??
+					AccessTools.Method(typeof(CreatureCmd), "TriggerHurtVfx", new[] { typeof(Creature) });
+			}
+
+			if (_hitFxMethod == null)
+			{
+				return;
+			}
+
+			_hitFxMethod.Invoke(null, new object[] { target });
+		}
+		catch
+		{
+		}
 	}
 
 	private static Task TryRunMeleeTeleportAttack(Creature attacker, string triggerName, float waitTime, AttackCommand command, CardModel card, ChaosTeleportAttackProfile profile)
@@ -1232,6 +1565,19 @@ public static class YukiMeleeTeleportAttackPatch
 		ChaosTeleportAttackVfxSet vfx = GetActiveVfx(profile, session);
 		PlayOneShotAutoLayer(room, pos, vfx.AttackPlayB, vfx.AttackPlayAnim, uniformScale);
 		PlayOneShotAutoLayer(room, pos, vfx.AttackPlayF, vfx.AttackPlayAnim, uniformScale);
+
+		if (string.Equals(profile.Id, ChaosTeleportAttackProfiles.Default.Id, StringComparison.Ordinal))
+		{
+			Node? front = room.CombatVfxContainer;
+			if (front != null)
+			{
+				const string targetScene = "res://YukiMod/ArtWorks/modspine/tscn_point/effect_scenes/yuki/yuki_1057_attack_play_target.tscn";
+				const string targetAnim = "animation";
+				float deltaDeg = (float)(Rng.NextDouble() * 40.0 - 20.0);
+				float deltaRad = Mathf.DegToRad(deltaDeg);
+				ChaosOneShotVfx.PlaySpineOneShot(targetScene, targetAnim, front, session.LatestTargetCenter, deltaRad, zIndex: -1, uniformScale: uniformScale);
+			}
+		}
 	}
 
 	private static ChaosTeleportAttackVfxSet GetActiveVfx(ChaosTeleportAttackProfile profile, MeleeSession session)
@@ -1758,4 +2104,3 @@ public static class YukiMeleeTeleportAttackPatch
 		Log.Warn(msg);
 	}
 }
-

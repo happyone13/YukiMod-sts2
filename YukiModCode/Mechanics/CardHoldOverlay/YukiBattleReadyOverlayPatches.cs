@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 
@@ -35,6 +36,7 @@ public static class YukiBattleReadyOverlayPatches
 
 			YukiBattleReadyOverlay.Preload();
 			YukiBattleDeadOverlay.Preload();
+			YukiAudioService.TryPlayCombatStartVoice(me);
 			TryPlayCombatStartAnimation(me);
 		}
 		catch
@@ -55,6 +57,7 @@ public static class YukiBattleReadyOverlayPatches
 			}
 
 			YukiBattleReadyOverlay.NotifyCombatEnded();
+			YukiAudioService.TryPlayVictoryVoice(me);
 			Mechanics.Animation.YukiVictoryAnimCoordinator.PlayOrDeferVictory(me!.Creature, () => TryPlayVictoryAnimation(me));
 		}
 		catch
@@ -423,4 +426,3 @@ public static class YukiBattleReadyOverlayPatches
 		}
 	}
 }
-

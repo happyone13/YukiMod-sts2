@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using HarmonyLib;
@@ -31,21 +31,21 @@ public static class YukiModSharedSettingsUiPatch
 	private const string ModTabName = "XCskin_ModSettingsTab";
 	private const string ModPanelName = "XCskin_ModSettingsPanel";
 
-	private const string VoiceSectionName = "YukiModVoiceVolume";
-	private const string VoiceSliderName = "YukiModVoiceSlider";
-	private const string VoiceLineName = "Line_YukiModVoice";
-	private const string ScaleSectionName = "YukiModBattleReadyScale";
-	private const string ScaleSliderName = "YukiModBattleReadyScaleSlider";
-	private const string ScaleLineName = "Line_YukiModBattleReadyScale";
-	private const string OffsetYSectionName = "YukiModBattleReadyOffsetY";
-	private const string OffsetYSliderName = "YukiModBattleReadyOffsetYSlider";
-	private const string OffsetYLineName = "Line_YukiModBattleReadyOffsetY";
-	private const string OffsetXSectionName = "YukiModBattleReadyOffsetX";
-	private const string OffsetXSliderName = "YukiModBattleReadyOffsetXSlider";
-	private const string OffsetXLineName = "Line_YukiModBattleReadyOffsetX";
-	private const string ResetSectionName = "YukiModBattleReadyReset";
-	private const string ResetButtonName = "YukiModBattleReadyResetButton";
-	private const string ResetLineName = "Line_YukiModBattleReadyReset";
+	private const string VoiceSectionName = "ChaosModVoiceVolume";
+	private const string VoiceSliderName = "ChaosModVoiceSlider";
+	private const string VoiceLineName = "Line_ChaosModVoice";
+	private const string ScaleSectionName = "ChaosModBattleReadyScale";
+	private const string ScaleSliderName = "ChaosModBattleReadyScaleSlider";
+	private const string ScaleLineName = "Line_ChaosModBattleReadyScale";
+	private const string OffsetYSectionName = "ChaosModBattleReadyOffsetY";
+	private const string OffsetYSliderName = "ChaosModBattleReadyOffsetYSlider";
+	private const string OffsetYLineName = "Line_ChaosModBattleReadyOffsetY";
+	private const string OffsetXSectionName = "ChaosModBattleReadyOffsetX";
+	private const string OffsetXSliderName = "ChaosModBattleReadyOffsetXSlider";
+	private const string OffsetXLineName = "Line_ChaosModBattleReadyOffsetX";
+	private const string ResetSectionName = "ChaosModBattleReadyReset";
+	private const string ResetButtonName = "ChaosModBattleReadyResetButton";
+	private const string ResetLineName = "Line_ChaosModBattleReadyReset";
 
 	private const string CardVisualsLineName = "Line_YukiModCardVisuals";
 	private const string DynamicPortraitsSectionName = "YukiModCardVisualsDynamicPortraits";
@@ -107,10 +107,14 @@ public static class YukiModSharedSettingsUiPatch
 		bool hasReset = vbox.GetNodeOrNull(ResetSectionName) != null;
 		bool hasDynamicPortraits = vbox.GetNodeOrNull(DynamicPortraitsSectionName) != null;
 
-		if (hasVoice && hasScale && hasOffsetY && hasOffsetX && hasReset && hasDynamicPortraits)
+		bool hasShared = hasVoice && hasScale && hasOffsetY && hasOffsetX && hasReset;
+		if (hasShared)
 		{
 			TryWireExistingTransformHooksOnce(vbox);
-			return;
+			if (hasDynamicPortraits)
+			{
+				return;
+			}
 		}
 
 		RichTextLabel? templateLabel = screen.GetNodeOrNull<RichTextLabel>(TemplateLabelFullPath);
@@ -1038,4 +1042,3 @@ public static class YukiModSharedSettingsUiPatch
 		valueLabel.SetTextAutoSize($"{display:+0;-0;0}px");
 	}
 }
-

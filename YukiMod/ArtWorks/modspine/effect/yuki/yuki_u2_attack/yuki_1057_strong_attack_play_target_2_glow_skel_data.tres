@@ -1,0 +1,9 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://c7315bu6nrdeq"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://bymeqtlwrdmui" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_u2_attack/yuki_1057_strong_attack_play_target_2_glow.atlas" id="1_pden4"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://cbvnovnq2h2e5" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_u2_attack/yuki_1057_strong_attack_play_target_2_glow.skel" id="2_alohp"]
+
+[resource]
+atlas_res = ExtResource("1_pden4")
+skeleton_file_res = ExtResource("2_alohp")
+default_mix = 0.05

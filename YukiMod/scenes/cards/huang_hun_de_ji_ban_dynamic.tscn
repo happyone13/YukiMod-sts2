@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 load_steps=3]
 
-[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/card/unique_1060_02.tres" id="1_spine"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/card/unique_1060_02_skel_data.tres" id="1_spine"]
 [ext_resource type="Script" path="res://YukiMod/scripts/spine_auto_player.gd" id="2_player"]
 
 [node name="HuangHunDeJiBanDynamicPortrait" type="Node2D"]
@@ -40,3 +40,4 @@ script = ExtResource("2_player")
 AnimationName = "animation"
 Loop = true
 SlotFixProfile = "huang_hun_de_ji_ban"
+

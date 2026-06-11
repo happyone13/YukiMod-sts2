@@ -23,9 +23,11 @@
   <PropertyGroup Condition="'$(IsWindows)' == 'true'">
     <AutoSteamPath>$(registry:HKEY_CURRENT_USER\Software\Valve\Steam@SteamPath)\steamapps</AutoSteamPath>
     <SteamLibraryPath Condition="Exists('$(AutoSteamPath)/common/Slay the Spire 2')">$(AutoSteamPath)</SteamLibraryPath>
-    <GodotPath>E:\SOFT\godot\Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
+    <GodotPath Condition="Exists('H:/Trae_home/ChaosMod/Godot_v4.5.1/Godot_v4.5.1-stable_mono_win64.exe')">H:/Trae_home/ChaosMod/Godot_v4.5.1/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
+    <GodotPath Condition="'$(GodotPath)' == ''">E:\SOFT\godot\Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe</GodotPath>
     <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">C:/Program Files (x86)/Steam/steamapps</SteamLibraryPath>
     <Sts2Path103 Condition="'$(Sts2Path103)' == '' and '$(STS2_103_PATH)' != ''">$(STS2_103_PATH)</Sts2Path103>
+    <Sts2Path103 Condition="'$(Sts2Path103)' == '' and Exists('H:/SteamLibrary/steamapps/common/Slay the Spire 2')">H:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path103>
     <Sts2Path103 Condition="'$(Sts2Path103)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path103>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '103'">$(Sts2Path103)</Sts2Path>
     <ModsPath>$(Sts2Path)/mods/</ModsPath>

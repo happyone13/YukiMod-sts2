@@ -55,7 +55,7 @@ public class YukiMod : PlaceholderCharacterModel
     public override Color MapDrawingColor => Color.Color8(120, 190, 185);
 
     public override string CustomIconPath => "res://YukiMod/scenes/yuki_icon.tscn";
-    public override string CustomVisualPath => "res://YukiMod/scenes/yuki_character.tscn";
+    public override string CustomVisualPath => "res://YukiMod/ArtWorks/scenes/creature_visuals/chaos_yuki.tscn";
     public override string CustomRestSiteAnimPath => "res://YukiMod/scenes/yuki_character_camp.tscn";
     public override string CustomMerchantAnimPath => "res://YukiMod/scenes/merchant/characters/yukimod_merchant.tscn";
     public override string CustomCharacterSelectBg => "res://YukiMod/scenes/yuki_bg.tscn";

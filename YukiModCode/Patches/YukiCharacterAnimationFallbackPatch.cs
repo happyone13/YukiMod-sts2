@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Random;
 using System.Collections.Generic;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Patches;
 
@@ -49,6 +50,8 @@ public static class YukiCharacterAnimationFallbackPatch
     {
         if (!IsYukiScene(__instance))
             return;
+
+        YukiAudioService.TryPlayRestSiteVoice();
 
         foreach (Node child in __instance.GetChildren())
         {

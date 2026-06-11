@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text.Json;
 using Godot;
@@ -8,9 +8,9 @@ namespace YukiMod.YukiModCode.Mechanics.Settings;
 
 public static class YukiModSharedSettings
 {
-	private const string SharedSettingsDirName = "yukimod";
-	private const string SharedSettingsFileName = "yuki_settings.json";
-	private const string SharedDomainKeyPrefix = "YUKIMOD_XCSKIN_";
+	private const string SharedSettingsDirName = "chaosmod";
+	private const string SharedSettingsFileName = "xcskin_settings.json";
+	private const string SharedDomainKeyPrefix = "CHAOSMOD_XCSKIN_";
 	private static readonly string SharedVoiceVolumeKey = SharedDomainKeyPrefix + "VOICE_VOLUME";
 	private static readonly string SharedBattleReadyScaleKey = SharedDomainKeyPrefix + "BATTLE_READY_SCALE";
 	private static readonly string SharedBattleReadyOffsetXKey = SharedDomainKeyPrefix + "BATTLE_READY_OFFSET_X";
@@ -269,5 +269,4 @@ public static class YukiModSharedSettings
 		public float BattleReadyOffsetY { get; set; }
 	}
 }
-
 

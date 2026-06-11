@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://src/Core/Nodes/Combat/NCreatureVisuals.cs" id="1"]
-[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/characters/chaos_yuki/chaos_yuki_skel_data.tres" id="2"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/characters/chaos_yuki/chaos_yuki_skel_data.tres" id="2"]
 
 [node name="ChaosYuki" type="Node2D"]
 script = ExtResource("1")

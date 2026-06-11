@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://dv61sfy17eaq6"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="SpineSkeletonDataResource" uid="uid://c3riufrx6emp4" path="res://Chaos_yuki/ArtWorks/modspine/battle_ready/chaos_yuki_battle_ready/chaos_yuki_battle_ready_skel_date.tres" id="1_cb8sm"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/battle_ready/chaos_yuki_battle_ready/chaos_yuki_battle_ready_skel_date.tres" id="1_cb8sm"]
 
 [node name="SpineSprite" type="SpineSprite"]
 skeleton_data_res = ExtResource("1_cb8sm")

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Godot;
 using HarmonyLib;
@@ -13,7 +13,9 @@ namespace YukiMod.YukiModCode.Patches;
 public static class YukiCharacterSelectAnimLoopPatch
 {
     private const string BgContainerNodeName = "AnimatedBg";
+    private const string Bg1NodeName = "YukiCharSelectBg1";
     private const string LoopAnimName = "animation";
+    private const string FallbackLoopAnimName = "idle";
     private const string YukiCharacterId = YukiModInfo.CharacterId;
 
     [HarmonyPostfix]
@@ -31,17 +33,17 @@ public static class YukiCharacterSelectAnimLoopPatch
             return;
         }
 
+        Control? bg1 = bgContainer.GetNodeOrNull<Control>(Bg1NodeName);
+        if (bg1 == null || !bg1.Visible)
+        {
+            return;
+        }
+
         int found = 0;
         int started = 0;
         int missingAnim = 0;
         int failed = 0;
-
-        foreach (Node child in bgContainer.GetChildren())
-        {
-            ForceLoopAnimationOnAllSpineSprites(child, ref found, ref started, ref missingAnim, ref failed);
-        }
-
-        Log.Info($"[{YukiModInfo.ModId}] CharacterSelect bg anim loop: found={found} started={started} missing={missingAnim} failed={failed}");
+        ForceLoopAnimationOnAllSpineSprites(bg1, ref found, ref started, ref missingAnim, ref failed);
     }
 
     private static bool IsYukiCharacter(CharacterModel? characterModel)
@@ -86,6 +88,11 @@ public static class YukiCharacterSelectAnimLoopPatch
                     sprite.GetAnimationState().SetAnimation(LoopAnimName, loop: true);
                     started++;
                 }
+                else if (sprite.HasAnimation(FallbackLoopAnimName))
+                {
+                    sprite.GetAnimationState().SetAnimation(FallbackLoopAnimName, loop: true);
+                    started++;
+                }
                 else
                 {
                     missingAnim++;
@@ -99,5 +106,4 @@ public static class YukiCharacterSelectAnimLoopPatch
         }
     }
 }
-
 

@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7k0my3f3lyha"]
+
+[ext_resource type="SpineSkeletonDataResource" uid="uid://chc7s1s3q86n1" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_attack_target/yuki_1057_attack_play_target_f0_skel_data.tres" id="1_1s8d4"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://ijjvxoeqs1bq" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_attack_target/yuki_1057_attack_play_target_f1_skel_data.tres" id="2_hru1m"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://d0k0ruovcttcr" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_attack_target/yuki_1057_attack_play_target_f2_skel_data.tres" id="3_ofrua"]
+
+[node name="Yuki1057AttackPlayTarget" type="Node2D"]
+position = Vector2(250, 0)
+rotation = -2.5307274
+
+[node name="SpineSprite" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("1_1s8d4")
+preview_skin = "Default"
+preview_animation = "animation"
+preview_frame = false
+preview_time = 0.0
+
+[node name="SpineSprite2" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("2_hru1m")
+preview_skin = "Default"
+preview_animation = "animation"
+preview_frame = false
+preview_time = 0.0
+
+[node name="SpineSprite3" type="SpineSprite" parent="."]
+skeleton_data_res = ExtResource("3_ofrua")
+preview_skin = "Default"
+preview_animation = "-- Empty --"
+preview_frame = false
+preview_time = 0.0

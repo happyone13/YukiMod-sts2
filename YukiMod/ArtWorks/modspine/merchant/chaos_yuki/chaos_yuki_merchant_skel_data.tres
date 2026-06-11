@@ -1,7 +1,7 @@
 [gd_resource type="SpineSkeletonDataResource" load_steps=9 format=3 uid="uid://cpfe18byewpmx"]
 
-[ext_resource type="SpineAtlasResource" uid="uid://ddxomaa38xabf" path="res://Chaos_yuki/ArtWorks/modspine/merchant/chaos_yuki/chaos_yuki_shop.atlas" id="1_iffkw"]
-[ext_resource type="SpineSkeletonFileResource" uid="uid://cfa6a1slm33bh" path="res://Chaos_yuki/ArtWorks/modspine/characters/chaos_yuki/chaos_yuki.skel" id="2_iffkw"]
+[ext_resource type="SpineAtlasResource" uid="uid://ddxomaa38xabf" path="res://YukiMod/ArtWorks/modspine/merchant/chaos_yuki/chaos_yuki_shop.atlas" id="1_iffkw"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://cfa6a1slm33bh" path="res://YukiMod/ArtWorks/modspine/characters/chaos_yuki/chaos_yuki.skel" id="2_iffkw"]
 
 [sub_resource type="SpineAnimationMix" id="SpineAnimationMix_q8rux"]
 from = "idle_loop"

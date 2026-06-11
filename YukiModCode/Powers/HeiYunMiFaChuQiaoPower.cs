@@ -24,9 +24,9 @@ public class HeiYunMiFaChuQiaoPower : YukiModPower, IBlackCloudExitedListener
     public override bool IsInstanced => true;
 
     public override LocString Description =>
-        new("powers", GetInternalData<Data>().CreateUpgradedNaDao
+        AddPowerDescriptionArgs(new LocString("powers", GetInternalData<Data>().CreateUpgradedNaDao
             ? $"{Id.Entry}.descriptionUpgraded"
-            : $"{Id.Entry}.description");
+            : $"{Id.Entry}.description"));
 
     protected override string SmartDescriptionLocKey =>
         GetInternalData<Data>().CreateUpgradedNaDao

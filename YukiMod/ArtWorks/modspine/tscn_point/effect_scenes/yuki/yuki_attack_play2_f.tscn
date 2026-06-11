@@ -1,12 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bl2e3ujghkbvx"]
+[gd_scene load_steps=8 format=3]
 
-[ext_resource type="SpineSkeletonDataResource" uid="uid://ocd6paauqgpl" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f1_skel_data.tres" id="1_vogfc"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://bmo0xv3ofofib" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f2_skel_data.tres" id="2_3b76j"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://ddavu8c1cqlel" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f3_skel_data.tres" id="3_573jg"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://dckx53k8x50yy" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f4_skel_data.tres" id="4_br8s3"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://cskah03xk0u7t" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f5_skel_data.tres" id="5_vjrk8"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://wfnb4h3mo220" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f6_skel_data.tres" id="6_fyfch"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://cqal8or7b7p1p" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f7_skel_data.tres" id="7_af4uw"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f1_skel_data.tres" id="1_vogfc"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f2_skel_data.tres" id="2_3b76j"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f3_skel_data.tres" id="3_573jg"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f4_skel_data.tres" id="4_br8s3"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f5_skel_data.tres" id="5_vjrk8"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f6_skel_data.tres" id="6_fyfch"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play2/yuki_attack_play2_f7_skel_data.tres" id="7_af4uw"]
 
 [node name="YukiAttackPlay2F" type="Node2D"]
 

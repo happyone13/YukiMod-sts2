@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cg340cj5cb7y5"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="SpineSkeletonDataResource" uid="uid://bjklx2khcrf03" path="res://Chaos_yuki/ArtWorks/modspine/deadcg/deadcg_chaos_yuki/deadcg_chaos_yuki_skel_data.tres" id="1_m537l"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/deadcg/deadcg_chaos_yuki/deadcg_chaos_yuki_skel_data.tres" id="1_m537l"]
 
 [node name="SpineSprite" type="SpineSprite"]
 skeleton_data_res = ExtResource("1_m537l")

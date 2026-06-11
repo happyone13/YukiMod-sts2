@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 load_steps=10]
 
 [ext_resource type="Texture2D" path="res://YukiMod/images/cards/chaos_frame/ancient_card_border.tres" id="1_border"]
 [ext_resource type="Texture2D" path="res://YukiMod/images/cards/chaos_frame/ancient_card_text_bg_attack.tres" id="2_textbg"]

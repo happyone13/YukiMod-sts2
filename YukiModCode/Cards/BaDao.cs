@@ -10,13 +10,16 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Mechanics.Animation;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy), IChaosTeleportAttackProfileOverride
 {
+    public string TeleportAttackProfileId => ChaosTeleportAttackProfiles.U2Attack.Id;
+
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/ba_dao_dynamic.tscn";
 

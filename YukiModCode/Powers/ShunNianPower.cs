@@ -27,9 +27,9 @@ public class ShunNianPower : YukiModPower
     public override bool IsInstanced => true;
 
     public override LocString Description =>
-        new("powers", GetInternalData<Data>().CreateUpgradedInspirationCard
+        AddPowerDescriptionArgs(new LocString("powers", GetInternalData<Data>().CreateUpgradedInspirationCard
             ? $"{Id.Entry}.descriptionUpgraded"
-            : $"{Id.Entry}.description");
+            : $"{Id.Entry}.description"));
 
     protected override string SmartDescriptionLocKey =>
         GetInternalData<Data>().CreateUpgradedInspirationCard

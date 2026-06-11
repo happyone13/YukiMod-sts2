@@ -17,14 +17,17 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Mechanics.Animation;
 using YukiMod.YukiModCode.Powers;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
-public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AllEnemies)
+public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AllEnemies), IChaosTeleportAttackProfileOverride
 {
+    public string TeleportAttackProfileId => ChaosTeleportAttackProfiles.U2Attack.Id;
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromJuHeKeyword()];
 

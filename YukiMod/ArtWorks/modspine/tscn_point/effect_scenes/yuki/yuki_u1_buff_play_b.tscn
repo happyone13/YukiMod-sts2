@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://jif8oq85q2c0"]
+[gd_scene load_steps=2 format=3]
 
-[ext_resource type="SpineSkeletonDataResource" uid="uid://21jvuawkopux" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/yuki_u1_buff/yuki_u1_buff_play_b1_skele_data.tres" id="1_ge0ox"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_u1_buff/yuki_u1_buff_play_b1_skele_data.tres" id="1_ge0ox"]
 
 [node name="YukiAttackPlay1F" type="Node2D"]
 

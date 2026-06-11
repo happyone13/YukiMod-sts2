@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://xh42kvejd41v"]
 
-[ext_resource type="SpineSkeletonDataResource" uid="uid://mxt4ihhbj2bc" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/yuki_u3_attack/yuki_1057_u3_attack_play_b2_skel_data.tres" id="1_e5p4s"]
-[ext_resource type="SpineSkeletonDataResource" uid="uid://l37ccox4suhb" path="res://Chaos_yuki/ArtWorks/modspine/effect/yuki/yuki_u3_attack/yuki_1057_u3_attack_play_b1_skel_data.tres" id="2_mwptm"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://mxt4ihhbj2bc" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_u3_attack/yuki_1057_u3_attack_play_b2_skel_data.tres" id="1_e5p4s"]
+[ext_resource type="SpineSkeletonDataResource" uid="uid://l37ccox4suhb" path="res://YukiMod/ArtWorks/modspine/effect/yuki/yuki_u3_attack/yuki_1057_u3_attack_play_b1_skel_data.tres" id="2_mwptm"]
 
 [node name="yuki_u3_attack_play_b" type="Node2D"]
 

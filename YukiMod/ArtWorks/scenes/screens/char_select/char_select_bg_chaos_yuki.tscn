@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_bg_skel_data.tres" id="1_1rkft"]
-[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_b2_skel_data.tres" id="1_82jt0"]
-[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_b1_skel_data.tres" id="2_iacxd"]
-[ext_resource type="SpineSkeletonDataResource" path="res://Chaos_yuki/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_f1_skel_data.tres" id="4_juvm1"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_bg_skel_data.tres" id="1_1rkft"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_b2_skel_data.tres" id="1_82jt0"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_b1_skel_data.tres" id="2_iacxd"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/character_select/chaos_yuki/chaos_yuki_f1_skel_data.tres" id="4_juvm1"]
 
 [node name="IroncladBg" type="Control"]
 layout_mode = 3
