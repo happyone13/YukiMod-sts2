@@ -76,11 +76,11 @@ public class ZhaoJia() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, Tar
             if (enchantment != null)
             {
                 var enchantedBlock = BaseValue;
-                enchantedBlock += enchantment.EnchantBlockAdditive(enchantedBlock, Props);
-                enchantedBlock *= enchantment.EnchantBlockMultiplicative(enchantedBlock, Props);
+                enchantedBlock += enchantment.EnchantBlockAdditive(enchantedBlock);
+                enchantedBlock *= enchantment.EnchantBlockMultiplicative(enchantedBlock);
 
-                previewBlock += enchantment.EnchantBlockAdditive(previewBlock, Props);
-                previewBlock *= enchantment.EnchantBlockMultiplicative(previewBlock, Props);
+                previewBlock += enchantment.EnchantBlockAdditive(previewBlock);
+                previewBlock *= enchantment.EnchantBlockMultiplicative(previewBlock);
                 if (!card.IsEnchantmentPreview)
                 {
                     EnchantedValue = enchantedBlock;

@@ -42,7 +42,7 @@ public static class YukiForeseeService
 
         foreach (var selectedCard in selectedCards)
         {
-            await CardPileCmd.Add(selectedCard, PileType.Discard, source: source);
+            await CardPileCmd.Add(selectedCard, PileType.Discard, clonedBy: source);
         }
 
         return selectedCards;

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
@@ -23,7 +23,7 @@ public class NuTaoZhanPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override bool IsInstanced => true;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override int DisplayAmount => Math.Max(0, Amount - GetInternalData<Data>().AttacksPlayedThisTurn);
 
@@ -63,7 +63,7 @@ public class NuTaoZhanPower : YukiModPower
         await PlayerCmd.GainEnergy(1m, Owner.Player);
     }
 
-    public override Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == Owner.Side)
         {

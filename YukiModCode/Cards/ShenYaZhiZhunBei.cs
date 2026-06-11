@@ -58,7 +58,7 @@ public class ShenYaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Anci
                 break;
             }
 
-            await CardPileCmd.Add(selectedAttack, PileType.Hand, source: this);
+            await CardPileCmd.Add(selectedAttack, PileType.Hand, clonedBy: this);
         }
 
         await YukiPowerService.Apply<VigorPower>(

@@ -18,7 +18,7 @@ public static class YukiPowerService
         bool silent = false)
         where T : PowerModel, new()
     {
-        var power = await PowerCmd.Apply<T>(target, amount, applier!, cardSource!, silent);
+        var power = await PowerCmd.Apply<T>(choiceContext, target, amount, applier!, cardSource!, silent);
         return power!;
     }
 
@@ -31,7 +31,7 @@ public static class YukiPowerService
         bool silent = false)
         where T : PowerModel, new()
     {
-        return PowerCmd.Apply<T>(targets, amount, applier!, cardSource!, silent);
+        return PowerCmd.Apply<T>(choiceContext, targets, amount, applier!, cardSource!, silent);
     }
 
     public static Task Apply(
@@ -43,7 +43,7 @@ public static class YukiPowerService
         CardModel? cardSource,
         bool silent = false)
     {
-        return PowerCmd.Apply(power, target, amount, applier!, cardSource!, silent);
+        return PowerCmd.Apply(choiceContext, power, target, amount, applier!, cardSource!, silent);
     }
 
     public static Task<int> ModifyAmount(
@@ -54,6 +54,6 @@ public static class YukiPowerService
         CardModel? cardSource,
         bool silent = false)
     {
-        return PowerCmd.ModifyAmount(power, offset, applier!, cardSource!, silent);
+        return PowerCmd.ModifyAmount(choiceContext, power, offset, applier!, cardSource!, silent);
     }
 }

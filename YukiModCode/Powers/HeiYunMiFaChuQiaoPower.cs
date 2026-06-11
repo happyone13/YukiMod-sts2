@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -21,7 +21,7 @@ public class HeiYunMiFaChuQiaoPower : YukiModPower, IBlackCloudExitedListener
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override bool IsInstanced => true;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override LocString Description =>
         AddPowerDescriptionArgs(new LocString("powers", GetInternalData<Data>().CreateUpgradedNaDao

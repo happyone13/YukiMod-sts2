@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
@@ -12,7 +12,7 @@ public class ShuangJiangPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override bool IsInstanced => true;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {

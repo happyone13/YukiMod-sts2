@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
@@ -16,7 +16,7 @@ public class HuangHunDeJiBanPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override bool IsInstanced => true;
+    public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override decimal ModifyEnergyGain(Player player, decimal amount)
     {

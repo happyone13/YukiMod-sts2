@@ -98,7 +98,7 @@
 
 当前可利用的原版能力：
 
-- `CardPileCmd.Add(..., PileType.Hand, source: ...)` 在移牌时带 `source`
+- `CardPileCmd.Add(..., PileType.Hand, clonedBy: ...)` 在移牌时带来源模型
 - `AfterCardChangedPiles(card, oldPileType, source)` 能监听“进入手牌”
 - `AfterCardDrawn(choiceContext, card, fromHandDraw)` 能单独监听“这是一次抽牌”
 - `SetupPlayerTurn` 中的回合开始默认抽牌使用 `Draw(..., fromHandDraw: true)`

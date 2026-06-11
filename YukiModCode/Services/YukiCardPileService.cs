@@ -12,13 +12,13 @@ public static class YukiCardPileService
 {
     public static int MaxCardsInHand
     {
-        get { return CardPile.maxCardsInHand; }
+        get { return CardPile.MaxCardsInHand; }
     }
 
     public static async Task AddGeneratedCardsToCombat(IEnumerable<CardModel> cards, PileType pileType, Player owner)
     {
         var cardList = cards.ToList();
-        await CardPileCmd.AddGeneratedCardsToCombat(cardList, pileType, addedByPlayer: owner != null);
+        await CardPileCmd.AddGeneratedCardsToCombat(cardList, pileType, owner, CardPilePosition.Top);
 
         if (pileType != PileType.Hand)
         {

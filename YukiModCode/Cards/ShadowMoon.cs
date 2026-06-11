@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,7 +54,7 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon,
 
     protected override void OnUpgrade() { }
 
-    public override Task AfterAttack(AttackCommand command)
+    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
     {
         if (!IsUpgraded || command.Attacker != Owner.Creature)
         {
@@ -71,7 +71,7 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon,
             return Task.CompletedTask;
         }
 
-        var hitCount = command.Results.Count(result => result.TotalDamage > 0);
+        var hitCount = command.Results.SelectMany(result => result).Count(result => result.TotalDamage > 0);
         if (hitCount > 0)
         {
             DynamicVars.Damage.BaseValue += hitCount;

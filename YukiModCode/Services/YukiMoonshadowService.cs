@@ -13,7 +13,7 @@ namespace YukiMod.YukiModCode.Services;
 
 public static class YukiMoonshadowService
 {
-    public static async Task NingJu(Player owner, YukiCombatState combatState, int amount)
+    public static async Task NingJu(Player owner, ICombatState combatState, int amount)
     {
         if (amount <= 0)
         {

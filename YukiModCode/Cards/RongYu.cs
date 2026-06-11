@@ -40,7 +40,7 @@ public class RongYu() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetT
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        if (shouldTriggerFatal && attack.Results.Any(result => result.WasTargetKilled) && CombatState != null)
+        if (shouldTriggerFatal && attack.Results.SelectMany(result => result).Any(result => result.WasTargetKilled) && CombatState != null)
         {
             await JuHe.CreateInHand(Owner, CombatState);
         }

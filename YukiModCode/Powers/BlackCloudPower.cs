@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -20,6 +20,7 @@ public class BlackCloudPower : YukiModPower, IBlackCloudEnteredListener, IBlackC
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterPowerAmountChanged(
+        PlayerChoiceContext choiceContext,
         PowerModel power,
         decimal amount,
         Creature? applier,
@@ -31,7 +32,6 @@ public class BlackCloudPower : YukiModPower, IBlackCloudEnteredListener, IBlackC
         }
 
         _grantedStrength += amount;
-        var choiceContext = new ThrowingPlayerChoiceContext();
         await YukiMod.YukiModCode.Services.YukiPowerService.Apply<StrengthPower>(choiceContext, Owner, amount, applier, cardSource, silent: true);
     }
 

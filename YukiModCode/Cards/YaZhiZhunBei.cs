@@ -72,7 +72,7 @@ public class YaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Basic, T
             return false;
         }
 
-        await CardPileCmd.Add(selectedAttack, PileType.Hand, source: this);
+        await CardPileCmd.Add(selectedAttack, PileType.Hand, clonedBy: this);
         return true;
     }
 }

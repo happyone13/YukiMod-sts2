@@ -41,7 +41,7 @@ public class HeiYunMiFaYanHui() : YukiModCard(0, CardType.Skill, CardRarity.Rare
         var selectedCard = Owner.RunState.Rng.CombatCardSelection.NextItem(cards);
         if (selectedCard != null)
         {
-            await CardPileCmd.Add(selectedCard, PileType.Hand, source: this);
+            await CardPileCmd.Add(selectedCard, PileType.Hand, clonedBy: this);
         }
     }
 

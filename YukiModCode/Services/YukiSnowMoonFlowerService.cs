@@ -40,7 +40,7 @@ public static class YukiSnowMoonFlowerService
                && card is Xue or Yue;
     }
 
-    public static async Task ApplyXue(PlayerChoiceContext choiceContext, Player owner, YukiCombatState? combatState, CardModel source)
+    public static async Task ApplyXue(PlayerChoiceContext choiceContext, Player owner, ICombatState? combatState, CardModel source)
     {
         if (GetXuePower(owner) == null)
         {
@@ -50,7 +50,7 @@ public static class YukiSnowMoonFlowerService
         await TryCreateJuHe(choiceContext, owner, combatState);
     }
 
-    public static async Task ApplyYue(PlayerChoiceContext choiceContext, Player owner, YukiCombatState? combatState, CardModel source)
+    public static async Task ApplyYue(PlayerChoiceContext choiceContext, Player owner, ICombatState? combatState, CardModel source)
     {
         if (GetYuePower(owner) == null)
         {
@@ -60,7 +60,7 @@ public static class YukiSnowMoonFlowerService
         await TryCreateJuHe(choiceContext, owner, combatState);
     }
 
-    public static async Task ApplyHua(PlayerChoiceContext choiceContext, Player owner, YukiCombatState? combatState, CardModel source)
+    public static async Task ApplyHua(PlayerChoiceContext choiceContext, Player owner, ICombatState? combatState, CardModel source)
     {
         if (GetHuaPower(owner) == null)
         {
@@ -79,7 +79,7 @@ public static class YukiSnowMoonFlowerService
     private static HuaPower? GetHuaPower(Player? player) =>
         player?.Creature.Powers.OfType<HuaPower>().FirstOrDefault();
 
-    private static async Task TryCreateJuHe(PlayerChoiceContext choiceContext, Player owner, YukiCombatState? combatState)
+    private static async Task TryCreateJuHe(PlayerChoiceContext choiceContext, Player owner, ICombatState? combatState)
     {
         var xuePower = GetXuePower(owner);
         var yuePower = GetYuePower(owner);

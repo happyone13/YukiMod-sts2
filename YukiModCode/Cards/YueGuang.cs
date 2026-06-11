@@ -38,7 +38,7 @@ public class YueGuang() : YukiModCard(1, CardType.Skill, CardRarity.Common, Targ
         EnergyCost.UpgradeBy(-1);
     }
 
-    private async Task ResolveMoonlight(YukiCombatState combatState)
+    private async Task ResolveMoonlight(ICombatState combatState)
     {
         await YukiMoonshadowService.NingJu(Owner, combatState, 1);
     }

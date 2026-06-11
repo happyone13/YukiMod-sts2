@@ -49,7 +49,7 @@ public class ErShiToken() : YukiModTokenCard(2, CardType.Attack, CardRarity.Toke
         DynamicVars.Damage.UpgradeValueBy(4m);
     }
 
-    public static async Task<CardModel> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded)
+    public static async Task<CardModel> CreateInHand(Player owner, ICombatState combatState, bool upgraded)
     {
         var card = combatState.CreateCard<ErShiToken>(owner);
         if (upgraded)

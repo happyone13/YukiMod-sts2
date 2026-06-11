@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,7 +63,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
         DynamicVars[AttackHitDamageKey].UpgradeValueBy(1m);
     }
 
-    public override Task AfterAttack(AttackCommand command)
+    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
     {
         if (command.Attacker != Owner.Creature)
         {
@@ -80,7 +80,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
             return Task.CompletedTask;
         }
 
-        var hitCount = command.Results.Count(result => result.TotalDamage > 0);
+        var hitCount = command.Results.SelectMany(result => result).Count(result => result.TotalDamage > 0);
         if (hitCount <= 0)
         {
             return Task.CompletedTask;
@@ -90,12 +90,12 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
         return Task.CompletedTask;
     }
 
-    public static async Task<CardModel?> CreateInHand(Player owner, YukiCombatState combatState)
+    public static async Task<CardModel?> CreateInHand(Player owner, ICombatState combatState)
     {
         return (await CreateInHand(owner, 1, combatState)).FirstOrDefault();
     }
 
-    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, YukiCombatState combatState)
+    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, ICombatState combatState)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding)
         {

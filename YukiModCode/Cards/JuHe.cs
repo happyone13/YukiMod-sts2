@@ -67,12 +67,12 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
         DynamicVars.Damage.UpgradeValueBy(17m);
     }
 
-    public static async Task<CardModel?> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded = false)
+    public static async Task<CardModel?> CreateInHand(Player owner, ICombatState combatState, bool upgraded = false)
     {
         return (await CreateInHand(owner, 1, combatState, upgraded)).FirstOrDefault();
     }
 
-    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, YukiCombatState combatState, bool upgraded = false)
+    public static async Task<IEnumerable<CardModel>> CreateInHand(Player owner, int count, ICombatState combatState, bool upgraded = false)
     {
         if (count <= 0 || CombatManager.Instance.IsOverOrEnding)
         {

@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,7 +17,7 @@ public class YueDuPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override Task AfterAttack(AttackCommand command)
+    public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
     {
         if (command.Attacker != Owner)
         {
@@ -34,7 +34,7 @@ public class YueDuPower : YukiModPower
             return Task.CompletedTask;
         }
 
-        var hitCount = command.Results.Count(result => result.TotalDamage > 0);
+        var hitCount = command.Results.SelectMany(result => result).Count(result => result.TotalDamage > 0);
         if (hitCount <= 0)
         {
             return Task.CompletedTask;
@@ -45,7 +45,7 @@ public class YueDuPower : YukiModPower
         return Task.CompletedTask;
     }
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side == Owner.Side)
         {

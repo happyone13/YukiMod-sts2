@@ -103,8 +103,8 @@
 
 - Windows 下默认依赖本机 `Slay the Spire 2` 安装目录
 - Windows 下 `GodotPath` 固定指向 `E:\SOFT\godot\Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe`
-- 当前默认且唯一支持的构建目标为 `103` 正式版
-- 当前已知原游戏解包参考目录仍为 `E:\DATA\GODOT\MyMod\sts104`；涉及 103 API 时以当前配置的 103 游戏目录中的 `sts2.dll` 为准
+- 当前默认且唯一支持的构建目标为 `107` 正式版，`BaseLib` 默认版本为 `3.0.9`
+- 当前已知原游戏解包参考目录仍为 `E:\DATA\GODOT\MyMod\sts104`，只能作为旧版行为参考；涉及当前 API 时以本机 107 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
 - 构建后会尝试把 `.dll`、`YukiMod.json`、`.pck` 复制或导出到游戏 `mods/YukiMod/`
 
 因此后续凡是涉及“可构建”或“可导出”的任务，都要同时考虑：
@@ -112,7 +112,7 @@
 - 本机游戏目录是否存在
 - Godot 路径是否仍然有效
 - 资源导出是否跟代码版本一致
-- 如需核对原版能力、遗物、卡牌、动作或 Hook 行为，104 行为仍可先看 `E:\DATA\GODOT\MyMod\sts104`；103 API 签名需要以当前配置的 103 游戏目录 `data_sts2_windows_x86_64/sts2.dll` 为准
+- 如需核对原版能力、遗物、卡牌、动作或 Hook 行为，104 行为仍可先看 `E:\DATA\GODOT\MyMod\sts104`；107 API 签名需要以当前配置的 107 游戏目录 `data_sts2_windows_x86_64/sts2.dll` 为准
 
 ## 6. 当前已知空缺与风险
 

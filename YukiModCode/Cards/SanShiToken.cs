@@ -49,7 +49,7 @@ public class SanShiToken() : YukiModTokenCard(3, CardType.Attack, CardRarity.Tok
         DynamicVars.Damage.UpgradeValueBy(8m);
     }
 
-    public static async Task<CardModel> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded)
+    public static async Task<CardModel> CreateInHand(Player owner, ICombatState combatState, bool upgraded)
     {
         var card = combatState.CreateCard<SanShiToken>(owner);
         if (upgraded)
