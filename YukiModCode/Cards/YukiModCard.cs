@@ -14,8 +14,6 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-
-[Pool(typeof(YukiModCardPool))]
 public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, TargetType target) :
     CustomCardModel(cost, type, rarity, target),
     IYukiCardVisualProfile
