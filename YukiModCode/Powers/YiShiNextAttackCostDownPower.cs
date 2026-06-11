@@ -31,10 +31,20 @@ public class YiShiNextAttackCostDownPower : YukiModPower
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (IsValidTarget(cardPlay.Card, cardPlay.Card.EnergyCost.GetResolved()))
+        if (ShouldConsumeOnPlay(cardPlay.Card))
         {
             await PowerCmd.Decrement(this);
         }
+    }
+
+    private bool ShouldConsumeOnPlay(CardModel card)
+    {
+        if (card.Owner.Creature != Owner || card.Type != CardType.Attack)
+        {
+            return false;
+        }
+
+        return card.Pile?.Type is PileType.Hand or PileType.Play;
     }
 
     private bool IsValidTarget(CardModel card, decimal originalCost)

@@ -15,13 +15,16 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.Mechanics.Animation;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
-public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
+public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy), IChaosTeleportAttackProfileOverride
 {
+    public string TeleportAttackProfileId => ChaosTeleportAttackProfiles.U2Attack.Id;
+
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/yue_ying_dynamic.tscn";
 

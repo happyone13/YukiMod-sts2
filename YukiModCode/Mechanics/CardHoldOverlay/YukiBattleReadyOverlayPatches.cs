@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.ControllerInput;
@@ -21,6 +22,11 @@ namespace YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 public static class YukiBattleReadyOverlayPatches
 {
 	private static int _combatAnimToken;
+	private static readonly string[] CombatStartCandidates = ["battle_start", "idle_to_b_idle", "b_in", "b_idle", "idle_loop", "idle"];
+	private static readonly string[] CombatIdleCandidates = ["idle_loop", "b_idle", "idle"];
+	private static readonly string[] VictoryStartCandidates = ["victory_ready", "b_idle", "idle_loop", "idle"];
+	private static readonly string[] VictoryIdleCandidates = ["victory_loop", "b_idle", "idle_loop", "idle"];
+	private static readonly string[] DefendCandidates = ["defend"];
 
 	[HarmonyPatch(typeof(Hook), nameof(Hook.BeforeCombatStart))]
 	[HarmonyPostfix]
@@ -72,7 +78,7 @@ public static class YukiBattleReadyOverlayPatches
 			return;
 		}
 		int token = ++_combatAnimToken;
-		TryApplyPlayerAnimation(player, "battle_start", "idle_loop", token, retries: 8);
+		TryApplyPlayerAnimation(player, CombatStartCandidates, CombatIdleCandidates, token, retries: 8);
 	}
 
 	private static void TryPlayVictoryAnimation(Player? player)
@@ -82,10 +88,10 @@ public static class YukiBattleReadyOverlayPatches
 			return;
 		}
 		int token = ++_combatAnimToken;
-		TryApplyPlayerAnimation(player, "victory_ready", "victory_loop", token, retries: 8);
+		TryApplyPlayerAnimation(player, VictoryStartCandidates, VictoryIdleCandidates, token, retries: 8);
 	}
 
-	private static void TryApplyPlayerAnimation(Player player, string firstAnim, string? loopAnim, int token, int retries)
+	private static void TryApplyPlayerAnimation(Player player, string[] firstCandidates, string[] loopCandidates, int token, int retries)
 	{
 		try
 		{
@@ -105,26 +111,37 @@ public static class YukiBattleReadyOverlayPatches
 			{
 				if (retries > 0)
 				{
-					Callable.From(() => TryApplyPlayerAnimation(player, firstAnim, loopAnim, token, retries - 1)).CallDeferred();
+					Callable.From(() => TryApplyPlayerAnimation(player, firstCandidates, loopCandidates, token, retries - 1)).CallDeferred();
 				}
 				return;
 			}
 
-			var state = creatureNode.SpineAnimation.GetAnimationState();
+			MegaSprite sprite = new(creatureNode);
+			MegaAnimationState state = sprite.GetAnimationState();
 			if (state == null)
 			{
 				if (retries > 0)
 				{
-					Callable.From(() => TryApplyPlayerAnimation(player, firstAnim, loopAnim, token, retries - 1)).CallDeferred();
+					Callable.From(() => TryApplyPlayerAnimation(player, firstCandidates, loopCandidates, token, retries - 1)).CallDeferred();
 				}
 				return;
 			}
 
-			creatureNode.SpineAnimation.SetAnimation(firstAnim, loop: false);
-			if (loopAnim != null)
+			string? firstAnim = FindFirstAvailable(sprite, firstCandidates);
+			if (firstAnim == null)
 			{
-				creatureNode.SpineAnimation.AddAnimation(loopAnim, 0f, loop: true);
+				return;
 			}
+
+			string? loopAnim = FindFirstAvailable(sprite, loopCandidates);
+			if (loopAnim == null || string.Equals(firstAnim, loopAnim, StringComparison.Ordinal))
+			{
+				state.SetAnimation(firstAnim, loop: true);
+				return;
+			}
+
+			state.SetAnimation(firstAnim, loop: false);
+			state.AddAnimation(loopAnim, 0f, loop: true);
 		}
 		catch
 		{
@@ -343,23 +360,50 @@ public static class YukiBattleReadyOverlayPatches
 
 		try
 		{
-			if (creatureNode.SpineAnimation.SetAnimation("defend", loop: false) == null)
+			MegaSprite sprite = new(creatureNode);
+			string? defendAnim = FindFirstAvailable(sprite, DefendCandidates);
+			if (defendAnim == null)
 			{
 				return;
+			}
+
+			MegaAnimationState state = sprite.GetAnimationState();
+			if (state.SetAnimation(defendAnim, loop: false) == null)
+			{
+				return;
+			}
+
+			string? loopAnim = FindFirstAvailable(sprite, CombatIdleCandidates);
+			if (loopAnim != null)
+			{
+				state.AddAnimation(loopAnim, 0f, loop: true);
 			}
 		}
 		catch
 		{
 			return;
 		}
+	}
 
-		try
+	private static string? FindFirstAvailable(MegaSprite sprite, string[] candidates)
+	{
+		for (int i = 0; i < candidates.Length; i++)
 		{
-			_ = creatureNode.SpineAnimation.AddAnimation("idle_loop", 0f, loop: true);
+			string candidate = candidates[i];
+			try
+			{
+				if (sprite.HasAnimation(candidate))
+				{
+					return candidate;
+				}
+			}
+			catch
+			{
+				return null;
+			}
 		}
-		catch
-		{
-		}
+
+		return null;
 	}
 
 	[HarmonyPatch(typeof(NCardPlay), nameof(NCardPlay.CancelPlayCard))]

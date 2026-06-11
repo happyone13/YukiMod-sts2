@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Powers;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -25,20 +26,22 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
     public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud()];
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(7m, ValueProp.Move)];
+        [new DamageVar(8m, ValueProp.Move), new DynamicVar("NoMing", 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
         var hitCount = 1;
-        var hand = PileType.Hand.GetPile(Owner).Cards;
-        hitCount += YukiBlackCloudService.IsActive(Owner)
-            ? hand.Count(card => card.Type == CardType.Skill)
-            : hand.Count(card => card.Type == CardType.Attack);
+        var isBlackCloudActive = YukiBlackCloudService.IsActive(Owner);
+        if (isBlackCloudActive)
+        {
+            var hand = PileType.Hand.GetPile(Owner).Cards;
+            hitCount += hand.Count(card => card.Type == CardType.Skill);
+        }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
@@ -46,6 +49,11 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        if (!isBlackCloudActive)
+        {
+            await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["NoMing"].BaseValue, this);
+        }
     }
 
     protected override void OnUpgrade()

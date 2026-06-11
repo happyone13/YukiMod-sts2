@@ -19,7 +19,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     private const string CurrentDamageKey = "CurrentDamage";
 

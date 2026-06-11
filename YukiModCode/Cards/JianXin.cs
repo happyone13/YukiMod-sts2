@@ -22,7 +22,7 @@ public class JianXin() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, Tar
         var selectedCards = (await CardSelectCmd.FromHand(
                 choiceContext,
                 Owner,
-                new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, DynamicVars.Cards.IntValue),
+                new CardSelectorPrefs(SelectionScreenPrompt, 0, DynamicVars.Cards.IntValue),
                 null,
                 this))
             .ToList();

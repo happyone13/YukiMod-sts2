@@ -17,7 +17,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunMiFaJiangLin() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(8m, ValueProp.Move), new PowerVar<VulnerablePower>(1m)];
+        [new BlockVar(9m, ValueProp.Move), new PowerVar<VulnerablePower>(1m)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 

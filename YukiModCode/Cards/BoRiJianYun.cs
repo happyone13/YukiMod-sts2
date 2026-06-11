@@ -18,10 +18,10 @@ public class BoRiJianYun() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon,
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudEnterNextTurnPower>()];
+        [YukiHoverTipFactory.FromNoMing(), HoverTipFactory.FromPower<BlackCloudEnterNextTurnPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("BlackCloud", 2m)];
+        [new DynamicVar("BlackCloud", 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

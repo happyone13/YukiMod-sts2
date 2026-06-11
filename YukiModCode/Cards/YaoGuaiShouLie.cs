@@ -15,7 +15,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class YaoGuaiShouLie() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+public class YaoGuaiShouLie() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
 {
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/yao_guai_shou_lie_dynamic.tscn";

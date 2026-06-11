@@ -13,27 +13,28 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class YuanWu() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class YuanWu() : YukiModCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
-    private const string MoonshadowDamageKey = "MoonshadowDamage";
-
     public override YukiCardSchool School => YukiCardSchool.Moonshadow;
     public override bool GainsBlock => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [HoverTipFactory.FromCard<YueYing>()];
+        [YukiMod.YukiModCode.HoverTips.YukiHoverTipFactory.FromNingJu(), HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(8m, ValueProp.Move), new DynamicVar(MoonshadowDamageKey, 3m)];
+        [new BlockVar(11m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        YukiMoonshadowService.GainMoonshadowDamageInHand(Owner, DynamicVars[MoonshadowDamageKey].BaseValue);
+        if (CombatState != null)
+        {
+            await YukiMoonshadowService.NingJu(Owner, CombatState, 1);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[MoonshadowDamageKey].UpgradeValueBy(2m);
+        DynamicVars.Block.UpgradeValueBy(4m);
     }
 }

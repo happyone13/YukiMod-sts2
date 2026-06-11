@@ -24,7 +24,7 @@ public class HeiYunMiFaYingFu() : YukiModCard(1, CardType.Attack, CardRarity.Com
     public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromBlackCloud()];
+        [YukiHoverTipFactory.FromBlackCloud(), YukiHoverTipFactory.FromNoMing()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

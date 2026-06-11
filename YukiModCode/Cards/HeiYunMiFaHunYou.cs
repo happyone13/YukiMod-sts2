@@ -15,10 +15,10 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HeiYunMiFaHunYou() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class HeiYunMiFaHunYou() : YukiModCard(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(5m, ValueProp.Move), new EnergyVar(1)];
+        [new BlockVar(12m, ValueProp.Move), new EnergyVar(1)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
     public override bool HasOwnBlackCloudEffect => true;
@@ -43,6 +43,6 @@ public class HeiYunMiFaHunYou() : YukiModCard(1, CardType.Skill, CardRarity.Comm
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(3m);
+        DynamicVars.Energy.UpgradeValueBy(1m);
     }
 }

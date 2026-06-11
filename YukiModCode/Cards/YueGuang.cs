@@ -14,15 +14,13 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class YueGuang() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
-    private const string MoonshadowDamageKey = "MoonshadowDamage";
-
     public override YukiCardSchool School => YukiCardSchool.Moonshadow;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromNingJu(), HoverTipFactory.FromCard<YueYing>()];
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar(MoonshadowDamageKey, 5m)];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -37,12 +35,11 @@ public class YueGuang() : YukiModCard(1, CardType.Skill, CardRarity.Common, Targ
 
     protected override void OnUpgrade()
     {
-        DynamicVars[MoonshadowDamageKey].UpgradeValueBy(3m);
+        EnergyCost.UpgradeBy(-1);
     }
 
     private async Task ResolveMoonlight(YukiCombatState combatState)
     {
         await YukiMoonshadowService.NingJu(Owner, combatState, 1);
-        YukiMoonshadowService.GainMoonshadowDamageInHand(Owner, DynamicVars[MoonshadowDamageKey].BaseValue);
     }
 }

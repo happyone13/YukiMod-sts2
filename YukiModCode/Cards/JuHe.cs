@@ -6,7 +6,6 @@ using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -32,7 +31,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
         [YukiHoverTipFactory.FromJuHeKeyword()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(50m, ValueProp.Move)];
+        [new DamageVar(33m, ValueProp.Move)];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
@@ -48,7 +47,11 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
         foreach (var enemy in combatState.HittableEnemies.ToList())
         {
             var damage = DynamicVars.Damage.BaseValue + GetTenPercent(enemy.CurrentHp);
-            await CreatureCmd.Damage(choiceContext, enemy, damage, ValueProp.Move, Owner.Creature, this);
+            await DamageCmd.Attack(damage)
+                .FromCard(this)
+                .Targeting(enemy)
+                .WithHitFx("vfx/vfx_attack_slash")
+                .Execute(choiceContext);
         }
 
         await YukiMod.YukiModCode.Services.YukiPowerService.Apply<JuHeEndTurnDamagePower>(
@@ -61,7 +64,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(16m);
+        DynamicVars.Damage.UpgradeValueBy(17m);
     }
 
     public static async Task<CardModel?> CreateInHand(Player owner, YukiCombatState combatState, bool upgraded = false)
