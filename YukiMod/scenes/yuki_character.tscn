@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bs33qpy2ufy75"]
 
-[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/q/q.tres" id="1_yuki_spine"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/ArtWorks/modspine/characters/chaos_yuki/chaos_yuki_skel_data.tres" id="1_yuki_spine"]
 [ext_resource type="Script" path="res://src/Core/Nodes/Combat/NCreatureVisuals.cs" id="2_visuals"]
 
 [node name="YukiCharacter" type="Node2D"]
@@ -10,11 +10,12 @@ metadata/_edit_group_ = true
 [node name="Visuals" type="SpineSprite" parent="."]
 skeleton_data_res = ExtResource("1_yuki_spine")
 preview_skin = "Default"
-preview_animation = "-- Empty --"
+preview_animation = "idle_loop"
 preview_frame = false
 preview_time = 0.0
 unique_name_in_owner = true
-scale = Vector2(1.3, 1.3)
+position = Vector2(5, -19)
+scale = Vector2(0.7, 0.7)
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
@@ -23,14 +24,15 @@ anchors_preset = 0
 offset_left = -142.0
 offset_top = -325.0
 offset_right = 122.0
+mouse_filter = 2
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -159)
+position = Vector2(30, -310)
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -72)
+position = Vector2(4, -168)
 
 [node name="OrbPos" type="Marker2D" parent="."]
 unique_name_in_owner = true

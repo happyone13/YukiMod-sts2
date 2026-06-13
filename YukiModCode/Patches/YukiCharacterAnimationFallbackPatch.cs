@@ -4,7 +4,6 @@ using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Random;
-using System.Collections.Generic;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Patches;
@@ -12,15 +11,11 @@ namespace YukiMod.YukiModCode.Patches;
 [HarmonyPatch]
 public static class YukiCharacterAnimationFallbackPatch
 {
-    private static readonly string[] MerchantFallbacks = ["stop", "camping", "b_idle", "idle"];
-    private static readonly string[] RestFallbacks = ["camping", "b_idle", "idle"];
-    private static readonly HashSet<string> RestSiteActLoops = new(System.StringComparer.Ordinal)
-    {
-        "overgrowth_loop",
-        "hive_loop",
-        "glory_loop"
-    };
-    private static readonly HashSet<ulong> RegisteredRestSiteAnimationStates = [];
+    private const string RestSiteScenePath = "res://YukiMod/scenes/yuki_character_camp.tscn";
+    private const string MerchantScenePath = "res://YukiMod/scenes/merchant/characters/yukimod_merchant.tscn";
+
+    private static readonly string[] MerchantFallbacks = ["relaxed_loop", "stop", "camping", "b_idle", "idle_loop", "idle"];
+    private static readonly string[] RestFallbacks = ["overgrowth_loop", "hive_loop", "glory_loop", "camping", "b_idle", "idle_loop", "idle"];
 
     [HarmonyPatch(typeof(NMerchantCharacter), nameof(NMerchantCharacter._Ready))]
     [HarmonyPrefix]
@@ -30,18 +25,6 @@ public static class YukiCharacterAnimationFallbackPatch
             return true;
 
         return !TryPlayFirstAvailableOnFirstChild(__instance, MerchantFallbacks, loop: true);
-    }
-
-    [HarmonyPatch(typeof(NRestSiteCharacter), nameof(NRestSiteCharacter._Ready))]
-    [HarmonyPrefix]
-    public static void RestSiteReadyPrefix(NRestSiteCharacter __instance)
-    {
-        if (!IsYukiScene(__instance))
-            return;
-
-        RegisteredRestSiteAnimationStates.Clear();
-        RegisterRestSiteAnimationStates(__instance);
-        __instance.Connect(Node.SignalName.TreeExiting, Callable.From(() => UnregisterRestSiteAnimationStates(__instance)));
     }
 
     [HarmonyPatch(typeof(NRestSiteCharacter), nameof(NRestSiteCharacter._Ready))]
@@ -60,60 +43,11 @@ public static class YukiCharacterAnimationFallbackPatch
         }
     }
 
-    [HarmonyPatch(typeof(MegaAnimationState), nameof(MegaAnimationState.SetAnimation), [typeof(string), typeof(bool), typeof(int)])]
-    [HarmonyPrefix]
-    public static void RestSiteSetAnimationPrefix(MegaAnimationState __instance, ref string __0)
-    {
-        if (!RestSiteActLoops.Contains(__0))
-            return;
-
-        ulong instanceId = __instance.BoundObject.GetInstanceId();
-        if (RegisteredRestSiteAnimationStates.Contains(instanceId))
-            __0 = "camping";
-    }
-
     private static bool IsYukiScene(Node node)
     {
         string path = node.SceneFilePath ?? string.Empty;
-        return path.Contains("YukiMod/scenes/", System.StringComparison.OrdinalIgnoreCase);
-    }
-
-    private static void RegisterRestSiteAnimationStates(NRestSiteCharacter restSiteCharacter)
-    {
-        foreach (Node child in restSiteCharacter.GetChildren())
-        {
-            if (child is not Node2D node2D)
-                continue;
-
-            try
-            {
-                MegaAnimationState animationState = new MegaSprite(node2D).GetAnimationState();
-                RegisteredRestSiteAnimationStates.Add(animationState.BoundObject.GetInstanceId());
-            }
-            catch
-            {
-                // Ignore non-Spine children.
-            }
-        }
-    }
-
-    private static void UnregisterRestSiteAnimationStates(NRestSiteCharacter restSiteCharacter)
-    {
-        foreach (Node child in restSiteCharacter.GetChildren())
-        {
-            if (child is not Node2D node2D)
-                continue;
-
-            try
-            {
-                MegaAnimationState animationState = new MegaSprite(node2D).GetAnimationState();
-                RegisteredRestSiteAnimationStates.Remove(animationState.BoundObject.GetInstanceId());
-            }
-            catch
-            {
-                // Ignore non-Spine children.
-            }
-        }
+        return string.Equals(path, RestSiteScenePath, System.StringComparison.OrdinalIgnoreCase)
+            || string.Equals(path, MerchantScenePath, System.StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool TryPlayFirstAvailableOnFirstChild(Node parent, string[] candidates, bool loop)
