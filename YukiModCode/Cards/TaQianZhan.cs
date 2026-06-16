@@ -43,6 +43,6 @@ public class TaQianZhan() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon,
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(1m);
     }
 }

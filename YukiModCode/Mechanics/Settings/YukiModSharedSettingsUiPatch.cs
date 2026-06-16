@@ -46,11 +46,15 @@ public static class YukiModSharedSettingsUiPatch
 	private const string ResetSectionName = "ChaosModBattleReadyReset";
 	private const string ResetButtonName = "ChaosModBattleReadyResetButton";
 	private const string ResetLineName = "Line_ChaosModBattleReadyReset";
+	private const string BattleReadyOverlayRowName = "ChaosModBattleReadyOverlayRow";
+	private const string CombatEffectsRowName = "ChaosModCombatEffectsRow";
 
 	private const string CardVisualsLineName = "Line_YukiModCardVisuals";
 	private const string DynamicPortraitsSectionName = "YukiModCardVisualsDynamicPortraits";
 	private const string DynamicPortraitsRowName = "YukiModCardVisualsDynamicPortraitsRow";
 	private const string DynamicPortraitsTickboxName = "YukiModCardVisualsDynamicPortraitsTickbox";
+	private const string BattleReadyOverlayTickboxName = "ChaosModBattleReadyOverlayTickbox";
+	private const string CombatEffectsTickboxName = "ChaosModCombatEffectsTickbox";
 
 	private static int _injectLogOnce;
 	private static int _ensureLogOnce;
@@ -105,13 +109,19 @@ public static class YukiModSharedSettingsUiPatch
 		bool hasOffsetY = vbox.GetNodeOrNull(OffsetYSectionName) != null;
 		bool hasOffsetX = vbox.GetNodeOrNull(OffsetXSectionName) != null;
 		bool hasReset = vbox.GetNodeOrNull(ResetSectionName) != null;
-		bool hasDynamicPortraits = vbox.GetNodeOrNull(DynamicPortraitsSectionName) != null;
+		RemoveLegacyBattleVisualsSection(vbox);
+
+		VBoxContainer? existingVisualEffectsSection = vbox.GetNodeOrNull<VBoxContainer>(DynamicPortraitsSectionName);
+		bool hasVisualEffectsSection = existingVisualEffectsSection != null;
+		bool hasDynamicPortraits = existingVisualEffectsSection?.GetNodeOrNull(DynamicPortraitsRowName) != null;
+		bool hasBattleReadyOverlay = existingVisualEffectsSection?.GetNodeOrNull(BattleReadyOverlayRowName) != null;
+		bool hasCombatEffects = existingVisualEffectsSection?.GetNodeOrNull(CombatEffectsRowName) != null;
 
 		bool hasShared = hasVoice && hasScale && hasOffsetY && hasOffsetX && hasReset;
 		if (hasShared)
 		{
 			TryWireExistingTransformHooksOnce(vbox);
-			if (hasDynamicPortraits)
+			if (hasDynamicPortraits && hasBattleReadyOverlay && hasCombatEffects)
 			{
 				return;
 			}
@@ -131,7 +141,6 @@ public static class YukiModSharedSettingsUiPatch
 		Control? offsetYSliderRoot = null;
 		Control? offsetXSliderRoot = null;
 		Control? resetButtonRoot = null;
-		Control? dynamicPortraitsRoot = null;
 		ColorRect? voiceLine = null;
 		ColorRect? scaleLine = null;
 		ColorRect? offsetYLine = null;
@@ -143,7 +152,8 @@ public static class YukiModSharedSettingsUiPatch
 		VBoxContainer? offsetYSection = null;
 		VBoxContainer? offsetXSection = null;
 		VBoxContainer? resetSection = null;
-		VBoxContainer? dynamicPortraitsSection = null;
+		VBoxContainer? visualEffectsSection = existingVisualEffectsSection;
+		bool addVisualEffectsSection = false;
 
 		if (!hasVoice)
 		{
@@ -218,43 +228,53 @@ public static class YukiModSharedSettingsUiPatch
 			resetSection.AddChild(resetButtonRoot);
 		}
 
-		if (!hasDynamicPortraits)
+		if (!hasVisualEffectsSection)
 		{
 			cardVisualsLine = CreateLine(CardVisualsLineName);
-			dynamicPortraitsSection = CreateSection(DynamicPortraitsSectionName);
+			visualEffectsSection = CreateSection(DynamicPortraitsSectionName);
+			addVisualEffectsSection = true;
 
-			string sectionTitle = LocString.GetIfExists("settings_ui", "chaos_yuki_card_visuals.title")?.GetFormattedText()
-				?? "卡牌视觉";
+			string sectionTitle = LocString.GetIfExists("settings_ui", "YUKIMOD-CARD_VISUALS.title")?.GetFormattedText()
+				?? "视觉效果";
 			RichTextLabel header = CreateLabel(templateLabel, sectionTitle);
-			dynamicPortraitsSection.AddChild(header);
+			visualEffectsSection.AddChild(header);
+		}
 
-			HBoxContainer row = new HBoxContainer
-			{
-				Name = DynamicPortraitsRowName,
-				SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
-				MouseFilter = Control.MouseFilterEnum.Ignore
-			};
-
-			string labelText = LocString.GetIfExists("settings_ui", "chaos_yuki_use_dynamic_card_portraits.title")?.GetFormattedText()
-				?? "启用动态卡图";
-			RichTextLabel rowLabel = CreateRowLabel(templateLabel, labelText);
-
-			NConfigTickbox tickbox = new NConfigTickbox
-			{
-				Name = DynamicPortraitsTickboxName
-			};
-
+		if (visualEffectsSection != null)
+		{
 			ModConfig? config = ModConfigRegistry.Get(YukiModInfo.ModId);
-			PropertyInfo? prop = typeof(YukiModConfig).GetProperty(nameof(YukiModConfig.UseDynamicCardPortraits), BindingFlags.Public | BindingFlags.Static);
-			if (config != null && prop != null)
+			if (!hasDynamicPortraits)
 			{
-				tickbox.Initialize(config, prop);
+				visualEffectsSection.AddChild(CreateConfigTickboxRow(
+					templateLabel,
+					DynamicPortraitsRowName,
+					DynamicPortraitsTickboxName,
+					LocText("YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.title", "启用动态卡图"),
+					config,
+					nameof(YukiModConfig.UseDynamicCardPortraits)));
 			}
 
-			row.AddChild(rowLabel);
-			row.AddChild(tickbox);
-			dynamicPortraitsRoot = row;
-			dynamicPortraitsSection.AddChild(row);
+			if (!hasBattleReadyOverlay)
+			{
+				visualEffectsSection.AddChild(CreateConfigTickboxRow(
+					templateLabel,
+					BattleReadyOverlayRowName,
+					BattleReadyOverlayTickboxName,
+					LocText("YUKIMOD-USE_BATTLE_READY_OVERLAY.title", "启用背身立绘"),
+					config,
+					nameof(YukiModConfig.UseBattleReadyOverlay)));
+			}
+
+			if (!hasCombatEffects)
+			{
+				visualEffectsSection.AddChild(CreateConfigTickboxRow(
+					templateLabel,
+					CombatEffectsRowName,
+					CombatEffectsTickboxName,
+					LocText("YUKIMOD-USE_COMBAT_EFFECTS.title", "启用战斗特效"),
+					config,
+					nameof(YukiModConfig.UseCombatEffects)));
+			}
 		}
 
 		if (voiceLine != null) vbox.AddChild(voiceLine);
@@ -268,7 +288,7 @@ public static class YukiModSharedSettingsUiPatch
 		if (resetLine != null) vbox.AddChild(resetLine);
 		if (resetSection != null) vbox.AddChild(resetSection);
 		if (cardVisualsLine != null) vbox.AddChild(cardVisualsLine);
-		if (dynamicPortraitsSection != null) vbox.AddChild(dynamicPortraitsSection);
+		if (addVisualEffectsSection && visualEffectsSection != null) vbox.AddChild(visualEffectsSection);
 
 		if (voiceSliderRoot != null) WireVoiceSliderWhenReady(voiceSliderRoot, source, 0);
 		if (scaleSliderRoot != null) WireScaleSliderWhenReady(scaleSliderRoot, source, 0);
@@ -384,6 +404,60 @@ public static class YukiModSharedSettingsUiPatch
 		label.Set("layout_mode", 2);
 		label.Text = text;
 		return label;
+	}
+
+	private static HBoxContainer CreateConfigTickboxRow(
+		RichTextLabel? templateLabel,
+		string rowName,
+		string tickboxName,
+		string labelText,
+		ModConfig? config,
+		string propertyName)
+	{
+		HBoxContainer row = new HBoxContainer
+		{
+			Name = rowName,
+			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
+			MouseFilter = Control.MouseFilterEnum.Ignore
+		};
+
+		RichTextLabel rowLabel = CreateRowLabel(templateLabel, labelText);
+		NConfigTickbox tickbox = new NConfigTickbox
+		{
+			Name = tickboxName
+		};
+
+		PropertyInfo? prop = typeof(YukiModConfig).GetProperty(propertyName, BindingFlags.Public | BindingFlags.Static);
+		if (config != null && prop != null)
+		{
+			tickbox.Initialize(config, prop);
+		}
+
+		row.AddChild(rowLabel);
+		row.AddChild(tickbox);
+		return row;
+	}
+
+	private static string LocText(string entryKey, string fallback)
+	{
+		return LocString.GetIfExists("settings_ui", entryKey)?.GetFormattedText() ?? fallback;
+	}
+
+	private static void RemoveLegacyBattleVisualsSection(VBoxContainer vbox)
+	{
+		Node? legacyLine = vbox.GetNodeOrNull("Line_ChaosModBattleVisuals");
+		if (legacyLine != null)
+		{
+			vbox.RemoveChild(legacyLine);
+			legacyLine.QueueFree();
+		}
+
+		Node? legacySection = vbox.GetNodeOrNull("ChaosModBattleVisuals");
+		if (legacySection != null)
+		{
+			vbox.RemoveChild(legacySection);
+			legacySection.QueueFree();
+		}
 	}
 
 	private static Control CreateResetButton(RichTextLabel? templateLabel)

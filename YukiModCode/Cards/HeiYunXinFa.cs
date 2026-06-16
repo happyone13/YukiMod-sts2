@@ -20,4 +20,9 @@ public class HeiYunXinFa() : YukiModCard(0, CardType.Skill, CardRarity.Rare, Tar
     {
         await YukiBlackCloudService.GrantKeepStanceThisTurn(choiceContext, Owner, this);
     }
+
+    protected override void OnUpgrade()
+    {
+        AddKeyword(CardKeyword.Retain);
+    }
 }

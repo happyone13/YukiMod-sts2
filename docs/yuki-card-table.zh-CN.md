@@ -29,8 +29,8 @@
 | 黑云奥义：影 | 1 | 通常 | 攻击 | 造成3/5点伤害2次。；黑云：额外攻击2次；否则，获得2层无明。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_YING_FU；类: HeiYunMiFaYingFu；牌池: 主牌池 |  |
 | 黑云奥义：灭 | 1 | 通常 | 攻击 | 造成9/12点伤害。；黑云：额外攻击1次；否则，施加1层虚弱。 | 黑云 | ID: YUKIMOD-HEI_YUN_AO_YI_MIE；类: HeiYunAoYiMie；牌池: 主牌池 |  |
 | 黑云秘法：积雨 | 1 | 通常 | 技能 | 获得8/11点格挡。；在你的下回合开始时，进入黑云姿态。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_JI_YU；类: HeiYunMiFaJiYu；牌池: 主牌池 |  |
-| 刀鞘打击 | 1 | 通常 | 攻击 | 造成8/11点伤害。；在下个回合获得1。 | 其他 | ID: YUKIMOD-DAO_QIAO_DA_JI；类: DaoQiaoDaJi；牌池: 主牌池 |  |
-| 斩钢闪 | 1 | 通常 | 攻击 | 造成9/12点伤害。；连续3回合打出斩钢闪，将一张居合加入手牌。 | 其他 | ID: YUKIMOD-ZHAN_GANG_SHAN；类: ZhanGangShan；牌池: 主牌池 |  |
+| 刀鞘打击 | 1 | 通常 | 攻击 | 造成8点伤害。；在下个回合获得1/2。 | 其他 | ID: YUKIMOD-DAO_QIAO_DA_JI；类: DaoQiaoDaJi；牌池: 主牌池；升级能量变化: +1 |  |
+| 黑云秘法：黄昏 | 1 | 通常 | 技能 | 获得8/10点格挡。；获得2/3层无明。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_HUANG_HUN；类: HeiYunMiFaHuangHun；牌池: 主牌池；沿用斩钢闪卡图 |  |
 | 月 | 1 | 通常 | 攻击 | 造成6/9点伤害。；获得1层月。；你手中的月影伤害+3。 | 其他 | ID: YUKIMOD-YUE；类: Yue；牌池: 主牌池 |  |
 | 一击必杀！居合抽卡 | 0 | 通常 | 技能 | 选择1张手牌弃掉。；抽1张牌。；如果抽到的是一击必杀！居合抽卡，将{IfUpgraded:show:1张居合+\|1张居合}加入手中。 | 其他 | ID: YUKIMOD-YI_JI_BI_SHA_JU_HE_CHOU_KA；类: YiJiBiShaJuHeChouKa；牌池: 主牌池 |  |
 | 人剑合一 | 1 | 通常 | 技能 | 获得8/11点格挡。；在接下来的2个回合开始时，各额外抽1张牌。 | 其他 | ID: YUKIMOD-REN_JIAN_HE_YI；类: RenJianHeYi；牌池: 主牌池 |  |
@@ -52,17 +52,17 @@
 | 黑云奥义：残 | 0 | 罕见 | 技能 | 抽1张牌。；进入黑云姿态。 | 黑云 | ID: YUKIMOD-HEI_YUN_AO_YI_CAN；类: HeiYunAoYiCan；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 黑云秘法：降临 | 1 | 罕见 | 技能 | 获得9/12点格挡。；下次进入黑云姿态时，对所有敌人施加1层易伤。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_JIANG_LIN；类: HeiYunMiFaJiangLin；牌池: 主牌池 |  |
 | 黑云秘法：魂佑 | 2 | 罕见 | 技能 | 获得12点格挡。；黑云：获得12点格挡；否则，下次进入黑云姿态时获得1/2。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_HUN_YOU；类: HeiYunMiFaHunYou；牌池: 主牌池 |  |
-| 黑雾降临 | 1 | 罕见 | 能力 | 回合开始时，进入黑云姿态。 | 黑云 | ID: YUKIMOD-HEI_WU_JIANG_LIN；类: HeiWuJiangLin；牌池: 主牌池；源码关键词: Innate |  |
+| 威压 | 1 | 罕见 | 能力 | 黑云姿态时，攻击命中获得2/3点格挡。 | 黑云 | ID: YUKIMOD-WEI_YA；类: WeiYa；牌池: 主牌池 |  |
 | 剑舞 | 1 | 罕见 | 攻击 | 根据本回合额外抽牌的数量造成5/7点伤害（当前{CurrentHitCount}次）。 | 其他 | ID: YUKIMOD-JIAN_WU；类: JianWu；牌池: 主牌池 |  |
 | 妖怪狩猎 | 1 | 罕见 | 攻击 | 造成2点伤害2/3次。；凝聚1。 | 其他 | ID: YUKIMOD-YAO_GUAI_SHOU_LIE；类: YaoGuaiShouLie；牌池: 主牌池 |  |
 | 幻变斩 | 1 | 罕见 | 攻击 | 造成3点伤害2/3次。；消耗1张手牌。；抽1张牌。 | 其他 | ID: YUKIMOD-HUAN_BIAN_ZHAN；类: HuanBianZhan；牌池: 主牌池 |  |
 | 影月 | 0 | 罕见 | 攻击 | 造成5点伤害。；这张牌视为月影。；{IfUpgraded:show:每当你使用其他攻击命中时，这张牌伤害+1。\|} | 其他 | ID: YUKIMOD-SHADOW_MOON；类: ShadowMoon；牌池: 主牌池；源码关键词: Retain, Exhaust |  |
 | 彼岸花 | 1 | 罕见 | 攻击 | 造成6/9点伤害。\n在接下来的2个回合开始时，造成6/9点伤害。 | 其他 | ID: YUKIMOD-BI_AN_HUA；类: BiAnHua；牌池: 主牌池 |  |
 | 明镜止水 | 1 | 罕见 | 攻击 | 造成6/9点伤害。；你的下一张攻击牌费用减少1。 | 其他 | ID: YUKIMOD-YI_SHI；类: YiShi；牌池: 主牌池 |  |
-| 踏前斩 | 0 | 罕见 | 攻击 | 造成2/4点伤害。；对这回合没被踏前斩命中的敌人释放时返回手牌。 | 其他 | ID: YUKIMOD-TA_QIAN_ZHAN；类: TaQianZhan；牌池: 主牌池 |  |
+| 踏前斩 | 0 | 罕见 | 攻击 | 造成2/3点伤害。；对这回合没被踏前斩命中的敌人释放时返回手牌。 | 其他 | ID: YUKIMOD-TA_QIAN_ZHAN；类: TaQianZhan；牌池: 主牌池 |  |
 | 轮回斩 | 3 | 罕见 | 攻击 | 造成5点伤害3/4次。\n每次抽到时，费用在本场战斗中减少1。 | 其他 | ID: YUKIMOD-LUN_HUI_ZHAN；类: LunHuiZhan；牌池: 主牌池 |  |
 | 人格切换 | 0 | 罕见 | 技能 | 将2/1张手牌放回抽牌堆顶部。；抽2张牌。 | 其他 | ID: YUKIMOD-REN_GE_QIE_HUAN；类: RenGeQieHuan；牌池: 主牌池 |  |
-| 剑心 | 0 | 罕见 | 技能 | 至多消耗1/2张手牌。抽等量的牌。 | 其他 | ID: YUKIMOD-JIAN_XIN；类: JianXin；牌池: 主牌池 |  |
+| 剑心 | 0 | 罕见 | 技能 | 至多消耗1/2张手牌。抽等量的牌。 | 其他 | ID: YUKIMOD-JIAN_XIN；类: JianXin；牌池: 主牌池；源码关键词: Exhaust |  |
 | 招架 | 1 | 罕见 | 技能 | 获得{Block:diff()}点格挡。；本回合每打出一张牌，使获得的格挡+1。；如果刚好抵挡全部伤害，下回合开始时获得一张居合。 | 其他 | ID: YUKIMOD-ZHAO_JIA；类: ZhaoJia；牌池: 主牌池 |  |
 | 映月 | 1 | 罕见 | 技能 | 下次打出月影时，将1张相同的复制加入手中。 | 其他 | ID: YUKIMOD-YING_YUE_MIRROR；类: YingYueMirror；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 背水 | 0 | 罕见 | 技能 | 获得2/3。；你在本回合内不能再抽任何牌。 | 其他 | ID: YUKIMOD-BEI_SHUI；类: BeiShui；牌池: 主牌池 |  |
@@ -78,10 +78,10 @@
 | 沉思 | 1 | 稀有 | 能力 | 当灵感触发时，获得2/3点格挡。 | 灵感 | ID: YUKIMOD-CHEN_SI；类: ChenSi；牌池: 主牌池 |  |
 | 零度 | 1 | 稀有 | 能力 | 当你触发12/9次灵感时，将1张居合加入手中。 | 灵感 | ID: YUKIMOD-LING_DU；类: LingDu；牌池: 主牌池 |  |
 | 黑云奥义：黑雾 | 1 | 稀有 | 攻击 | 造成8/10点伤害。；黑云：你手中每有1张技能牌，额外攻击1次；否则，获得3层无明。 | 黑云 | ID: YUKIMOD-HEI_YUN_AO_YI_HEI_WU；类: HeiYunAoYiHeiWu；牌池: 主牌池 |  |
-| 黑云心法 | 0 | 稀有 | 技能 | 本回合内保留黑云姿态。 | 黑云 | ID: YUKIMOD-HEI_YUN_XIN_FA；类: HeiYunXinFa；牌池: 主牌池 |  |
+| 黑云心法 | 0 | 稀有 | 技能 | 本回合内保留黑云姿态。升级：获得保留。 | 黑云 | ID: YUKIMOD-HEI_YUN_XIN_FA；类: HeiYunXinFa；牌池: 主牌池 |  |
 | 黑云秘法：出鞘 | 1 | 稀有 | 技能 | 进入黑云姿态。；下次退出黑云姿态时，将1张{IfUpgraded:show:纳刀+\|纳刀}加入手中。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_CHU_QIAO；类: HeiYunMiFaChuQiao；牌池: 主牌池 |  |
 | 黑云秘法：幕临 | 1 | 稀有 | 技能 | 黑云：获得1，抽1张牌，保留黑云姿态；否则，下次进入黑云姿态时额外获得2点能量，抽2张牌。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_MU_LIN；类: HeiYunMiFaMuLin；牌池: 主牌池；源码关键词: Exhaust；升级费用变化: -1 |  |
-| 黑云秘法：燕回 | 0 | 稀有 | 技能 | 将抽牌堆或弃牌堆中的随机1张黑云牌加入手中。；黑云：保留黑云姿态。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_YAN_HUI；类: HeiYunMiFaYanHui；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
+| 黑云秘法：燕返 | 1 | 稀有 | 技能 | 黑云：释放你上一次释放的黑云牌。否则，你下一张释放的黑云牌额外释放一次。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_YAN_HUI；类: HeiYunMiFaYanHui；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 黑云秘法：霞阵 | 1 | 稀有 | 能力 | 回合开始时，获得2/3层无明。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_XIA_ZHEN；类: HeiYunMiFaXiaZhen；牌池: 主牌池 |  |
 | 业火 | 1 | 稀有 | 攻击 | 造成5点伤害。；每当你攻击该目标时，手中月影伤害+2/3。 | 其他 | ID: YUKIMOD-YE_HUO；类: YeHuo；牌池: 主牌池 |  |
 | 燕回反 | 1 | 稀有 | 攻击 | 释放你上一个释放的攻击1次。 | 其他 | ID: YUKIMOD-YAN_HUI_FAN；类: YanHuiFan；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
@@ -91,11 +91,11 @@
 | 回天 | 1 | 稀有 | 技能 | 下一张攻击牌额外释放1次。 | 其他 | ID: YUKIMOD-HUI_TIAN；类: HuiTian；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 月读 | 0 | 稀有 | 技能 | 本回合内，你的攻击命中时，手中月影伤害+2/3。 | 其他 | ID: YUKIMOD-YUE_DU；类: YueDu；牌池: 主牌池 |  |
 | 残月 | 1 | 稀有 | 技能 | 凝聚1。；你手中的月影费用减少1。 | 其他 | ID: YUKIMOD-CAN_YUE；类: CanYue；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
-| 红尘 | 0 | 稀有 | 技能 | 获得1。；抽2/3张牌。；你在本回合内不能再抽任何牌。 | 其他 | ID: YUKIMOD-HONG_CHEN；类: HongChen；牌池: 主牌池 |  |
-| 天刀形态 | 3 | 稀有 | 能力 | 每回合打出的第一张攻击牌额外打出一次。 | 其他 | ID: YUKIMOD-TIAN_DAO_XING_TAI；类: TianDaoXingTai；牌池: 主牌池；源码关键词: Retain |  |
+| 红尘 | 2 | 稀有 | 能力 | 使用灵感卡时，随机1张手牌下次使用前费用减少1。 | 其他 | ID: YUKIMOD-HONG_CHEN；类: HongChen；牌池: 主牌池；升级费用变化: -1 |  |
+| 天刀形态 | 3 | 稀有 | 能力 | 回合结束释放你本回合首次使用的攻击牌。；回合开始时释放上回合最后使用的技能牌。 | 其他 | ID: YUKIMOD-TIAN_DAO_XING_TAI；类: TianDaoXingTai；牌池: 主牌池；升级获得保留 |  |
 | 振刀 | 1 | 稀有 | 能力 | 每花费3/2费，抽1张牌。 | 其他 | ID: YUKIMOD-ZHEN_DAO；类: ZhenDao；牌池: 主牌池 |  |
 | 朔月 | 1 | 稀有 | 能力 | 回合结束时，凝聚1。 | 其他 | ID: YUKIMOD-SHUO_YUE；类: ShuoYue；牌池: 主牌池；源码关键词: Innate |  |
-| 满溢 | 1 | 稀有 | 能力 | 每回合第一次抽满手牌时，获得2费。 | 其他 | ID: YUKIMOD-MAN_YI；类: ManYi；牌池: 主牌池；升级费用变化: -1 |  |
+| 漫天 | 2 | 稀有 | 能力 | 黑云姿态使用黑云牌时抽1张牌。 | 黑云 | ID: YUKIMOD-MAN_TIAN；类: ManTian；牌池: 主牌池；升级费用变化: -1 |  |
 | 瞬念 | 1 | 稀有 | 能力 | 回合开始时，将1张随机的{IfUpgraded:show:升级过的}灵感牌加入手中。 | 其他 | ID: YUKIMOD-SHUN_NIAN；类: ShunNian；牌池: 主牌池 |  |
 | 黄昏的羁绊 | 1 | 稀有 | 能力 | 你不能额外获得费用。；回合开始时，随机2张手牌下次使用前费用减少1。 | 其他 | ID: YUKIMOD-HUANG_HUN_DE_JI_BAN；类: HuangHunDeJiBan；牌池: 主牌池；源码关键词: Innate；升级费用变化: -1 |  |
 | 神丶压制准备 | 0 | 先古 | 技能 | 从抽牌堆或弃牌堆抽尽可能多的攻击牌。；获得2/5层活力。；灵感：优先抽灵感牌。 | 灵感 | ID: YUKIMOD-SHEN_YA_ZHI_ZHUN_BEI；类: ShenYaZhiZhunBei；牌池: 主牌池 |  |

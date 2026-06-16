@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using YukiMod.YukiModCode.Mechanics.Settings;
 
 namespace YukiMod.YukiModCode.Mechanics.Vfx;
 
@@ -33,6 +34,11 @@ public static partial class ChaosVfxApi
 
 	public static void Preload(in ChaosVfxSpec spec)
 	{
+		if (!YukiModSharedSettings.CombatEffectsEnabled)
+		{
+			return;
+		}
+
 		if (string.IsNullOrWhiteSpace(spec.ScenePath))
 		{
 			return;
@@ -58,6 +64,12 @@ public static partial class ChaosVfxApi
 
 	public static void PlayStatic(Creature creature, string effectKey, in ChaosVfxSpec spec)
 	{
+		if (!YukiModSharedSettings.CombatEffectsEnabled)
+		{
+			Stop(creature, effectKey);
+			return;
+		}
+
 		if (creature == null || string.IsNullOrWhiteSpace(effectKey))
 		{
 			return;
@@ -102,6 +114,12 @@ public static partial class ChaosVfxApi
 
 	public static void EnsureFollow(Creature creature, string effectKey, in ChaosVfxSpec spec)
 	{
+		if (!YukiModSharedSettings.CombatEffectsEnabled)
+		{
+			Stop(creature, effectKey);
+			return;
+		}
+
 		if (creature == null || string.IsNullOrWhiteSpace(effectKey))
 		{
 			return;
@@ -162,6 +180,11 @@ public static partial class ChaosVfxApi
 
 	public static void FireProjectile(Creature from, Creature to, in ChaosVfxSpec spec)
 	{
+		if (!YukiModSharedSettings.CombatEffectsEnabled)
+		{
+			return;
+		}
+
 		if (from == null || to == null)
 		{
 			return;
@@ -412,4 +435,3 @@ public static partial class ChaosVfxApi
 		}
 	}
 }
-

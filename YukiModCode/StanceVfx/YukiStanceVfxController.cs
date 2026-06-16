@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using YukiMod.YukiModCode.Mechanics.Settings;
 
 namespace YukiMod.YukiModCode.StanceVfx;
 
@@ -15,8 +16,19 @@ public sealed class YukiStanceVfxController
     private Node2D? _currentAura;
     private string? _currentAuraScenePath;
 
+    public YukiStanceVfxController()
+    {
+        YukiModSharedSettings.CombatEffectsEnabledChanged += OnCombatEffectsEnabledChanged;
+    }
+
     public async Task SetAura(Creature owner, string? auraScenePath)
     {
+        if (!YukiModSharedSettings.CombatEffectsEnabled)
+        {
+            await ClearAura();
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(auraScenePath))
         {
             await ClearAura();
@@ -159,5 +171,13 @@ public sealed class YukiStanceVfxController
 
         GD.PushWarning($"[YukiStanceVfx] Unsupported aura path requested: {auraScenePath}");
         return null;
+    }
+
+    private void OnCombatEffectsEnabledChanged(bool enabled)
+    {
+        if (!enabled)
+        {
+            _ = ClearAura();
+        }
     }
 }

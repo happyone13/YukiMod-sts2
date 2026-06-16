@@ -33,6 +33,12 @@ public static class YukiU1BuffAnim
 			return;
 		}
 
+		if (!HasAnimation(node, ReadyAnim) || !HasAnimation(node, PlayAnim))
+		{
+			await onPlay();
+			return;
+		}
+
 		try
 		{
 			node.SpineAnimation.SetAnimation(ReadyAnim, loop: false);
@@ -149,6 +155,19 @@ public static class YukiU1BuffAnim
 		return true;
 	}
 
+	private static bool HasAnimation(NCreature creatureNode, string name)
+	{
+		try
+		{
+			MegaSprite? body = creatureNode.Visuals?.SpineBody;
+			return body != null && body.HasAnimation(name);
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
 	private static Vector2 GetFootPos(NCreature creatureNode)
 	{
 		try
@@ -197,4 +216,3 @@ public static class YukiU1BuffAnim
 		}
 	}
 }
-

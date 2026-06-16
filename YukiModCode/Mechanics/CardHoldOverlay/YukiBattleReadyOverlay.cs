@@ -65,6 +65,10 @@ public static class YukiBattleReadyOverlay
 
 	public static void Preload()
 	{
+		if (!YukiModSharedSettings.BattleReadyOverlayEnabled)
+		{
+			return;
+		}
 		_ = GetScene();
 	}
 
@@ -102,6 +106,12 @@ public static class YukiBattleReadyOverlay
 
 	private static void EnsureCreated(bool playIntro)
 	{
+		if (!YukiModSharedSettings.BattleReadyOverlayEnabled)
+		{
+			Cleanup();
+			return;
+		}
+
 		long now = System.Environment.TickCount64;
 		if (now < _createDisabledUntil)
 		{
@@ -299,6 +309,12 @@ public static class YukiBattleReadyOverlay
 
 	public static void NotifyHovered(CardModel card, bool hovered)
 	{
+		if (!YukiModSharedSettings.BattleReadyOverlayEnabled)
+		{
+			Cleanup();
+			return;
+		}
+
 		if (!YukiTarget.IsTarget(card.Owner?.Character))
 		{
 			return;
@@ -340,6 +356,12 @@ public static class YukiBattleReadyOverlay
 
 	public static void NotifyUiFocused(CardModel card, bool focused)
 	{
+		if (!YukiModSharedSettings.BattleReadyOverlayEnabled)
+		{
+			Cleanup();
+			return;
+		}
+
 		if (!YukiTarget.IsTarget(card.Owner?.Character))
 		{
 			return;
@@ -462,6 +484,12 @@ public static class YukiBattleReadyOverlay
 
 	public static void NotifyBeforeCardPlayed(CardPlay cardPlay)
 	{
+		if (!YukiModSharedSettings.BattleReadyOverlayEnabled)
+		{
+			Cleanup();
+			return;
+		}
+
 		CardModel? card = cardPlay.Card;
 		if (card == null || !YukiTarget.IsTarget(card.Owner?.Character))
 		{
@@ -501,6 +529,12 @@ public static class YukiBattleReadyOverlay
 
 	public static void NotifyCanceled(CardModel card)
 	{
+		if (!YukiModSharedSettings.BattleReadyOverlayEnabled)
+		{
+			Cleanup();
+			return;
+		}
+
 		if (!YukiTarget.IsTarget(card.Owner?.Character))
 		{
 			return;
@@ -681,4 +715,3 @@ public static class YukiBattleReadyOverlay
 		}
 	}
 }
-

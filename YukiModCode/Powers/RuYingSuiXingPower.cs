@@ -1,4 +1,3 @@
-﻿using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -16,21 +15,9 @@ public class RuYingSuiXingPower : YukiModPower
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
-        if (player != Owner.Player)
+        if (player != Owner.Player || !YukiBlackCloudService.IsActive(player))
         {
             return;
-        }
-
-        if (!YukiBlackCloudService.IsActive(player))
-        {
-            if (player.Creature.Powers.OfType<HeiWuJiangLinPower>().Any())
-            {
-                await YukiBlackCloudService.Enter(choiceContext, player, this);
-            }
-            else
-            {
-                return;
-            }
         }
 
         Flash();

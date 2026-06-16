@@ -15,12 +15,18 @@ public static class YukiModSharedSettings
 	private static readonly string SharedBattleReadyScaleKey = SharedDomainKeyPrefix + "BATTLE_READY_SCALE";
 	private static readonly string SharedBattleReadyOffsetXKey = SharedDomainKeyPrefix + "BATTLE_READY_OFFSET_X";
 	private static readonly string SharedBattleReadyOffsetYKey = SharedDomainKeyPrefix + "BATTLE_READY_OFFSET_Y";
+	private static readonly string SharedBattleReadyOverlayEnabledKey = SharedDomainKeyPrefix + "BATTLE_READY_OVERLAY_ENABLED";
+	private static readonly string SharedCombatEffectsEnabledKey = SharedDomainKeyPrefix + "COMBAT_EFFECTS_ENABLED";
 
 	private static int _settingsLoaded;
 	private static float _voiceVolume = 0.8f;
 	private static float _battleReadyScale = 1f;
 	private static float _battleReadyOffsetX;
 	private static float _battleReadyOffsetY;
+	private static bool _battleReadyOverlayEnabled = true;
+	private static bool _combatEffectsEnabled = true;
+
+	public static event Action<bool>? CombatEffectsEnabledChanged;
 
 	public static float VoiceVolume
 	{
@@ -55,6 +61,24 @@ public static class YukiModSharedSettings
 		{
 			EnsureSettingsLoaded();
 			return GetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY);
+		}
+	}
+
+	public static bool BattleReadyOverlayEnabled
+	{
+		get
+		{
+			EnsureSettingsLoaded();
+			return GetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
+		}
+	}
+
+	public static bool CombatEffectsEnabled
+	{
+		get
+		{
+			EnsureSettingsLoaded();
+			return GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
 		}
 	}
 
@@ -102,6 +126,39 @@ public static class YukiModSharedSettings
 		}
 	}
 
+	public static void SetBattleReadyOverlayEnabled(bool value, bool persist)
+	{
+		EnsureSettingsLoaded();
+		_battleReadyOverlayEnabled = value;
+		SetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
+		if (persist)
+		{
+			Save();
+		}
+	}
+
+	public static void SetCombatEffectsEnabled(bool value, bool persist)
+	{
+		EnsureSettingsLoaded();
+		bool changed = _combatEffectsEnabled != value;
+		_combatEffectsEnabled = value;
+		SetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
+		if (persist)
+		{
+			Save();
+		}
+		if (changed)
+		{
+			try
+			{
+				CombatEffectsEnabledChanged?.Invoke(value);
+			}
+			catch
+			{
+			}
+		}
+	}
+
 	public static void EnsureSettingsLoaded()
 	{
 		if (System.Threading.Interlocked.Exchange(ref _settingsLoaded, 1) != 0)
@@ -118,6 +175,8 @@ public static class YukiModSharedSettings
 				_battleReadyScale = 1f;
 				_battleReadyOffsetX = 0f;
 				_battleReadyOffsetY = 0f;
+				_battleReadyOverlayEnabled = true;
+				_combatEffectsEnabled = true;
 			}
 			else
 			{
@@ -127,12 +186,16 @@ public static class YukiModSharedSettings
 				_battleReadyScale = Mathf.Clamp(settings?.BattleReadyScale ?? 1f, 0.5f, 2.0f);
 				_battleReadyOffsetX = Mathf.Clamp(settings?.BattleReadyOffsetX ?? 0f, -400f, 400f);
 				_battleReadyOffsetY = Mathf.Clamp(settings?.BattleReadyOffsetY ?? 0f, -400f, 400f);
+				_battleReadyOverlayEnabled = settings?.BattleReadyOverlayEnabled ?? true;
+				_combatEffectsEnabled = settings?.CombatEffectsEnabled ?? true;
 			}
 
 			SetSharedFloat(SharedVoiceVolumeKey, _voiceVolume);
 			SetSharedFloat(SharedBattleReadyScaleKey, _battleReadyScale);
 			SetSharedFloat(SharedBattleReadyOffsetXKey, _battleReadyOffsetX);
 			SetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY);
+			SetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
+			SetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
 		}
 		catch (Exception ex)
 		{
@@ -140,10 +203,14 @@ public static class YukiModSharedSettings
 			_battleReadyScale = 1f;
 			_battleReadyOffsetX = 0f;
 			_battleReadyOffsetY = 0f;
+			_battleReadyOverlayEnabled = true;
+			_combatEffectsEnabled = true;
 			SetSharedFloat(SharedVoiceVolumeKey, _voiceVolume);
 			SetSharedFloat(SharedBattleReadyScaleKey, _battleReadyScale);
 			SetSharedFloat(SharedBattleReadyOffsetXKey, _battleReadyOffsetX);
 			SetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY);
+			SetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
+			SetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
 			Log.Warn($"[{YukiModInfo.ModId}] Shared settings load failed: {ex.Message}");
 		}
 	}
@@ -164,7 +231,9 @@ public static class YukiModSharedSettings
 				Volume = GetSharedFloat(SharedVoiceVolumeKey, _voiceVolume),
 				BattleReadyScale = GetSharedFloat(SharedBattleReadyScaleKey, _battleReadyScale),
 				BattleReadyOffsetX = GetSharedFloat(SharedBattleReadyOffsetXKey, _battleReadyOffsetX),
-				BattleReadyOffsetY = GetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY)
+				BattleReadyOffsetY = GetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY),
+				BattleReadyOverlayEnabled = GetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled),
+				CombatEffectsEnabled = GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled)
 			};
 			string json = JsonSerializer.Serialize(settings);
 			File.WriteAllText(path, json);
@@ -199,7 +268,38 @@ public static class YukiModSharedSettings
 		return fallback;
 	}
 
+	private static bool GetSharedBool(string key, bool fallback)
+	{
+		try
+		{
+			object? obj = AppDomain.CurrentDomain.GetData(key);
+			if (obj is bool b)
+			{
+				return b;
+			}
+			if (obj is string s && bool.TryParse(s, out bool parsed))
+			{
+				return parsed;
+			}
+		}
+		catch
+		{
+		}
+		return fallback;
+	}
+
 	private static void SetSharedFloat(string key, float value)
+	{
+		try
+		{
+			AppDomain.CurrentDomain.SetData(key, value);
+		}
+		catch
+		{
+		}
+	}
+
+	private static void SetSharedBool(string key, bool value)
 	{
 		try
 		{
@@ -267,6 +367,7 @@ public static class YukiModSharedSettings
 		public float BattleReadyScale { get; set; } = 1f;
 		public float BattleReadyOffsetX { get; set; }
 		public float BattleReadyOffsetY { get; set; }
+		public bool BattleReadyOverlayEnabled { get; set; } = true;
+		public bool CombatEffectsEnabled { get; set; } = true;
 	}
 }
-

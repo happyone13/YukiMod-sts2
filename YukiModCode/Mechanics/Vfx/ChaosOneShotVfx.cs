@@ -4,6 +4,7 @@ using Godot;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Logging;
+using YukiMod.YukiModCode.Mechanics.Settings;
 
 namespace YukiMod.YukiModCode.Mechanics.Vfx;
 
@@ -15,6 +16,11 @@ public static class ChaosOneShotVfx
 
 	public static void Prewarm(IEnumerable<string> scenePaths)
 	{
+		if (!YukiModSharedSettings.CombatEffectsEnabled)
+		{
+			return;
+		}
+
 		if (scenePaths == null)
 		{
 			return;
@@ -66,6 +72,11 @@ public static class ChaosOneShotVfx
 
 	public static void PlaySpineOneShot(string scenePath, string anim, Node parent, Vector2 globalPos, int? zIndex = null, float? uniformScale = null)
 	{
+		if (!YukiModSharedSettings.CombatEffectsEnabled)
+		{
+			return;
+		}
+
 		if (parent == null || !GodotObject.IsInstanceValid(parent))
 		{
 			return;
@@ -205,6 +216,11 @@ public static class ChaosOneShotVfx
 
 	public static void PlaySpineOneShot(string scenePath, string anim, Node parent, Vector2 globalPos, float rotationDelta, int? zIndex = null, float? uniformScale = null)
 	{
+		if (!YukiModSharedSettings.CombatEffectsEnabled)
+		{
+			return;
+		}
+
 		if (parent == null || !GodotObject.IsInstanceValid(parent))
 		{
 			return;

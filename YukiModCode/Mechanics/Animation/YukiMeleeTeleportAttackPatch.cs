@@ -295,6 +295,11 @@ public static class YukiMeleeTeleportAttackPatch
 				return CreatureCmd.TriggerAnim(attacker, "Attack", waitTime);
 			}
 
+			if (!HasU2AttackAnims(attackerNode))
+			{
+				return CreatureCmd.TriggerAnim(attacker, "Attack", waitTime);
+			}
+
 			Creature? target = TryGetPrimaryTarget(command);
 			if (target == null || !target.IsAlive)
 			{
@@ -1488,6 +1493,13 @@ public static class YukiMeleeTeleportAttackPatch
 		bool hasPlay = HasAnim(creatureNode, profile.PlayAnim);
 		bool hasAltPlay = !string.IsNullOrWhiteSpace(profile.AltPlayAnim) && HasAnim(creatureNode, profile.AltPlayAnim);
 		return hasReady && hasEnd && (hasPlay || hasAltPlay);
+	}
+
+	private static bool HasU2AttackAnims(NCreature creatureNode)
+	{
+		return HasAnim(creatureNode, U2ReadyAnim)
+		       && HasAnim(creatureNode, U2PlayAnim)
+		       && HasAnim(creatureNode, U2EndAnim);
 	}
 
 	private static void TryAddIdleLoop(NCreature creatureNode)
