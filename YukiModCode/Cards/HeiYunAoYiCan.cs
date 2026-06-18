@@ -22,9 +22,6 @@ public class HeiYunAoYiCan() : YukiModCard(0, CardType.Skill, CardRarity.Uncommo
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud()];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Exhaust];
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(choiceContext, 1m, Owner);
@@ -33,6 +30,6 @@ public class HeiYunAoYiCan() : YukiModCard(0, CardType.Skill, CardRarity.Uncommo
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        AddKeyword(CardKeyword.Retain);
     }
 }

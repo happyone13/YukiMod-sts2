@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
@@ -21,7 +22,6 @@ public static class YukiTarget
 
 	public static bool IsMineTargetCard(CardModel? card)
 	{
-		return card != null && IsTarget(card.Owner?.Character);
+		return card != null && card.IsMutable && LocalContext.IsMine(card) && IsTarget(card.Owner?.Character);
 	}
 }
-

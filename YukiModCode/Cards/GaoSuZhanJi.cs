@@ -51,6 +51,7 @@ public class GaoSuZhanJi() : YukiModCard(2, CardType.Attack, CardRarity.Uncommon
 
     protected override void OnUpgrade()
     {
+        DynamicVars.Damage.UpgradeValueBy(3m);
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 }

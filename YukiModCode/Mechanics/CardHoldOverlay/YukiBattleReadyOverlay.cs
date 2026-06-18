@@ -39,6 +39,7 @@ public static class YukiBattleReadyOverlay
 
 	private static bool _outPlaying;
 	private static bool _cardUsePlaying;
+	private static readonly Queue<string> _cardAnimQueue = new Queue<string>();
 
 	private static bool _baseCaptured;
 	private static Vector2 _basePos;
@@ -151,6 +152,7 @@ public static class YukiBattleReadyOverlay
 			_busy = true;
 			_outPlaying = false;
 			_cardUsePlaying = false;
+			_cardAnimQueue.Clear();
 
 			ulong watchToken = ++_watchToken;
 			TaskHelper.RunSafely(IdleWatchLoop(instance, watchToken));
@@ -164,6 +166,11 @@ public static class YukiBattleReadyOverlay
 
 				if (_cardUsePlaying)
 				{
+					if (TryPlayNextQueuedCardAnim(currentCompleted: true))
+					{
+						return;
+					}
+
 					_cardUsePlaying = false;
 					if (IsFocused)
 					{
@@ -285,6 +292,7 @@ public static class YukiBattleReadyOverlay
 		_busy = false;
 		_outPlaying = false;
 		_cardUsePlaying = false;
+		_cardAnimQueue.Clear();
 		_lastFirst = null;
 		_lastNextLoop = null;
 		_baseCaptured = false;
@@ -315,7 +323,7 @@ public static class YukiBattleReadyOverlay
 			return;
 		}
 
-		if (!YukiTarget.IsTarget(card.Owner?.Character))
+		if (!YukiTarget.IsMineTargetCard(card))
 		{
 			return;
 		}
@@ -362,7 +370,7 @@ public static class YukiBattleReadyOverlay
 			return;
 		}
 
-		if (!YukiTarget.IsTarget(card.Owner?.Character))
+		if (!YukiTarget.IsMineTargetCard(card))
 		{
 			return;
 		}
@@ -438,7 +446,7 @@ public static class YukiBattleReadyOverlay
 				return;
 			}
 
-			if (_cardUsePlaying || _outPlaying || _outScheduled)
+			if (_cardUsePlaying || _cardAnimQueue.Count > 0 || _outPlaying || _outScheduled)
 			{
 				continue;
 			}
@@ -491,7 +499,7 @@ public static class YukiBattleReadyOverlay
 		}
 
 		CardModel? card = cardPlay.Card;
-		if (card == null || !YukiTarget.IsTarget(card.Owner?.Character))
+		if (!YukiTarget.IsMineTargetCard(card))
 		{
 			return;
 		}
@@ -501,7 +509,7 @@ public static class YukiBattleReadyOverlay
 		_outScheduled = false;
 		EnsureCreated(playIntro: false);
 
-		string? anim = GetCardUseAnim(card);
+		string? anim = GetCardUseAnim(card!);
 		if (anim == null)
 		{
 			return;
@@ -512,19 +520,8 @@ public static class YukiBattleReadyOverlay
 			_outPlaying = false;
 		}
 
-		_cardUsePlaying = true;
-		if (!PlaySingle(anim))
-		{
-			_cardUsePlaying = false;
-			if (IsFocused)
-			{
-				PlaySequence(AnimIdle, AnimIdle);
-			}
-			else
-			{
-				StartOut();
-			}
-		}
+		_cardAnimQueue.Enqueue(anim);
+		TryPlayNextQueuedCardAnim();
 	}
 
 	public static void NotifyCanceled(CardModel card)
@@ -535,7 +532,7 @@ public static class YukiBattleReadyOverlay
 			return;
 		}
 
-		if (!YukiTarget.IsTarget(card.Owner?.Character))
+		if (!YukiTarget.IsMineTargetCard(card))
 		{
 			return;
 		}
@@ -550,7 +547,7 @@ public static class YukiBattleReadyOverlay
 		_outScheduled = true;
 		ulong token = ++_focusToken;
 
-		if (_cardUsePlaying || _outPlaying)
+		if (_cardUsePlaying || _cardAnimQueue.Count > 0 || _outPlaying)
 		{
 			return;
 		}
@@ -560,7 +557,7 @@ public static class YukiBattleReadyOverlay
 
 	private static void StartOut()
 	{
-		if (_cardUsePlaying)
+		if (_cardUsePlaying || _cardAnimQueue.Count > 0)
 		{
 			return;
 		}
@@ -580,6 +577,45 @@ public static class YukiBattleReadyOverlay
 		{
 			Cleanup();
 		}
+	}
+
+	private static bool TryPlayNextQueuedCardAnim(bool currentCompleted = false)
+	{
+		if (_cardUsePlaying && !currentCompleted)
+		{
+			return true;
+		}
+
+		if (_cardAnimQueue.Count == 0)
+		{
+			return false;
+		}
+
+		while (_cardAnimQueue.Count > 0)
+		{
+			string anim = _cardAnimQueue.Dequeue();
+			_cardUsePlaying = true;
+			_outScheduled = false;
+			_outPlaying = false;
+
+			if (PlaySingle(anim, restartIfSame: true))
+			{
+				return true;
+			}
+
+			_cardUsePlaying = false;
+		}
+
+		if (IsFocused)
+		{
+			PlaySequence(AnimIdle, AnimIdle);
+		}
+		else
+		{
+			StartOut();
+		}
+
+		return false;
 	}
 
 	private static void PlaySequence(string first, string nextLoop)
@@ -629,7 +665,7 @@ public static class YukiBattleReadyOverlay
 		}
 	}
 
-	private static bool PlaySingle(string anim)
+	private static bool PlaySingle(string anim, bool restartIfSame = false)
 	{
 		MegaSprite? sprite = _sprite;
 		if (sprite == null)
@@ -643,7 +679,7 @@ public static class YukiBattleReadyOverlay
 			return false;
 		}
 
-		if (string.Equals(_lastFirst, anim, StringComparison.Ordinal) && _lastNextLoop == null)
+		if (!restartIfSame && string.Equals(_lastFirst, anim, StringComparison.Ordinal) && _lastNextLoop == null)
 		{
 			return true;
 		}

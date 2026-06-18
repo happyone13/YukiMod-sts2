@@ -76,5 +76,8 @@ public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Ta
         }
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(2m);
+    }
 }

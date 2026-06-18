@@ -19,7 +19,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
     private const string CurrentDamageKey = "CurrentDamage";
 
@@ -52,11 +52,14 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon,
             .Execute(choiceContext);
     }
 
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(5m);
+    }
 
     public override Task AfterAttack(PlayerChoiceContext choiceContext, AttackCommand command)
     {
-        if (!IsUpgraded || command.Attacker != Owner.Creature)
+        if (command.Attacker != Owner.Creature)
         {
             return Task.CompletedTask;
         }

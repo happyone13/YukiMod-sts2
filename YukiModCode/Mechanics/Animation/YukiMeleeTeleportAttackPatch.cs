@@ -205,23 +205,30 @@ public static class YukiMeleeTeleportAttackPatch
 				return true;
 			}
 
+			if (!ShouldUseYukiMeleeVisuals(creature))
+			{
+				WarnOnce($"visuals:{RuntimeHelpers.GetHashCode(creature)}", $"[{YukiModInfo.ModId}] MeleeTeleport fallback: attacker does not use Yuki melee visuals attacker={creature}");
+				return true;
+			}
+
 			if (string.Equals(profile.Value.Id, U2AttackId, StringComparison.Ordinal))
 			{
-				__result = RunWithTeleportProxyGuard(TryRunU2Attack(creature, waitTime, command));
+				__result = RunWithTeleportProxyGuard(() => TryRunU2Attack(creature, waitTime, command));
 				return false;
 			}
 
-			__result = RunWithTeleportProxyGuard(TryRunMeleeTeleportAttack(creature, triggerName, waitTime, command, card, profile.Value));
+			__result = RunWithTeleportProxyGuard(() => TryRunMeleeTeleportAttack(creature, triggerName, waitTime, command, card, profile.Value));
 			return false;
 		}
 	}
 
-	private static async Task RunWithTeleportProxyGuard(Task task)
+	private static async Task RunWithTeleportProxyGuard(Func<Task> taskFactory)
 	{
 		bool prev = InTeleportProxy.Value;
 		InTeleportProxy.Value = true;
 		try
 		{
+			Task task = taskFactory();
 			await task.ConfigureAwait(false);
 		}
 		finally
@@ -258,9 +265,15 @@ public static class YukiMeleeTeleportAttackPatch
 			return CreatureCmd.TriggerAnim(creature, triggerName, waitTime);
 		}
 
+		if (!ShouldUseYukiMeleeVisuals(creature))
+		{
+			WarnOnce($"visuals:{RuntimeHelpers.GetHashCode(creature)}", $"[{YukiModInfo.ModId}] MeleeTeleport fallback: attacker does not use Yuki melee visuals attacker={creature}");
+			return RunWithTeleportProxyGuard(() => CreatureCmd.TriggerAnim(creature, triggerName, waitTime));
+		}
+
 		if (string.Equals(profile.Value.Id, U2AttackId, StringComparison.Ordinal))
 		{
-			return RunWithTeleportProxyGuard(TryRunU2Attack(creature, waitTime, command));
+			return RunWithTeleportProxyGuard(() => TryRunU2Attack(creature, waitTime, command));
 		}
 
 		try
@@ -277,7 +290,7 @@ public static class YukiMeleeTeleportAttackPatch
 		{
 		}
 
-		return TryRunMeleeTeleportAttack(creature, triggerName, waitTime, command, card, profile.Value);
+		return RunWithTeleportProxyGuard(() => TryRunMeleeTeleportAttack(creature, triggerName, waitTime, command, card, profile.Value));
 	}
 
 	private static bool IsAttackTrigger(string triggerName)
@@ -611,6 +624,12 @@ public static class YukiMeleeTeleportAttackPatch
 			{
 				WarnOnce($"node:{RuntimeHelpers.GetHashCode(attacker)}", $"[{YukiModInfo.ModId}] MeleeTeleport fallback: missing NCreature/SpineAnimation for attacker={attacker}");
 				return CreatureCmd.TriggerAnim(attacker, "Attack", waitTime);
+			}
+
+			if (!HasYukiMeleeVisuals(attackerNode))
+			{
+				WarnOnce($"visuals:{RuntimeHelpers.GetHashCode(attacker)}", $"[{YukiModInfo.ModId}] MeleeTeleport fallback: attacker does not use Yuki melee visuals attacker={attacker}");
+				return CreatureCmd.TriggerAnim(attacker, triggerName, waitTime);
 			}
 
 			try
@@ -1502,11 +1521,55 @@ public static class YukiMeleeTeleportAttackPatch
 		       && HasAnim(creatureNode, U2EndAnim);
 	}
 
+	private static bool HasYukiMeleeVisuals(NCreature creatureNode)
+	{
+		try
+		{
+			string scenePath = creatureNode.Visuals?.SceneFilePath ?? "";
+			if (scenePath.Contains("YukiMod", StringComparison.OrdinalIgnoreCase)
+			    || scenePath.Contains("chaos_yuki", StringComparison.OrdinalIgnoreCase))
+			{
+				return true;
+			}
+		}
+		catch
+		{
+		}
+
+		return GetChaosEffMarker(creatureNode) != null;
+	}
+
+	private static bool ShouldUseYukiMeleeVisuals(Creature creature)
+	{
+		try
+		{
+			if (!TryGetRoomAndNode(creature, out _, out NCreature creatureNode))
+			{
+				return false;
+			}
+
+			return HasYukiMeleeVisuals(creatureNode);
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
 	private static void TryAddIdleLoop(NCreature creatureNode)
 	{
 		try
 		{
-			_ = creatureNode.SpineAnimation.AddAnimation("idle_loop", 0f, loop: true);
+			foreach (string anim in new[] { "idle_loop", "b_idle", "idle" })
+			{
+				if (!HasAnim(creatureNode, anim))
+				{
+					continue;
+				}
+
+				_ = creatureNode.SpineAnimation.AddAnimation(anim, 0f, loop: true);
+				return;
+			}
 		}
 		catch
 		{

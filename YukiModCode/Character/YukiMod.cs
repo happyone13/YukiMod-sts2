@@ -28,7 +28,7 @@ public class YukiMod : PlaceholderCharacterModel
         ModelDb.Card<StrikeYuki>(),
         ModelDb.Card<StrikeYuki>(),
         ModelDb.Card<StrikeYuki>(),
-        ModelDb.Card<StrikeYuki>(),
+        ModelDb.Card<DefendYuki>(),
         ModelDb.Card<DefendYuki>(),
         ModelDb.Card<DefendYuki>(),
         ModelDb.Card<DefendYuki>(),

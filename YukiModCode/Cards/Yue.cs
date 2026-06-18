@@ -22,7 +22,7 @@ public class Yue() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
         [HoverTipFactory.FromPower<YuePower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(6m, ValueProp.Move), new DynamicVar("MoonshadowDamage", 3m)];
+        [new DamageVar(9m, ValueProp.Move), new DynamicVar("MoonshadowDamage", 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

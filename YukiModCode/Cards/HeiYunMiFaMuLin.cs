@@ -17,7 +17,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new EnergyVar(1), new CardsVar(1), new DynamicVar("DelayedEnergy", 2m), new DynamicVar("DelayedCards", 2m)];
+        [new EnergyVar(2), new CardsVar(2), new DynamicVar("DelayedEnergy", 2m), new DynamicVar("DelayedCards", 2m)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
     public override bool HasOwnBlackCloudEffect => true;
@@ -34,7 +34,6 @@ public class HeiYunMiFaMuLin() : YukiModCard(1, CardType.Skill, CardRarity.Rare,
         {
             await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
             await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-            await YukiBlackCloudService.GrantKeepStanceOnce(choiceContext, Owner, this);
         }
         else
         {

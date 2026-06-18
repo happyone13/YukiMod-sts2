@@ -18,7 +18,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunMiFaYingFu() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(3m, ValueProp.Move), new RepeatVar(2)];
+        [new DamageVar(4m, ValueProp.Move), new RepeatVar(2)];
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
     public override bool HasOwnBlackCloudEffect => true;
@@ -56,6 +56,6 @@ public class HeiYunMiFaYingFu() : YukiModCard(1, CardType.Attack, CardRarity.Com
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Damage.UpgradeValueBy(1m);
     }
 }

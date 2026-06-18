@@ -24,7 +24,7 @@ public class YanHan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Tar
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(5m, ValueProp.Move), new CardsVar(1)];
+        [new DamageVar(8m, ValueProp.Move), new CardsVar(1)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

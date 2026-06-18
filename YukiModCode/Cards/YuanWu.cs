@@ -22,7 +22,7 @@ public class YuanWu() : YukiModCard(2, CardType.Skill, CardRarity.Uncommon, Targ
         [YukiMod.YukiModCode.HoverTips.YukiHoverTipFactory.FromNingJu(), HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(11m, ValueProp.Move)];
+        [new BlockVar(12m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

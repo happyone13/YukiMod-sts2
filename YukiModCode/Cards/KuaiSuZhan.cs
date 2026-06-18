@@ -25,7 +25,7 @@ public class KuaiSuZhan() : YukiModCard(1, CardType.Attack, CardRarity.Common, T
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(2m, ValueProp.Move), new RepeatVar(3)];
+        [new DamageVar(4m, ValueProp.Move), new RepeatVar(3)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

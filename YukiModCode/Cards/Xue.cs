@@ -25,7 +25,7 @@ public class Xue() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
         [YukiHoverTipFactory.FromInspiration(), HoverTipFactory.FromPower<XuePower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(6m, ValueProp.Move)];
+        [new DamageVar(9m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
