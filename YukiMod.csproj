@@ -87,6 +87,7 @@
     <Compile Remove="YukiMod/**" />
     <Compile Remove=".godot/**" />
     <Compile Remove="tmp/**" />
+    <Compile Remove="tests/**" />
     <Compile Remove="tools/**" />
     <Compile Remove="materials/**" />
     <Compile Remove="shaders/**" />
@@ -94,11 +95,13 @@
     <EmbeddedResource Remove="YukiMod/**" />
     <EmbeddedResource Remove=".godot/**" />
     <EmbeddedResource Remove="tmp/**" />
+    <EmbeddedResource Remove="tests/**" />
     <EmbeddedResource Remove="tools/**" />
     <EmbeddedResource Remove="materials/**" />
     <EmbeddedResource Remove="shaders/**" />
     <EmbeddedResource Remove="images/**" />
     <None Remove="tmp/**" />
+    <None Remove="tests/**" />
   </ItemGroup>
 
   <ItemGroup>

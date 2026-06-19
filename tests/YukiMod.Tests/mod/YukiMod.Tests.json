@@ -1,0 +1,14 @@
+{
+"id": "YukiMod.Tests",
+"name": "YukiMod.Tests",
+"author": "lozalia",
+"description": "Headless combat assertion harness for YukiMod.",
+"version": "0.1.0",
+"has_pck": false,
+"has_dll": true,
+"dependencies": [
+"TestTheSpire",
+"YukiMod"
+],
+"affects_gameplay": true
+}
