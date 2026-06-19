@@ -3,7 +3,7 @@
   "name": "YukiMod",
   "author": "lozalia,星晨代谢",
   "description": "Yuki playable character mod for Slay the Spire 2.",
-  "version": "v0.0.4",
+  "version": "v0.0.5",
   "has_pck": true,
   "has_dll": true,
   "dependencies": [
