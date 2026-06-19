@@ -194,7 +194,26 @@
 
 “不是原版卡调用了自定义 UI，而是自定义卡框补丁污染了公共 `NCard` 节点，原版卡复用了这个脏节点。”
 
-## 7. 开发时的最小检查表
+## 7. 案例：自定义 Spine 资源污染原版角色模型
+
+### 7.1 典型现象
+
+原版角色路径仍然正确，例如日志里显示创建的是 `res://scenes/rest_site/characters/ironclad_rest_site.tscn` 或 `res://scenes/merchant/characters/ironclad_merchant.tscn`，但实际显示成 Mod 角色模型。
+
+### 7.2 根因
+
+从原版资源复制 `.tres` 或 `.tscn` 后，如果保留了原版资源的 `uid="uid://..."`，Godot 可能按 UID 把原版场景里的内部资源解析到 Mod 资源。Yuki 旧皮肤阶段遗留过这个问题：
+
+- `rest_site_chaos_yuki_skel_data.tres` 曾复用铁甲火堆 `SpineSkeletonDataResource` 的 UID
+- `chaos_yuki_merchant_skel_data.tres` 曾复用铁甲商店 `SpineSkeletonDataResource` 的 UID
+
+结果不是铁甲路径被 C# 改掉，而是铁甲场景内部按 UID 取到了友纪的骨骼数据。
+
+### 7.3 修复原则
+
+复制原版 Godot 资源作为 Mod 资源时，不要保留原版 UID。对 Yuki 专用 Spine 资源，优先删除复制来的 `uid="uid://..."`，让资源按 `res://YukiMod/...` 路径解析；若确实需要 UID，则必须生成新的、不与原版冲突的 UID。
+
+## 8. 开发时的最小检查表
 
 写或改一个效果前，至少做这几步：
 
@@ -206,7 +225,7 @@
 6. 完成后至少做一次 `dotnet build`
 7. 环境允许时确认最新 `YukiMod.pck` 已导出
 
-## 8. 后续规则
+## 9. 后续规则
 
 以后凡是涉及以下主题，先读这份文档再动手：
 
