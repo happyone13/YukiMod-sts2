@@ -38,6 +38,7 @@ public static class YukiAudioService
 
     private static readonly Dictionary<string, string> CustomCardClipMap = new(StringComparer.OrdinalIgnoreCase)
     {
+        ["ba_dao"] = "res://YukiMod/sound/ba_dao.mp3",
         ["bing_dian_zhi_ren"] = "res://YukiMod/sound/bing_dian_zhi_ren.mp3",
         ["mi_huo_yi_ji"] = "res://YukiMod/sound/mi_huo_yi_ji.mp3",
         ["po_bing_zhan"] = "res://YukiMod/sound/po_bing_zhan.mp3",

@@ -179,6 +179,12 @@
 
 否则原版控件的透明度、淡入淡出状态也可能把自定义 overlay 一起隐藏。
 
+#### 原则 D：恢复原版控件时必须恢复 sibling 绘制顺序
+
+Godot 同父节点、同 `ZIndex` 的 `Control` 绘制顺序会受 child index 影响。如果自定义卡框对原版 `_banner`、`_titleLabel`、`_descriptionLabel`、`_energyIcon` 等控件调用过 `MoveChild()` / `BringToFront()`，快照不能只恢复 `ZIndex`，还必须恢复原父节点下的原始 sibling index。
+
+典型表现是：打开友纪卡牌大图后再查看其他卡，标题背景偶发盖住费用图标。根因不是费用图标丢失，而是标题背景节点残留在费用图标之后绘制。
+
 ### 6.4 适用于 MeiLinMod / YukiMod 的检查项
 
 如果 `MeiLinMod` 或 `YukiMod` 继续出现“原版卡费用消失”“原版卡错位”之类的问题，优先检查：
@@ -187,6 +193,7 @@
 2. 所有 fallback / transition 分支里，是否错误隐藏了原版 `_energyLabel`、`_typeLabel`、`_typePlaque`
 3. 是否有自定义 overlay 继承了原版 label 的透明度或颜色状态
 4. 是否只移除了 overlay，却没有恢复 `NCard` 原始控件的 `Visible / Position / Size / Texture / Material`
+5. 是否调用过 `MoveChild()` / `BringToFront()`，但快照恢复没有还原原始 child index
 
 ### 6.5 排查结论模板
 

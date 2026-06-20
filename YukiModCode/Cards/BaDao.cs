@@ -38,6 +38,8 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
+        YukiAudioService.TryPlayCustomAttackCardClip("ba_dao", Owner);
+
         var hitCount = 1;
         var shouldEnterBlackCloud = !YukiBlackCloudService.IsActive(Owner);
         await YukiBlackCloudService.Resolve(

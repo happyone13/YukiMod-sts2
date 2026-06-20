@@ -38,6 +38,8 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        YukiAudioService.TryPlayCustomAttackCardClip("ba_dao", Owner);
+
         var combatState = CombatState;
         if (combatState == null)
         {

@@ -50,6 +50,7 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
+        YukiAudioService.TryPlayCustomAttackCardClip("ba_dao", Owner);
 
         await DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
             .FromCard(this)

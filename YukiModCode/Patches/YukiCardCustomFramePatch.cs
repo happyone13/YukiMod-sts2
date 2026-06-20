@@ -978,6 +978,24 @@ public static class YukiCardCustomFramePatch
         RestoreControlSnapshot(Get<Control>(EnergyLabelField, cardNode), state.EnergyLabel, restoreTextures);
         RestoreControlSnapshot(Get<Control>(TypeLabelField, cardNode), state.TypeLabel, restoreTextures);
         RestoreControlSnapshot(Get<Control>(TypePlaqueField, cardNode), state.TypePlaque, restoreTextures);
+        RestoreControlSiblingOrder(new List<(Control? Control, ControlSnapshot? Snapshot)>
+        {
+            (Get<Control>(BannerField, cardNode), state.Banner),
+            (Get<Control>(FrameField, cardNode), state.Frame),
+            (Get<Control>(PortraitField, cardNode), state.Portrait),
+            (Get<Control>(AncientPortraitField, cardNode), state.AncientPortrait),
+            (Get<Control>(PortraitBorderField, cardNode), state.PortraitBorder),
+            (Get<Control>(AncientBorderField, cardNode), state.AncientBorder),
+            (Get<Control>(AncientBannerField, cardNode), state.AncientBanner),
+            (Get<Control>(AncientTextBgField, cardNode), state.AncientTextBg),
+            (Get<Control>(AncientHighlightField, cardNode), state.AncientHighlight),
+            (Get<Control>(TitleLabelField, cardNode), state.TitleLabel),
+            (Get<Control>(EnergyIconField, cardNode), state.EnergyIcon),
+            (Get<Control>(DescriptionLabelField, cardNode), state.DescriptionLabel),
+            (Get<Control>(EnergyLabelField, cardNode), state.EnergyLabel),
+            (Get<Control>(TypeLabelField, cardNode), state.TypeLabel),
+            (Get<Control>(TypePlaqueField, cardNode), state.TypePlaque)
+        });
         if (removeState)
             OriginalStates.Remove(cardNode);
     }
@@ -989,6 +1007,8 @@ public static class YukiCardCustomFramePatch
 
         return new ControlSnapshot
         {
+            Parent = control.GetParent(),
+            SiblingIndex = control.GetIndex(),
             Position = control.Position,
             Size = control.Size,
             AnchorLeft = control.AnchorLeft,
@@ -1020,6 +1040,36 @@ public static class YukiCardCustomFramePatch
             RichTextFitContent = (control as RichTextLabel)?.FitContent,
             RichTextAutowrapMode = (control as RichTextLabel)?.AutowrapMode
         };
+    }
+
+    private static void RestoreControlSiblingOrder(List<(Control? Control, ControlSnapshot? Snapshot)> snapshots)
+    {
+        snapshots.Sort((left, right) =>
+            (left.Snapshot?.SiblingIndex ?? int.MaxValue).CompareTo(right.Snapshot?.SiblingIndex ?? int.MaxValue));
+
+        foreach ((Control? control, ControlSnapshot? snapshot) in snapshots)
+            RestoreControlSiblingIndex(control, snapshot);
+    }
+
+    private static void RestoreControlSiblingIndex(Control? control, ControlSnapshot? snapshot)
+    {
+        if (control == null || snapshot?.Parent == null)
+            return;
+
+        if (!GodotObject.IsInstanceValid(control) || !GodotObject.IsInstanceValid(snapshot.Parent))
+            return;
+
+        Node? parent = control.GetParent();
+        if (!ReferenceEquals(parent, snapshot.Parent))
+            return;
+
+        int childCount = parent.GetChildCount();
+        if (childCount <= 0)
+            return;
+
+        int targetIndex = Math.Clamp(snapshot.SiblingIndex, 0, childCount - 1);
+        if (control.GetIndex() != targetIndex)
+            parent.MoveChild(control, targetIndex);
     }
 
     private static void RestoreControlSnapshot(Control? control, ControlSnapshot? snapshot, bool restoreTexture)
@@ -1463,6 +1513,8 @@ public static class YukiCardCustomFramePatch
 
     private sealed class ControlSnapshot
     {
+        public Node? Parent { get; init; }
+        public int SiblingIndex { get; init; }
         public Vector2 Position { get; init; }
         public Vector2 Size { get; init; }
         public float AnchorLeft { get; init; }

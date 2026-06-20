@@ -21,6 +21,7 @@ namespace YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 [HarmonyPatch]
 public static class YukiBattleReadyOverlayPatches
 {
+	private const float CombatEventVoiceVolume = 3f;
 	private static int _combatAnimToken;
 	private static readonly string[] CombatStartCandidates = ["battle_start", "idle_to_b_idle", "b_in", "b_idle", "idle_loop", "idle"];
 	private static readonly string[] CombatIdleCandidates = ["idle_loop", "b_idle", "idle"];
@@ -42,7 +43,7 @@ public static class YukiBattleReadyOverlayPatches
 
 			YukiBattleReadyOverlay.Preload();
 			YukiBattleDeadOverlay.Preload();
-			YukiAudioService.TryPlayCombatStartVoice(me);
+			YukiAudioService.TryPlayCombatStartVoice(me, CombatEventVoiceVolume);
 			TryPlayCombatStartAnimation(me);
 		}
 		catch
@@ -63,7 +64,7 @@ public static class YukiBattleReadyOverlayPatches
 			}
 
 			YukiBattleReadyOverlay.NotifyCombatEnded();
-			YukiAudioService.TryPlayVictoryVoice(me);
+			YukiAudioService.TryPlayVictoryVoice(me, CombatEventVoiceVolume);
 			Mechanics.Animation.YukiVictoryAnimCoordinator.PlayOrDeferVictory(me!.Creature, () => TryPlayVictoryAnimation(me));
 		}
 		catch
