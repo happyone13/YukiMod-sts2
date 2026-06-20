@@ -81,7 +81,7 @@
 | 黑云心法 | 0 | 稀有 | 技能 | 本回合内保留黑云姿态。升级：获得保留。 | 黑云 | ID: YUKIMOD-HEI_YUN_XIN_FA；类: HeiYunXinFa；牌池: 主牌池 |  |
 | 黑云秘法：出鞘 | 1 | 稀有 | 技能 | 进入黑云姿态。；下次退出黑云姿态时，将1张{IfUpgraded:show:纳刀+\|纳刀}加入手中。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_CHU_QIAO；类: HeiYunMiFaChuQiao；牌池: 主牌池 |  |
 | 黑云秘法：幕临 | 1 | 稀有 | 技能 | 黑云：获得2点能量，抽2张牌；否则，下次进入黑云姿态时获得2点能量，抽2张牌。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_MU_LIN；类: HeiYunMiFaMuLin；牌池: 主牌池；源码关键词: Exhaust；升级费用变化: -1 |  |
-| 黑云秘法：燕返 | 1 | 稀有 | 技能 | 黑云：释放你上一次释放的黑云牌。否则，你下一张释放的黑云牌额外释放一次。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_YAN_HUI；类: HeiYunMiFaYanHui；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
+| 黑云秘法：燕返 | 1 | 稀有 | 技能 | 黑云：释放你上一次释放的黑云牌（自身除外）。否则，你下一张释放的黑云牌（自身除外）额外释放一次。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_YAN_HUI；类: HeiYunMiFaYanHui；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 黑云秘法：霞阵 | 1 | 稀有 | 能力 | 回合开始时，获得2/3层无明。 | 黑云 | ID: YUKIMOD-HEI_YUN_MI_FA_XIA_ZHEN；类: HeiYunMiFaXiaZhen；牌池: 主牌池 |  |
 | 业火 | 1 | 稀有 | 攻击 | 造成5点伤害。；每当你攻击该目标时，手中月影伤害+2/3。 | 其他 | ID: YUKIMOD-YE_HUO；类: YeHuo；牌池: 主牌池 |  |
 | 燕回反 | 1 | 稀有 | 攻击 | 释放你上一个释放的攻击1次。 | 其他 | ID: YUKIMOD-YAN_HUI_FAN；类: YanHuiFan；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |

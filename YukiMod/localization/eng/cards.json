@@ -43,7 +43,7 @@
     "YUKIMOD-HEI_YUN_MI_FA_HUANG_HUN.title": "Black Cloud Art: Twilight",
     "YUKIMOD-HEI_YUN_MI_FA_HUANG_HUN.description": "Gain {Block:diff()} Block.\nGain {BlackCloud:diff()} [gold]Ignorance[/gold].",
     "YUKIMOD-HEI_YUN_MI_FA_YAN_HUI.title": "Black Cloud Art: Swallow Reversal",
-    "YUKIMOD-HEI_YUN_MI_FA_YAN_HUI.description": "[gold]Black Cloud[/gold]: Play the last [gold]Black Cloud[/gold] card you played. Otherwise, the next [gold]Black Cloud[/gold] card you play is played an additional time.",
+    "YUKIMOD-HEI_YUN_MI_FA_YAN_HUI.description": "[gold]Black Cloud[/gold]: Play the last [gold]Black Cloud[/gold] card you played, except this card. Otherwise, the next [gold]Black Cloud[/gold] card you play, except this card, is played an additional time.",
     "YUKIMOD-HEI_YUN_MI_FA_XIA_ZHEN.title": "Black Cloud Art: Haze Array",
     "YUKIMOD-HEI_YUN_MI_FA_XIA_ZHEN.description": "At the start of your turn, gain {BlackCloud:diff()} [gold]Ignorance[/gold].",
     "YUKIMOD-HEI_YUN_XIN_FA.title": "Black Cloud Heart Method",

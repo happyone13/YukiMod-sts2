@@ -43,7 +43,7 @@
     "YUKIMOD-HEI_YUN_MI_FA_HUANG_HUN.title": "黑云秘法：黄昏",
     "YUKIMOD-HEI_YUN_MI_FA_HUANG_HUN.description": "获得{Block:diff()}点格挡。\n获得{BlackCloud:diff()}层[gold]无明[/gold]。",
     "YUKIMOD-HEI_YUN_MI_FA_YAN_HUI.title": "黑云秘法：燕返",
-    "YUKIMOD-HEI_YUN_MI_FA_YAN_HUI.description": "[gold]黑云[/gold]：释放你上一次释放的[gold]黑云[/gold]牌。否则，你下一张释放的[gold]黑云[/gold]牌额外释放一次。",
+    "YUKIMOD-HEI_YUN_MI_FA_YAN_HUI.description": "[gold]黑云[/gold]：释放你上一次释放的[gold]黑云[/gold]牌（自身除外）。否则，你下一张释放的[gold]黑云[/gold]牌（自身除外）额外释放一次。",
     "YUKIMOD-HEI_YUN_MI_FA_XIA_ZHEN.title": "黑云秘法：霞阵",
     "YUKIMOD-HEI_YUN_MI_FA_XIA_ZHEN.description": "回合开始时，获得{BlackCloud:diff()}层[gold]无明[/gold]。",
     "YUKIMOD-HEI_YUN_XIN_FA.title": "黑云心法",

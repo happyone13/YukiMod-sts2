@@ -37,6 +37,7 @@ public class HeiYunMiFaYanHui() : YukiModCard(1, CardType.Skill, CardRarity.Rare
             .LastOrDefault(entry =>
                 entry.CardPlay.Card.Owner == Owner
                 && entry.CardPlay.IsFirstInSeries
+                && entry.CardPlay.Card is not HeiYunMiFaYanHui
                 && YukiBlackCloudService.IsBlackCloudCard(entry.CardPlay.Card));
         if (previousBlackCloud == null)
         {
