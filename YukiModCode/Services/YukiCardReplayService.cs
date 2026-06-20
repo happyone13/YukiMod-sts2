@@ -16,6 +16,12 @@ public static class YukiCardReplayService
         return CardCmd.AutoPlay(choiceContext, replayCard, GetReplayTarget(previousPlay, replayCard));
     }
 
+    public static Task AutoPlayDupe(PlayerChoiceContext choiceContext, CardPlay previousPlay)
+    {
+        var replayCard = previousPlay.Card.CreateDupe();
+        return CardCmd.AutoPlay(choiceContext, replayCard, GetReplayTarget(previousPlay, replayCard));
+    }
+
     private static Creature? GetReplayTarget(CardPlay previousPlay, CardModel replayCard)
     {
         var target = previousPlay.Target;

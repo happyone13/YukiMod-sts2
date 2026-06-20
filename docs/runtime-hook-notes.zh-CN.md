@@ -242,3 +242,13 @@ Godot 同父节点、同 `ZIndex` 的 `Control` 绘制顺序会受 child index �
 - 洗回牌堆后重抽
 - 带具体卡牌预览的 Hover Tip
 - 自定义卡框、动态立绘、原版 `NCard` UI 污染
+
+## 10. 复放卡牌的复制口径
+
+如果一个效果只是“临时释放上一张牌”或“参考历史记录再释放一次”，并且不应该把复制体加入抽牌堆、弃牌堆或消耗堆，优先参考原版 `HistoryCourse`：
+
+1. 从 `CombatManager.Instance.History.CardPlaysFinished` 读取原始卡牌记录。
+2. 自动释放时使用 `card.CreateDupe()`，再传给 `CardCmd.AutoPlay(...)`。
+3. 记录“本回合第一张攻击”“上回合最后一张技能”这类状态时，过滤 `CardPlay.IsAutoPlay` 与 `Card.IsDupe`。
+
+不要在这类效果里直接使用 `CreateClone()`，否则自动释放后的复制体会按普通卡牌进入结果牌堆，可能表现为牌组里越洗越多；同时复放产生的 `CardPlay` 还可能反过来覆盖下一回合要参考的历史记录，导致总是重复同一张牌。

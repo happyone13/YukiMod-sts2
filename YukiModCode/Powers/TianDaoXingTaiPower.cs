@@ -37,6 +37,7 @@ public class TianDaoXingTaiPower : YukiModPower
         data.FirstAttackThisTurn = CombatManager.Instance.History.CardPlaysFinished
             .FirstOrDefault(entry =>
                 entry.Actor == Owner
+                && IsManualOriginalCardPlay(entry.CardPlay)
                 && entry.CardPlay.IsFirstInSeries
                 && entry.CardPlay.Card.Type == CardType.Attack
                 && entry.HappenedThisTurn(CombatState))
@@ -44,6 +45,7 @@ public class TianDaoXingTaiPower : YukiModPower
         data.LastSkillThisTurn = CombatManager.Instance.History.CardPlaysFinished
             .LastOrDefault(entry =>
                 entry.Actor == Owner
+                && IsManualOriginalCardPlay(entry.CardPlay)
                 && entry.CardPlay.IsFirstInSeries
                 && entry.CardPlay.Card.Type == CardType.Skill
                 && entry.HappenedThisTurn(CombatState))
@@ -53,7 +55,7 @@ public class TianDaoXingTaiPower : YukiModPower
 
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner?.Creature != Owner || !cardPlay.IsFirstInSeries)
+        if (cardPlay.Card.Owner?.Creature != Owner || !cardPlay.IsFirstInSeries || !IsManualOriginalCardPlay(cardPlay))
         {
             return Task.CompletedTask;
         }
@@ -87,7 +89,7 @@ public class TianDaoXingTaiPower : YukiModPower
         Flash();
         for (var i = 0; i < Amount; i++)
         {
-            await YukiCardReplayService.AutoPlayClone(choiceContext, previousSkill);
+            await YukiCardReplayService.AutoPlayDupe(choiceContext, previousSkill);
         }
     }
 
@@ -112,7 +114,12 @@ public class TianDaoXingTaiPower : YukiModPower
         Flash();
         for (var i = 0; i < Amount; i++)
         {
-            await YukiCardReplayService.AutoPlayClone(choiceContext, firstAttackThisTurn);
+            await YukiCardReplayService.AutoPlayDupe(choiceContext, firstAttackThisTurn);
         }
+    }
+
+    private static bool IsManualOriginalCardPlay(CardPlay cardPlay)
+    {
+        return !cardPlay.IsAutoPlay && !cardPlay.Card.IsDupe;
     }
 }
