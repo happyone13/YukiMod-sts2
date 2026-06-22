@@ -106,6 +106,7 @@
 - 当前默认且唯一支持的构建目标为 `107` 正式版，`BaseLib` 默认版本为 `3.2.0`
 - 当前已知原游戏解包参考目录仍为 `E:\DATA\GODOT\MyMod\sts104`，只能作为旧版行为参考；涉及当前 API 时以本机 107 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
 - 构建后会尝试把 `.dll`、`YukiMod.json`、`.pck` 复制或导出到游戏 `mods/YukiMod/`
+- `export_presets.cfg` 的 `BasicExport` 使用 `binary_format/architecture="msil"`，避免 Godot/.NET 资源包导出被固定到 Windows x64；macOS 实际运行仍需要对应平台的原生 GDExtension 依赖可用
 
 因此后续凡是涉及“可构建”或“可导出”的任务，都要同时考虑：
 
