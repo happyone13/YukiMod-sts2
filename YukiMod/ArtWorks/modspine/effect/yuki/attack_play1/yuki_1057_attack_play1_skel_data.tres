@@ -1,7 +1,7 @@
 [gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://b2sj8hnba5nlm"]
 
-[ext_resource type="SpineAtlasResource" uid="uid://g8vwux0ybdn8" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play1/yuki_1057_attack_play1.atlas" id="1_t00iu"]
-[ext_resource type="SpineSkeletonFileResource" uid="uid://v65xwfuy0fc0" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play1/yuki_1057_attack_play1.skel" id="2_48g8y"]
+[ext_resource type="SpineAtlasResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play1/yuki_1057_attack_play1.atlas" id="1_t00iu"]
+[ext_resource type="SpineSkeletonFileResource" path="res://YukiMod/ArtWorks/modspine/effect/yuki/attack_play1/yuki_1057_attack_play1.skel" id="2_48g8y"]
 
 [resource]
 atlas_res = ExtResource("1_t00iu")

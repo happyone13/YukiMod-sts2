@@ -49,7 +49,7 @@ public static class ChaosOneShotVfx
 		PackedScene? loaded;
 		try
 		{
-			loaded = ResourceLoader.Load<PackedScene>(scenePath);
+			loaded = ResourceLoader.Load<PackedScene>(scenePath, "", ResourceLoader.CacheMode.Reuse);
 		}
 		catch (Exception ex)
 		{

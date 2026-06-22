@@ -176,12 +176,20 @@ public static class YukiCardCustomFramePatch
         Material? bannerMaterial = LoadResource<Material>(YukiCardFramePaths.BannerMaterialPath);
         bool hasDynamicSpineScene = YukiModConfig.UseDynamicCardPortraits &&
                                     YukiCardSpinePortraitPatch.TryGetSpineScenePath(cardNode, out _);
-        if (hasDynamicSpineScene)
+        bool shouldDisplayDynamicOverlay = hasDynamicSpineScene &&
+                                           YukiCardSpinePortraitPatch.ShouldDisplayDynamicOverlays(cardNode);
+        if (shouldDisplayDynamicOverlay)
+        {
             YukiCardSpinePortraitPatch.Apply(cardNode);
+        }
+        else if (hasDynamicSpineScene && YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
+        {
+            YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
+        }
 
         bool shouldDisplayCustomUi = YukiCardSpinePortraitPatch.ShouldDisplayCustomUi(cardNode);
 
-        if (hasDynamicSpineScene && !YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
+        if (shouldDisplayDynamicOverlay && !YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
         {
             RemoveChaosEffects(cardNode, restoreOriginalState: true);
             frame?.Show();
@@ -245,7 +253,7 @@ public static class YukiCardCustomFramePatch
 
         ApplyChaosEffects(cardNode!, cardModel);
 
-        if (hasDynamicSpineScene && cardNode!.Model is IYukiCardVisualProfile profile)
+        if (shouldDisplayDynamicOverlay && cardNode!.Model is IYukiCardVisualProfile profile)
         {
             YukiCardSpinePortraitPatch.ForcePortraitSlot(cardNode, portrait, ancientPortrait, profile.CustomSpinePortraitSlot);
             YukiCardSpinePortraitPatch.UpdateOverlay(

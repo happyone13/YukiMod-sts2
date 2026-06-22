@@ -10,6 +10,8 @@ namespace YukiMod.YukiModCode.Mechanics.Vfx;
 public sealed class ChaosSpineVfxInstance
 {
 	private static readonly HashSet<string> Warned = new HashSet<string>(StringComparer.Ordinal);
+	private static readonly object SceneCacheLock = new object();
+	private static readonly Dictionary<string, PackedScene?> SceneCache = new Dictionary<string, PackedScene?>(StringComparer.Ordinal);
 
 	public Node2D Node { get; }
 	public MegaSprite Controller { get; }
@@ -28,22 +30,9 @@ public sealed class ChaosSpineVfxInstance
 			return false;
 		}
 
-		PackedScene? scene;
-		try
-		{
-			scene = ResourceLoader.Load<PackedScene>(scenePath);
-		}
-		catch (Exception ex)
-		{
-			WarnOnce($"scene_load:{scenePath}", $"[{YukiModInfo.ModId}] Vfx scene load failed: {scenePath}: {ex.GetType().Name}: {ex.Message}");
-			return false;
-		}
-
+		PackedScene? scene = GetOrLoadScene(scenePath);
 		if (scene == null)
-		{
-			WarnOnce($"scene_null:{scenePath}", $"[{YukiModInfo.ModId}] Vfx scene missing: {scenePath}");
 			return false;
-		}
 
 		Node2D? node;
 		try
@@ -75,6 +64,58 @@ public sealed class ChaosSpineVfxInstance
 
 		instance = new ChaosSpineVfxInstance(node, controller);
 		return true;
+	}
+
+	public static void Prewarm(IEnumerable<string> scenePaths)
+	{
+		if (scenePaths == null)
+		{
+			return;
+		}
+
+		foreach (string? scenePath in scenePaths)
+		{
+			if (string.IsNullOrWhiteSpace(scenePath))
+			{
+				continue;
+			}
+
+			_ = GetOrLoadScene(scenePath);
+		}
+	}
+
+	private static PackedScene? GetOrLoadScene(string scenePath)
+	{
+		lock (SceneCacheLock)
+		{
+			if (SceneCache.TryGetValue(scenePath, out PackedScene? cachedScene))
+			{
+				return cachedScene;
+			}
+		}
+
+		PackedScene? scene;
+		try
+		{
+			scene = ResourceLoader.Load<PackedScene>(scenePath, "", ResourceLoader.CacheMode.Reuse);
+		}
+		catch (Exception ex)
+		{
+			WarnOnce($"scene_load:{scenePath}", $"[{YukiModInfo.ModId}] Vfx scene load failed: {scenePath}: {ex.GetType().Name}: {ex.Message}");
+			return null;
+		}
+
+		if (scene == null)
+		{
+			WarnOnce($"scene_null:{scenePath}", $"[{YukiModInfo.ModId}] Vfx scene missing: {scenePath}");
+			return null;
+		}
+
+		lock (SceneCacheLock)
+		{
+			SceneCache[scenePath] = scene;
+		}
+		return scene;
 	}
 
 	public bool HasAnimation(string name)
@@ -166,4 +207,3 @@ public sealed class ChaosSpineVfxInstance
 		Log.Warn(message);
 	}
 }
-

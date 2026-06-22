@@ -6,6 +6,11 @@ namespace YukiMod.YukiModCode.StanceVfx;
 public partial class YukiAuraBlobEmitter : Node2D
 {
     private const float VfxScale = 0.9f;
+    private const string BlurTexturePath = "res://YukiMod/images/vfx/big_blur.png";
+
+    private static Texture2D? s_blurTexture;
+    private static CanvasItemMaterial? s_additiveMaterial;
+    private static Gradient? s_colorRamp;
 
     [Export] public Color BlobColor { get; set; } = new(0.18f, 0.08f, 0.30f);
 
@@ -14,20 +19,9 @@ public partial class YukiAuraBlobEmitter : Node2D
         var s = VfxScale;
         Position *= s;
 
-        var ramp = new Gradient();
-        ramp.Offsets = [0f, 0.3f, 0.5f, 0.7f, 1f];
-        ramp.Colors =
-        [
-            new Color(1, 1, 1, 0f),
-            new Color(1, 1, 1, 0.6f),
-            new Color(1, 1, 1, 0.6f),
-            new Color(1, 1, 1, 0.3f),
-            new Color(1, 1, 1, 0f)
-        ];
-
         var cpu = new CpuParticles2D();
-        cpu.Texture = ResourceLoader.Load<Texture2D>("res://YukiMod/images/vfx/big_blur.png", cacheMode: ResourceLoader.CacheMode.Ignore);
-        cpu.Material = new CanvasItemMaterial { BlendMode = CanvasItemMaterial.BlendModeEnum.Add };
+        cpu.Texture = GetBlurTexture();
+        cpu.Material = GetAdditiveMaterial();
 
         cpu.Amount = 6;
         cpu.Lifetime = 2.0f;
@@ -44,11 +38,42 @@ public partial class YukiAuraBlobEmitter : Node2D
         cpu.AngularVelocityMin = -20f;
         cpu.AngularVelocityMax = 20f;
         cpu.Color = BlobColor;
-        cpu.ColorRamp = ramp;
+        cpu.ColorRamp = GetColorRamp();
         cpu.EmissionShape = CpuParticles2D.EmissionShapeEnum.Rectangle;
         cpu.EmissionRectExtents = new Vector2(38f * s, 63f * s);
         cpu.Emitting = true;
 
         AddChild(cpu);
+    }
+
+    private static Texture2D? GetBlurTexture()
+    {
+        return s_blurTexture ??= ResourceLoader.Load<Texture2D>(BlurTexturePath, cacheMode: ResourceLoader.CacheMode.Reuse);
+    }
+
+    private static CanvasItemMaterial GetAdditiveMaterial()
+    {
+        return s_additiveMaterial ??= new CanvasItemMaterial { BlendMode = CanvasItemMaterial.BlendModeEnum.Add };
+    }
+
+    private static Gradient GetColorRamp()
+    {
+        if (s_colorRamp != null)
+        {
+            return s_colorRamp;
+        }
+
+        var ramp = new Gradient();
+        ramp.Offsets = [0f, 0.3f, 0.5f, 0.7f, 1f];
+        ramp.Colors =
+        [
+            new Color(1, 1, 1, 0f),
+            new Color(1, 1, 1, 0.6f),
+            new Color(1, 1, 1, 0.6f),
+            new Color(1, 1, 1, 0.3f),
+            new Color(1, 1, 1, 0f)
+        ];
+        s_colorRamp = ramp;
+        return ramp;
     }
 }

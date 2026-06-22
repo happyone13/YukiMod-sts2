@@ -87,6 +87,20 @@ public static class YukiMeleeTeleportAttackPatch
 	private static readonly MethodInfo? TriggerAnimMethod = AccessTools.Method(typeof(CreatureCmd), nameof(CreatureCmd.TriggerAnim), new[] { typeof(Creature), typeof(string), typeof(float) });
 	private static readonly MethodInfo? ProxyMethod = AccessTools.Method(typeof(YukiMeleeTeleportAttackPatch), nameof(TriggerAnimProxy));
 
+	public static IEnumerable<string> GetPreloadScenePaths()
+	{
+		foreach (string scenePath in ChaosTeleportAttackProfiles.GetPreloadScenePaths())
+		{
+			yield return scenePath;
+		}
+
+		yield return U2ReadyF;
+		yield return U2ReadyTargetF;
+		yield return U2PlayTargetB;
+		yield return U2PlayTargetF1;
+		yield return U2PlayTargetF2;
+	}
+
 	private static MethodBase? TargetMethod()
 	{
 		MethodInfo? execute = AccessTools.Method(typeof(AttackCommand), nameof(AttackCommand.Execute));
