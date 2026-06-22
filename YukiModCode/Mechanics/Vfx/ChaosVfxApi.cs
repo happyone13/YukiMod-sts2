@@ -54,7 +54,7 @@ public static partial class ChaosVfxApi
 
 		try
 		{
-			_ = ResourceLoader.Load<PackedScene>(spec.ScenePath);
+			ChaosSpineVfxInstance.Prewarm([spec.ScenePath]);
 		}
 		catch (Exception ex)
 		{

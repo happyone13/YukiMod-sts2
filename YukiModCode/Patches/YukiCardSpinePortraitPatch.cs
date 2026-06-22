@@ -81,6 +81,12 @@ public static class YukiCardSpinePortraitPatch
             return;
         }
 
+        if (!ShouldDisplayDynamicOverlays(cardNode))
+        {
+            RemoveSpineOverlay(cardNode);
+            return;
+        }
+
         if (cardNode?.Model is not IYukiCardVisualProfile profile || cardNode.IsInsideTree() != true)
             return;
 

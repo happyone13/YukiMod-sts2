@@ -174,6 +174,40 @@ public static class ChaosTeleportAttackProfiles
 		profile = default;
 		return false;
 	}
+
+	public static IEnumerable<string> GetPreloadScenePaths()
+	{
+		foreach (string scenePath in GetVfxScenePaths(Default.Vfx))
+		{
+			yield return scenePath;
+		}
+		yield return Default.AltAttackPlayB;
+		yield return Default.AltAttackPlayF;
+		yield return "res://YukiMod/ArtWorks/modspine/tscn_point/effect_scenes/yuki/yuki_1057_attack_play_target.tscn";
+
+		foreach (string scenePath in GetVfxScenePaths(U3Attack.Vfx))
+		{
+			yield return scenePath;
+		}
+
+		foreach (string scenePath in GetVfxScenePaths(U2Attack.Vfx))
+		{
+			yield return scenePath;
+		}
+	}
+
+	private static IEnumerable<string> GetVfxScenePaths(ChaosTeleportAttackVfxSet vfx)
+	{
+		yield return vfx.StepPlayerMoveB;
+		yield return vfx.StepPlayerMoveF;
+		yield return vfx.StepTargetArriveB;
+		yield return vfx.StepTargetArriveF;
+		yield return vfx.StepPlayerArriveB;
+		yield return vfx.StepPlayerArriveF;
+		yield return vfx.StepTargetMove;
+		yield return vfx.AttackPlayB;
+		yield return vfx.AttackPlayF;
+	}
 }
 
 public interface IChaosTeleportAttackProfileOverride

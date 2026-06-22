@@ -10,6 +10,10 @@ public partial class YukiBlackCloudStreakSpawner : Node2D
     private const float MinLifetime = 1.1f;
     private const float MaxLifetime = 1.7f;
     private const float VfxScale = 0.9f;
+    private const string StreakTexturePath = "res://YukiMod/images/vfx/frost_streak.png";
+
+    private static CanvasItemMaterial? s_additiveMaterial;
+    private static Texture2D? s_streakTexture;
 
     private readonly List<StreakData> _streaks = [];
     private CanvasItemMaterial _material = null!;
@@ -26,8 +30,8 @@ public partial class YukiBlackCloudStreakSpawner : Node2D
 
         _rng = new RandomNumberGenerator();
         _rng.Randomize();
-        _material = new CanvasItemMaterial { BlendMode = CanvasItemMaterial.BlendModeEnum.Add };
-        _texture = ResourceLoader.Load<Texture2D>("res://YukiMod/images/vfx/frost_streak.png", cacheMode: ResourceLoader.CacheMode.Ignore)!;
+        _material = GetAdditiveMaterial();
+        _texture = GetStreakTexture()!;
         if (_texture == null)
         {
             QueueFree();
@@ -39,6 +43,16 @@ public partial class YukiBlackCloudStreakSpawner : Node2D
             var preAge = _rng.RandfRange(0f, MaxLifetime);
             SpawnStreak(preAge);
         }
+    }
+
+    private static CanvasItemMaterial GetAdditiveMaterial()
+    {
+        return s_additiveMaterial ??= new CanvasItemMaterial { BlendMode = CanvasItemMaterial.BlendModeEnum.Add };
+    }
+
+    private static Texture2D? GetStreakTexture()
+    {
+        return s_streakTexture ??= ResourceLoader.Load<Texture2D>(StreakTexturePath, cacheMode: ResourceLoader.CacheMode.Reuse);
     }
 
     public void StopSpawning()
