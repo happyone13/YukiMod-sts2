@@ -27,6 +27,7 @@ public static class YukiModSharedSettingsUiPatch
 	private const string SettingsSliderScenePath = "res://scenes/screens/settings_slider.tscn";
 	private const string TemplateLabelPath = "SfxVolume/Label";
 	private static readonly string TemplateLabelFullPath = SoundSettingsVBoxPath + "/" + TemplateLabelPath;
+	private const string SharedModTabLabel = "ChaosMod";
 
 	private const string ModTabName = "XCskin_ModSettingsTab";
 	private const string ModPanelName = "XCskin_ModSettingsPanel";
@@ -718,14 +719,6 @@ public static class YukiModSharedSettingsUiPatch
 				tabManager.MoveChild(tab, rightIconIndex);
 			}
 			tab.Set("layout_mode", 2);
-			Callable.From(() =>
-			{
-				if (!GodotObject.IsInstanceValid(tab) || !tab.IsNodeReady())
-				{
-					return;
-				}
-				tab.SetLabel("YukiMod");
-			}).CallDeferred();
 		}
 		else
 		{
@@ -741,9 +734,23 @@ public static class YukiModSharedSettingsUiPatch
 			tab.Set("layout_mode", 2);
 		}
 
+		EnsureSharedTabLabelWhenReady(tab);
 		panel = settingsPanel;
 		EnsureTabBinding(tabManager, tab, settingsPanel);
 		return true;
+	}
+
+	private static void EnsureSharedTabLabelWhenReady(NSettingsTab tab)
+	{
+		Callable.From(() =>
+		{
+			if (!GodotObject.IsInstanceValid(tab) || !tab.IsNodeReady())
+			{
+				return;
+			}
+
+			tab.SetLabel(SharedModTabLabel);
+		}).CallDeferred();
 	}
 
 	private static void EnsureTabBinding(NSettingsTabManager tabManager, NSettingsTab tab, NSettingsPanel panel)
