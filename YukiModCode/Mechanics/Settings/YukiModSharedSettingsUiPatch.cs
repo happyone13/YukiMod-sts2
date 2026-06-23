@@ -35,6 +35,12 @@ public static class YukiModSharedSettingsUiPatch
 	private const string VoiceSectionName = "ChaosModVoiceVolume";
 	private const string VoiceSliderName = "ChaosModVoiceSlider";
 	private const string VoiceLineName = "Line_ChaosModVoice";
+	private const string ActionVfxSectionName = "ChaosModActionVfxEnabled";
+	private const string ActionVfxTickboxName = "ChaosModActionVfxTickbox";
+	private const string ActionVfxLineName = "Line_ChaosModActionVfxEnabled";
+	private const string PortraitsSectionName = "ChaosModPortraitsEnabled";
+	private const string PortraitsTickboxName = "ChaosModPortraitsTickbox";
+	private const string PortraitsLineName = "Line_ChaosModPortraitsEnabled";
 	private const string ScaleSectionName = "ChaosModBattleReadyScale";
 	private const string ScaleSliderName = "ChaosModBattleReadyScaleSlider";
 	private const string ScaleLineName = "Line_ChaosModBattleReadyScale";
@@ -47,15 +53,13 @@ public static class YukiModSharedSettingsUiPatch
 	private const string ResetSectionName = "ChaosModBattleReadyReset";
 	private const string ResetButtonName = "ChaosModBattleReadyResetButton";
 	private const string ResetLineName = "Line_ChaosModBattleReadyReset";
-	private const string BattleReadyOverlayRowName = "ChaosModBattleReadyOverlayRow";
-	private const string CombatEffectsRowName = "ChaosModCombatEffectsRow";
+	private const string ActionVfxLabelText = "mod特效开关";
+	private const string PortraitsLabelText = "立绘开关";
 
 	private const string CardVisualsLineName = "Line_YukiModCardVisuals";
 	private const string DynamicPortraitsSectionName = "YukiModCardVisualsDynamicPortraits";
 	private const string DynamicPortraitsRowName = "YukiModCardVisualsDynamicPortraitsRow";
 	private const string DynamicPortraitsTickboxName = "YukiModCardVisualsDynamicPortraitsTickbox";
-	private const string BattleReadyOverlayTickboxName = "ChaosModBattleReadyOverlayTickbox";
-	private const string CombatEffectsTickboxName = "ChaosModCombatEffectsTickbox";
 
 	private static int _injectLogOnce;
 	private static int _ensureLogOnce;
@@ -106,6 +110,8 @@ public static class YukiModSharedSettingsUiPatch
 		}
 
 		bool hasVoice = vbox.GetNodeOrNull(VoiceSectionName) != null;
+		bool hasActionVfx = vbox.GetNodeOrNull(ActionVfxSectionName) != null;
+		bool hasPortraits = vbox.GetNodeOrNull(PortraitsSectionName) != null;
 		bool hasScale = vbox.GetNodeOrNull(ScaleSectionName) != null;
 		bool hasOffsetY = vbox.GetNodeOrNull(OffsetYSectionName) != null;
 		bool hasOffsetX = vbox.GetNodeOrNull(OffsetXSectionName) != null;
@@ -115,14 +121,12 @@ public static class YukiModSharedSettingsUiPatch
 		VBoxContainer? existingVisualEffectsSection = vbox.GetNodeOrNull<VBoxContainer>(DynamicPortraitsSectionName);
 		bool hasVisualEffectsSection = existingVisualEffectsSection != null;
 		bool hasDynamicPortraits = existingVisualEffectsSection?.GetNodeOrNull(DynamicPortraitsRowName) != null;
-		bool hasBattleReadyOverlay = existingVisualEffectsSection?.GetNodeOrNull(BattleReadyOverlayRowName) != null;
-		bool hasCombatEffects = existingVisualEffectsSection?.GetNodeOrNull(CombatEffectsRowName) != null;
 
-		bool hasShared = hasVoice && hasScale && hasOffsetY && hasOffsetX && hasReset;
+		bool hasShared = hasVoice && hasActionVfx && hasPortraits && hasScale && hasOffsetY && hasOffsetX && hasReset;
 		if (hasShared)
 		{
 			TryWireExistingTransformHooksOnce(vbox);
-			if (hasDynamicPortraits && hasBattleReadyOverlay && hasCombatEffects)
+			if (hasDynamicPortraits)
 			{
 				return;
 			}
@@ -138,11 +142,15 @@ public static class YukiModSharedSettingsUiPatch
 		}
 
 		Control? voiceSliderRoot = null;
+		HBoxContainer? actionVfxSection = null;
+		HBoxContainer? portraitsSection = null;
 		Control? scaleSliderRoot = null;
 		Control? offsetYSliderRoot = null;
 		Control? offsetXSliderRoot = null;
 		Control? resetButtonRoot = null;
 		ColorRect? voiceLine = null;
+		ColorRect? actionVfxLine = null;
+		ColorRect? portraitsLine = null;
 		ColorRect? scaleLine = null;
 		ColorRect? offsetYLine = null;
 		ColorRect? offsetXLine = null;
@@ -169,6 +177,30 @@ public static class YukiModSharedSettingsUiPatch
 			voiceSliderRoot.CustomMinimumSize = new Vector2(0, 64);
 			voiceSection.AddChild(label);
 			voiceSection.AddChild(voiceSliderRoot);
+		}
+
+		if (!hasActionVfx)
+		{
+			actionVfxLine = CreateLine(ActionVfxLineName);
+			actionVfxSection = CreateConfigTickboxSection(
+				templateLabel,
+				ActionVfxSectionName,
+				ActionVfxTickboxName,
+				ActionVfxLabelText,
+				ModConfigRegistry.Get(YukiModInfo.ModId),
+				nameof(YukiModConfig.UseCombatEffects));
+		}
+
+		if (!hasPortraits)
+		{
+			portraitsLine = CreateLine(PortraitsLineName);
+			portraitsSection = CreateConfigTickboxSection(
+				templateLabel,
+				PortraitsSectionName,
+				PortraitsTickboxName,
+				PortraitsLabelText,
+				ModConfigRegistry.Get(YukiModInfo.ModId),
+				nameof(YukiModConfig.UseBattleReadyOverlay));
 		}
 
 		if (!hasScale)
@@ -254,32 +286,14 @@ public static class YukiModSharedSettingsUiPatch
 					config,
 					nameof(YukiModConfig.UseDynamicCardPortraits)));
 			}
-
-			if (!hasBattleReadyOverlay)
-			{
-				visualEffectsSection.AddChild(CreateConfigTickboxRow(
-					templateLabel,
-					BattleReadyOverlayRowName,
-					BattleReadyOverlayTickboxName,
-					LocText("YUKIMOD-USE_BATTLE_READY_OVERLAY.title", "启用背身立绘"),
-					config,
-					nameof(YukiModConfig.UseBattleReadyOverlay)));
-			}
-
-			if (!hasCombatEffects)
-			{
-				visualEffectsSection.AddChild(CreateConfigTickboxRow(
-					templateLabel,
-					CombatEffectsRowName,
-					CombatEffectsTickboxName,
-					LocText("YUKIMOD-USE_COMBAT_EFFECTS.title", "启用战斗特效"),
-					config,
-					nameof(YukiModConfig.UseCombatEffects)));
-			}
 		}
 
 		if (voiceLine != null) vbox.AddChild(voiceLine);
 		if (voiceSection != null) vbox.AddChild(voiceSection);
+		if (actionVfxLine != null) vbox.AddChild(actionVfxLine);
+		if (actionVfxSection != null) vbox.AddChild(actionVfxSection);
+		if (portraitsLine != null) vbox.AddChild(portraitsLine);
+		if (portraitsSection != null) vbox.AddChild(portraitsSection);
 		if (scaleLine != null) vbox.AddChild(scaleLine);
 		if (scaleSection != null) vbox.AddChild(scaleSection);
 		if (offsetYLine != null) vbox.AddChild(offsetYLine);
@@ -437,6 +451,19 @@ public static class YukiModSharedSettingsUiPatch
 		row.AddChild(rowLabel);
 		row.AddChild(tickbox);
 		return row;
+	}
+
+	private static HBoxContainer CreateConfigTickboxSection(
+		RichTextLabel? templateLabel,
+		string sectionName,
+		string tickboxName,
+		string labelText,
+		ModConfig? config,
+		string propertyName)
+	{
+		HBoxContainer section = CreateConfigTickboxRow(templateLabel, sectionName, tickboxName, labelText, config, propertyName);
+		section.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
+		return section;
 	}
 
 	private static string LocText(string entryKey, string fallback)
