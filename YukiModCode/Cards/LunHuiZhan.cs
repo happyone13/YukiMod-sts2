@@ -30,14 +30,17 @@ public class LunHuiZhan() : YukiModCard(3, CardType.Attack, CardRarity.Uncommon,
             .Execute(choiceContext);
     }
 
-    public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? source)
     {
+        await base.AfterCardChangedPiles(card, oldPileType, source);
+
         if (card == this)
         {
-            EnergyCost.AddThisCombat(-1);
+            if (Pile?.Type == PileType.Hand && oldPileType != PileType.Hand)
+            {
+                EnergyCost.AddThisCombat(-1);
+            }
         }
-
-        return Task.CompletedTask;
     }
 
     protected override void OnUpgrade()

@@ -135,7 +135,7 @@
     "YUKIMOD-BI_AN_HUA.title": "彼岸花",
     "YUKIMOD-BI_AN_HUA.description": "造成{Damage:diff()}点伤害。\\n在接下来的2个回合开始时，造成{Damage:diff()}点伤害。",
     "YUKIMOD-LUN_HUI_ZHAN.title": "轮回斩",
-    "YUKIMOD-LUN_HUI_ZHAN.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次。\\n每次抽到时，费用在本场战斗中减少1。",
+    "YUKIMOD-LUN_HUI_ZHAN.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次。\\n每次加入手牌时，费用在本场战斗中减少1。",
     "YUKIMOD-MAN_TIAN.title": "漫天",
     "YUKIMOD-MAN_TIAN.description": "处于[gold]黑云姿态[/gold]时，每当你使用[gold]黑云[/gold]牌，抽1张牌。",
     "YUKIMOD-NU_TAO_ZHAN.description": "一回合内首次打出{Threshold:diff()}张[gold]攻击[/gold]牌时，获得{Energy:energyIcons()}。",
