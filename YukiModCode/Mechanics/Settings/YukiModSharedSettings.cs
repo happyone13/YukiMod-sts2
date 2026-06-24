@@ -15,8 +15,8 @@ public static class YukiModSharedSettings
 	private static readonly string SharedBattleReadyScaleKey = SharedDomainKeyPrefix + "BATTLE_READY_SCALE";
 	private static readonly string SharedBattleReadyOffsetXKey = SharedDomainKeyPrefix + "BATTLE_READY_OFFSET_X";
 	private static readonly string SharedBattleReadyOffsetYKey = SharedDomainKeyPrefix + "BATTLE_READY_OFFSET_Y";
-	private static readonly string SharedBattleReadyOverlayEnabledKey = SharedDomainKeyPrefix + "BATTLE_READY_OVERLAY_ENABLED";
-	private static readonly string SharedCombatEffectsEnabledKey = SharedDomainKeyPrefix + "COMBAT_EFFECTS_ENABLED";
+	private static readonly string SharedBattleReadyOverlayEnabledKey = SharedDomainKeyPrefix + "PORTRAITS_ENABLED";
+	private static readonly string SharedCombatEffectsEnabledKey = SharedDomainKeyPrefix + "ACTION_VFX_ENABLED";
 
 	private static int _settingsLoaded;
 	private static float _voiceVolume = 0.8f;
@@ -181,13 +181,7 @@ public static class YukiModSharedSettings
 			else
 			{
 				string json = File.ReadAllText(path);
-				XCskinVoiceSettings? settings = JsonSerializer.Deserialize<XCskinVoiceSettings>(json);
-				_voiceVolume = Mathf.Clamp(settings?.Volume ?? 0.8f, 0f, 1f);
-				_battleReadyScale = Mathf.Clamp(settings?.BattleReadyScale ?? 1f, 0.5f, 2.0f);
-				_battleReadyOffsetX = Mathf.Clamp(settings?.BattleReadyOffsetX ?? 0f, -400f, 400f);
-				_battleReadyOffsetY = Mathf.Clamp(settings?.BattleReadyOffsetY ?? 0f, -400f, 400f);
-				_battleReadyOverlayEnabled = settings?.BattleReadyOverlayEnabled ?? true;
-				_combatEffectsEnabled = settings?.CombatEffectsEnabled ?? true;
+				LoadSettingsFromJson(json);
 			}
 
 			SetSharedFloat(SharedVoiceVolumeKey, _voiceVolume);
@@ -232,8 +226,8 @@ public static class YukiModSharedSettings
 				BattleReadyScale = GetSharedFloat(SharedBattleReadyScaleKey, _battleReadyScale),
 				BattleReadyOffsetX = GetSharedFloat(SharedBattleReadyOffsetXKey, _battleReadyOffsetX),
 				BattleReadyOffsetY = GetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY),
-				BattleReadyOverlayEnabled = GetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled),
-				CombatEffectsEnabled = GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled)
+				PortraitsEnabled = GetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled),
+				ActionVfxEnabled = GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled)
 			};
 			string json = JsonSerializer.Serialize(settings);
 			File.WriteAllText(path, json);
@@ -285,6 +279,67 @@ public static class YukiModSharedSettings
 		catch
 		{
 		}
+		return fallback;
+	}
+
+	private static void LoadSettingsFromJson(string json)
+	{
+		using JsonDocument document = JsonDocument.Parse(json);
+		JsonElement root = document.RootElement;
+
+		_voiceVolume = Mathf.Clamp(ReadFloat(root, "Volume", 0.8f), 0f, 1f);
+		_battleReadyScale = Mathf.Clamp(ReadFloat(root, "BattleReadyScale", 1f), 0.5f, 2.0f);
+		_battleReadyOffsetX = Mathf.Clamp(ReadFloat(root, "BattleReadyOffsetX", 0f), -400f, 400f);
+		_battleReadyOffsetY = Mathf.Clamp(ReadFloat(root, "BattleReadyOffsetY", 0f), -400f, 400f);
+		_battleReadyOverlayEnabled = ReadBool(root, true, "PortraitsEnabled", "BattleReadyOverlayEnabled");
+		_combatEffectsEnabled = ReadBool(root, true, "ActionVfxEnabled", "CombatEffectsEnabled");
+	}
+
+	private static float ReadFloat(JsonElement root, string propertyName, float fallback)
+	{
+		if (!root.TryGetProperty(propertyName, out JsonElement value))
+		{
+			return fallback;
+		}
+
+		if (value.ValueKind == JsonValueKind.Number && value.TryGetSingle(out float number))
+		{
+			return number;
+		}
+
+		if (value.ValueKind == JsonValueKind.String && float.TryParse(value.GetString(), out float parsed))
+		{
+			return parsed;
+		}
+
+		return fallback;
+	}
+
+	private static bool ReadBool(JsonElement root, bool fallback, params string[] propertyNames)
+	{
+		for (int i = 0; i < propertyNames.Length; i++)
+		{
+			if (!root.TryGetProperty(propertyNames[i], out JsonElement value))
+			{
+				continue;
+			}
+
+			if (value.ValueKind == JsonValueKind.True)
+			{
+				return true;
+			}
+
+			if (value.ValueKind == JsonValueKind.False)
+			{
+				return false;
+			}
+
+			if (value.ValueKind == JsonValueKind.String && bool.TryParse(value.GetString(), out bool parsed))
+			{
+				return parsed;
+			}
+		}
+
 		return fallback;
 	}
 
@@ -367,7 +422,7 @@ public static class YukiModSharedSettings
 		public float BattleReadyScale { get; set; } = 1f;
 		public float BattleReadyOffsetX { get; set; }
 		public float BattleReadyOffsetY { get; set; }
-		public bool BattleReadyOverlayEnabled { get; set; } = true;
-		public bool CombatEffectsEnabled { get; set; } = true;
+		public bool PortraitsEnabled { get; set; } = true;
+		public bool ActionVfxEnabled { get; set; } = true;
 	}
 }
