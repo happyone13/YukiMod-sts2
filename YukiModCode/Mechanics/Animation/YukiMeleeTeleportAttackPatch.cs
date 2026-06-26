@@ -151,6 +151,11 @@ public static class YukiMeleeTeleportAttackPatch
 	{
 		public static void Prefix(MegaCrit.Sts2.Core.Commands.Builders.AttackCommand __instance)
 		{
+			if (__instance == null)
+			{
+				return;
+			}
+
 			int d = AttackCommandDepth.Value;
 			AttackCommandDepth.Value = d + 1;
 			if (d == 0)
@@ -159,9 +164,15 @@ public static class YukiMeleeTeleportAttackPatch
 			}
 		}
 
-		public static void Postfix(ref Task<MegaCrit.Sts2.Core.Commands.Builders.AttackCommand> __result)
+		public static void Postfix(MegaCrit.Sts2.Core.Commands.Builders.AttackCommand __instance, ref Task<MegaCrit.Sts2.Core.Commands.Builders.AttackCommand> __result)
 		{
-			__result = Wrap(__result);
+			if (__instance == null)
+			{
+				return;
+			}
+
+			Task<MegaCrit.Sts2.Core.Commands.Builders.AttackCommand> original = __result ?? Task.FromResult(__instance);
+			__result = Wrap(original);
 		}
 
 		private static async Task<MegaCrit.Sts2.Core.Commands.Builders.AttackCommand> Wrap(Task<MegaCrit.Sts2.Core.Commands.Builders.AttackCommand> inner)
