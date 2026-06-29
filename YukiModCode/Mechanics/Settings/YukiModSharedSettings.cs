@@ -17,6 +17,7 @@ public static class YukiModSharedSettings
 	private static readonly string SharedBattleReadyOffsetYKey = SharedDomainKeyPrefix + "BATTLE_READY_OFFSET_Y";
 	private static readonly string SharedBattleReadyOverlayEnabledKey = SharedDomainKeyPrefix + "PORTRAITS_ENABLED";
 	private static readonly string SharedCombatEffectsEnabledKey = SharedDomainKeyPrefix + "ACTION_VFX_ENABLED";
+	private static readonly string SharedDynamicCardPortraitsEnabledKey = SharedDomainKeyPrefix + "DYNAMIC_CARD_PORTRAITS_ENABLED";
 
 	private static int _settingsLoaded;
 	private static float _voiceVolume = 0.8f;
@@ -25,6 +26,7 @@ public static class YukiModSharedSettings
 	private static float _battleReadyOffsetY;
 	private static bool _battleReadyOverlayEnabled = true;
 	private static bool _combatEffectsEnabled = true;
+	private static bool _dynamicCardPortraitsEnabled = true;
 
 	public static event Action<bool>? CombatEffectsEnabledChanged;
 
@@ -79,6 +81,15 @@ public static class YukiModSharedSettings
 		{
 			EnsureSettingsLoaded();
 			return GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
+		}
+	}
+
+	public static bool DynamicCardPortraitsEnabled
+	{
+		get
+		{
+			EnsureSettingsLoaded();
+			return GetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled);
 		}
 	}
 
@@ -159,6 +170,17 @@ public static class YukiModSharedSettings
 		}
 	}
 
+	public static void SetDynamicCardPortraitsEnabled(bool value, bool persist)
+	{
+		EnsureSettingsLoaded();
+		_dynamicCardPortraitsEnabled = value;
+		SetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled);
+		if (persist)
+		{
+			Save();
+		}
+	}
+
 	public static void EnsureSettingsLoaded()
 	{
 		if (System.Threading.Interlocked.Exchange(ref _settingsLoaded, 1) != 0)
@@ -177,6 +199,7 @@ public static class YukiModSharedSettings
 				_battleReadyOffsetY = 0f;
 				_battleReadyOverlayEnabled = true;
 				_combatEffectsEnabled = true;
+				_dynamicCardPortraitsEnabled = true;
 			}
 			else
 			{
@@ -190,6 +213,7 @@ public static class YukiModSharedSettings
 			SetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY);
 			SetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
 			SetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
+			SetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled);
 		}
 		catch (Exception ex)
 		{
@@ -199,12 +223,14 @@ public static class YukiModSharedSettings
 			_battleReadyOffsetY = 0f;
 			_battleReadyOverlayEnabled = true;
 			_combatEffectsEnabled = true;
+			_dynamicCardPortraitsEnabled = true;
 			SetSharedFloat(SharedVoiceVolumeKey, _voiceVolume);
 			SetSharedFloat(SharedBattleReadyScaleKey, _battleReadyScale);
 			SetSharedFloat(SharedBattleReadyOffsetXKey, _battleReadyOffsetX);
 			SetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY);
 			SetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
 			SetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
+			SetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled);
 			Log.Warn($"[{YukiModInfo.ModId}] Shared settings load failed: {ex.Message}");
 		}
 	}
@@ -227,7 +253,8 @@ public static class YukiModSharedSettings
 				BattleReadyOffsetX = GetSharedFloat(SharedBattleReadyOffsetXKey, _battleReadyOffsetX),
 				BattleReadyOffsetY = GetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY),
 				PortraitsEnabled = GetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled),
-				ActionVfxEnabled = GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled)
+				ActionVfxEnabled = GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled),
+				DynamicCardPortraitsEnabled = GetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled)
 			};
 			string json = JsonSerializer.Serialize(settings);
 			File.WriteAllText(path, json);
@@ -293,6 +320,7 @@ public static class YukiModSharedSettings
 		_battleReadyOffsetY = Mathf.Clamp(ReadFloat(root, "BattleReadyOffsetY", 0f), -400f, 400f);
 		_battleReadyOverlayEnabled = ReadBool(root, true, "PortraitsEnabled", "BattleReadyOverlayEnabled");
 		_combatEffectsEnabled = ReadBool(root, true, "ActionVfxEnabled", "CombatEffectsEnabled");
+		_dynamicCardPortraitsEnabled = ReadBool(root, true, "DynamicCardPortraitsEnabled", "UseDynamicCardPortraits");
 	}
 
 	private static float ReadFloat(JsonElement root, string propertyName, float fallback)
@@ -424,5 +452,6 @@ public static class YukiModSharedSettings
 		public float BattleReadyOffsetY { get; set; }
 		public bool PortraitsEnabled { get; set; } = true;
 		public bool ActionVfxEnabled { get; set; } = true;
+		public bool DynamicCardPortraitsEnabled { get; set; } = true;
 	}
 }
