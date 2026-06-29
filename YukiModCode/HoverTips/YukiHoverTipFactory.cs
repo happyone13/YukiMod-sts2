@@ -74,7 +74,7 @@ public static class YukiHoverTipFactory
 
     public static IEnumerable<IHoverTip> FromIai()
     {
-        return [HoverTipFactory.FromCard<JuHe>()];
+        return [HoverTipFactory.FromCard<JuHe>(), FromJuHeKeyword()];
     }
 
     public static IHoverTip FromJuHeKeyword()

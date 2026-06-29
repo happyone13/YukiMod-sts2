@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
+using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -27,6 +30,20 @@ public class BoRiJianYun() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon,
     {
         await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["BlackCloud"].BaseValue, this);
         await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudEnterNextTurnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+
+        if (PileType.Hand.GetPile(Owner).Cards.Count == 0)
+        {
+            return;
+        }
+
+        var selected = (await CardSelectCmd.FromHand(
+                choiceContext,
+                Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 1),
+                null,
+                this))
+            .FirstOrDefault();
+        selected?.GiveSingleTurnRetain();
     }
 
     protected override void OnUpgrade()

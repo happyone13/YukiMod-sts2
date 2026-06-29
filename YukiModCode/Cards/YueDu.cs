@@ -21,7 +21,7 @@ public class YueDu() : YukiModCard(0, CardType.Skill, CardRarity.Rare, TargetTyp
         [HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("MoonshadowDamage", 2m)];
+        [new DynamicVar("MoonshadowDamage", 3m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -25,7 +25,15 @@ public class NuTaoZhanPower : YukiModPower
 
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    public override int DisplayAmount => Math.Max(0, Amount - GetInternalData<Data>().AttacksPlayedThisTurn);
+    public override int DisplayAmount
+    {
+        get
+        {
+            var threshold = Math.Max(1, (int)Amount);
+            var progress = GetInternalData<Data>().AttacksPlayedThisTurn % threshold;
+            return progress == 0 ? threshold : threshold - progress;
+        }
+    }
 
     protected override object InitInternalData()
     {
@@ -54,7 +62,7 @@ public class NuTaoZhanPower : YukiModPower
         data.AttacksPlayedThisTurn++;
         InvokeDisplayAmountChanged();
 
-        if (data.AttacksPlayedThisTurn != Amount)
+        if (data.AttacksPlayedThisTurn % Math.Max(1, (int)Amount) != 0)
         {
             return;
         }

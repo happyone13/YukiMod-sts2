@@ -15,7 +15,7 @@ using YukiMod.YukiModCode.Character;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class YanHuiFan() : YukiModCard(1, CardType.Attack, CardRarity.Rare, TargetType.Self)
+public class YanHuiFan() : YukiModCard(0, CardType.Attack, CardRarity.Rare, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];

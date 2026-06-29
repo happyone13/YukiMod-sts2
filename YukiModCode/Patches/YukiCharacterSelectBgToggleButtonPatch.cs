@@ -23,63 +23,26 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 	private const string Bg2Path = "res://YukiMod/ArtWorks/scenes/screens/char_select/char_select_bg_chaos_yuki_2.tscn";
 	private const string LoopAnimName = "animation";
 	private const string FallbackLoopAnimName = "idle";
+	private const string ToggleButtonConnectedMeta = "YukiBgToggleButtonConnected";
 	private static bool _forceLoopWarned;
+	private static bool _toggleButtonCreatedLogged;
+	private static bool _toggleButtonVisibleLogged;
+	private static bool _bgContainerMissingWarned;
+	private static bool _bgPairInjectedLogged;
 
 	[HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen._Ready))]
 	[HarmonyPostfix]
 	public static void ReadyPostfix(NCharacterSelectScreen __instance)
 	{
-		Control? charSelectButtons = __instance.GetNodeOrNull<Control>(CharSelectButtonsNodeName);
-		if (charSelectButtons == null)
-		{
-			Log.Warn($"[{YukiModInfo.ModId}] CharacterSelect missing node: {CharSelectButtonsNodeName}");
-			return;
-		}
-
-		if (charSelectButtons.GetNodeOrNull<Button>(ToggleButtonNodeName) != null)
-		{
-			return;
-		}
-
-		Button btn = new Button
-		{
-			Name = ToggleButtonNodeName,
-			Text = "切换背景",
-			Visible = false,
-		};
-
-		charSelectButtons.AddChildSafely(btn);
-
-		btn.TopLevel = true;
-		btn.SetAnchorsPreset(Control.LayoutPreset.TopLeft);
-		btn.Size = new Vector2(100, 28);
-
-		btn.Pressed += () =>
-		{
-			try
-			{
-				YukiCharacterSelectBgToggleState.UseAltBg = !YukiCharacterSelectBgToggleState.UseAltBg;
-				EnsureBgPairInjected(__instance);
-				ApplyBgVisibility(__instance);
-			}
-			catch (Exception ex)
-			{
-				Log.Warn($"[{YukiModInfo.ModId}] Toggle Yuki character select bg failed: {ex.Message}");
-			}
-		};
+		EnsureToggleButton(__instance);
 	}
 
 	[HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.SelectCharacter))]
 	[HarmonyPostfix]
+	[HarmonyPriority(Priority.Last)]
 	public static void SelectCharacterPostfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton, CharacterModel characterModel)
 	{
-		Control? charSelectButtons = __instance.GetNodeOrNull<Control>(CharSelectButtonsNodeName);
-		if (charSelectButtons == null)
-		{
-			return;
-		}
-
-		Button? btn = charSelectButtons.GetNodeOrNull<Button>(ToggleButtonNodeName);
+		Button? btn = EnsureToggleButton(__instance);
 		if (btn == null)
 		{
 			return;
@@ -88,10 +51,144 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 		btn.Visible = !charSelectButton.IsLocked && IsYukiCharacter(characterModel);
 		if (btn.Visible)
 		{
+			btn.Disabled = false;
+			btn.Modulate = Colors.White;
+			btn.ZIndex = 4096;
 			UpdateToggleButtonPosition(btn, charSelectButton);
+			MoveToFront(btn);
+			LogToggleButtonVisibleOnce(btn);
 			EnsureBgPairInjected(__instance);
 			ApplyBgVisibility(__instance);
+			Callable.From(() => ApplyDeferredIfStillYuki(__instance, charSelectButton, characterModel)).CallDeferred();
 		}
+	}
+
+	private static Button? EnsureToggleButton(NCharacterSelectScreen screen)
+	{
+		Button? btn = FindToggleButton(screen);
+		if (btn == null)
+		{
+			btn = new Button
+			{
+				Name = ToggleButtonNodeName,
+				Text = "切换背景",
+				Visible = false,
+				TopLevel = true,
+				MouseFilter = Control.MouseFilterEnum.Stop,
+				FocusMode = Control.FocusModeEnum.None,
+				ZIndex = 4096,
+			};
+
+			screen.AddChildSafely(btn);
+			LogToggleButtonCreatedOnce(screen);
+		}
+		else if (btn.GetParent() != screen)
+		{
+			Node? parent = btn.GetParent();
+			parent?.RemoveChildSafely(btn);
+			screen.AddChildSafely(btn);
+		}
+
+		btn.TopLevel = true;
+		btn.MouseFilter = Control.MouseFilterEnum.Stop;
+		btn.FocusMode = Control.FocusModeEnum.None;
+		btn.ZIndex = 4096;
+		btn.Size = new Vector2(100, 28);
+
+		if (!btn.HasMeta(ToggleButtonConnectedMeta))
+		{
+			void OnPressed()
+			{
+				try
+				{
+					YukiCharacterSelectBgToggleState.UseAltBg = !YukiCharacterSelectBgToggleState.UseAltBg;
+					EnsureBgPairInjected(screen);
+					ApplyBgVisibility(screen);
+				}
+				catch (Exception ex)
+				{
+					Log.Warn($"[{YukiModInfo.ModId}] Toggle Yuki character select bg failed: {ex.Message}");
+				}
+			}
+
+			btn.Connect(BaseButton.SignalName.Pressed, Callable.From(new Action(OnPressed)));
+			btn.SetMeta(ToggleButtonConnectedMeta, true);
+		}
+
+		return btn;
+	}
+
+	private static Button? FindToggleButton(Node root)
+	{
+		var stack = new System.Collections.Generic.Stack<Node>();
+		stack.Push(root);
+
+		while (stack.Count > 0)
+		{
+			Node node = stack.Pop();
+			if (node is Button button && string.Equals(button.Name.ToString(), ToggleButtonNodeName, StringComparison.Ordinal))
+			{
+				return button;
+			}
+
+			foreach (Node child in node.GetChildren())
+			{
+				stack.Push(child);
+			}
+		}
+
+		return null;
+	}
+
+	private static void ApplyDeferredIfStillYuki(NCharacterSelectScreen screen, NCharacterSelectButton charSelectButton, CharacterModel characterModel)
+	{
+		if (!GodotObject.IsInstanceValid(screen) || !GodotObject.IsInstanceValid(charSelectButton))
+		{
+			return;
+		}
+
+		Button? btn = EnsureToggleButton(screen);
+		if (btn == null)
+		{
+			return;
+		}
+
+		bool visible = !charSelectButton.IsLocked && IsYukiCharacter(characterModel);
+		btn.Visible = visible;
+		if (!visible)
+		{
+			return;
+		}
+
+		btn.Disabled = false;
+		btn.ZIndex = 4096;
+		UpdateToggleButtonPosition(btn, charSelectButton);
+		MoveToFront(btn);
+		LogToggleButtonVisibleOnce(btn);
+		EnsureBgPairInjected(screen);
+		ApplyBgVisibility(screen);
+	}
+
+	private static void LogToggleButtonCreatedOnce(NCharacterSelectScreen screen)
+	{
+		if (_toggleButtonCreatedLogged)
+		{
+			return;
+		}
+
+		_toggleButtonCreatedLogged = true;
+		Log.Info($"[{YukiModInfo.ModId}] CharacterSelect bg toggle button created under {screen.GetPath()}.");
+	}
+
+	private static void LogToggleButtonVisibleOnce(Button btn)
+	{
+		if (_toggleButtonVisibleLogged)
+		{
+			return;
+		}
+
+		_toggleButtonVisibleLogged = true;
+		Log.Info($"[{YukiModInfo.ModId}] CharacterSelect bg toggle visible at {btn.GlobalPosition} size={btn.Size}.");
 	}
 
 	private static bool IsYukiCharacter(CharacterModel? characterModel)
@@ -120,9 +217,27 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 		Vector2 size = new Vector2(width, height);
 		btn.Size = size;
 
-		float x = rect.Position.X;
+		Rect2 viewportRect = selectedButton.GetViewportRect();
+		float x = Mathf.Clamp(rect.Position.X, 8f, Mathf.Max(8f, viewportRect.Size.X - size.X - 8f));
 		float y = rect.Position.Y - size.Y + 6;
+		if (y < 8f)
+		{
+			y = rect.Position.Y + rect.Size.Y - size.Y - 6f;
+		}
+
+		y = Mathf.Clamp(y, 8f, Mathf.Max(8f, viewportRect.Size.Y - size.Y - 8f));
 		btn.GlobalPosition = new Vector2(Mathf.Round(x), Mathf.Round(y));
+	}
+
+	private static void MoveToFront(Node node)
+	{
+		Node? parent = node.GetParent();
+		if (parent == null)
+		{
+			return;
+		}
+
+		parent.MoveChild(node, parent.GetChildCount() - 1);
 	}
 
 	private static void EnsureBgPairInjected(NCharacterSelectScreen screen)
@@ -130,6 +245,7 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 		Control? bgContainer = screen.GetNodeOrNull<Control>(BgContainerNodeName);
 		if (bgContainer == null)
 		{
+			LogBgContainerMissingOnce();
 			return;
 		}
 
@@ -155,7 +271,31 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 		bg2.Name = Bg2NodeName;
 		bgContainer.AddChildSafely(bg2);
 
+		LogBgPairInjectedOnce(bgContainer);
+
 		StartForceLoopRetry(screen, bg1, maxFrames: 90);
+	}
+
+	private static void LogBgContainerMissingOnce()
+	{
+		if (_bgContainerMissingWarned)
+		{
+			return;
+		}
+
+		_bgContainerMissingWarned = true;
+		Log.Warn($"[{YukiModInfo.ModId}] CharacterSelect bg container missing: {BgContainerNodeName}");
+	}
+
+	private static void LogBgPairInjectedOnce(Node bgContainer)
+	{
+		if (_bgPairInjectedLogged)
+		{
+			return;
+		}
+
+		_bgPairInjectedLogged = true;
+		Log.Info($"[{YukiModInfo.ModId}] CharacterSelect bg pair injected into {bgContainer.GetPath()}.");
 	}
 
 	private static void ApplyBgVisibility(NCharacterSelectScreen screen)
@@ -163,6 +303,7 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 		Control? bgContainer = screen.GetNodeOrNull<Control>(BgContainerNodeName);
 		if (bgContainer == null)
 		{
+			LogBgContainerMissingOnce();
 			return;
 		}
 

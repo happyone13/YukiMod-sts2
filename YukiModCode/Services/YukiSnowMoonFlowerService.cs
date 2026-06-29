@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,8 +12,6 @@ namespace YukiMod.YukiModCode.Services;
 
 public static class YukiSnowMoonFlowerService
 {
-    public const decimal SharedMoonshadowDamageBonus = 3m;
-
     public static bool HasXue(Player? player) => GetXuePower(player) != null;
     public static bool HasYue(Player? player) => GetYuePower(player) != null;
     public static bool HasHua(Player? player) => GetHuaPower(player) != null;
@@ -26,14 +23,14 @@ public static class YukiSnowMoonFlowerService
                && card is Yue or Hua;
     }
 
-    public static bool ShouldGrantMoonshadowDamage(CardModel card)
+    public static bool ShouldGrantExtraAttack(CardModel card)
     {
         return card.Owner != null
                && HasYue(card.Owner)
                && card is Xue or Hua;
     }
 
-    public static bool ShouldGrantBlackCloud(CardModel card)
+    public static bool ShouldGrantBlackCloudCostDown(CardModel card)
     {
         return card.Owner != null
                && HasHua(card.Owner)
@@ -85,14 +82,12 @@ public static class YukiSnowMoonFlowerService
         var yuePower = GetYuePower(owner);
         var huaPower = GetHuaPower(owner);
 
-        if (xuePower == null || yuePower == null || huaPower == null || combatState == null)
+        if (xuePower == null || yuePower == null || huaPower == null || combatState == null || xuePower.HasCreatedJuHe)
         {
             return;
         }
 
-        await PowerCmd.Remove(xuePower);
-        await PowerCmd.Remove(yuePower);
-        await PowerCmd.Remove(huaPower);
+        xuePower.MarkJuHeCreated();
         await JuHe.CreateInHand(owner, combatState);
     }
 }

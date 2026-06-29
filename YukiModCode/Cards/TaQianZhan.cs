@@ -1,48 +1,40 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
-using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.HoverTips;
 using YukiMod.YukiModCode.Character;
-using YukiMod.YukiModCode.Powers;
+using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class TaQianZhan() : YukiModCard(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+public class TaQianZhan() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyAlly)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(2m, ValueProp.Move)];
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        [CardKeyword.Exhaust];
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        [YukiHoverTipFactory.FromNingJu(), HoverTipFactory.FromCard<YueYing>()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
-
-        var wasTargetHitByThisCardThisTurn = cardPlay.Target.GetPower<TaQianZhanMarkedPower>() != null;
-
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
-
-        if (cardPlay.Target.IsAlive && !wasTargetHitByThisCardThisTurn)
+        var targetPlayer = cardPlay.Target?.Player;
+        var combatState = CombatState;
+        if (targetPlayer == null || combatState == null)
         {
-            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<TaQianZhanMarkedPower>(choiceContext, cardPlay.Target, 1m, Owner.Creature, this);
+            return;
         }
 
-        if (!wasTargetHitByThisCardThisTurn)
-        {
-            await CardPileCmd.Add(this, PileType.Hand);
-        }
+        await YukiMoonshadowService.NingJu(targetPlayer, combatState, 1);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(1m);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

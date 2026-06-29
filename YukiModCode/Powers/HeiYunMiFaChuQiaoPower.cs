@@ -1,20 +1,22 @@
-﻿using System.Threading.Tasks;
+using System.Linq;
+using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
-using YukiMod.YukiModCode.Cards;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Powers;
 
-public class HeiYunMiFaChuQiaoPower : YukiModPower, IBlackCloudExitedListener
+public class HeiYunMiFaChuQiaoPower : YukiModPower, IBlackCloudEnteredListener
 {
     private sealed class Data
     {
-        public bool CreateUpgradedNaDao;
+        public bool CreateUpgradedBlackCloudCard;
     }
 
     public override PowerType Type => PowerType.Buff;
@@ -24,12 +26,12 @@ public class HeiYunMiFaChuQiaoPower : YukiModPower, IBlackCloudExitedListener
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
     public override LocString Description =>
-        AddPowerDescriptionArgs(new LocString("powers", GetInternalData<Data>().CreateUpgradedNaDao
+        AddPowerDescriptionArgs(new LocString("powers", GetInternalData<Data>().CreateUpgradedBlackCloudCard
             ? $"{Id.Entry}.descriptionUpgraded"
             : $"{Id.Entry}.description"));
 
     protected override string SmartDescriptionLocKey =>
-        GetInternalData<Data>().CreateUpgradedNaDao
+        GetInternalData<Data>().CreateUpgradedBlackCloudCard
             ? $"{Id.Entry}.smartDescriptionUpgraded"
             : base.SmartDescriptionLocKey;
 
@@ -40,24 +42,44 @@ public class HeiYunMiFaChuQiaoPower : YukiModPower, IBlackCloudExitedListener
 
     public override Task AfterApplied(MegaCrit.Sts2.Core.Entities.Creatures.Creature? applier, CardModel? cardSource)
     {
-        GetInternalData<Data>().CreateUpgradedNaDao = cardSource?.IsUpgraded == true;
+        GetInternalData<Data>().CreateUpgradedBlackCloudCard = cardSource?.IsUpgraded == true;
         return Task.CompletedTask;
     }
 
-    public async Task OnBlackCloudExited(PlayerChoiceContext choiceContext, Player player)
+    public async Task OnBlackCloudEntered(PlayerChoiceContext choiceContext, Player player)
     {
         if (player != Owner.Player || CombatState == null)
         {
             return;
         }
 
-        Flash();
-        var createUpgradedNaDao = GetInternalData<Data>().CreateUpgradedNaDao;
-        for (var i = 0; i < Amount; i++)
+        var candidates = player.Character.CardPool.AllCards
+            .Where(YukiBlackCloudService.IsBlackCloudCard)
+            .ToList();
+        if (candidates.Count == 0)
         {
-            await NaDao.CreateInHand(player, CombatState, upgraded: createUpgradedNaDao);
+            return;
         }
 
-        await PowerCmd.Remove(this);
+        Flash();
+        var createUpgradedBlackCloudCard = GetInternalData<Data>().CreateUpgradedBlackCloudCard;
+        var rng = player.RunState.Rng.CombatCardSelection;
+        for (var i = 0; i < Amount; i++)
+        {
+            var canonicalCard = rng.NextItem(candidates);
+            if (canonicalCard == null)
+            {
+                return;
+            }
+
+            var card = CombatState.CreateCard(canonicalCard, player);
+            CardCmd.ApplyKeyword(card, CardKeyword.Ethereal);
+            if (createUpgradedBlackCloudCard && card.IsUpgradable && !card.IsUpgraded)
+            {
+                CardCmd.Upgrade(card, CardPreviewStyle.None);
+            }
+
+            await YukiCardPileService.AddGeneratedCardsToCombat([card], PileType.Hand, player);
+        }
     }
 }

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
@@ -25,21 +26,17 @@ public class Hua() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<HuaPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move)];
+        [new DamageVar(6m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
         var hitCount = 1;
-        await YukiBlackCloudService.Resolve(
-            choiceContext,
-            this,
-            () =>
-            {
-                hitCount++;
-                return Task.CompletedTask;
-            });
+        if (YukiSnowMoonFlowerService.ShouldGrantExtraAttack(this))
+        {
+            hitCount++;
+        }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
@@ -48,11 +45,6 @@ public class Hua() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        if (YukiSnowMoonFlowerService.ShouldGrantMoonshadowDamage(this))
-        {
-            YukiMoonshadowService.GainMoonshadowDamageInHand(Owner, YukiSnowMoonFlowerService.SharedMoonshadowDamageBonus);
-        }
-
         await YukiSnowMoonFlowerService.ApplyHua(choiceContext, Owner, CombatState, this);
         if (YukiInspirationService.WillTriggerOnPlay(this))
         {
@@ -60,8 +52,28 @@ public class Hua() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
         }
     }
 
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this
+            || originalCost <= 0m
+            || Pile?.Type is not (PileType.Hand or PileType.Play)
+            || !YukiBlackCloudService.IsActive(Owner))
+        {
+            return false;
+        }
+
+        modifiedCost = originalCost - 1m;
+        if (modifiedCost < 0m)
+        {
+            modifiedCost = 0m;
+        }
+
+        return modifiedCost != originalCost;
+    }
+
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

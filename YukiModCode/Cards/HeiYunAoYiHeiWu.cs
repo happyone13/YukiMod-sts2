@@ -29,7 +29,7 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(8m, ValueProp.Move), new DynamicVar("NoMing", 3m)];
+        [new DamageVar(8m, ValueProp.Move), new DynamicVar("NoMing", 2m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -39,8 +39,17 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
         var isBlackCloudActive = YukiBlackCloudService.IsActive(Owner);
         if (isBlackCloudActive)
         {
-            var hand = PileType.Hand.GetPile(Owner).Cards;
-            hitCount += hand.Count(card => card.Type == CardType.Skill);
+            var hand = PileType.Hand.GetPile(Owner).Cards
+                .Where(card => !YukiBlackCloudService.IsBlackCloudCard(card))
+                .ToList();
+            foreach (var card in hand)
+            {
+                await CardCmd.Exhaust(choiceContext, card);
+                if (card.Pile?.Type == PileType.Exhaust)
+                {
+                    hitCount++;
+                }
+            }
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
@@ -59,5 +68,6 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars["NoMing"].UpgradeValueBy(1m);
     }
 }

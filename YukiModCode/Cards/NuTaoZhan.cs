@@ -12,12 +12,12 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class NuTaoZhan() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+public class NuTaoZhan() : YukiModCard(2, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
     private const string ThresholdKey = "Threshold";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar(ThresholdKey, 3m), new EnergyVar(1)];
+        [new DynamicVar(ThresholdKey, 4m), new EnergyVar(1)];
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [EnergyHoverTip];

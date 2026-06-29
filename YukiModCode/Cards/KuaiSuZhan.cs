@@ -20,12 +20,13 @@ public class KuaiSuZhan() : YukiModCard(1, CardType.Attack, CardRarity.Common, T
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        [YukiHoverTipFactory.FromInspiration()];
+        [YukiHoverTipFactory.FromInspiration(), YukiHoverTipFactory.FromBlackCloud()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(4m, ValueProp.Move), new RepeatVar(3)];
+        [new DamageVar(3m, ValueProp.Move), new RepeatVar(3), new CardsVar(1)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -37,6 +38,11 @@ public class KuaiSuZhan() : YukiModCard(1, CardType.Attack, CardRarity.Common, T
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
+
+        if (YukiBlackCloudService.IsActive(Owner))
+        {
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        }
     }
 
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)

@@ -13,7 +13,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class HuiTian() : YukiModCard(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
+public class HuiTian() : YukiModCard(0, CardType.Skill, CardRarity.Rare, TargetType.Self)
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
