@@ -42,7 +42,7 @@
 - 涉及“回合开始”“抽牌前/后”“重抽整手牌”“是否计入起手抽牌”等效果时，先对照对应目标版本的 `CombatManager.cs` 实际调用顺序；只有 104 资料时可先参考 `sts104/src/Core/Combat/CombatManager.cs`，再用 107 API 校验
 - 如果碰到 `meilin` 命名的资源，先判断它是暂时沿用还是准备迁移，不要自动重命名
 - 运行时报错优先查看 `C:\Users\lozalia\AppData\Roaming\SlayTheSpire2\logs` 下最新的 `godot.log` 或时间戳日志，再决定修复方向
-- 如果 Godot 编辑器里出现 `SpineAtlasResource` / `SpineSkeletonFileResource` 依赖损坏，先检查仓库根目录 `bin/spine_godot_extension.gdextension` 及对应 `bin/windows/libspine_godot...dll` 是否存在；缺这层时，编辑器会把 `.atlas/.skel` 误判成坏依赖
+- 如果 Godot 编辑器里出现 `SpineAtlasResource` / `SpineSkeletonFileResource` 依赖损坏，先检查仓库根目录 `spine_godot_extension.gdextension` 及对应 `windows/libspine_godot...dll` 是否存在；缺这层时，编辑器会把 `.atlas/.skel` 误判成坏依赖
 - 如果本地场景引用了原版工程里的 `res://src/...` 或 `res://scenes/...` 路径，而当前仓库没有这些文件，优先补最小本地桥接文件；对 C# 脚本优先使用继承原版类型的薄包装器，避免直接复制同名原版类导致与 `sts2.dll` 类型冲突
 
 ### 4.2 修改时

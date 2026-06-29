@@ -10,6 +10,9 @@ publish/
 tmp/
 *.pck
 *.dll
+!windows/libspine_godot.windows.editor.x86_64.dll
+!windows/libspine_godot.windows.template_debug.x86_64.dll
+!windows/libspine_godot.windows.template_release.x86_64.dll
 *.deps.json
 *.runtimeconfig.json
 .idea/
