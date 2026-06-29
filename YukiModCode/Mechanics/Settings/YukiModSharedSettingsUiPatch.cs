@@ -1,18 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using HarmonyLib;
 using Godot;
-using MegaCrit.Sts2.Core.ControllerInput;
+using HarmonyLib;
 using MegaCrit.Sts2.addons.mega_text;
-using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.ControllerInput;
 using MegaCrit.Sts2.Core.Logging;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Screens.Settings;
-using BaseLib.Config;
-using BaseLib.Config.UI;
-using YukiMod.YukiModCode.Config;
 using YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 
 namespace YukiMod.YukiModCode.Mechanics.Settings;
@@ -22,16 +18,31 @@ public static class YukiModSharedSettingsUiPatch
 {
 	private const string ClipperPath = "ScrollContainer/Mask/Clipper";
 	private const string SoundSettingsVBoxPath = ClipperPath + "/SoundSettings/VBoxContainer";
-	private const string SettingsTabManagerPath = "SettingsTabManager";
+	private const string SettingsTabManagerPath = "%SettingsTabManager";
 	private const string ModTabScenePath = "res://scenes/screens/settings_tab.tscn";
 	private const string SettingsSliderScenePath = "res://scenes/screens/settings_slider.tscn";
+	private const string SettingsTickboxScenePath = "res://scenes/screens/settings_tickbox.tscn";
+	private const string ScrollContainerPath = "ScrollContainer";
 	private const string TemplateLabelPath = "SfxVolume/Label";
 	private static readonly string TemplateLabelFullPath = SoundSettingsVBoxPath + "/" + TemplateLabelPath;
-	private const string SharedModTabLabel = "ChaosMod";
+	private const string TickboxTickedPath = "TickboxVisuals/Ticked";
+	private const string TickboxNotTickedPath = "TickboxVisuals/NotTicked";
+	private const string TickboxReticlePath = "SelectionReticle";
+	private const float UiFontScale = 1.45f;
+	private const float RowMinHeight = 64f;
+	private const float RowSeparation = 24f;
+	private const float LabelMinHeight = 32f;
+	private const float LabelWidth = 340f;
+	private const float SliderMinWidth = 420f;
+	private const float TickboxMinWidth = 96f;
+	private const float ResetButtonWidth = 320f;
+	private const float ResetButtonHeight = 56f;
+	private const float ScrollBarWidth = 18f;
+	private const float SliderValueWidth = 96f;
+	private const float SliderValueGap = 12f;
 
 	private const string ModTabName = "XCskin_ModSettingsTab";
 	private const string ModPanelName = "XCskin_ModSettingsPanel";
-
 	private const string VoiceSectionName = "ChaosModVoiceVolume";
 	private const string VoiceSliderName = "ChaosModVoiceSlider";
 	private const string VoiceLineName = "Line_ChaosModVoice";
@@ -50,20 +61,18 @@ public static class YukiModSharedSettingsUiPatch
 	private const string OffsetXSectionName = "ChaosModBattleReadyOffsetX";
 	private const string OffsetXSliderName = "ChaosModBattleReadyOffsetXSlider";
 	private const string OffsetXLineName = "Line_ChaosModBattleReadyOffsetX";
+	private const string DynamicCardSectionName = "ChaosModDynamicCardPortraitsEnabled";
+	private const string DynamicCardTickboxName = "ChaosModDynamicCardPortraitsTickbox";
+	private const string DynamicCardLineName = "Line_ChaosModDynamicCardPortraitsEnabled";
 	private const string ResetSectionName = "ChaosModBattleReadyReset";
 	private const string ResetButtonName = "ChaosModBattleReadyResetButton";
 	private const string ResetLineName = "Line_ChaosModBattleReadyReset";
-	private const string ActionVfxLabelText = "mod特效开关";
-	private const string PortraitsLabelText = "立绘开关";
-
-	private const string CardVisualsLineName = "Line_YukiModCardVisuals";
-	private const string DynamicPortraitsSectionName = "YukiModCardVisualsDynamicPortraits";
-	private const string DynamicPortraitsRowName = "YukiModCardVisualsDynamicPortraitsRow";
-	private const string DynamicPortraitsTickboxName = "YukiModCardVisualsDynamicPortraitsTickbox";
-
-	private static int _injectLogOnce;
-	private static int _ensureLogOnce;
-	private static int _wireExistingOnce;
+	private const string LegacyCardVisualsLineName = "Line_YukiModCardVisuals";
+	private const string LegacyDynamicPortraitsSectionName = "YukiModCardVisualsDynamicPortraits";
+	private const string LegacyDynamicPortraitsRowName = "YukiModCardVisualsDynamicPortraitsRow";
+	private const string LegacyBattleVisualsLineName = "Line_ChaosModBattleVisuals";
+	private const string LegacyBattleVisualsSectionName = "ChaosModBattleVisuals";
+	private const string ControlWiredMeta = "XCskin_SettingsWired";
 
 	[HarmonyPostfix]
 	public static void Postfix(NSettingsScreen __instance)
@@ -71,20 +80,8 @@ public static class YukiModSharedSettingsUiPatch
 		TryInject(__instance, "_Ready");
 	}
 
-	private static void TryInject(NSettingsScreen screen, string source)
+	public static void TryInject(NSettingsScreen screen, string source)
 	{
-		if (System.Threading.Interlocked.Exchange(ref _injectLogOnce, 1) == 0)
-		{
-			try
-			{
-				Log.Info("[YukiMod] Settings inject entered. source=" + source + " screen=" + screen.GetPath());
-			}
-			catch
-			{
-				Log.Info("[YukiMod] Settings inject entered. source=" + source);
-			}
-		}
-
 		try
 		{
 			TryInjectInner(screen, source);
@@ -98,579 +95,262 @@ public static class YukiModSharedSettingsUiPatch
 	private static void TryInjectInner(NSettingsScreen screen, string source)
 	{
 		if (!EnsureModSettingsTabAndPanel(screen, out NSettingsPanel? panel, source))
-		{
 			return;
-		}
 
 		VBoxContainer? vbox = panel!.GetNodeOrNull<VBoxContainer>("VBoxContainer");
 		if (vbox == null)
 		{
-			Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): panel missing VBoxContainer");
+			Log.Warn("[YukiMod] Settings inject skipped (" + source + "): panel missing VBoxContainer");
 			return;
-		}
-
-		bool hasVoice = vbox.GetNodeOrNull(VoiceSectionName) != null;
-		bool hasActionVfx = vbox.GetNodeOrNull(ActionVfxSectionName) != null;
-		bool hasPortraits = vbox.GetNodeOrNull(PortraitsSectionName) != null;
-		bool hasScale = vbox.GetNodeOrNull(ScaleSectionName) != null;
-		bool hasOffsetY = vbox.GetNodeOrNull(OffsetYSectionName) != null;
-		bool hasOffsetX = vbox.GetNodeOrNull(OffsetXSectionName) != null;
-		bool hasReset = vbox.GetNodeOrNull(ResetSectionName) != null;
-		RemoveLegacyBattleVisualsSection(vbox);
-
-		VBoxContainer? existingVisualEffectsSection = vbox.GetNodeOrNull<VBoxContainer>(DynamicPortraitsSectionName);
-		bool hasVisualEffectsSection = existingVisualEffectsSection != null;
-		bool hasDynamicPortraits = existingVisualEffectsSection?.GetNodeOrNull(DynamicPortraitsRowName) != null;
-
-		bool hasShared = hasVoice && hasActionVfx && hasPortraits && hasScale && hasOffsetY && hasOffsetX && hasReset;
-		if (hasShared)
-		{
-			TryWireExistingTransformHooksOnce(vbox);
-			if (hasDynamicPortraits)
-			{
-				return;
-			}
 		}
 
 		RichTextLabel? templateLabel = screen.GetNodeOrNull<RichTextLabel>(TemplateLabelFullPath);
-
 		PackedScene? settingsSliderScene = ResourceLoader.Load<PackedScene>(SettingsSliderScenePath);
-		if (settingsSliderScene == null)
+		PackedScene? settingsTickboxScene = ResourceLoader.Load<PackedScene>(SettingsTickboxScenePath);
+		if (settingsSliderScene == null || settingsTickboxScene == null)
 		{
-			Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): missing scene " + SettingsSliderScenePath);
+			Log.Warn("[YukiMod] Settings inject skipped (" + source + "): missing slider or tickbox scene");
 			return;
 		}
 
-		Control? voiceSliderRoot = null;
-		HBoxContainer? actionVfxSection = null;
-		HBoxContainer? portraitsSection = null;
-		Control? scaleSliderRoot = null;
-		Control? offsetYSliderRoot = null;
-		Control? offsetXSliderRoot = null;
-		Control? resetButtonRoot = null;
-		ColorRect? voiceLine = null;
-		ColorRect? actionVfxLine = null;
-		ColorRect? portraitsLine = null;
-		ColorRect? scaleLine = null;
-		ColorRect? offsetYLine = null;
-		ColorRect? offsetXLine = null;
-		ColorRect? resetLine = null;
-		ColorRect? cardVisualsLine = null;
-		VBoxContainer? voiceSection = null;
-		VBoxContainer? scaleSection = null;
-		VBoxContainer? offsetYSection = null;
-		VBoxContainer? offsetXSection = null;
-		VBoxContainer? resetSection = null;
-		VBoxContainer? visualEffectsSection = existingVisualEffectsSection;
-		bool addVisualEffectsSection = false;
+		RemoveNodeIfPresent(vbox, LegacyCardVisualsLineName);
+		RemoveNodeIfPresent(vbox, LegacyDynamicPortraitsRowName);
+		RemoveNodeIfPresent(vbox, LegacyDynamicPortraitsSectionName);
+		RemoveNodeIfPresent(vbox, LegacyBattleVisualsLineName);
+		RemoveNodeIfPresent(vbox, LegacyBattleVisualsSectionName);
 
-		if (!hasVoice)
-		{
-			voiceLine = CreateLine(VoiceLineName);
-			voiceSection = CreateSection(VoiceSectionName);
-			RichTextLabel label = CreateLabel(templateLabel, "卡厄思角色语音音量");
-			voiceSliderRoot = settingsSliderScene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
-			voiceSliderRoot.Name = VoiceSliderName;
-			voiceSliderRoot.Set("layout_mode", 2);
-			voiceSliderRoot.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-			voiceSliderRoot.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
-			voiceSliderRoot.CustomMinimumSize = new Vector2(0, 64);
-			voiceSection.AddChild(label);
-			voiceSection.AddChild(voiceSliderRoot);
-		}
+		EnsureSliderSection(vbox, templateLabel, settingsSliderScene, VoiceLineName, VoiceSectionName, VoiceSliderName, "角色音量");
+		EnsureTickboxSection(vbox, templateLabel, settingsTickboxScene, ActionVfxLineName, ActionVfxSectionName, ActionVfxTickboxName, "特效开关");
+		EnsureTickboxSection(vbox, templateLabel, settingsTickboxScene, PortraitsLineName, PortraitsSectionName, PortraitsTickboxName, "立绘开关");
+		EnsureSliderSection(vbox, templateLabel, settingsSliderScene, ScaleLineName, ScaleSectionName, ScaleSliderName, "背身立绘缩放");
+		EnsureSliderSection(vbox, templateLabel, settingsSliderScene, OffsetYLineName, OffsetYSectionName, OffsetYSliderName, "背身立绘位置上下");
+		EnsureSliderSection(vbox, templateLabel, settingsSliderScene, OffsetXLineName, OffsetXSectionName, OffsetXSliderName, "背身立绘位置左右");
+		EnsureTickboxSection(vbox, templateLabel, settingsTickboxScene, DynamicCardLineName, DynamicCardSectionName, DynamicCardTickboxName, "启动动态卡图 [font_size=18]进入战斗时生效[/font_size]");
+		EnsureResetSection(vbox, templateLabel);
+		ConfigurePanelLayout(screen, panel!, vbox);
 
-		if (!hasActionVfx)
-		{
-			actionVfxLine = CreateLine(ActionVfxLineName);
-			actionVfxSection = CreateConfigTickboxSection(
-				templateLabel,
-				ActionVfxSectionName,
-				ActionVfxTickboxName,
-				ActionVfxLabelText,
-				ModConfigRegistry.Get(YukiModInfo.ModId),
-				nameof(YukiModConfig.UseCombatEffects));
-		}
+		Control? voiceSliderRoot = vbox.GetNodeOrNull<Control>(VoiceSectionName + "/" + VoiceSliderName);
+		Control? actionVfxTickboxRoot = vbox.GetNodeOrNull<Control>(ActionVfxSectionName + "/" + ActionVfxTickboxName);
+		Control? portraitsTickboxRoot = vbox.GetNodeOrNull<Control>(PortraitsSectionName + "/" + PortraitsTickboxName);
+		Control? scaleSliderRoot = vbox.GetNodeOrNull<Control>(ScaleSectionName + "/" + ScaleSliderName);
+		Control? offsetYSliderRoot = vbox.GetNodeOrNull<Control>(OffsetYSectionName + "/" + OffsetYSliderName);
+		Control? offsetXSliderRoot = vbox.GetNodeOrNull<Control>(OffsetXSectionName + "/" + OffsetXSliderName);
+		Control? dynamicCardTickboxRoot = vbox.GetNodeOrNull<Control>(DynamicCardSectionName + "/" + DynamicCardTickboxName);
+		Control? resetButtonRoot = vbox.GetNodeOrNull<Control>(ResetSectionName + "/" + ResetButtonName);
 
-		if (!hasPortraits)
-		{
-			portraitsLine = CreateLine(PortraitsLineName);
-			portraitsSection = CreateConfigTickboxSection(
-				templateLabel,
-				PortraitsSectionName,
-				PortraitsTickboxName,
-				PortraitsLabelText,
-				ModConfigRegistry.Get(YukiModInfo.ModId),
-				nameof(YukiModConfig.UseBattleReadyOverlay));
-		}
+		if (voiceSliderRoot != null)
+			Callable.From(() => WireVoiceSliderWhenReady(voiceSliderRoot, source, 0)).CallDeferred();
+		if (actionVfxTickboxRoot != null)
+			Callable.From(() => WireActionVfxTickboxWhenReady(actionVfxTickboxRoot, source, 0)).CallDeferred();
+		if (portraitsTickboxRoot != null)
+			Callable.From(() => WirePortraitsTickboxWhenReady(portraitsTickboxRoot, source, 0)).CallDeferred();
+		if (scaleSliderRoot != null)
+			Callable.From(() => WireScaleSliderWhenReady(scaleSliderRoot, source, 0)).CallDeferred();
+		if (offsetYSliderRoot != null)
+			Callable.From(() => WireOffsetYSliderWhenReady(offsetYSliderRoot, source, 0)).CallDeferred();
+		if (offsetXSliderRoot != null)
+			Callable.From(() => WireOffsetXSliderWhenReady(offsetXSliderRoot, source, 0)).CallDeferred();
+		if (dynamicCardTickboxRoot != null)
+			Callable.From(() => WireDynamicCardPortraitsTickboxWhenReady(dynamicCardTickboxRoot, source, 0)).CallDeferred();
+		if (resetButtonRoot != null)
+			Callable.From(() => WireResetButtonWhenReady(vbox, resetButtonRoot, source, 0)).CallDeferred();
 
-		if (!hasScale)
-		{
-			scaleLine = CreateLine(ScaleLineName);
-			scaleSection = CreateSection(ScaleSectionName);
-			RichTextLabel label = CreateLabel(templateLabel, "卡厄思角色立绘缩放");
-			scaleSliderRoot = settingsSliderScene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
-			scaleSliderRoot.Name = ScaleSliderName;
-			scaleSliderRoot.Set("layout_mode", 2);
-			scaleSliderRoot.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-			scaleSliderRoot.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
-			scaleSliderRoot.CustomMinimumSize = new Vector2(0, 64);
-			scaleSection.AddChild(label);
-			scaleSection.AddChild(scaleSliderRoot);
-		}
-
-		if (!hasOffsetY)
-		{
-			offsetYLine = CreateLine(OffsetYLineName);
-			offsetYSection = CreateSection(OffsetYSectionName);
-			RichTextLabel label = CreateLabel(templateLabel, "卡厄思角色位置Y");
-			offsetYSliderRoot = settingsSliderScene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
-			offsetYSliderRoot.Name = OffsetYSliderName;
-			offsetYSliderRoot.Set("layout_mode", 2);
-			offsetYSliderRoot.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-			offsetYSliderRoot.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
-			offsetYSliderRoot.CustomMinimumSize = new Vector2(0, 64);
-			offsetYSection.AddChild(label);
-			offsetYSection.AddChild(offsetYSliderRoot);
-		}
-
-		if (!hasOffsetX)
-		{
-			offsetXLine = CreateLine(OffsetXLineName);
-			offsetXSection = CreateSection(OffsetXSectionName);
-			RichTextLabel label = CreateLabel(templateLabel, "卡厄思角色位置X");
-			offsetXSliderRoot = settingsSliderScene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
-			offsetXSliderRoot.Name = OffsetXSliderName;
-			offsetXSliderRoot.Set("layout_mode", 2);
-			offsetXSliderRoot.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-			offsetXSliderRoot.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
-			offsetXSliderRoot.CustomMinimumSize = new Vector2(0, 64);
-			offsetXSection.AddChild(label);
-			offsetXSection.AddChild(offsetXSliderRoot);
-		}
-
-		if (!hasReset)
-		{
-			resetLine = CreateLine(ResetLineName);
-			resetSection = CreateSection(ResetSectionName);
-			resetButtonRoot = CreateResetButton(templateLabel);
-			resetButtonRoot.Name = ResetButtonName;
-			resetButtonRoot.Set("layout_mode", 2);
-			resetButtonRoot.SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter;
-			resetButtonRoot.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
-			resetButtonRoot.CustomMinimumSize = new Vector2(0, 48);
-			resetSection.AddChild(resetButtonRoot);
-		}
-
-		if (!hasVisualEffectsSection)
-		{
-			cardVisualsLine = CreateLine(CardVisualsLineName);
-			visualEffectsSection = CreateSection(DynamicPortraitsSectionName);
-			addVisualEffectsSection = true;
-
-			string sectionTitle = LocString.GetIfExists("settings_ui", "YUKIMOD-CARD_VISUALS.title")?.GetFormattedText()
-				?? "视觉效果";
-			RichTextLabel header = CreateLabel(templateLabel, sectionTitle);
-			visualEffectsSection.AddChild(header);
-		}
-
-		if (visualEffectsSection != null)
-		{
-			ModConfig? config = ModConfigRegistry.Get(YukiModInfo.ModId);
-			if (!hasDynamicPortraits)
-			{
-				visualEffectsSection.AddChild(CreateConfigTickboxRow(
-					templateLabel,
-					DynamicPortraitsRowName,
-					DynamicPortraitsTickboxName,
-					LocText("YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.title", "启用动态卡图"),
-					config,
-					nameof(YukiModConfig.UseDynamicCardPortraits)));
-			}
-		}
-
-		if (voiceLine != null) vbox.AddChild(voiceLine);
-		if (voiceSection != null) vbox.AddChild(voiceSection);
-		if (actionVfxLine != null) vbox.AddChild(actionVfxLine);
-		if (actionVfxSection != null) vbox.AddChild(actionVfxSection);
-		if (portraitsLine != null) vbox.AddChild(portraitsLine);
-		if (portraitsSection != null) vbox.AddChild(portraitsSection);
-		if (scaleLine != null) vbox.AddChild(scaleLine);
-		if (scaleSection != null) vbox.AddChild(scaleSection);
-		if (offsetYLine != null) vbox.AddChild(offsetYLine);
-		if (offsetYSection != null) vbox.AddChild(offsetYSection);
-		if (offsetXLine != null) vbox.AddChild(offsetXLine);
-		if (offsetXSection != null) vbox.AddChild(offsetXSection);
-		if (resetLine != null) vbox.AddChild(resetLine);
-		if (resetSection != null) vbox.AddChild(resetSection);
-		if (cardVisualsLine != null) vbox.AddChild(cardVisualsLine);
-		if (addVisualEffectsSection && visualEffectsSection != null) vbox.AddChild(visualEffectsSection);
-
-		if (voiceSliderRoot != null) WireVoiceSliderWhenReady(voiceSliderRoot, source, 0);
-		if (scaleSliderRoot != null) WireScaleSliderWhenReady(scaleSliderRoot, source, 0);
-		if (offsetYSliderRoot != null) WireOffsetYSliderWhenReady(offsetYSliderRoot, source, 0);
-		if (offsetXSliderRoot != null) WireOffsetXSliderWhenReady(offsetXSliderRoot, source, 0);
-		if (resetButtonRoot != null) WireResetButtonWhenReady(vbox, resetButtonRoot, source, 0);
-	}
-
-	private static void TryWireExistingTransformHooksOnce(VBoxContainer vbox)
-	{
-		if (System.Threading.Interlocked.Exchange(ref _wireExistingOnce, 1) != 0)
-		{
-			return;
-		}
-
-		Control? scaleRoot = vbox.GetNodeOrNull<Control>(ScaleSectionName + "/" + ScaleSliderName);
-		if (scaleRoot != null)
-		{
-			TryConnectApplyTransform(scaleRoot);
-		}
-
-		Control? offsetXRoot = vbox.GetNodeOrNull<Control>(OffsetXSectionName + "/" + OffsetXSliderName);
-		if (offsetXRoot != null)
-		{
-			TryConnectApplyTransform(offsetXRoot);
-		}
-
-		Control? offsetYRoot = vbox.GetNodeOrNull<Control>(OffsetYSectionName + "/" + OffsetYSliderName);
-		if (offsetYRoot != null)
-		{
-			TryConnectApplyTransform(offsetYRoot);
-		}
-
-		Control? resetRoot = vbox.GetNodeOrNull<Control>(ResetSectionName + "/" + ResetButtonName);
-		if (resetRoot is NClickableControl clickable)
-		{
-			clickable.Connect(NClickableControl.SignalName.Released, Callable.From<NClickableControl>(_ => YukiBattleReadyOverlay.ApplyTransformFromSettings()));
-		}
-	}
-
-	private static void TryConnectApplyTransform(Control sliderRoot)
-	{
-		if (!sliderRoot.IsNodeReady())
-		{
-			Callable.From(() => TryConnectApplyTransform(sliderRoot)).CallDeferred();
-			return;
-		}
-		NSlider? slider = sliderRoot.GetNodeOrNull<NSlider>("Slider");
-		if (slider == null)
-		{
-			return;
-		}
-		slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(_ => YukiBattleReadyOverlay.ApplyTransformFromSettings()));
-		slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
-		{
-			if (valueChanged)
-			{
-				YukiBattleReadyOverlay.ApplyTransformFromSettings();
-			}
-		}));
+		RefreshFocusNeighbors(voiceSliderRoot, actionVfxTickboxRoot, portraitsTickboxRoot, scaleSliderRoot,
+			offsetYSliderRoot, offsetXSliderRoot, dynamicCardTickboxRoot, resetButtonRoot);
 	}
 
 	private static ColorRect CreateLine(string name)
 	{
-		return new ColorRect
+		ColorRect line = new()
 		{
 			Name = name,
-			CustomMinimumSize = new Vector2(0, 4),
-			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
-			SizeFlagsVertical = Control.SizeFlags.ShrinkBegin,
-			Color = new Color(0.34f, 0.34f, 0.34f),
-			MouseFilter = Control.MouseFilterEnum.Ignore
+			CustomMinimumSize = new Vector2(0f, 4f),
+			MouseFilter = Control.MouseFilterEnum.Ignore,
+			Color = new Color(0.909804f, 0.862745f, 0.745098f, 0.25098f)
 		};
+		line.Set("layout_mode", 2);
+		return line;
 	}
 
-	private static VBoxContainer CreateSection(string name)
+	private static HBoxContainer CreateRow(string name)
 	{
-		return new VBoxContainer
+		HBoxContainer section = new()
 		{
 			Name = name,
-			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
-			SizeFlagsVertical = Control.SizeFlags.ShrinkBegin,
-			MouseFilter = Control.MouseFilterEnum.Ignore
+			CustomMinimumSize = new Vector2(0f, RowMinHeight),
+			MouseFilter = Control.MouseFilterEnum.Ignore,
+			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill
 		};
+		section.Set("layout_mode", 2);
+		section.AddThemeConstantOverride("separation", (int)RowSeparation);
+		return section;
 	}
 
 	private static RichTextLabel CreateLabel(RichTextLabel? templateLabel, string text)
 	{
-		RichTextLabel label = templateLabel != null
-			? (RichTextLabel)templateLabel.Duplicate()
-			: new RichTextLabel();
-		label.MouseFilter = Control.MouseFilterEnum.Ignore;
-		label.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-		label.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
-		label.Set("layout_mode", 2);
-		if (label.CustomMinimumSize.Y < 32)
+		RichTextLabel label = new()
 		{
-			label.CustomMinimumSize = new Vector2(label.CustomMinimumSize.X, 32);
-		}
-		label.Text = text;
-		return label;
-	}
-
-	private static RichTextLabel CreateRowLabel(RichTextLabel? templateLabel, string text)
-	{
-		RichTextLabel label = templateLabel != null
-			? (RichTextLabel)templateLabel.Duplicate()
-			: new RichTextLabel();
-		label.MouseFilter = Control.MouseFilterEnum.Ignore;
-		label.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-		label.SizeFlagsVertical = Control.SizeFlags.Fill;
-		label.CustomMinimumSize = new Vector2(label.CustomMinimumSize.X, 64);
-		label.Set("layout_mode", 2);
-		label.Text = text;
-		return label;
-	}
-
-	private static HBoxContainer CreateConfigTickboxRow(
-		RichTextLabel? templateLabel,
-		string rowName,
-		string tickboxName,
-		string labelText,
-		ModConfig? config,
-		string propertyName)
-	{
-		HBoxContainer row = new HBoxContainer
-		{
-			Name = rowName,
-			SizeFlagsHorizontal = Control.SizeFlags.ExpandFill,
-			MouseFilter = Control.MouseFilterEnum.Ignore
+			Name = "Label",
+			BbcodeEnabled = true,
+			MouseFilter = Control.MouseFilterEnum.Ignore,
+			Text = text,
+			VerticalAlignment = VerticalAlignment.Center,
+			CustomMinimumSize = new Vector2(LabelWidth, LabelMinHeight),
+			SizeFlagsHorizontal = Control.SizeFlags.Fill
 		};
-
-		RichTextLabel rowLabel = CreateRowLabel(templateLabel, labelText);
-		NConfigTickbox tickbox = new NConfigTickbox
+		label.Set("layout_mode", 2);
+		if (templateLabel != null)
 		{
-			Name = tickboxName
-		};
-
-		PropertyInfo? prop = typeof(YukiModConfig).GetProperty(propertyName, BindingFlags.Public | BindingFlags.Static);
-		if (config != null && prop != null)
-		{
-			tickbox.Initialize(config, prop);
+			label.Theme = templateLabel.Theme;
+			label.AddThemeFontOverride("normal_font", templateLabel.GetThemeFont("normal_font"));
+			label.AddThemeFontOverride("bold_font", templateLabel.GetThemeFont("bold_font"));
+			label.AddThemeFontSizeOverride("normal_font_size", ScaleFontSize(templateLabel.GetThemeFontSize("normal_font_size")));
+			label.AddThemeFontSizeOverride("bold_font_size", ScaleFontSize(templateLabel.GetThemeFontSize("bold_font_size")));
 		}
-
-		row.AddChild(rowLabel);
-		row.AddChild(tickbox);
-		return row;
-	}
-
-	private static HBoxContainer CreateConfigTickboxSection(
-		RichTextLabel? templateLabel,
-		string sectionName,
-		string tickboxName,
-		string labelText,
-		ModConfig? config,
-		string propertyName)
-	{
-		HBoxContainer section = CreateConfigTickboxRow(templateLabel, sectionName, tickboxName, labelText, config, propertyName);
-		section.SizeFlagsVertical = Control.SizeFlags.ShrinkBegin;
-		return section;
-	}
-
-	private static string LocText(string entryKey, string fallback)
-	{
-		return LocString.GetIfExists("settings_ui", entryKey)?.GetFormattedText() ?? fallback;
-	}
-
-	private static void RemoveLegacyBattleVisualsSection(VBoxContainer vbox)
-	{
-		Node? legacyLine = vbox.GetNodeOrNull("Line_ChaosModBattleVisuals");
-		if (legacyLine != null)
-		{
-			vbox.RemoveChild(legacyLine);
-			legacyLine.QueueFree();
-		}
-
-		Node? legacySection = vbox.GetNodeOrNull("ChaosModBattleVisuals");
-		if (legacySection != null)
-		{
-			vbox.RemoveChild(legacySection);
-			legacySection.QueueFree();
-		}
+		return label;
 	}
 
 	private static Control CreateResetButton(RichTextLabel? templateLabel)
 	{
-		NButton button = new NButton
+		NButton button = new()
 		{
-			SizeFlagsHorizontal = Control.SizeFlags.ShrinkCenter,
-			SizeFlagsVertical = Control.SizeFlags.ShrinkBegin
+			Name = ResetButtonName,
+			CustomMinimumSize = new Vector2(ResetButtonWidth, ResetButtonHeight),
+			FocusMode = Control.FocusModeEnum.All
 		};
 		button.Set("layout_mode", 2);
-		button.CustomMinimumSize = new Vector2(0, 48);
-		button.MouseFilter = Control.MouseFilterEnum.Stop;
+		button.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+		button.SizeFlagsVertical = Control.SizeFlags.ShrinkCenter;
 
-		StyleBoxFlat normalStyle = new StyleBoxFlat
+		Texture2D? texture = ResourceLoader.Load<Texture2D>("res://images/ui/reward_screen/reward_skip_button.png");
+		if (texture != null)
 		{
-			BgColor = new Color(0, 0, 0, 0.25f),
-			BorderWidthLeft = 1,
-			BorderWidthTop = 1,
-			BorderWidthRight = 1,
-			BorderWidthBottom = 1,
-			BorderColor = new Color(1, 1, 1, 0.15f),
-			CornerRadiusTopLeft = 8,
-			CornerRadiusTopRight = 8,
-			CornerRadiusBottomLeft = 8,
-			CornerRadiusBottomRight = 8,
-			ContentMarginLeft = 8,
-			ContentMarginRight = 8,
-			ContentMarginTop = 6,
-			ContentMarginBottom = 6
-		};
+			TextureRect bg = new()
+			{
+				Name = "Image",
+				Texture = texture,
+				ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
+				StretchMode = TextureRect.StretchModeEnum.Scale,
+				MouseFilter = Control.MouseFilterEnum.Ignore
+			};
+			bg.Set("layout_mode", 2);
+			bg.AnchorsPreset = (int)Control.LayoutPreset.FullRect;
+			button.AddChild(bg);
+		}
 
-		StyleBoxFlat hoverStyle = (StyleBoxFlat)normalStyle.Duplicate();
-		hoverStyle.BgColor = new Color(1, 1, 1, 0.10f);
-		hoverStyle.BorderColor = new Color(1, 1, 1, 0.25f);
-
-		StyleBoxFlat pressedStyle = (StyleBoxFlat)normalStyle.Duplicate();
-		pressedStyle.BgColor = new Color(0, 0, 0, 0.35f);
-		pressedStyle.BorderColor = new Color(1, 1, 1, 0.20f);
-
-		Panel bg = new Panel
+		MegaLabel label = new()
 		{
+			Name = "Label",
+			Text = "重置立绘",
+			HorizontalAlignment = HorizontalAlignment.Center,
+			VerticalAlignment = VerticalAlignment.Center,
 			MouseFilter = Control.MouseFilterEnum.Ignore
 		};
-		bg.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-		bg.AddThemeStyleboxOverride("panel", normalStyle);
-		button.AddChild(bg);
-
-		RichTextLabel label = templateLabel != null
-			? (RichTextLabel)templateLabel.Duplicate()
-			: new RichTextLabel();
-		label.MouseFilter = Control.MouseFilterEnum.Ignore;
-		label.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
-		label.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
-		label.SetAnchorsPreset(Control.LayoutPreset.FullRect);
-		label.AutowrapMode = TextServer.AutowrapMode.Off;
-		label.HorizontalAlignment = HorizontalAlignment.Center;
-		label.VerticalAlignment = VerticalAlignment.Center;
-		label.Text = "重置立绘";
+		label.Set("layout_mode", 2);
+		label.AnchorsPreset = (int)Control.LayoutPreset.FullRect;
+		label.MaxFontSize = ScaleFontSize(28);
+		if (templateLabel != null)
+		{
+			label.Theme = templateLabel.Theme;
+			label.AddThemeFontOverride("font", templateLabel.GetThemeFont("normal_font"));
+			label.AddThemeFontSizeOverride("font_size", ScaleFontSize(templateLabel.GetThemeFontSize("normal_font_size")));
+		}
 		button.AddChild(label);
 
-		Callable.From(() =>
-		{
-			if (!GodotObject.IsInstanceValid(button) || !GodotObject.IsInstanceValid(label))
-			{
-				return;
-			}
-
-			float w1 = label.GetContentWidth();
-			float w2 = label.GetMinimumSize().X;
-			float w = Mathf.Max(w1, w2);
-
-			if (w > 0)
-			{
-				button.CustomMinimumSize = new Vector2(w + 48, button.CustomMinimumSize.Y);
-			}
-		}).CallDeferred();
-
-		Color normalColor = Colors.White;
-		Color hoverColor = new Color(1.12f, 1.12f, 1.12f, 1);
-		Color pressedColor = new Color(0.92f, 0.92f, 0.92f, 1);
-		Vector2 normalScale = Vector2.One;
-		Vector2 hoverScale = new Vector2(1.05f, 1.05f);
-		Vector2 pressedScale = new Vector2(0.98f, 0.98f);
-
-		bool isHover = false;
-		bool isPressed = false;
-		Tween? activeTween = null;
-
-		void TweenTo(Vector2 scale, Color color, float duration)
-		{
-			activeTween?.Kill();
-			activeTween = button.CreateTween();
-			activeTween.SetParallel(true);
-			activeTween.TweenProperty(button, "scale", scale, duration).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
-			activeTween.TweenProperty(button, "modulate", color, duration).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
-		}
-
-		void UpdatePivot()
-		{
-			button.PivotOffset = button.Size / 2f;
-		}
-
-		button.Resized += UpdatePivot;
-		Callable.From(UpdatePivot).CallDeferred();
-
-		button.MouseEntered += () =>
-		{
-			isHover = true;
-			if (!isPressed)
-			{
-				bg.AddThemeStyleboxOverride("panel", hoverStyle);
-				TweenTo(hoverScale, hoverColor, 0.08f);
-			}
-		};
-		button.MouseExited += () =>
-		{
-			isHover = false;
-			if (!isPressed)
-			{
-				bg.AddThemeStyleboxOverride("panel", normalStyle);
-				TweenTo(normalScale, normalColor, 0.10f);
-			}
-		};
-
-		button.GuiInput += input =>
-		{
-			if (input is not InputEventMouseButton mb || mb.ButtonIndex != MouseButton.Left)
-			{
-				return;
-			}
-
-			if (mb.Pressed)
-			{
-				isPressed = true;
-				bg.AddThemeStyleboxOverride("panel", pressedStyle);
-				TweenTo(pressedScale, pressedColor, 0.05f);
-				return;
-			}
-
-			isPressed = false;
-			bg.AddThemeStyleboxOverride("panel", isHover ? hoverStyle : normalStyle);
-			TweenTo(isHover ? hoverScale : normalScale, isHover ? hoverColor : normalColor, 0.08f);
-		};
-
 		return button;
+	}
+
+	private static int ScaleFontSize(int baseSize)
+	{
+		return Math.Max(1, (int)Math.Round(baseSize * UiFontScale));
+	}
+
+	private static void EnsureTickboxSection(
+		VBoxContainer vbox,
+		RichTextLabel? templateLabel,
+		PackedScene tickboxScene,
+		string lineName,
+		string sectionName,
+		string tickboxName,
+		string labelText)
+	{
+		if (vbox.GetNodeOrNull(sectionName) != null)
+			return;
+
+		vbox.AddChild(CreateLine(lineName));
+		HBoxContainer section = CreateRow(sectionName);
+		section.AddChild(CreateLabel(templateLabel, labelText));
+		Control tickbox = tickboxScene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
+		PrepareInlineControl(tickbox, tickboxName, TickboxMinWidth, expand: false);
+		TryHideInlineLabel(tickbox);
+		PrepareInlineTickboxLayout(tickbox);
+		section.AddChild(tickbox);
+		vbox.AddChild(section);
+	}
+
+	private static void EnsureSliderSection(
+		VBoxContainer vbox,
+		RichTextLabel? templateLabel,
+		PackedScene sliderScene,
+		string lineName,
+		string sectionName,
+		string sliderName,
+		string labelText)
+	{
+		if (vbox.GetNodeOrNull(sectionName) != null)
+			return;
+
+		vbox.AddChild(CreateLine(lineName));
+		HBoxContainer section = CreateRow(sectionName);
+		section.AddChild(CreateLabel(templateLabel, labelText));
+		Control slider = sliderScene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
+		PrepareInlineControl(slider, sliderName, SliderMinWidth, expand: true);
+		TryHideInlineLabel(slider);
+		PrepareInlineSliderLayout(slider);
+		section.AddChild(slider);
+		vbox.AddChild(section);
+	}
+
+	private static void EnsureResetSection(VBoxContainer vbox, RichTextLabel? templateLabel)
+	{
+		if (vbox.GetNodeOrNull(ResetSectionName) != null)
+			return;
+
+		vbox.AddChild(CreateLine(ResetLineName));
+		HBoxContainer section = CreateRow(ResetSectionName);
+		section.AddChild(CreateLabel(templateLabel, "重置立绘"));
+		section.AddChild(CreateResetButton(templateLabel));
+		vbox.AddChild(section);
 	}
 
 	private static bool EnsureModSettingsTabAndPanel(NSettingsScreen screen, out NSettingsPanel? panel, string source)
 	{
 		panel = null;
-		NSettingsTabManager? tabManager = screen.GetNodeOrNull<NSettingsTabManager>(SettingsTabManagerPath) ?? screen.GetNodeOrNull<NSettingsTabManager>("%SettingsTabManager");
+		NSettingsTabManager? tabManager = screen.GetNodeOrNull<NSettingsTabManager>(SettingsTabManagerPath) ??
+			screen.GetNodeOrNull<NSettingsTabManager>("SettingsTabManager");
 		if (tabManager == null)
 		{
-			Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): missing SettingsTabManager");
+			Log.Warn("[YukiMod] Settings inject skipped (" + source + "): missing SettingsTabManager");
 			return false;
 		}
 
 		Control? clipper = screen.GetNodeOrNull<Control>(ClipperPath);
 		if (clipper == null)
 		{
-			Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): missing Clipper");
+			Log.Warn("[YukiMod] Settings inject skipped (" + source + "): missing Clipper");
 			return false;
 		}
 
 		NSettingsTab? tab = tabManager.GetNodeOrNull<NSettingsTab>(ModTabName);
 		NSettingsPanel? settingsPanel = clipper.GetNodeOrNull<NSettingsPanel>(ModPanelName);
 
-		if (System.Threading.Interlocked.Exchange(ref _ensureLogOnce, 1) == 0)
-		{
-			try
-			{
-				Log.Info("[YukiMod] EnsureModTab: tabManager=" + tabManager.GetPath() + " clipper=" + clipper.GetPath() + " hasTab=" + (tab != null) + " hasPanel=" + (settingsPanel != null));
-			}
-			catch
-			{
-				Log.Info("[YukiMod] EnsureModTab: hasTab=" + (tab != null) + " hasPanel=" + (settingsPanel != null));
-			}
-		}
-
 		if (settingsPanel == null)
 		{
-			NSettingsPanel? templatePanel = screen.GetNodeOrNull<NSettingsPanel>("%SoundSettings") ?? screen.GetNodeOrNull<NSettingsPanel>(ClipperPath + "/SoundSettings");
+			NSettingsPanel? templatePanel = screen.GetNodeOrNull<NSettingsPanel>("%SoundSettings") ??
+				screen.GetNodeOrNull<NSettingsPanel>(ClipperPath + "/SoundSettings");
 			if (templatePanel == null)
 			{
-				Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): missing template panel SoundSettings");
+				Log.Warn("[YukiMod] Settings inject skipped (" + source + "): missing SoundSettings template panel");
 				return false;
 			}
 
@@ -680,7 +360,7 @@ public static class YukiModSharedSettingsUiPatch
 			}
 			catch (Exception ex)
 			{
-				Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): duplicate panel failed: " + ex.Message);
+				Log.Warn("[YukiMod] Duplicate settings panel failed (" + source + "): " + ex.Message);
 				return false;
 			}
 
@@ -691,23 +371,12 @@ public static class YukiModSharedSettingsUiPatch
 			VBoxContainer? vbox = settingsPanel.GetNodeOrNull<VBoxContainer>("VBoxContainer");
 			if (vbox == null)
 			{
-				Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): duplicated panel missing VBoxContainer");
+				Log.Warn("[YukiMod] Settings inject skipped (" + source + "): duplicated panel missing VBoxContainer");
 				return false;
 			}
-			Node? keep = null;
+
 			foreach (Node child in vbox.GetChildren())
 			{
-				if (keep == null && child is Control)
-				{
-					keep = child;
-				}
-			}
-			foreach (Node child in vbox.GetChildren())
-			{
-				if (child == keep)
-				{
-					continue;
-				}
 				vbox.RemoveChild(child);
 				child.QueueFree();
 			}
@@ -720,32 +389,39 @@ public static class YukiModSharedSettingsUiPatch
 			PackedScene? tabScene = ResourceLoader.Load<PackedScene>(ModTabScenePath);
 			if (tabScene == null)
 			{
-				Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): missing tab scene " + ModTabScenePath);
+				Log.Warn("[YukiMod] Settings inject skipped (" + source + "): missing tab scene");
 				return false;
 			}
+
 			try
 			{
 				tab = tabScene.Instantiate<NSettingsTab>(PackedScene.GenEditState.Disabled);
 			}
 			catch (Exception ex)
 			{
-				Log.Warn("[YukiMod] Mod settings inject skipped (" + source + "): instantiate tab failed: " + ex.Message);
+				Log.Warn("[YukiMod] Instantiate tab failed (" + source + "): " + ex.Message);
 				return false;
 			}
+
 			tab.Name = ModTabName;
 			tab.UniqueNameInOwner = true;
 			int rightIconIndex = -1;
 			Node? rightIcon = tabManager.GetNodeOrNull("RightTriggerIcon");
 			if (rightIcon != null)
-			{
 				rightIconIndex = rightIcon.GetIndex();
-			}
+
 			tabManager.AddChild(tab);
 			if (rightIconIndex >= 0)
-			{
 				tabManager.MoveChild(tab, rightIconIndex);
-			}
+
 			tab.Set("layout_mode", 2);
+			Callable.From(() =>
+			{
+				if (!GodotObject.IsInstanceValid(tab) || !tab.IsNodeReady())
+					return;
+
+				tab.SetLabel("卡厄思mod");
+			}).CallDeferred();
 		}
 		else
 		{
@@ -754,30 +430,138 @@ public static class YukiModSharedSettingsUiPatch
 			{
 				int rightIconIndex = rightIcon.GetIndex();
 				if (tab.GetIndex() > rightIconIndex)
-				{
 					tabManager.MoveChild(tab, rightIconIndex);
-				}
 			}
+
 			tab.Set("layout_mode", 2);
 		}
 
-		EnsureSharedTabLabelWhenReady(tab);
 		panel = settingsPanel;
 		EnsureTabBinding(tabManager, tab, settingsPanel);
 		return true;
 	}
 
-	private static void EnsureSharedTabLabelWhenReady(NSettingsTab tab)
+	private static void ConfigurePanelLayout(NSettingsScreen screen, Control panel, VBoxContainer vbox)
 	{
-		Callable.From(() =>
-		{
-			if (!GodotObject.IsInstanceValid(tab) || !tab.IsNodeReady())
-			{
-				return;
-			}
+		vbox.CustomMinimumSize = Vector2.Zero;
+		panel.CustomMinimumSize = Vector2.Zero;
+		vbox.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+		panel.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+		vbox.AddThemeConstantOverride("separation", 10);
 
-			tab.SetLabel(SharedModTabLabel);
-		}).CallDeferred();
+		ScrollContainer? scrollContainer = screen.GetNodeOrNull<ScrollContainer>(ScrollContainerPath);
+		if (scrollContainer == null)
+			return;
+
+		scrollContainer.HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled;
+		scrollContainer.VerticalScrollMode = ScrollContainer.ScrollMode.Auto;
+		VScrollBar? scrollBar = scrollContainer.GetVScrollBar();
+		if (scrollBar != null)
+		{
+			scrollBar.CustomMinimumSize = new Vector2(ScrollBarWidth, 0f);
+			scrollBar.Show();
+		}
+
+		scrollContainer.QueueSort();
+	}
+
+	private static void RemoveNodeIfPresent(Node parent, string nodeName)
+	{
+		Node? existing = parent.GetNodeOrNull(nodeName);
+		if (existing == null)
+			return;
+
+		parent.RemoveChild(existing);
+		existing.QueueFree();
+	}
+
+	private static void PrepareInlineControl(Control control, string name, float minWidth, bool expand)
+	{
+		control.Name = name;
+		control.Set("layout_mode", 2);
+		control.FocusMode = Control.FocusModeEnum.All;
+		control.MouseFilter = Control.MouseFilterEnum.Stop;
+		control.CustomMinimumSize = new Vector2(minWidth, 0f);
+		control.SizeFlagsHorizontal = expand ? Control.SizeFlags.ExpandFill : Control.SizeFlags.ShrinkEnd;
+		control.SizeFlagsVertical = Control.SizeFlags.ShrinkCenter;
+	}
+
+	private static void TryHideInlineLabel(Control root)
+	{
+		Control? inlineLabel = root.GetNodeOrNull<Control>("Label");
+		if (inlineLabel == null)
+			return;
+
+		inlineLabel.Visible = false;
+		inlineLabel.CustomMinimumSize = Vector2.Zero;
+	}
+
+	private static void PrepareInlineSliderLayout(Control sliderRoot)
+	{
+		sliderRoot.CustomMinimumSize = new Vector2(SliderMinWidth, RowMinHeight);
+
+		Control? slider = sliderRoot.GetNodeOrNull<Control>("Slider");
+		if (slider != null)
+		{
+			slider.Set("layout_mode", 1);
+			slider.AnchorsPreset = (int)Control.LayoutPreset.FullRect;
+			slider.AnchorLeft = 0f;
+			slider.AnchorTop = 0f;
+			slider.AnchorRight = 1f;
+			slider.AnchorBottom = 1f;
+			slider.OffsetLeft = 0f;
+			slider.OffsetTop = 0f;
+			slider.OffsetRight = -(SliderValueWidth + SliderValueGap);
+			slider.OffsetBottom = 0f;
+			slider.SizeFlagsHorizontal = Control.SizeFlags.ExpandFill;
+			slider.SizeFlagsVertical = Control.SizeFlags.ExpandFill;
+		}
+
+		Label? valueLabel = sliderRoot.GetNodeOrNull<Label>("SliderValue");
+		if (valueLabel != null)
+		{
+			valueLabel.Set("layout_mode", 1);
+			valueLabel.AnchorLeft = 1f;
+			valueLabel.AnchorRight = 1f;
+			valueLabel.AnchorTop = 0.5f;
+			valueLabel.AnchorBottom = 0.5f;
+			valueLabel.OffsetLeft = -SliderValueWidth;
+			valueLabel.OffsetTop = -32f;
+			valueLabel.OffsetRight = 0f;
+			valueLabel.OffsetBottom = 32f;
+			valueLabel.HorizontalAlignment = HorizontalAlignment.Center;
+			valueLabel.VerticalAlignment = VerticalAlignment.Center;
+			valueLabel.SizeFlagsHorizontal = Control.SizeFlags.ShrinkEnd;
+			ApplyScaledValueLabelStyle(valueLabel);
+		}
+	}
+
+	private static void PrepareInlineTickboxLayout(Control tickboxRoot)
+	{
+		tickboxRoot.CustomMinimumSize = new Vector2(TickboxMinWidth, RowMinHeight);
+
+		Control? visuals = tickboxRoot.GetNodeOrNull<Control>("TickboxVisuals");
+		if (visuals != null)
+		{
+			visuals.Set("layout_mode", 1);
+			visuals.MouseFilter = Control.MouseFilterEnum.Stop;
+			visuals.AnchorLeft = 0.5f;
+			visuals.AnchorTop = 0.5f;
+			visuals.AnchorRight = 0.5f;
+			visuals.AnchorBottom = 0.5f;
+			visuals.OffsetLeft = -32f;
+			visuals.OffsetTop = -32f;
+			visuals.OffsetRight = 32f;
+			visuals.OffsetBottom = 32f;
+		}
+
+		Control? ticked = tickboxRoot.GetNodeOrNull<Control>(TickboxTickedPath);
+		if (ticked != null)
+			ticked.MouseFilter = Control.MouseFilterEnum.Ignore;
+
+		Control? notTicked = tickboxRoot.GetNodeOrNull<Control>(TickboxNotTickedPath);
+		if (notTicked != null)
+			notTicked.MouseFilter = Control.MouseFilterEnum.Ignore;
 	}
 
 	private static void EnsureTabBinding(NSettingsTabManager tabManager, NSettingsTab tab, NSettingsPanel panel)
@@ -786,19 +570,13 @@ public static class YukiModSharedSettingsUiPatch
 		{
 			var field = AccessTools.Field(typeof(NSettingsTabManager), "_tabs");
 			if (field?.GetValue(tabManager) is not Dictionary<NSettingsTab, NSettingsPanel> dict)
-			{
 				return;
-			}
-			if (!dict.ContainsKey(tab))
-			{
-				dict.Add(tab, panel);
-			}
+
+			dict[tab] = panel;
 
 			Callable callable = Callable.From<NButton>(_ => SwitchTabTo(tabManager, tab));
 			if (!tab.IsConnected(NClickableControl.SignalName.Released, callable))
-			{
 				tab.Connect(NClickableControl.SignalName.Released, callable);
-			}
 		}
 		catch
 		{
@@ -820,74 +598,277 @@ public static class YukiModSharedSettingsUiPatch
 	private static void WireVoiceSliderWhenReady(Control sliderRoot, string source, int attempt)
 	{
 		if (!GodotObject.IsInstanceValid(sliderRoot))
-		{
 			return;
-		}
+
 		if (!sliderRoot.IsNodeReady())
 		{
 			if (attempt < 8)
-			{
 				Callable.From(() => WireVoiceSliderWhenReady(sliderRoot, source, attempt + 1)).CallDeferred();
-			}
-			else
-			{
-				Log.Warn("[YukiMod] Voice slider not ready after retries (" + source + ")");
-			}
+
 			return;
 		}
+
 		WireVoiceSlider(sliderRoot);
 	}
 
 	private static void WireVoiceSlider(Control sliderRoot)
 	{
 		NSlider slider = sliderRoot.GetNode<NSlider>("Slider");
-		MegaLabel valueLabel = sliderRoot.GetNode<MegaLabel>("SliderValue");
+		Label? valueLabel = GetSliderValueLabel(sliderRoot);
+		NSelectionReticle? reticle = sliderRoot.GetNodeOrNull<NSelectionReticle>("SelectionReticle");
 
-		slider.SetValueWithoutAnimation(YukiModSharedSettings.VoiceVolume * 100f);
-		valueLabel.SetTextAutoSize($"{slider.Value}%");
+		if (!sliderRoot.HasMeta(ControlWiredMeta))
+		{
+			sliderRoot.SetMeta(ControlWiredMeta, true);
+			slider.MinValue = 0.0;
+			slider.MaxValue = 100.0;
+			slider.Step = 5.0;
+			slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
+			{
+				SetSliderValueText(valueLabel, $"{value}%");
+				YukiModSharedSettings.SetVoiceVolume((float)value * 0.01f, persist: false);
+			}));
+			slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
+			{
+				if (valueChanged)
+					YukiModSharedSettings.SetVoiceVolume(YukiModSharedSettings.VoiceVolume, persist: true);
+			}));
+			sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+			{
+				if (input.IsActionPressed(MegaInput.left))
+					slider.Value -= 5.0;
+				if (input.IsActionPressed(MegaInput.right))
+					slider.Value += 5.0;
+			}));
+			WireFocusReticle(sliderRoot, reticle);
+		}
 
-		slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
+		SetVoiceSliderValue(sliderRoot, YukiModSharedSettings.VoiceVolume);
+	}
+
+	private static void WireActionVfxTickboxWhenReady(Control tickboxRoot, string source, int attempt)
+	{
+		if (!GodotObject.IsInstanceValid(tickboxRoot))
+			return;
+		if (!tickboxRoot.IsNodeReady())
 		{
-			valueLabel.SetTextAutoSize($"{value}%");
-			YukiModSharedSettings.SetVoiceVolume((float)value * 0.01f, persist: false);
-		}));
-		slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
+			if (attempt < 8)
+				Callable.From(() => WireActionVfxTickboxWhenReady(tickboxRoot, source, attempt + 1)).CallDeferred();
+			return;
+		}
+
+		WireActionVfxTickbox(tickboxRoot);
+	}
+
+	private static void WireActionVfxTickbox(Control tickboxRoot)
+	{
+		ApplySettingsTickboxState(tickboxRoot, YukiModSharedSettings.CombatEffectsEnabled);
+		if (tickboxRoot.HasMeta(ControlWiredMeta))
+			return;
+
+		tickboxRoot.SetMeta(ControlWiredMeta, true);
+		tickboxRoot.FocusMode = Control.FocusModeEnum.All;
+		WireFocusReticle(tickboxRoot, tickboxRoot.GetNodeOrNull<NSelectionReticle>(TickboxReticlePath));
+		if (tickboxRoot is NTickbox tickbox)
 		{
-			if (valueChanged)
+			tickbox.Connect(NTickbox.SignalName.Toggled, Callable.From<NTickbox>(_ =>
 			{
-				YukiModSharedSettings.SetVoiceVolume(YukiModSharedSettings.VoiceVolume, persist: true);
-			}
+				bool enabled = tickbox.IsTicked;
+				YukiModSharedSettings.SetCombatEffectsEnabled(enabled, persist: true);
+				ApplySettingsTickboxState(tickboxRoot, enabled);
+			}));
+			return;
+		}
+
+		WireControllerTickboxToggle(tickboxRoot, () =>
+		{
+			bool enabled = !YukiModSharedSettings.CombatEffectsEnabled;
+			YukiModSharedSettings.SetCombatEffectsEnabled(enabled, persist: true);
+			ApplySettingsTickboxState(tickboxRoot, enabled);
+		});
+		WireClickableTickboxToggle(tickboxRoot, () =>
+		{
+			bool enabled = !YukiModSharedSettings.CombatEffectsEnabled;
+			YukiModSharedSettings.SetCombatEffectsEnabled(enabled, persist: true);
+			ApplySettingsTickboxState(tickboxRoot, enabled);
+		});
+	}
+
+	private static void WirePortraitsTickboxWhenReady(Control tickboxRoot, string source, int attempt)
+	{
+		if (!GodotObject.IsInstanceValid(tickboxRoot))
+			return;
+		if (!tickboxRoot.IsNodeReady())
+		{
+			if (attempt < 8)
+				Callable.From(() => WirePortraitsTickboxWhenReady(tickboxRoot, source, attempt + 1)).CallDeferred();
+			return;
+		}
+
+		WirePortraitsTickbox(tickboxRoot);
+	}
+
+	private static void WirePortraitsTickbox(Control tickboxRoot)
+	{
+		ApplySettingsTickboxState(tickboxRoot, YukiModSharedSettings.BattleReadyOverlayEnabled);
+		if (tickboxRoot.HasMeta(ControlWiredMeta))
+			return;
+
+		tickboxRoot.SetMeta(ControlWiredMeta, true);
+		tickboxRoot.FocusMode = Control.FocusModeEnum.All;
+		WireFocusReticle(tickboxRoot, tickboxRoot.GetNodeOrNull<NSelectionReticle>(TickboxReticlePath));
+		if (tickboxRoot is NTickbox tickbox)
+		{
+			tickbox.Connect(NTickbox.SignalName.Toggled, Callable.From<NTickbox>(_ =>
+			{
+				bool enabled = tickbox.IsTicked;
+				YukiModSharedSettings.SetBattleReadyOverlayEnabled(enabled, persist: true);
+				ApplySettingsTickboxState(tickboxRoot, enabled);
+				if (enabled)
+					YukiBattleReadyOverlay.ApplyTransformFromSettings();
+				else
+					YukiBattleReadyOverlay.NotifyCombatEnded();
+			}));
+			return;
+		}
+
+		WireControllerTickboxToggle(tickboxRoot, () =>
+		{
+			bool enabled = !YukiModSharedSettings.BattleReadyOverlayEnabled;
+			YukiModSharedSettings.SetBattleReadyOverlayEnabled(enabled, persist: true);
+			ApplySettingsTickboxState(tickboxRoot, enabled);
+			if (enabled)
+				YukiBattleReadyOverlay.ApplyTransformFromSettings();
+			else
+				YukiBattleReadyOverlay.NotifyCombatEnded();
+		});
+		WireClickableTickboxToggle(tickboxRoot, () =>
+		{
+			bool enabled = !YukiModSharedSettings.BattleReadyOverlayEnabled;
+			YukiModSharedSettings.SetBattleReadyOverlayEnabled(enabled, persist: true);
+			ApplySettingsTickboxState(tickboxRoot, enabled);
+			if (enabled)
+				YukiBattleReadyOverlay.ApplyTransformFromSettings();
+			else
+				YukiBattleReadyOverlay.NotifyCombatEnded();
+		});
+	}
+
+	private static void WireDynamicCardPortraitsTickboxWhenReady(Control tickboxRoot, string source, int attempt)
+	{
+		if (!GodotObject.IsInstanceValid(tickboxRoot))
+			return;
+		if (!tickboxRoot.IsNodeReady())
+		{
+			if (attempt < 8)
+				Callable.From(() => WireDynamicCardPortraitsTickboxWhenReady(tickboxRoot, source, attempt + 1)).CallDeferred();
+			return;
+		}
+
+		WireDynamicCardPortraitsTickbox(tickboxRoot);
+	}
+
+	private static void WireDynamicCardPortraitsTickbox(Control tickboxRoot)
+	{
+		ApplySettingsTickboxState(tickboxRoot, YukiModSharedSettings.DynamicCardPortraitsEnabled);
+		if (tickboxRoot.HasMeta(ControlWiredMeta))
+			return;
+
+		tickboxRoot.SetMeta(ControlWiredMeta, true);
+		tickboxRoot.FocusMode = Control.FocusModeEnum.All;
+		WireFocusReticle(tickboxRoot, tickboxRoot.GetNodeOrNull<NSelectionReticle>(TickboxReticlePath));
+		if (tickboxRoot is NTickbox tickbox)
+		{
+			tickbox.Connect(NTickbox.SignalName.Toggled, Callable.From<NTickbox>(_ =>
+			{
+				bool enabled = tickbox.IsTicked;
+				YukiModSharedSettings.SetDynamicCardPortraitsEnabled(enabled, persist: true);
+				ApplySettingsTickboxState(tickboxRoot, enabled);
+			}));
+			return;
+		}
+
+		WireControllerTickboxToggle(tickboxRoot, () =>
+		{
+			bool enabled = !YukiModSharedSettings.DynamicCardPortraitsEnabled;
+			YukiModSharedSettings.SetDynamicCardPortraitsEnabled(enabled, persist: true);
+			ApplySettingsTickboxState(tickboxRoot, enabled);
+		});
+		WireClickableTickboxToggle(tickboxRoot, () =>
+		{
+			bool enabled = !YukiModSharedSettings.DynamicCardPortraitsEnabled;
+			YukiModSharedSettings.SetDynamicCardPortraitsEnabled(enabled, persist: true);
+			ApplySettingsTickboxState(tickboxRoot, enabled);
+		});
+	}
+
+	private static void WireControllerTickboxToggle(Control tickboxRoot, Action onToggle)
+	{
+		tickboxRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+		{
+			if (input is InputEventMouseButton)
+				return;
+			if (!input.IsActionReleased(MegaInput.select))
+				return;
+
+			onToggle();
+			tickboxRoot.AcceptEvent();
+		}));
+	}
+
+	private static void WireClickableTickboxToggle(Control tickboxRoot, Action onToggle)
+	{
+		if (tickboxRoot is NClickableControl clickable)
+		{
+			clickable.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+			{
+				if (input is not InputEventMouseButton mouseInput || mouseInput.ButtonIndex != MouseButton.Left)
+					return;
+			}));
+			clickable.Connect(NClickableControl.SignalName.Released, Callable.From<NClickableControl>(_ => onToggle()));
+			return;
+		}
+
+		tickboxRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+		{
+			if (input is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
+				return;
+			onToggle();
+			tickboxRoot.AcceptEvent();
 		}));
 
-		sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+		Control? visuals = tickboxRoot.GetNodeOrNull<Control>("TickboxVisuals");
+		if (visuals != null)
 		{
-			if (input.IsActionPressed(MegaInput.left))
+			visuals.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
 			{
-				slider.Value -= 5.0;
-			}
-			if (input.IsActionPressed(MegaInput.right))
-			{
-				slider.Value += 5.0;
-			}
-		}));
+				if (input is not InputEventMouseButton { ButtonIndex: MouseButton.Left, Pressed: true })
+					return;
+				onToggle();
+				visuals.AcceptEvent();
+			}));
+		}
+	}
+
+	private static void ApplySettingsTickboxState(Control tickboxRoot, bool enabled)
+	{
+		Control? ticked = tickboxRoot.GetNodeOrNull<Control>(TickboxTickedPath);
+		Control? notTicked = tickboxRoot.GetNodeOrNull<Control>(TickboxNotTickedPath);
+		if (ticked == null || notTicked == null)
+			return;
+
+		ticked.Visible = enabled;
+		notTicked.Visible = !enabled;
 	}
 
 	private static void WireScaleSliderWhenReady(Control sliderRoot, string source, int attempt)
 	{
 		if (!GodotObject.IsInstanceValid(sliderRoot))
-		{
 			return;
-		}
 		if (!sliderRoot.IsNodeReady())
 		{
 			if (attempt < 8)
-			{
 				Callable.From(() => WireScaleSliderWhenReady(sliderRoot, source, attempt + 1)).CallDeferred();
-			}
-			else
-			{
-				Log.Warn("[YukiMod] Scale slider not ready after retries (" + source + ")");
-			}
 			return;
 		}
 		WireScaleSlider(sliderRoot);
@@ -896,57 +877,47 @@ public static class YukiModSharedSettingsUiPatch
 	private static void WireScaleSlider(Control sliderRoot)
 	{
 		NSlider slider = sliderRoot.GetNode<NSlider>("Slider");
-		MegaLabel valueLabel = sliderRoot.GetNode<MegaLabel>("SliderValue");
+		Label? valueLabel = GetSliderValueLabel(sliderRoot);
+		NSelectionReticle? reticle = sliderRoot.GetNodeOrNull<NSelectionReticle>("SelectionReticle");
 
-		slider.MinValue = 50.0;
-		slider.MaxValue = 200.0;
-		slider.Step = 5.0;
-		slider.SetValueWithoutAnimation(Mathf.Clamp(YukiModSharedSettings.BattleReadyScale * 100f, 50f, 200f));
-		valueLabel.SetTextAutoSize($"{slider.Value}%");
+		if (!sliderRoot.HasMeta(ControlWiredMeta))
+		{
+			sliderRoot.SetMeta(ControlWiredMeta, true);
+			slider.MinValue = 50.0;
+			slider.MaxValue = 200.0;
+			slider.Step = 5.0;
+			slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
+			{
+				SetSliderValueText(valueLabel, $"{value}%");
+				YukiModSharedSettings.SetBattleReadyScale((float)value * 0.01f, persist: false);
+				YukiBattleReadyOverlay.ApplyTransformFromSettings();
+			}));
+			slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
+			{
+				if (valueChanged)
+					YukiModSharedSettings.SetBattleReadyScale(YukiModSharedSettings.BattleReadyScale, persist: true);
+			}));
+			sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+			{
+				if (input.IsActionPressed(MegaInput.left))
+					slider.Value -= 5.0;
+				if (input.IsActionPressed(MegaInput.right))
+					slider.Value += 5.0;
+			}));
+			WireFocusReticle(sliderRoot, reticle);
+		}
 
-		slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
-		{
-			valueLabel.SetTextAutoSize($"{value}%");
-			YukiModSharedSettings.SetBattleReadyScale((float)value * 0.01f, persist: false);
-			YukiBattleReadyOverlay.ApplyTransformFromSettings();
-		}));
-		slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
-		{
-			if (valueChanged)
-			{
-				YukiModSharedSettings.SetBattleReadyScale(YukiModSharedSettings.BattleReadyScale, persist: true);
-			}
-		}));
-
-		sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
-		{
-			if (input.IsActionPressed(MegaInput.left))
-			{
-				slider.Value -= 5.0;
-			}
-			if (input.IsActionPressed(MegaInput.right))
-			{
-				slider.Value += 5.0;
-			}
-		}));
+		SetScaleSliderValue(sliderRoot, YukiModSharedSettings.BattleReadyScale);
 	}
 
 	private static void WireOffsetYSliderWhenReady(Control sliderRoot, string source, int attempt)
 	{
 		if (!GodotObject.IsInstanceValid(sliderRoot))
-		{
 			return;
-		}
 		if (!sliderRoot.IsNodeReady())
 		{
 			if (attempt < 8)
-			{
 				Callable.From(() => WireOffsetYSliderWhenReady(sliderRoot, source, attempt + 1)).CallDeferred();
-			}
-			else
-			{
-				Log.Warn("[YukiMod] Offset slider not ready after retries (" + source + ")");
-			}
 			return;
 		}
 		WireOffsetYSlider(sliderRoot);
@@ -955,60 +926,48 @@ public static class YukiModSharedSettingsUiPatch
 	private static void WireOffsetYSlider(Control sliderRoot)
 	{
 		NSlider slider = sliderRoot.GetNode<NSlider>("Slider");
-		MegaLabel valueLabel = sliderRoot.GetNode<MegaLabel>("SliderValue");
+		Label? valueLabel = GetSliderValueLabel(sliderRoot);
+		NSelectionReticle? reticle = sliderRoot.GetNodeOrNull<NSelectionReticle>("SelectionReticle");
 
-		slider.MinValue = 0.0;
-		slider.MaxValue = 800.0;
-		slider.Step = 10.0;
-		float initialOffset = Mathf.Clamp(YukiModSharedSettings.BattleReadyOffsetY, -400f, 400f);
-		slider.SetValueWithoutAnimation(Mathf.Clamp(initialOffset + 400f, 0f, 800f));
-		int initialDisplay = (int)Math.Round(slider.Value - 400.0);
-		valueLabel.SetTextAutoSize($"{initialDisplay:+0;-0;0}px");
+		if (!sliderRoot.HasMeta(ControlWiredMeta))
+		{
+			sliderRoot.SetMeta(ControlWiredMeta, true);
+			slider.MinValue = 0.0;
+			slider.MaxValue = 800.0;
+			slider.Step = 10.0;
+			slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
+			{
+				int display = (int)Math.Round(value - 400.0);
+				SetSliderValueText(valueLabel, $"{display:+0;-0;0}px");
+				YukiModSharedSettings.SetBattleReadyOffsetY((float)value - 400f, persist: false);
+				YukiBattleReadyOverlay.ApplyTransformFromSettings();
+			}));
+			slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
+			{
+				if (valueChanged)
+					YukiModSharedSettings.SetBattleReadyOffsetY(YukiModSharedSettings.BattleReadyOffsetY, persist: true);
+			}));
+			sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+			{
+				if (input.IsActionPressed(MegaInput.left))
+					slider.Value -= 10.0;
+				if (input.IsActionPressed(MegaInput.right))
+					slider.Value += 10.0;
+			}));
+			WireFocusReticle(sliderRoot, reticle);
+		}
 
-		slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
-		{
-			int display = (int)Math.Round(value - 400.0);
-			valueLabel.SetTextAutoSize($"{display:+0;-0;0}px");
-			YukiModSharedSettings.SetBattleReadyOffsetY((float)value - 400f, persist: false);
-			YukiBattleReadyOverlay.ApplyTransformFromSettings();
-		}));
-		slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
-		{
-			if (valueChanged)
-			{
-				YukiModSharedSettings.SetBattleReadyOffsetY(YukiModSharedSettings.BattleReadyOffsetY, persist: true);
-			}
-		}));
-
-		sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
-		{
-			if (input.IsActionPressed(MegaInput.left))
-			{
-				slider.Value -= 10.0;
-			}
-			if (input.IsActionPressed(MegaInput.right))
-			{
-				slider.Value += 10.0;
-			}
-		}));
+		SetOffsetSliderValue(sliderRoot, YukiModSharedSettings.BattleReadyOffsetY);
 	}
 
 	private static void WireOffsetXSliderWhenReady(Control sliderRoot, string source, int attempt)
 	{
 		if (!GodotObject.IsInstanceValid(sliderRoot))
-		{
 			return;
-		}
 		if (!sliderRoot.IsNodeReady())
 		{
 			if (attempt < 8)
-			{
 				Callable.From(() => WireOffsetXSliderWhenReady(sliderRoot, source, attempt + 1)).CallDeferred();
-			}
-			else
-			{
-				Log.Warn("[YukiMod] OffsetX slider not ready after retries (" + source + ")");
-			}
 			return;
 		}
 		WireOffsetXSlider(sliderRoot);
@@ -1017,60 +976,48 @@ public static class YukiModSharedSettingsUiPatch
 	private static void WireOffsetXSlider(Control sliderRoot)
 	{
 		NSlider slider = sliderRoot.GetNode<NSlider>("Slider");
-		MegaLabel valueLabel = sliderRoot.GetNode<MegaLabel>("SliderValue");
+		Label? valueLabel = GetSliderValueLabel(sliderRoot);
+		NSelectionReticle? reticle = sliderRoot.GetNodeOrNull<NSelectionReticle>("SelectionReticle");
 
-		slider.MinValue = 0.0;
-		slider.MaxValue = 800.0;
-		slider.Step = 10.0;
-		float initialOffset = Mathf.Clamp(YukiModSharedSettings.BattleReadyOffsetX, -400f, 400f);
-		slider.SetValueWithoutAnimation(Mathf.Clamp(initialOffset + 400f, 0f, 800f));
-		int initialDisplay = (int)Math.Round(slider.Value - 400.0);
-		valueLabel.SetTextAutoSize($"{initialDisplay:+0;-0;0}px");
+		if (!sliderRoot.HasMeta(ControlWiredMeta))
+		{
+			sliderRoot.SetMeta(ControlWiredMeta, true);
+			slider.MinValue = 0.0;
+			slider.MaxValue = 800.0;
+			slider.Step = 10.0;
+			slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
+			{
+				int display = (int)Math.Round(value - 400.0);
+				SetSliderValueText(valueLabel, $"{display:+0;-0;0}px");
+				YukiModSharedSettings.SetBattleReadyOffsetX((float)value - 400f, persist: false);
+				YukiBattleReadyOverlay.ApplyTransformFromSettings();
+			}));
+			slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
+			{
+				if (valueChanged)
+					YukiModSharedSettings.SetBattleReadyOffsetX(YukiModSharedSettings.BattleReadyOffsetX, persist: true);
+			}));
+			sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
+			{
+				if (input.IsActionPressed(MegaInput.left))
+					slider.Value -= 10.0;
+				if (input.IsActionPressed(MegaInput.right))
+					slider.Value += 10.0;
+			}));
+			WireFocusReticle(sliderRoot, reticle);
+		}
 
-		slider.Connect(Godot.Range.SignalName.ValueChanged, Callable.From<double>(value =>
-		{
-			int display = (int)Math.Round(value - 400.0);
-			valueLabel.SetTextAutoSize($"{display:+0;-0;0}px");
-			YukiModSharedSettings.SetBattleReadyOffsetX((float)value - 400f, persist: false);
-			YukiBattleReadyOverlay.ApplyTransformFromSettings();
-		}));
-		slider.Connect(NSlider.SignalName.MouseReleased, Callable.From<bool>(valueChanged =>
-		{
-			if (valueChanged)
-			{
-				YukiModSharedSettings.SetBattleReadyOffsetX(YukiModSharedSettings.BattleReadyOffsetX, persist: true);
-			}
-		}));
-
-		sliderRoot.Connect(Control.SignalName.GuiInput, Callable.From<InputEvent>(input =>
-		{
-			if (input.IsActionPressed(MegaInput.left))
-			{
-				slider.Value -= 10.0;
-			}
-			if (input.IsActionPressed(MegaInput.right))
-			{
-				slider.Value += 10.0;
-			}
-		}));
+		SetOffsetSliderValue(sliderRoot, YukiModSharedSettings.BattleReadyOffsetX);
 	}
 
 	private static void WireResetButtonWhenReady(VBoxContainer vbox, Control buttonRoot, string source, int attempt)
 	{
 		if (!GodotObject.IsInstanceValid(buttonRoot))
-		{
 			return;
-		}
 		if (!buttonRoot.IsNodeReady())
 		{
 			if (attempt < 8)
-			{
 				Callable.From(() => WireResetButtonWhenReady(vbox, buttonRoot, source, attempt + 1)).CallDeferred();
-			}
-			else
-			{
-				Log.Warn("[YukiMod] Reset button not ready after retries (" + source + ")");
-			}
 			return;
 		}
 		WireResetButton(vbox, buttonRoot);
@@ -1078,10 +1025,12 @@ public static class YukiModSharedSettingsUiPatch
 
 	private static void WireResetButton(VBoxContainer vbox, Control buttonRoot)
 	{
-		if (buttonRoot is not NClickableControl clickable)
-		{
+		if (buttonRoot.HasMeta(ControlWiredMeta))
 			return;
-		}
+		if (buttonRoot is not NClickableControl clickable)
+			return;
+
+		buttonRoot.SetMeta(ControlWiredMeta, true);
 		clickable.Connect(NClickableControl.SignalName.Released, Callable.From<NClickableControl>(_ => ResetBattleReadyPosition(vbox)));
 	}
 
@@ -1094,59 +1043,129 @@ public static class YukiModSharedSettingsUiPatch
 
 		Control? scaleRoot = vbox.GetNodeOrNull<Control>(ScaleSectionName + "/" + ScaleSliderName);
 		if (scaleRoot != null)
-		{
 			SetScaleSliderValue(scaleRoot, 1f);
-		}
 
 		Control? offsetXRoot = vbox.GetNodeOrNull<Control>(OffsetXSectionName + "/" + OffsetXSliderName);
 		if (offsetXRoot != null)
-		{
 			SetOffsetSliderValue(offsetXRoot, 0f);
-		}
 
 		Control? offsetYRoot = vbox.GetNodeOrNull<Control>(OffsetYSectionName + "/" + OffsetYSliderName);
 		if (offsetYRoot != null)
-		{
 			SetOffsetSliderValue(offsetYRoot, 0f);
-		}
 	}
 
 	private static void SetScaleSliderValue(Control sliderRoot, float scale)
 	{
 		if (!sliderRoot.IsNodeReady())
-		{
 			return;
-		}
 
 		NSlider? slider = sliderRoot.GetNodeOrNull<NSlider>("Slider");
-		MegaLabel? valueLabel = sliderRoot.GetNodeOrNull<MegaLabel>("SliderValue");
+		Label? valueLabel = GetSliderValueLabel(sliderRoot);
 		if (slider == null || valueLabel == null)
-		{
 			return;
-		}
 
 		double v = Mathf.Clamp(scale * 100f, 50f, 200f);
 		slider.SetValueWithoutAnimation(v);
-		valueLabel.SetTextAutoSize($"{v}%");
+		SetSliderValueText(valueLabel, $"{v}%");
 	}
 
 	private static void SetOffsetSliderValue(Control sliderRoot, float offset)
 	{
 		if (!sliderRoot.IsNodeReady())
-		{
 			return;
-		}
 
 		NSlider? slider = sliderRoot.GetNodeOrNull<NSlider>("Slider");
-		MegaLabel? valueLabel = sliderRoot.GetNodeOrNull<MegaLabel>("SliderValue");
+		Label? valueLabel = GetSliderValueLabel(sliderRoot);
 		if (slider == null || valueLabel == null)
-		{
 			return;
-		}
 
 		double v = Mathf.Clamp(offset + 400f, 0f, 800f);
 		slider.SetValueWithoutAnimation(v);
 		int display = (int)Math.Round(v - 400.0);
-		valueLabel.SetTextAutoSize($"{display:+0;-0;0}px");
+		SetSliderValueText(valueLabel, $"{display:+0;-0;0}px");
+	}
+
+	private static void SetVoiceSliderValue(Control sliderRoot, float volume)
+	{
+		if (!sliderRoot.IsNodeReady())
+			return;
+
+		NSlider? slider = sliderRoot.GetNodeOrNull<NSlider>("Slider");
+		Label? valueLabel = GetSliderValueLabel(sliderRoot);
+		if (slider == null || valueLabel == null)
+			return;
+
+		double v = Mathf.Clamp(volume * 100f, 0f, 100f);
+		slider.SetValueWithoutAnimation(v);
+		SetSliderValueText(valueLabel, $"{v}%");
+	}
+
+	private static Label? GetSliderValueLabel(Control sliderRoot)
+	{
+		Label? label = sliderRoot.GetNodeOrNull<Label>("SliderValue");
+		ApplyScaledValueLabelStyle(label);
+		return label;
+	}
+
+	private static void SetSliderValueText(Label? label, string text)
+	{
+		if (label == null)
+			return;
+
+		if (label is MegaLabel megaLabel)
+		{
+			megaLabel.SetTextAutoSize(text);
+			return;
+		}
+
+		label.Text = text;
+	}
+
+	private static void ApplyScaledValueLabelStyle(Label? label)
+	{
+		if (label == null)
+			return;
+
+		label.CustomMinimumSize = new Vector2(Math.Max(label.CustomMinimumSize.X, 84f), Math.Max(label.CustomMinimumSize.Y, LabelMinHeight));
+		if (label is MegaLabel megaLabel)
+			megaLabel.MaxFontSize = Math.Max(megaLabel.MaxFontSize, ScaleFontSize(28));
+	}
+
+	private static void WireFocusReticle(Control root, NSelectionReticle? reticle)
+	{
+		if (reticle == null)
+			return;
+
+		reticle.Visible = false;
+		reticle.MouseFilter = Control.MouseFilterEnum.Ignore;
+	}
+
+	private static void RefreshFocusNeighbors(params Control?[] controls)
+	{
+		List<Control> focusables = new();
+		foreach (Control? control in controls)
+		{
+			if (control != null)
+				focusables.Add(control);
+		}
+
+		for (int i = 0; i < focusables.Count; i++)
+		{
+			Control current = focusables[i];
+			current.FocusNeighborLeft = current.GetPath();
+			current.FocusNeighborRight = current.GetPath();
+			current.FocusNeighborTop = (i > 0 ? focusables[i - 1] : current).GetPath();
+			current.FocusNeighborBottom = (i < focusables.Count - 1 ? focusables[i + 1] : current).GetPath();
+		}
+	}
+}
+
+[HarmonyPatch(typeof(NSettingsScreen), nameof(NSettingsScreen.OnSubmenuOpened))]
+public static class YukiModSharedSettingsUiOpenPatch
+{
+	[HarmonyPostfix]
+	public static void Postfix(NSettingsScreen __instance)
+	{
+		YukiModSharedSettingsUiPatch.TryInject(__instance, "OnSubmenuOpened");
 	}
 }

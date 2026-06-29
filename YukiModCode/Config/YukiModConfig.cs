@@ -8,7 +8,11 @@ internal class YukiModConfig : SimpleModConfig
 {
     [ConfigSection("CardVisuals")]
     [ConfigHoverTip]
-    public static bool UseDynamicCardPortraits { get; set; } = true;
+    public static bool UseDynamicCardPortraits
+    {
+        get => YukiModSharedSettings.DynamicCardPortraitsEnabled;
+        set => YukiModSharedSettings.SetDynamicCardPortraitsEnabled(value, persist: true);
+    }
 
     [ConfigSection("CardVisuals")]
     public static bool UseBattleReadyOverlay
