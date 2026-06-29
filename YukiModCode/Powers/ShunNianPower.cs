@@ -79,6 +79,7 @@ public class ShunNianPower : YukiModPower
                 CardCmd.Upgrade(card, CardPreviewStyle.None);
             }
 
+            CardCmd.ApplyKeyword(card, CardKeyword.Exhaust);
             await YukiCardPileService.AddGeneratedCardsToCombat([card], PileType.Hand, player);
         }
     }

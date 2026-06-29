@@ -16,9 +16,6 @@ public class ShunNian() : YukiModCard(1, CardType.Power, CardRarity.Rare, Target
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        [CardKeyword.Exhaust];
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];
 

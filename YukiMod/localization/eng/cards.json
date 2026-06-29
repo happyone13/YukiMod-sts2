@@ -180,7 +180,7 @@
     "YUKIMOD-ZHAO_JIA.title": "Parry",
     "YUKIMOD-ZHAO_JIA.description": "Gain {Block:diff()} Block.\nFor each card played this turn, increase the Block gained by 1.\nIf you exactly block all damage, add an [gold]Iai[/gold] to your [gold]Hand[/gold] at the start of next turn.",
     "YUKIMOD-SHUN_NIAN.title": "Instant Thought",
-    "YUKIMOD-SHUN_NIAN.description": "At the start of your turn, add 1 random {IfUpgraded:show:upgraded }[gold]Inspiration[/gold] card to your [gold]Hand[/gold].",
+    "YUKIMOD-SHUN_NIAN.description": "At the start of your turn, add 1 random {IfUpgraded:show:upgraded }[gold]Inspiration[/gold] card to your [gold]Hand[/gold]. It gains [gold]Exhaust[/gold].",
     "YUKIMOD-LING_GUANG.title": "Glimmer",
     "YUKIMOD-LING_GUANG.description": "Draw {Cards:diff()} cards.",
     "YUKIMOD-SHUANG_JIANG.title": "First Frost",

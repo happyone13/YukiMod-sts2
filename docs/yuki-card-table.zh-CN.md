@@ -74,7 +74,7 @@
 | 血月 | 1 | 罕见 | 能力 | 当你在黑云姿态下使用牌时，你手中的月影伤害+3/5。 | 其他 | ID: YUKIMOD-XUE_YUE；类: XueYue；牌池: 主牌池 |  |
 | 寒霜 | 1 | 稀有 | 能力 | 回合开始时，随机触发1/2张手中的灵感。 | 灵感 | ID: YUKIMOD-HAN_SHUANG；类: HanShuang；牌池: 主牌池 |  |
 | 沉思 | 1 | 稀有 | 能力 | 当灵感触发时，获得2/3点格挡。 | 灵感 | ID: YUKIMOD-CHEN_SI；类: ChenSi；牌池: 主牌池 |  |
-| 瞬念 | 1 | 稀有 | 能力 | 回合开始时，将1张随机的{IfUpgraded:show:升级过的}灵感牌加入手中。 | 灵感 | ID: YUKIMOD-SHUN_NIAN；类: ShunNian；牌池: 主牌池；源码关键词: Exhaust |  |
+| 瞬念 | 1 | 稀有 | 能力 | 回合开始时，将1张随机的{IfUpgraded:show:升级过的}灵感牌加入手中。它获得消耗。 | 灵感 | ID: YUKIMOD-SHUN_NIAN；类: ShunNian；牌池: 主牌池 |  |
 | 零度 | 1 | 稀有 | 能力 | 当你触发12/9次灵感时，将1张居合加入手中。 | 灵感 | ID: YUKIMOD-LING_DU；类: LingDu；牌池: 主牌池 |  |
 | 黑云奥义：黑雾 | 1 | 稀有 | 攻击 | 造成8/10点伤害。；黑云：消耗手牌中所有非黑云的牌，每消耗1张，额外攻击1次；否则，获得2/3层无明。 | 黑云 | ID: YUKIMOD-HEI_YUN_AO_YI_HEI_WU；类: HeiYunAoYiHeiWu；牌池: 主牌池 |  |
 | 黑云心法 | 0 | 稀有 | 技能 | 本回合内保留黑云姿态。 | 黑云 | ID: YUKIMOD-HEI_YUN_XIN_FA；类: HeiYunXinFa；牌池: 主牌池；源码关键词: Retain |  |

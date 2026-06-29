@@ -180,7 +180,7 @@
     "YUKIMOD-ZHAO_JIA.title": "招架",
     "YUKIMOD-ZHAO_JIA.description": "获得{Block:diff()}点格挡。\n本回合每打出一张牌，使获得的格挡+1。\n如果刚好抵挡全部伤害，下回合开始时获得一张[gold]居合[/gold]。",
     "YUKIMOD-SHUN_NIAN.title": "瞬念",
-    "YUKIMOD-SHUN_NIAN.description": "回合开始时，将1张随机的{IfUpgraded:show:升级过的}[gold]灵感[/gold]牌加入手中。",
+    "YUKIMOD-SHUN_NIAN.description": "回合开始时，将1张随机的{IfUpgraded:show:升级过的}[gold]灵感[/gold]牌加入手中。它获得[gold]消耗[/gold]。",
     "YUKIMOD-LING_GUANG.title": "灵光",
     "YUKIMOD-LING_GUANG.description": "抽{Cards:diff()}张牌。",
     "YUKIMOD-SHUANG_JIANG.title": "霜降",
