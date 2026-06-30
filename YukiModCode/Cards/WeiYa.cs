@@ -21,7 +21,7 @@ public class WeiYa() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, Targe
         [HoverTipFactory.FromPower<BlackCloudStancePower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(2m, ValueProp.Move)];
+        [new BlockVar(2m, ValueProp.Move | ValueProp.Unpowered)];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

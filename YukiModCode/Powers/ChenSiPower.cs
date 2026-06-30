@@ -24,6 +24,6 @@ public class ChenSiPower : YukiModPower, IInspiredTriggeredListener
         }
 
         Flash();
-        return CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
+        return CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move | ValueProp.Unpowered, null);
     }
 }

@@ -22,7 +22,7 @@ public class ChenSi() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetTy
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(2m, ValueProp.Move)];
+        [new BlockVar(2m, ValueProp.Move | ValueProp.Unpowered)];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

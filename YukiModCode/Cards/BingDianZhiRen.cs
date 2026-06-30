@@ -26,7 +26,7 @@ public class BingDianZhiRen() : YukiModCard(1, CardType.Power, CardRarity.Uncomm
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(4m, ValueProp.Move)];
+        [new DamageVar(4m, ValueProp.Move | ValueProp.Unpowered)];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

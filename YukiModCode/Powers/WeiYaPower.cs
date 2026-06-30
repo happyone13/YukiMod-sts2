@@ -28,6 +28,6 @@ public class WeiYaPower : YukiModPower
         }
 
         Flash();
-        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move, null);
+        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Move | ValueProp.Unpowered, null);
     }
 }
