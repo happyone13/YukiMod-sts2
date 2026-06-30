@@ -13,7 +13,6 @@ using YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 
 namespace YukiMod.YukiModCode.Mechanics.Settings;
 
-[HarmonyPatch(typeof(NSettingsScreen), nameof(NSettingsScreen._Ready))]
 public static class YukiModSharedSettingsUiPatch
 {
 	private const string ClipperPath = "ScrollContainer/Mask/Clipper";
@@ -73,12 +72,6 @@ public static class YukiModSharedSettingsUiPatch
 	private const string LegacyBattleVisualsLineName = "Line_ChaosModBattleVisuals";
 	private const string LegacyBattleVisualsSectionName = "ChaosModBattleVisuals";
 	private const string ControlWiredMeta = "XCskin_SettingsWired";
-
-	[HarmonyPostfix]
-	public static void Postfix(NSettingsScreen __instance)
-	{
-		TryInject(__instance, "_Ready");
-	}
 
 	public static void TryInject(NSettingsScreen screen, string source)
 	{
@@ -1166,6 +1159,9 @@ public static class YukiModSharedSettingsUiOpenPatch
 	[HarmonyPostfix]
 	public static void Postfix(NSettingsScreen __instance)
 	{
-		YukiModSharedSettingsUiPatch.TryInject(__instance, "OnSubmenuOpened");
+		if (!__instance.Visible)
+			return;
+
+		Callable.From(() => YukiModSharedSettingsUiPatch.TryInject(__instance, "OnSubmenuOpened:deferred")).CallDeferred();
 	}
 }
