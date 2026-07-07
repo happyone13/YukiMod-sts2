@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,7 +20,7 @@ public class HeiYunMiFaHuangHun() : YukiModCard(1, CardType.Skill, CardRarity.Co
 
     public override bool GainsBlock => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromNoMing()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

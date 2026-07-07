@@ -6,22 +6,22 @@ namespace YukiMod.YukiModCode.HoverTips;
 
 public static class YukiHoverTipFactory
 {
-    private const string ForeseeTitleKey = "YUKIMOD-FORESEE.title";
-    private const string ForeseeDescriptionKey = "YUKIMOD-FORESEE.description";
-    private const string InspirationTitleKey = "YUKIMOD-INSPIRATION.title";
-    private const string InspirationDescriptionKey = "YUKIMOD-INSPIRATION.description";
-    private const string NingJuTitleKey = "YUKIMOD-NING_JU.title";
-    private const string NingJuDescriptionKey = "YUKIMOD-NING_JU.description";
-    private const string BlackCloudTitleKey = "YUKIMOD-BLACK_CLOUD.title";
-    private const string BlackCloudDescriptionKey = "YUKIMOD-BLACK_CLOUD.description";
-    private const string NoMingTitleKey = "YUKIMOD-NO_MING.title";
-    private const string NoMingDescriptionKey = "YUKIMOD-NO_MING.description";
-    private const string CountsAsMoonshadowTitleKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.title";
-    private const string CountsAsMoonshadowDescriptionKey = "YUKIMOD-COUNTS_AS_MOONSHADOW.description";
-    private const string NextAttackPlayCountTitleKey = "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.title";
-    private const string NextAttackPlayCountDescriptionKey = "YUKIMOD-NEXT_ATTACK_PLAY_COUNT.description";
-    private const string JuHeTitleKey = "YUKIMOD-JU_HE_KEYWORD.title";
-    private const string JuHeDescriptionKey = "YUKIMOD-JU_HE_KEYWORD.description";
+    private const string ForeseeTitleKey = "YUKIMOD_FORESEE.title";
+    private const string ForeseeDescriptionKey = "YUKIMOD_FORESEE.description";
+    private const string InspirationTitleKey = "YUKIMOD_INSPIRATION.title";
+    private const string InspirationDescriptionKey = "YUKIMOD_INSPIRATION.description";
+    private const string NingJuTitleKey = "YUKIMOD_NING_JU.title";
+    private const string NingJuDescriptionKey = "YUKIMOD_NING_JU.description";
+    private const string BlackCloudTitleKey = "YUKIMOD_BLACK_CLOUD.title";
+    private const string BlackCloudDescriptionKey = "YUKIMOD_BLACK_CLOUD.description";
+    private const string NoMingTitleKey = "YUKIMOD_NO_MING.title";
+    private const string NoMingDescriptionKey = "YUKIMOD_NO_MING.description";
+    private const string CountsAsMoonshadowTitleKey = "YUKIMOD_COUNTS_AS_MOONSHADOW.title";
+    private const string CountsAsMoonshadowDescriptionKey = "YUKIMOD_COUNTS_AS_MOONSHADOW.description";
+    private const string NextAttackPlayCountTitleKey = "YUKIMOD_NEXT_ATTACK_PLAY_COUNT.title";
+    private const string NextAttackPlayCountDescriptionKey = "YUKIMOD_NEXT_ATTACK_PLAY_COUNT.description";
+    private const string JuHeTitleKey = "YUKIMOD_JU_HE_KEYWORD.title";
+    private const string JuHeDescriptionKey = "YUKIMOD_JU_HE_KEYWORD.description";
 
     public static IHoverTip FromForesee()
     {

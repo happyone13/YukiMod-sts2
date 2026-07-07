@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -26,7 +26,7 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
     public override bool HasOwnBlackCloudEffect => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -58,7 +58,7 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

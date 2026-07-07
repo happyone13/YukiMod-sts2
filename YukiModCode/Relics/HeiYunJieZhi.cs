@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -17,7 +17,7 @@ public class HeiYunJieZhi : YukiModRelic
 {
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudStancePower>()];
 
     public override async Task BeforeCombatStart()

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -12,10 +12,10 @@ using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(NoneCardPool))]
+[Pool(typeof(YukiHiddenCardPool))]
 public class ShangXianZhiYue() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
 {
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard<YueYing>(), .. YukiHoverTipFactory.FromIai()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

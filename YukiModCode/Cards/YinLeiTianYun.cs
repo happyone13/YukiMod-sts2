@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -12,7 +12,7 @@ using YukiMod.YukiModCode.Powers;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(NoneCardPool))]
+[Pool(typeof(YukiHiddenCardPool))]
 public class YinLeiTianYun() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -20,7 +20,7 @@ public class YinLeiTianYun() : YukiModCard(1, CardType.Power, CardRarity.Uncommo
 
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<BlackCloudStancePower>(), HoverTipFactory.FromPower<VigorPower>()];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

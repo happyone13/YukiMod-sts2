@@ -14,7 +14,7 @@ public static class TouchOfOrobasYukiPatch
     public static bool SetupForPlayerPrefix(TouchOfOrobas __instance, Player player, ref bool __result)
     {
         var starterRelic = player.Relics.FirstOrDefault(relic =>
-            relic is YukiStarterRelic || relic.Id.Entry == "YUKIMOD-YUKI_STARTER_RELIC");
+            relic is YukiStarterRelic || relic.Id.Entry == "YUKIMOD_YUKI_STARTER_RELIC");
         if (starterRelic == null)
         {
             return true;

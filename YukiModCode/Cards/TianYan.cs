@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,7 +20,7 @@ public class TianYan() : YukiModCard(1, CardType.Skill, CardRarity.Common, Targe
 
     public override bool GainsBlock => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromForesee()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

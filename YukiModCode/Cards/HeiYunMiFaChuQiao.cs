@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -14,7 +14,7 @@ public class HeiYunMiFaChuQiao() : YukiModCard(1, CardType.Power, CardRarity.Rar
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<BlackCloudStancePower>(), HoverTipFactory.FromKeyword(CardKeyword.Ethereal)];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

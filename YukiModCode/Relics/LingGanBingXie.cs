@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -20,7 +20,7 @@ public class LingGanBingXie : YukiModRelic
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];
 
     public override Task BeforeCombatStart()

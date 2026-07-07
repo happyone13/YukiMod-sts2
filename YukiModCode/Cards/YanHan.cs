@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -20,7 +20,7 @@ public class YanHan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Tar
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -34,7 +34,7 @@ public class YanHan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Tar
         for (var i = 0; i < playCount; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this, cardPlay)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);

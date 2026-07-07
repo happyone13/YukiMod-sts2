@@ -16,7 +16,7 @@ public static class YukiBattleAnimationSequencePatch
     private static readonly ConditionalWeakTable<MegaAnimationState, RegistrationMarker> RegisteredStates = new();
     private static bool _sequenceInProgress;
 
-    [HarmonyPatch(typeof(YukiMod.YukiModCode.Character.YukiMod), nameof(YukiMod.YukiModCode.Character.YukiMod.GenerateAnimator))]
+    [HarmonyPatch(typeof(YukiMod.YukiModCode.Character.YukiMod), "SetupCustomCreatureAnimator")]
     [HarmonyPostfix]
     public static void GenerateAnimatorPostfix(MegaSprite controller)
     {
@@ -27,12 +27,12 @@ public static class YukiBattleAnimationSequencePatch
 
     [HarmonyPatch(typeof(MegaAnimationState), nameof(MegaAnimationState.SetAnimation), [typeof(string), typeof(bool), typeof(int)])]
     [HarmonyPrefix]
-    public static bool SetAnimationWithTrackPrefix(MegaAnimationState __instance, string __0, bool __1, int __2, ref MegaTrackEntry? __result)
+    public static bool SetAnimationWithTrackPrefix(MegaAnimationState __instance, string __0, bool __1, int __2)
     {
-        return HandleSetAnimation(__instance, __0, __1, __2, ref __result);
+        return HandleSetAnimation(__instance, __0, __1, __2);
     }
 
-    private static bool HandleSetAnimation(MegaAnimationState animationState, string animation, bool loop, int track, ref MegaTrackEntry? result)
+    private static bool HandleSetAnimation(MegaAnimationState animationState, string animation, bool loop, int track)
     {
         if (_sequenceInProgress)
             return true;
@@ -43,7 +43,7 @@ public static class YukiBattleAnimationSequencePatch
         string requested = Normalize(animation);
         if (requested == "attack_play1")
         {
-            if (TryPlayAttackSequence(animationState, track, out result))
+            if (TryPlayAttackSequence(animationState, track))
                 return false;
 
             return true;
@@ -51,7 +51,7 @@ public static class YukiBattleAnimationSequencePatch
 
         if (requested == "buff_play")
         {
-            if (TryPlayTwoStepSequence(animationState, track, "buff_ready", "buff_play", loopSecond: false, out result))
+            if (TryPlayTwoStepSequence(animationState, track, "buff_ready", "buff_play", loopSecond: false))
                 return false;
 
             return true;
@@ -59,7 +59,7 @@ public static class YukiBattleAnimationSequencePatch
 
         if (requested == "death")
         {
-            if (TryPlayTwoStepSequence(animationState, track, "death_ready", "death", loopSecond: false, out result))
+            if (TryPlayTwoStepSequence(animationState, track, "death_ready", "death", loopSecond: false))
                 return false;
 
             return true;
@@ -68,17 +68,12 @@ public static class YukiBattleAnimationSequencePatch
         return true;
     }
 
-    private static bool TryPlayAttackSequence(MegaAnimationState animationState, int track, out MegaTrackEntry? result)
+    private static bool TryPlayAttackSequence(MegaAnimationState animationState, int track)
     {
-        result = null;
-
         try
         {
             _sequenceInProgress = true;
-            result = animationState.SetAnimation("attack_ready", false, track);
-            if (result == null)
-                return false;
-
+            animationState.SetAnimation("attack_ready", false, track);
             TryAddAnimation(animationState, "attack_play1", false, track, 0f);
             TryAddAnimation(animationState, "attack_end", false, track, 0f);
             return true;
@@ -94,18 +89,12 @@ public static class YukiBattleAnimationSequencePatch
         int track,
         string first,
         string second,
-        bool loopSecond,
-        out MegaTrackEntry? result)
+        bool loopSecond)
     {
-        result = null;
-
         try
         {
             _sequenceInProgress = true;
-            result = animationState.SetAnimation(first, false, track);
-            if (result == null)
-                return false;
-
+            animationState.SetAnimation(first, false, track);
             TryAddAnimation(animationState, second, loopSecond, track, 0f);
             return true;
         }

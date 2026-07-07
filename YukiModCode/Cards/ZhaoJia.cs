@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -26,7 +26,7 @@ public class ZhaoJia() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, Tar
 
     public override bool GainsBlock => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         YukiHoverTipFactory.FromIai();
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

@@ -1,8 +1,8 @@
 {
-  "YUKIMOD-NING_JU_POTION.title": "Ningju Potion",
-  "YUKIMOD-NING_JU_POTION.description": "[gold]Concentrate[/gold] {Amount:diff()}.",
-  "YUKIMOD-RU_YUN_POTION.title": "Cloudstep Potion",
-  "YUKIMOD-RU_YUN_POTION.description": "Enter [gold]Black Cloud Stance[/gold].",
-  "YUKIMOD-LING_SI_POTION.title": "Inspiration Potion",
-  "YUKIMOD-LING_SI_POTION.description": "Activate [gold]Inspiration[/gold] on {Amount:diff()} random cards in your [gold]Hand[/gold]."
+  "YUKIMOD_NING_JU_POTION.title": "Ningju Potion",
+  "YUKIMOD_NING_JU_POTION.description": "[gold]Concentrate[/gold] {Amount:diff()}.",
+  "YUKIMOD_RU_YUN_POTION.title": "Cloudstep Potion",
+  "YUKIMOD_RU_YUN_POTION.description": "Enter [gold]Black Cloud Stance[/gold].",
+  "YUKIMOD_LING_SI_POTION.title": "Inspiration Potion",
+  "YUKIMOD_LING_SI_POTION.description": "Activate [gold]Inspiration[/gold] on {Amount:diff()} random cards in your [gold]Hand[/gold]."
 }

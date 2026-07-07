@@ -369,11 +369,7 @@ public static class YukiBattleReadyOverlayPatches
 			}
 
 			MegaAnimationState state = sprite.GetAnimationState();
-			if (state.SetAnimation(defendAnim, loop: false) == null)
-			{
-				return;
-			}
-
+			state.SetAnimation(defendAnim, loop: false);
 			string? loopAnim = FindFirstAvailable(sprite, CombatIdleCandidates);
 			if (loopAnim != null)
 			{

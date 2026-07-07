@@ -83,10 +83,7 @@ public static class YukiCharacterAnimationFallbackPatch
             if (!hasAnimation)
                 continue;
 
-            MegaTrackEntry? entry = sprite.GetAnimationState().SetAnimation(anim, loop);
-            if (loop && entry != null)
-                entry.SetTrackTime(entry.GetAnimationEnd() * Rng.Chaotic.NextFloat());
-
+            sprite.GetAnimationState().SetAnimation(anim, loop);
             return true;
         }
 

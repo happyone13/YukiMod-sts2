@@ -1,9 +1,10 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Scaffolding.Content;
 using YukiMod.YukiModCode.Cards;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.Extensions;
@@ -19,14 +20,13 @@ public class YukiStarterRelicPlus : YukiModRelic
 
     public override RelicRarity Rarity => RelicRarity.Starter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromNingJu(), HoverTipFactory.FromCard<YueYing>()];
 
-    public override string PackedIconPath => SharedIconFileName.RelicImagePathOrDefault();
-
-    protected override string PackedIconOutlinePath => SharedIconFileName.RelicOutlineImagePathOrDefault();
-
-    protected override string BigIconPath => PackedIconPath;
+    public override RelicAssetProfile AssetProfile => new(
+        IconPath: SharedIconFileName.RelicImagePathOrDefault(),
+        IconOutlinePath: SharedIconFileName.RelicOutlineImagePathOrDefault(),
+        BigIconPath: SharedIconFileName.BigRelicImagePathOrDefault());
 
     public override async Task BeforeCombatStart()
     {

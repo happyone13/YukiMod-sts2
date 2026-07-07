@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -24,7 +24,7 @@ public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon,
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -50,7 +50,7 @@ public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon,
         var hitCount = YukiInspirationService.WillTriggerOnPlay(this) ? 2 : 1;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

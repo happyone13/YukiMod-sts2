@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -20,7 +20,7 @@ public class LingGanXiangLian : YukiModRelic, IInspiredTriggeredListener
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];
 
     public Task OnInspiredTriggered(PlayerChoiceContext choiceContext, Player player, CardModel sourceCard)
@@ -38,6 +38,6 @@ public class LingGanXiangLian : YukiModRelic, IInspiredTriggeredListener
         }
 
         Flash();
-        return CreatureCmd.Damage(choiceContext, target, 2m, ValueProp.Unpowered, Owner.Creature, null);
+        return CreatureCmd.Damage(choiceContext, target, 2m, ValueProp.Unpowered, sourceCard, null);
     }
 }

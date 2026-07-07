@@ -1,16 +1,16 @@
-using BaseLib.Abstracts;
-using BaseLib.Extensions;
-using MegaCrit.Sts2.Core.Localization;
+﻿using MegaCrit.Sts2.Core.Localization;
+using STS2RitsuLib.Scaffolding.Content;
 using YukiMod.YukiModCode.Extensions;
 
 namespace YukiMod.YukiModCode.Powers;
 
-public abstract class YukiModPower : CustomPowerModel
+public abstract class YukiModPower : ModPowerTemplate
 {
     public override LocString Description => AddPowerDescriptionArgs(base.Description);
 
-    public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePathOrDefault();
-    public override string CustomBigIconPath => CustomPackedIconPath;
+    public override PowerAssetProfile AssetProfile => new(
+        IconPath: $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePathOrDefault(),
+        BigIconPath: $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".BigPowerImagePathOrDefault());
 
     protected LocString AddPowerDescriptionArgs(LocString description)
     {

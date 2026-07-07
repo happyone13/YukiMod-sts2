@@ -17,7 +17,7 @@ public class YueYingShuDai : YukiModRelic
 {
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard<YueYing>()];
 
     public override Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)

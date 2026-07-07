@@ -1581,7 +1581,7 @@ public static class YukiMeleeTeleportAttackPatch
 					continue;
 				}
 
-				_ = creatureNode.SpineAnimation.AddAnimation(anim, 0f, loop: true);
+				creatureNode.SpineAnimation.AddAnimation(anim, 0f, loop: true);
 				return;
 			}
 		}

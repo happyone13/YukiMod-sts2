@@ -16,7 +16,7 @@ public class XianJianZhiMingPower : YukiModPower
 {
     private LocString SelectionPrompt => new("powers", $"{Id.Entry}.selectionScreenPrompt");
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromForesee()];
 
     public override PowerType Type => PowerType.Buff;

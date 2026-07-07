@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -18,7 +18,7 @@ public class BingXueShouZhuo : YukiModRelic
 {
     public override RelicRarity Rarity => RelicRarity.Shop;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];
 
     public override Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)

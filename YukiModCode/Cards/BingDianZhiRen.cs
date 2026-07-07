@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -22,7 +22,7 @@ public class BingDianZhiRen() : YukiModCard(1, CardType.Power, CardRarity.Uncomm
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     protected override string? CustomPowerCastClipKey => "bing_dian_zhi_ren";
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +27,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
 {
     public string TeleportAttackProfileId => ChaosTeleportAttackProfiles.U2Attack.Id;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromJuHeKeyword()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -50,7 +50,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
         {
             var damage = DynamicVars.Damage.BaseValue + GetTenPercent(enemy.CurrentHp);
             await DamageCmd.Attack(damage)
-                .FromCard(this)
+                .FromCard(this, cardPlay)
                 .Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);

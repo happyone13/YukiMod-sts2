@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -19,7 +19,7 @@ public class NuTaoZhan() : YukiModCard(2, CardType.Power, CardRarity.Rare, Targe
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DynamicVar(ThresholdKey, 4m), new EnergyVar(1)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [EnergyHoverTip];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

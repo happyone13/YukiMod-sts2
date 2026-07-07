@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -14,7 +14,7 @@ public class ManTian() : YukiModCard(2, CardType.Power, CardRarity.Rare, TargetT
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<BlackCloudStancePower>()];
 
     protected override Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

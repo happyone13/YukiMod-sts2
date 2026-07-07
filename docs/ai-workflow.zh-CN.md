@@ -37,9 +37,9 @@
 
 - 先确认改动是模板迁移，还是友纪新内容，还是工程修复
 - 先看已有代码和路径，不用记忆代替检查
-- 涉及 `YukiMod.csproj`、构建目标版本、BaseLib 版本或导出流程时，先对照兄弟仓库 `E:\DATA\GODOT\MyMod\MeiLinMod-sts2` 中的 `MeiLinMod.csproj`，再决定 YukiMod 是否需要同步适配
-- 涉及原版 `104` 行为时，优先查看解包目录 `E:\DATA\GODOT\MyMod\sts104` 作为旧版参考；涉及当前 107 兼容构建的 API 签名时，以配置的 107 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
-- 涉及“回合开始”“抽牌前/后”“重抽整手牌”“是否计入起手抽牌”等效果时，先对照对应目标版本的 `CombatManager.cs` 实际调用顺序；只有 104 资料时可先参考 `sts104/src/Core/Combat/CombatManager.cs`，再用 107 API 校验
+- 涉及 `YukiMod.csproj`、构建目标版本、RitsuLib 版本或导出流程时，先对照兄弟仓库 `E:\DATA\GODOT\MyMod\MeiLinMod-sts2` 中的 `MeiLinMod.csproj`，再决定 YukiMod 是否需要同步适配
+- 涉及原版 `104` 行为时，优先查看解包目录 `E:\DATA\GODOT\MyMod\sts104` 作为旧版参考；涉及当前 108 构建的 API 签名时，以配置的 108 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
+- 涉及“回合开始”“抽牌前/后”“重抽整手牌”“是否计入起手抽牌”等效果时，先对照对应目标版本的 `CombatManager.cs` 实际调用顺序；只有 104 资料时可先参考 `sts104/src/Core/Combat/CombatManager.cs`，再用 108 API 校验
 - 如果碰到 `meilin` 命名的资源，先判断它是暂时沿用还是准备迁移，不要自动重命名
 - 运行时报错优先查看 `C:\Users\lozalia\AppData\Roaming\SlayTheSpire2\logs` 下最新的 `godot.log` 或时间戳日志，再决定修复方向
 - 如果 Godot 编辑器里出现 `SpineAtlasResource` / `SpineSkeletonFileResource` 依赖损坏，先检查仓库根目录 `spine_godot_extension.gdextension` 及对应 `windows/libspine_godot...dll` 是否存在；缺这层时，编辑器会把 `.atlas/.skel` 误判成坏依赖
@@ -62,6 +62,7 @@
 - 从抽牌堆/弃牌堆/手牌选择牌时，优先找原版同类卡做参照；例如从抽牌堆选牌进手优先对照 `sts104` 中的 `SecretTechnique`
 - 卡牌效果、费用、稀有度、种类以 `docs/yuki-card-table.xlsx` 为第一权威来源；若旧 md、旧代码、旧对话记录与表格冲突，以当前 xlsx 为准
 - 当前默认占位资源约定为：卡牌缺图回退到 `YukiMod/images/card_portraits/card.png`，力量缺图回退到 `YukiMod/images/powers/power.png`，遗物缺图回退到 `YukiMod/images/relics/relic.png` 与 `relic_outline.png`；卡牌、力量、遗物的大图路径均复用小图路径
+- 0.108 / RitsuLib 运行时会把友纪公开 ID 规范化为 `YUKIMOD_...`；代码常量、补丁判断和本地化 key 必须使用下划线格式，例如 `YUKIMOD_STRIKE_YUKI.title`，不要再写旧的 `YUKIMOD-...`
 - 新文本文件默认使用 `UTF-8`
 - 对 `Task`、`IEnumerable` 这类基础类型，尽量在源码里显式写 `using System.Threading.Tasks;`、`using System.Collections.Generic;`，不要只依赖 `ImplicitUsings` 或 `.godot/mono/temp/obj/...GlobalUsings.g.cs`，否则 IDE/编辑器索引异常时容易出现“缺少引用”的假报错
 

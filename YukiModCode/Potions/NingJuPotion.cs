@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -22,7 +22,7 @@ public class NingJuPotion : YukiModPotion
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [new DynamicVar("Amount", 1m)];
 
-    public override IEnumerable<IHoverTip> ExtraHoverTips => [YukiHoverTipFactory.FromNingJu()];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [YukiHoverTipFactory.FromNingJu()];
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature? target)
     {

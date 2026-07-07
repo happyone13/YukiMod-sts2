@@ -54,12 +54,12 @@ dotnet build YukiMod.csproj -v:minimal
 
 `CheckDependencyPaths` 会在构建前检查：
 
-- `Sts2TargetVersion` 必须是 `107`。
-- `Sts2Path107` 必须能解析到游戏安装目录。
+- `Sts2TargetVersion` 必须是 `107` 或 `108`，默认是 `108`。
+- 当前目标版本对应的 `Sts2Path107` 或 `Sts2Path108` 必须能解析到游戏安装目录。
 - `Sts2DataDir` 必须存在，即游戏数据目录。
 - `GodotPath` 必须存在。
 
-当前 YukiMod 只支持 `107`，不要按旧模板传 `103`。
+当前 YukiMod 默认支持 `108`，并保留 `107` 作为显式传参兼容构建目标；不要按旧模板传 `103`。
 
 ### 复制 dll 和 manifest
 
@@ -86,6 +86,7 @@ YukiMod.json -> $(ModsPath)YukiMod/
 IsInnerGodotExport=true
 MSBUILDDISABLENODEREUSE=1
 STS2_107_PATH=$(Sts2Path107)
+STS2_108_PATH=$(Sts2Path108)
 ```
 
 `IsInnerGodotExport=true` 用来避免 Godot 导出过程中再次触发外层导出，造成递归构建。
@@ -110,12 +111,12 @@ E:\SOFT\godot\Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe
 
 注意：必须是 Godot `4.5.1` Mono 版。游戏使用的 Godot 版本和导出版本不一致时，`.pck` 可能无法被游戏正确加载。
 
-### Sts2Path107
+### Sts2Path108 / Sts2Path107
 
 优先级：
 
-1. MSBuild 属性 `-p:Sts2Path107=...`
-2. 环境变量 `STS2_107_PATH`
+1. MSBuild 属性 `-p:Sts2Path108=...` 或 `-p:Sts2Path107=...`
+2. 环境变量 `STS2_108_PATH` 或 `STS2_107_PATH`
 3. `H:/SteamLibrary/steamapps/common/Slay the Spire 2`
 4. Steam 注册表推断出的默认库
 5. `C:/Program Files (x86)/Steam/steamapps/common/Slay the Spire 2`
@@ -129,7 +130,7 @@ D:\steam\steamapps\common\Slay the Spire 2
 如果你的游戏不在默认位置，推荐显式传参：
 
 ```powershell
-dotnet build YukiMod.csproj -v:minimal -p:Sts2Path107="D:\steam\steamapps\common\Slay the Spire 2"
+dotnet build YukiMod.csproj -v:minimal -p:Sts2Path108="D:\steam\steamapps\common\Slay the Spire 2"
 ```
 
 ## 手动导出兜底
@@ -197,7 +198,7 @@ YukiMod/images/powers/xue_ying_power.png.import
 public override string CustomPackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePathOrDefault();
 ```
 
-也就是说，power 的本地化 / 注册 ID 去掉 `YUKIMOD-` 前缀后，转小写并加 `.png`，就是期望的图片名。
+也就是说，power 的本地化 / 注册 ID 去掉 `YUKIMOD_` 前缀后，转小写并加 `.png`，就是期望的图片名。
 
 示例：
 
@@ -263,13 +264,13 @@ Get-Item "D:\steam\steamapps\common\Slay the Spire 2\mods\YukiMod\YukiMod.pck" |
 报错类似：
 
 ```text
-Slay the Spire 2 107 data not found at path ...
+Slay the Spire 2 108 data not found at path ...
 ```
 
 处理方式：
 
 ```powershell
-dotnet build YukiMod.csproj -v:minimal -p:Sts2Path107="你的 Slay the Spire 2 安装目录"
+dotnet build YukiMod.csproj -v:minimal -p:Sts2Path108="你的 Slay the Spire 2 安装目录"
 ```
 
 目录里必须能找到：

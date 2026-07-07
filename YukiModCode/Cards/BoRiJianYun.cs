@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -20,7 +20,7 @@ public class BoRiJianYun() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon,
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromNoMing(), HoverTipFactory.FromPower<BlackCloudEnterNextTurnPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

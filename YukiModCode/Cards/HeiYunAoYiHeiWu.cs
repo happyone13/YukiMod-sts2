@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
     public override bool HasOwnBlackCloudEffect => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -54,7 +54,7 @@ public class HeiYunAoYiHeiWu() : YukiModCard(1, CardType.Attack, CardRarity.Rare
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

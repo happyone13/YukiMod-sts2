@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -21,7 +21,7 @@ public class ShenYaZhiZhunBei() : YukiModCard(0, CardType.Skill, CardRarity.Anci
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
     public override bool HasOwnInspirationEffect => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromInspiration(), HoverTipFactory.FromPower<VigorPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

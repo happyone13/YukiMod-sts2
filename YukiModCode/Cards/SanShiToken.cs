@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -24,7 +24,7 @@ public class SanShiToken() : YukiModTokenCard(3, CardType.Attack, CardRarity.Tok
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Exhaust];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [.. YukiHoverTipFactory.FromIai()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -34,7 +34,7 @@ public class SanShiToken() : YukiModTokenCard(3, CardType.Attack, CardRarity.Tok
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

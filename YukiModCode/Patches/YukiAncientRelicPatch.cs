@@ -119,7 +119,7 @@ public static class YukiAncientRelicPatch
     private static CardModel? GetStarterSuppressionPrep(Player player)
     {
         return player.Deck.Cards.FirstOrDefault(card =>
-            card is YaZhiZhunBei || card.Id.Entry == "YUKIMOD-YA_ZHI_ZHUN_BEI");
+            card is YaZhiZhunBei || card.Id.Entry == "YUKIMOD_YA_ZHI_ZHUN_BEI");
     }
 
     private static bool IsYukiPlayer(Player? player)
@@ -161,6 +161,6 @@ public static class YukiAncientRelicPatch
             return false;
         }
 
-        return card is not ShenYaZhiZhunBei && card.Id.Entry != "YUKIMOD-SHEN_YA_ZHI_ZHUN_BEI";
+        return card is not ShenYaZhiZhunBei && card.Id.Entry != "YUKIMOD_SHEN_YA_ZHI_ZHUN_BEI";
     }
 }

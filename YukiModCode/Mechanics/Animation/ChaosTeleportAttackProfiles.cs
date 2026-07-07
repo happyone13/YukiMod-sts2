@@ -9,7 +9,7 @@ namespace YukiMod.YukiModCode.Mechanics.Animation;
 
 public static class ChaosTeleportAttackProfiles
 {
-	private const string YukiCardIdPrefix = "YUKIMOD-";
+	private const string YukiCardIdPrefix = "YUKIMOD_";
 
 	public static readonly ChaosTeleportAttackProfile Default = new ChaosTeleportAttackProfile(
 		Id: "default_melee_teleport",

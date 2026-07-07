@@ -29,7 +29,7 @@ public class JuHeEndTurnDamagePower : YukiModPower
         {
             var missingHp = Math.Max(0, enemy.MaxHp - enemy.CurrentHp);
             var damage = Amount + Math.Ceiling(missingHp * 0.1m);
-            await CreatureCmd.Damage(choiceContext, enemy, damage, ValueProp.Unpowered | ValueProp.Move, Owner, null);
+            await CreatureCmd.Damage(choiceContext, enemy, damage, ValueProp.Unpowered | ValueProp.Move, null, null);
         }
 
         await PowerCmd.Remove(this);

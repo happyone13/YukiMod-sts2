@@ -1,9 +1,9 @@
 {
   "YUKIMOD.mod_title": "YukiMod",
-  "YUKIMOD-USE_BATTLE_READY_OVERLAY.title": "Use Back Portrait",
-  "YUKIMOD-USE_COMBAT_EFFECTS.title": "Use Combat Effects",
-  "YUKIMOD-CARD_VISUALS.title": "Visual Effects",
-  "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.title": "Use Dynamic Card Portraits",
-  "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.hover.title": "Dynamic Card Portraits",
-  "YUKIMOD-USE_DYNAMIC_CARD_PORTRAITS.hover.desc": "Enable Spine animated portraits on supported cards. Turning this off keeps Yuki's custom card frame and uses static portraits instead."
+  "YUKIMOD_USE_BATTLE_READY_OVERLAY.title": "Use Back Portrait",
+  "YUKIMOD_USE_COMBAT_EFFECTS.title": "Use Combat Effects",
+  "YUKIMOD_CARD_VISUALS.title": "Visual Effects",
+  "YUKIMOD_USE_DYNAMIC_CARD_PORTRAITS.title": "Use Dynamic Card Portraits",
+  "YUKIMOD_USE_DYNAMIC_CARD_PORTRAITS.hover.title": "Dynamic Card Portraits",
+  "YUKIMOD_USE_DYNAMIC_CARD_PORTRAITS.hover.desc": "Enable Spine animated portraits on supported cards. Turning this off keeps Yuki's custom card frame and uses static portraits instead."
 }

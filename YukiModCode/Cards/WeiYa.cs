@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,7 +17,7 @@ public class WeiYa() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, Targe
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<BlackCloudStancePower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

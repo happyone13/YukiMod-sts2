@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -21,7 +21,7 @@ public class HeiYunDaoQiao : YukiModRelic, IBlackCloudEnteredListener, IBlackClo
 
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<BlackCloudStancePower>()];
 
     public override Task BeforeCombatStart()

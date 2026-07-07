@@ -7,8 +7,8 @@
     <DefaultItemExcludes>packages/**</DefaultItemExcludes>
     <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
     <PathMap>$(AppOutputBase)=.\</PathMap>
-    <Sts2TargetVersion Condition="'$(Sts2TargetVersion)' == ''">107</Sts2TargetVersion>
-    <BaseLibVersion Condition="'$(BaseLibVersion)' == ''">3.2.0</BaseLibVersion>
+    <Sts2TargetVersion Condition="'$(Sts2TargetVersion)' == ''">108</Sts2TargetVersion>
+    <RitsuLibVersion Condition="'$(RitsuLibVersion)' == ''">0.4.54</RitsuLibVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -29,8 +29,15 @@
     <Sts2Path107 Condition="'$(Sts2Path107)' == '' and '$(STS2_107_PATH)' != ''">$(STS2_107_PATH)</Sts2Path107>
     <Sts2Path107 Condition="'$(Sts2Path107)' == '' and Exists('H:/SteamLibrary/steamapps/common/Slay the Spire 2')">H:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path107>
     <Sts2Path107 Condition="'$(Sts2Path107)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path107>
+    <Sts2Path108 Condition="'$(Sts2Path108)' == '' and '$(STS2_108_PATH)' != ''">$(STS2_108_PATH)</Sts2Path108>
+    <Sts2Path108 Condition="'$(Sts2Path108)' == '' and Exists('H:/SteamLibrary/steamapps/common/Slay the Spire 2')">H:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path108>
+    <Sts2Path108 Condition="'$(Sts2Path108)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path108>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '107'">$(Sts2Path107)</Sts2Path>
-    <ModsPath>$(Sts2Path)/mods/</ModsPath>
+    <Sts2Path Condition="'$(Sts2TargetVersion)' == '108'">$(Sts2Path108)</Sts2Path>
+    <LocalModsDirName Condition="'$(LocalModsDirName)' == '' and Exists('$(Sts2Path)/mods2')">mods2</LocalModsDirName>
+    <LocalModsDirName Condition="'$(LocalModsDirName)' == ''">mods</LocalModsDirName>
+    <ModsPath>$(Sts2Path)/$(LocalModsDirName)/</ModsPath>
+    <LegacyModsPath>$(Sts2Path)/mods/</LegacyModsPath>
     <Sts2DataDir>$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
   </PropertyGroup>
 
@@ -52,7 +59,8 @@
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
-    <DefineConstants>$(DefineConstants);STS2_107</DefineConstants>
+    <DefineConstants Condition="'$(Sts2TargetVersion)' == '107'">$(DefineConstants);STS2_107</DefineConstants>
+    <DefineConstants Condition="'$(Sts2TargetVersion)' == '108'">$(DefineConstants);STS2_108</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(Sts2DataDir)') and '$(Configuration)' == 'Debug'">
@@ -78,8 +86,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alchyr.Sts2.BaseLib" Version="$(BaseLibVersion)" GeneratePathProperty="true" PrivateAssets="All" />
-    <PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="*" />
+    <PackageReference Include="STS2.RitsuLib" Version="$(RitsuLibVersion)" GeneratePathProperty="true" PrivateAssets="All" />
     <AdditionalFiles Include="YukiMod/localization/**/*.json" />
   </ItemGroup>
 
@@ -113,11 +120,14 @@
 
   <Target Name="CheckDependencyPaths">
     <Error
-      Text=" Unsupported Sts2TargetVersion '$(Sts2TargetVersion)'. YukiMod currently supports 107 only."
-      Condition="'$(Sts2TargetVersion)' != '107'" />
+      Text=" Unsupported Sts2TargetVersion '$(Sts2TargetVersion)'. Use 107 or 108."
+      Condition="'$(Sts2TargetVersion)' != '107' and '$(Sts2TargetVersion)' != '108'" />
     <Error
       Text=" Sts2Path107 is not configured. Pass -p:Sts2Path107=&lt;path&gt; or set STS2_107_PATH when building 107."
       Condition="'$(Sts2TargetVersion)' == '107' and '$(Sts2Path107)' == ''" />
+    <Error
+      Text=" Sts2Path108 is not configured. Pass -p:Sts2Path108=&lt;path&gt; or set STS2_108_PATH when building 108."
+      Condition="'$(Sts2TargetVersion)' == '108' and '$(Sts2Path108)' == ''" />
     <Error
       Text=" Slay the Spire 2 $(Sts2TargetVersion) data not found at path '$(Sts2DataDir)'"
       Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
@@ -130,6 +140,13 @@
     <Message Text="Copying .dll and manifest to mods folder." Importance="high" />
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
     <Copy SourceFiles="YukiMod.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(LegacyModsPath)$(MSBuildProjectName)/" Condition="'$(LegacyModsPath)' != '' and '$(LegacyModsPath)' != '$(ModsPath)'" />
+    <Copy SourceFiles="YukiMod.json" DestinationFolder="$(LegacyModsPath)$(MSBuildProjectName)/" Condition="'$(LegacyModsPath)' != '' and '$(LegacyModsPath)' != '$(ModsPath)'" />
+  </Target>
+
+  <Target Name="MirrorGodotPackToLegacyModsFolder" AfterTargets="GodotPackOnBuild;GodotPublish" Condition="'$(LegacyModsPath)' != '' and '$(LegacyModsPath)' != '$(ModsPath)' and Exists('$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck')">
+    <Message Text="Mirroring Godot .pck to legacy mods folder for test loaders" Importance="high" />
+    <Copy SourceFiles="$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck" DestinationFolder="$(LegacyModsPath)$(MSBuildProjectName)/" />
   </Target>
 
   <Target
@@ -139,7 +156,7 @@
     <Message Text="Exporting Godot .pck to mods folder on Build" Importance="high" />
     <Exec
       Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107)"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108)"
       ContinueOnError="WarnAndContinue" />
   </Target>
 
@@ -147,7 +164,7 @@
     <Message Text="Exporting Godot .pck to mods folder" Importance="high" />
     <Exec
       Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107)"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108)"
       ContinueOnError="WarnAndContinue" />
   </Target>
 

@@ -1,12 +1,10 @@
-using System.Threading.Tasks;
-using BaseLib.Abstracts;
-using BaseLib.Extensions;
-using BaseLib.Utils;
+﻿using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using STS2RitsuLib.Scaffolding.Content;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.Extensions;
 using YukiMod.YukiModCode.Mechanics.Animation;
@@ -15,7 +13,7 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, TargetType target) :
-    CustomCardModel(cost, type, rarity, target),
+    ModCardTemplate(cost, type, rarity, target),
     IYukiCardVisualProfile
 {
     public virtual bool UseCustomFrame => true;
@@ -37,9 +35,8 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
 
     protected string IdPortraitPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".CardImagePathOrDefault();
 
-    public override string CustomPortraitPath => IdPortraitPath;
-    public override string PortraitPath => IdPortraitPath;
-    public override string BetaPortraitPath => PortraitPath;
+    public override string? CustomPortraitPath => IdPortraitPath;
+    public override string? CustomBetaPortraitPath => null;
 
     protected override bool ShouldGlowGoldInternal =>
         IsInspired && YukiInspirationService.CanReceiveInspiration(this);

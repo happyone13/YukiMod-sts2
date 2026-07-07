@@ -12,12 +12,12 @@
     <Sts2TestModId>YukiMod.Tests</Sts2TestModId>
     <Sts2TestModName>YukiMod.Tests</Sts2TestModName>
     <Sts2TestModAuthor>lozalia</Sts2TestModAuthor>
-    <Sts2TestDisabledModIds>Fei;KalipeiMod;KaylaMod;MeiLinMod;StS2_MeiLinTexturePack;STS2-RitsuLib</Sts2TestDisabledModIds>
+    <Sts2TestDisabledModIds>Fei;KalipeiMod;KaylaMod;MeiLinMod;StS2_MeiLinTexturePack;BaseLib</Sts2TestDisabledModIds>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="../../YukiMod.csproj" />
-    <PackageReference Include="Alchyr.Sts2.BaseLib" Version="3.2.0" PrivateAssets="all" />
+    <PackageReference Include="STS2.RitsuLib" Version="0.4.54" PrivateAssets="all" />
     <PackageReference Include="TestTheSpire" Version="0.1.0" />
   </ItemGroup>
 </Project>

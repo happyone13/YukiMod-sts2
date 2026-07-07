@@ -7,7 +7,7 @@
 现阶段它的定位不是“完整角色”，而是：
 
 - 已保留可运行的角色模板骨架
-- 已接上 Godot + C# + BaseLib + Harmony 的基础工程
+- 已接上 Godot + C# + RitsuLib + Harmony 的基础工程
 - 尚未建立完整的角色机制、卡池、遗物池、药水池与最终视觉命名
 
 后续开发应把“模板可运行”逐步推进到“角色可定义、机制可验证、资源可替换、文档可维护”。
@@ -16,7 +16,7 @@
 
 - `Godot 4.5.1`
 - `C# / .NET 9`
-- `BaseLib`
+- `RitsuLib`
 - `Harmony`
 
 构建产物仍沿用标准双件式结构：
@@ -29,7 +29,7 @@
 ### 根目录
 
 - `MainFile.cs`
-  - Mod 初始化入口，负责脚本查找、配置注册和 Harmony 补丁加载
+- Mod 初始化入口，负责 RitsuLib 初始化、遥测注册、脚本查找和 Harmony 补丁加载
 - `YukiMod.csproj`
   - 构建、依赖、拷贝到游戏目录、Godot 导出流程
 - `YukiMod.json`
@@ -74,8 +74,8 @@
 - 角色 ID：`YukiMod`
 - 性别：`Feminine`
 - 名字主色：`#9DD9D2`
-- 初始生命：`72`
-- 初始卡组：`4` 张 `StrikeYuki`、`4` 张 `DefendYuki`、`1` 张 `压制准备`、`1` 张 `拔刀`
+- 初始生命：`70`
+- 初始卡组：`3` 张 `StrikeYuki`、`5` 张 `DefendYuki`、`1` 张 `压制准备`、`1` 张 `拔刀`
 - 初始遗物：`YukiStarterRelic`（月影吊坠），战斗开始时 `凝聚1`
 
 这意味着项目已经能以“占位角色”的方式挂接进角色系统，但还没有真正可玩的内容闭环。
@@ -103,8 +103,9 @@
 
 - Windows 下默认依赖本机 `Slay the Spire 2` 安装目录
 - Windows 下 `GodotPath` 固定指向 `E:\SOFT\godot\Godot_v4.5.1-stable_mono_win64/Godot_v4.5.1-stable_mono_win64.exe`
-- 当前默认且唯一支持的构建目标为 `107` 正式版，`BaseLib` 默认版本为 `3.2.0`
-- 当前已知原游戏解包参考目录仍为 `E:\DATA\GODOT\MyMod\sts104`，只能作为旧版行为参考；涉及当前 API 时以本机 107 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
+- 当前默认构建目标为 `108` 正式版，依赖 `STS2.RitsuLib` / 游戏 Mod `STS2-RitsuLib`，默认版本为本机已安装的 `0.4.54`
+- `107` 仍保留为显式传参兼容构建路径；新工程适配和运行验证默认按 `108` 处理
+- 当前已知原游戏解包参考目录仍为 `E:\DATA\GODOT\MyMod\sts104`，只能作为旧版行为参考；涉及当前 API 时以本机 108 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
 - 构建后会尝试把 `.dll`、`YukiMod.json`、`.pck` 复制或导出到游戏 `mods/YukiMod/`
 - `export_presets.cfg` 的 `BasicExport` 使用 `binary_format/architecture="msil"`，避免 Godot/.NET 资源包导出被固定到 Windows x64；`spine_godot_extension.gdextension` 已将 Windows `msil` 导出映射到现有 x86_64 Spine DLL，避免导出阶段出现 `unknown_arch` 警告；macOS 实际运行仍需要对应平台的原生 GDExtension 依赖可用
 
@@ -113,7 +114,7 @@
 - 本机游戏目录是否存在
 - Godot 路径是否仍然有效
 - 资源导出是否跟代码版本一致
-- 如需核对原版能力、遗物、卡牌、动作或 Hook 行为，104 行为仍可先看 `E:\DATA\GODOT\MyMod\sts104`；107 API 签名需要以当前配置的 107 游戏目录 `data_sts2_windows_x86_64/sts2.dll` 为准
+- 如需核对原版能力、遗物、卡牌、动作或 Hook 行为，104 行为仍可先看 `E:\DATA\GODOT\MyMod\sts104`；108 API 签名需要以当前配置的 108 游戏目录 `data_sts2_windows_x86_64/sts2.dll` 为准
 
 ## 6. 当前已知空缺与风险
 

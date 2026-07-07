@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -17,7 +17,7 @@ public class YueDu() : YukiModCard(0, CardType.Skill, CardRarity.Rare, TargetTyp
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/yue_du_dynamic.tscn";
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

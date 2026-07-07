@@ -1,19 +1,18 @@
 using System.Collections.Generic;
-using BaseLib.Abstracts;
 using Godot;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Entities.Characters;
-using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Cards;
-using MegaCrit.Sts2.Core.Models.Relics;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using STS2RitsuLib.Scaffolding.Characters;
+using STS2RitsuLib.Scaffolding.Godot;
 using YukiMod.YukiModCode.Cards;
 using YukiMod.YukiModCode.Extensions;
 using YukiMod.YukiModCode.Relics;
 
 namespace YukiMod.YukiModCode.Character;
 
-public class YukiMod : PlaceholderCharacterModel
+public class YukiMod : ModCharacterTemplate<YukiModCardPool, YukiModRelicPool, YukiModPotionPool>
 {
     public const string CharacterId = "YukiMod";
 
@@ -22,29 +21,24 @@ public class YukiMod : PlaceholderCharacterModel
     public override Color NameColor => Color;
     public override CharacterGender Gender => CharacterGender.Feminine;
     public override int StartingHp => 70;
+    public override int StartingGold => 99;
+    public override float AttackAnimDelay => 0.15f;
+    public override float CastAnimDelay => 0.25f;
 
-    public override IEnumerable<CardModel> StartingDeck =>
+    [Obsolete("Legacy starter hook", false)]
+    protected override IEnumerable<StartingDeckEntry> StartingDeckEntries =>
     [
-        ModelDb.Card<StrikeYuki>(),
-        ModelDb.Card<StrikeYuki>(),
-        ModelDb.Card<StrikeYuki>(),
-        ModelDb.Card<DefendYuki>(),
-        ModelDb.Card<DefendYuki>(),
-        ModelDb.Card<DefendYuki>(),
-        ModelDb.Card<DefendYuki>(),
-        ModelDb.Card<DefendYuki>(),
-        ModelDb.Card<YaZhiZhunBei>(),
-        ModelDb.Card<BaDao>()
+        StartingDeckEntry.Of<StrikeYuki>(3),
+        StartingDeckEntry.Of<DefendYuki>(5),
+        StartingDeckEntry.Of<YaZhiZhunBei>(),
+        StartingDeckEntry.Of<BaDao>()
     ];
 
-    public override IReadOnlyList<RelicModel> StartingRelics =>
+    [Obsolete("Legacy starter hook", false)]
+    protected override IEnumerable<Type> StartingRelicTypes =>
     [
-        ModelDb.Relic<YukiStarterRelic>()
+        typeof(YukiStarterRelic)
     ];
-
-    public override CardPoolModel CardPool => ModelDb.CardPool<YukiModCardPool>();
-    public override RelicPoolModel RelicPool => ModelDb.RelicPool<YukiModRelicPool>();
-    public override PotionPoolModel PotionPool => ModelDb.PotionPool<YukiModPotionPool>();
 
     public override string CustomIconTexturePath => "res://YukiMod/images/charui/character_icon_yuki_name.png";
     public override string CustomCharacterSelectIconPath => "res://YukiMod/images/charui/char_select_char_yuki.png";
@@ -55,10 +49,10 @@ public class YukiMod : PlaceholderCharacterModel
     public override Color MapDrawingColor => Color.Color8(120, 190, 185);
 
     public override string CustomIconPath => "res://YukiMod/scenes/yuki_icon.tscn";
-    public override string CustomVisualPath => "res://YukiMod/ArtWorks/scenes/creature_visuals/chaos_yuki.tscn";
+    public override string? CustomVisualsPath => "res://YukiMod/ArtWorks/scenes/creature_visuals/chaos_yuki.tscn";
     public override string CustomRestSiteAnimPath => "res://YukiMod/scenes/yuki_character_camp.tscn";
     public override string CustomMerchantAnimPath => "res://YukiMod/scenes/merchant/characters/yukimod_merchant.tscn";
-    public override string CustomCharacterSelectBg => "res://YukiMod/scenes/yuki_bg.tscn";
+    public override string? CustomCharacterSelectBgPath => "res://YukiMod/scenes/yuki_bg.tscn";
     public override string CustomArmPointingTexturePath => "multiplayer_hand_yuki_point.png".CharacterUiPath();
     public override string CustomArmRockTexturePath => "multiplayer_hand_yuki_rock.png".CharacterUiPath();
     public override string CustomArmPaperTexturePath => "multiplayer_hand_yuki_paper.png".CharacterUiPath();
@@ -66,10 +60,23 @@ public class YukiMod : PlaceholderCharacterModel
     public override string CustomAttackSfx => "yuki_attack";
     public override string CustomCastSfx => "yuki_cast";
     public override string CustomDeathSfx => "yuki_die";
-    public override string CharacterSelectSfx => "yuki_select";
+    public override string? CustomCharacterSelectSfx => "yuki_select";
 
+    protected override NCreatureVisuals? TryCreateCreatureVisuals()
+    {
+        return RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(CustomVisualsPath!);
+    }
 
-    public override CreatureAnimator GenerateAnimator(MegaSprite controller)
+    public override List<string> GetArchitectAttackVfx() =>
+    [
+        "vfx/vfx_attack_blunt",
+        "vfx/vfx_heavy_blunt",
+        "vfx/vfx_attack_slash",
+        "vfx/vfx_bloody_impact",
+        "vfx/vfx_rock_shatter"
+    ];
+
+    protected override CreatureAnimator? SetupCustomCreatureAnimator(MegaSprite controller)
     {
         AnimState idle = new("b_idle", isLooping: true);
         AnimState attack = new("attack_play1");

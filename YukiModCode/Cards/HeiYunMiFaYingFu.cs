@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -23,7 +23,7 @@ public class HeiYunMiFaYingFu() : YukiModCard(1, CardType.Attack, CardRarity.Com
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
     public override bool HasOwnBlackCloudEffect => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), YukiHoverTipFactory.FromNoMing()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -48,7 +48,7 @@ public class HeiYunMiFaYingFu() : YukiModCard(1, CardType.Attack, CardRarity.Com
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

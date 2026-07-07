@@ -13,7 +13,7 @@ public static class YukiGameOverAnimationFallbackPatch
     private static bool _redirectInProgress;
 
     [HarmonyPrefix]
-    public static bool SetAnimationPrefix(SpineAnimationAccess __instance, string name, bool loop, int track, ref MegaTrackEntry? __result)
+    public static bool SetAnimationPrefix(SpineAnimationAccess __instance, string name, bool loop, int track)
     {
         if (_redirectInProgress)
             return true;
@@ -29,10 +29,7 @@ public static class YukiGameOverAnimationFallbackPatch
         {
             _redirectInProgress = true;
             MegaAnimationState animationState = sprite.GetAnimationState();
-            __result = animationState.SetAnimation("death_ready", false, track);
-            if (__result == null)
-                return true;
-
+            animationState.SetAnimation("death_ready", false, track);
             animationState.AddAnimation("death", 0f, loop: false, trackId: track);
             return false;
         }

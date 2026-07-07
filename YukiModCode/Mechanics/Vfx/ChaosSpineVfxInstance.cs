@@ -144,7 +144,7 @@ public sealed class ChaosSpineVfxInstance
 
 		try
 		{
-			_ = Controller.GetAnimationState().SetAnimation(name, loop: loop);
+			Controller.GetAnimationState().SetAnimation(name, loop: loop);
 			return true;
 		}
 		catch
@@ -174,7 +174,7 @@ public sealed class ChaosSpineVfxInstance
 				QueueFree();
 			}));
 
-			_ = Controller.GetAnimationState().SetAnimation(outAnim, loop: false);
+			Controller.GetAnimationState().SetAnimation(outAnim, loop: false);
 			return true;
 		}
 		catch

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -18,7 +18,7 @@ public class XueYing() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetT
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [.. YukiHoverTipFactory.FromIai()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>

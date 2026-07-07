@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
@@ -23,7 +23,7 @@ public class HeiYunMiFaHunYou() : YukiModCard(2, CardType.Skill, CardRarity.Unco
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
     public override bool HasOwnBlackCloudEffect => true;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromBlackCloud(), EnergyHoverTip];
 
     public override bool GainsBlock => true;

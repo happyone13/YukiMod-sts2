@@ -4,6 +4,14 @@ namespace YukiMod.YukiModCode.Extensions;
 
 public static class StringExtensions
 {
+    public static string RemovePrefix(this string value)
+    {
+        var separatorIndex = value.IndexOf('_', StringComparison.Ordinal);
+        return separatorIndex >= 0 && separatorIndex + 1 < value.Length
+            ? value[(separatorIndex + 1)..]
+            : value;
+    }
+
     private static bool ResourceExists(string path)
     {
         return ResourceLoader.Exists(path) || ResourceLoader.Exists($"res://{path}");

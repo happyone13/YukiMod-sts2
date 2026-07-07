@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -20,7 +20,7 @@ public class YaoGuaiShouLie() : YukiModCard(1, CardType.Attack, CardRarity.Uncom
     public override string? CustomSpinePortraitScenePath =>
         "res://YukiMod/scenes/cards/yao_guai_shou_lie_dynamic.tscn";
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromNingJu()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -32,7 +32,7 @@ public class YaoGuaiShouLie() : YukiModCard(1, CardType.Attack, CardRarity.Uncom
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars.Repeat.IntValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

@@ -29,7 +29,7 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Rare, Tar
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         [CardKeyword.Retain, CardKeyword.Exhaust];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromCountsAsMoonshadow(), HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -46,7 +46,7 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Rare, Tar
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
         await DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

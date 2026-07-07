@@ -26,11 +26,11 @@ public static class YukiRandomAttackCastAnimPatch
 
 	private static MethodBase? TargetMethod()
 	{
-		return AccessTools.Method(typeof(YukiCharacterModel), "GenerateAnimator");
+		return AccessTools.Method(typeof(YukiCharacterModel), "SetupCustomCreatureAnimator");
 	}
 
 	[HarmonyPostfix]
-	public static void Postfix(MegaSprite controller, ref CreatureAnimator __result)
+	public static void Postfix(MegaSprite controller, ref CreatureAnimator? __result)
 	{
 		if (controller == null || __result == null)
 		{
@@ -242,4 +242,3 @@ public static class YukiRandomAttackCastAnimPatch
 		}
 	}
 }
-

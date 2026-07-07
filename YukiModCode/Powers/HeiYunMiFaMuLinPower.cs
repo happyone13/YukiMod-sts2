@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -16,7 +16,7 @@ public class HeiYunMiFaMuLinPower : YukiModPower, IBlackCloudEnteredListener
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromPower<StrengthPower>()];
 
     public async Task OnBlackCloudEntered(PlayerChoiceContext choiceContext, Player player)

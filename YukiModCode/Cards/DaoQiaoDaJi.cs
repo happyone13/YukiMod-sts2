@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BaseLib.Utils;
@@ -22,7 +22,7 @@ public class DaoQiaoDaJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         [new DamageVar(8m, ValueProp.Move), new EnergyVar(1)];
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [EnergyHoverTip];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -30,7 +30,7 @@ public class DaoQiaoDaJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, 
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

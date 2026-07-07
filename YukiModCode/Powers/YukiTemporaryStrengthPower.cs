@@ -21,7 +21,7 @@ public abstract class YukiTemporaryStrengthPower : YukiModPower
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard((CardModel)OriginModel), HoverTipFactory.FromPower<StrengthPower>()];
 
     public override async Task BeforeApplied(Creature target, decimal amount, Creature? applier, CardModel? cardSource)

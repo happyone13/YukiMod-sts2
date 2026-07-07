@@ -33,7 +33,7 @@ public class BiAnHuaDelayedDamagePower : YukiModPower
         }
 
         var data = GetInternalData<Data>();
-        await CreatureCmd.Damage(choiceContext, [Owner], Amount, ValueProp.Move, Applier ?? Owner);
+        await CreatureCmd.Damage(choiceContext, Owner, Amount, ValueProp.Move, null, null);
 
         data.TriggersRemaining--;
         if (data.TriggersRemaining <= 0)
