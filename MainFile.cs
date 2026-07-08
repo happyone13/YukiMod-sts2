@@ -1,4 +1,3 @@
-using Godot;
 using Godot.Bridge;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
@@ -12,7 +11,7 @@ using YukiMod.YukiModCode.Telemetry;
 namespace YukiMod;
 
 [ModInitializer(nameof(Initialize))]
-public partial class MainFile : Node
+public static class MainFile
 {
     public const string ModId = "YukiMod";
 
