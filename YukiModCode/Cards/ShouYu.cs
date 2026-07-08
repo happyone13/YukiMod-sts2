@@ -13,7 +13,7 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiModCardPool))]
+[Pool(typeof(YukiHiddenCardPool))]
 public class ShouYu() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyAlly)
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
@@ -56,7 +56,7 @@ public class ShouYu() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, Targ
         CardModel card,
         MegaCrit.Sts2.Core.Entities.Players.Player targetPlayer)
     {
-        var copy = card.CreateCloneForPlayer(targetPlayer);
+        var copy = YukiCardPileService.CloneForPlayer(card, targetPlayer);
         await YukiCardPileService.AddGeneratedCardsToCombat([copy], PileType.Hand, targetPlayer);
         await CardCmd.Exhaust(choiceContext, card);
     }

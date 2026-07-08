@@ -35,7 +35,7 @@ public class HeiYunAoYiShang() : YukiModCard(1, CardType.Attack, CardRarity.Comm
         var applyVulnerable = YukiBlackCloudService.IsActive(Owner);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

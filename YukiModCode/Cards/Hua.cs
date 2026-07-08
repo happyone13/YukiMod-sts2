@@ -40,7 +40,7 @@ public class Hua() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

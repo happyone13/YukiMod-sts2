@@ -35,7 +35,7 @@ public class TouXiZhan() : YukiModCard(2, CardType.Attack, CardRarity.Common, Ta
     {
         YukiAudioService.TryPlayCustomAttackCardClip("tou_xi_zhan", Owner);
         return DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

@@ -40,7 +40,7 @@ public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Ta
         YukiAudioService.TryPlayCustomAttackCardClip("mi_huo_yi_ji", Owner);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

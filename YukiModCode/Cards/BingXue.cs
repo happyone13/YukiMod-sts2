@@ -28,7 +28,7 @@ public class BingXue() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Ta
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars[RepeatKey].IntValue)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

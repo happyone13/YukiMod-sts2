@@ -38,6 +38,6 @@ public class LingGanXiangLian : YukiModRelic, IInspiredTriggeredListener
         }
 
         Flash();
-        return CreatureCmd.Damage(choiceContext, target, 2m, ValueProp.Unpowered, sourceCard, null);
+        return CreatureCmd.Damage(choiceContext, target, 2m, ValueProp.Unpowered, player.Creature, null);
     }
 }

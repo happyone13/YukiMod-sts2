@@ -31,7 +31,7 @@ public class Yue() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetTy
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(2)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

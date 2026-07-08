@@ -46,7 +46,7 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Rare, Tar
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
         await DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

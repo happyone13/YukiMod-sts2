@@ -39,14 +39,14 @@ public class YiShan() : YukiModCard(0, CardType.Attack, CardRarity.Rare, TargetT
         }
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .TargetingAllOpponents(CombatState)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
         foreach (var player in CombatState.Players)
         {
-            var copy = CreateCloneForPlayer(player);
+            var copy = YukiCardPileService.CloneForPlayer(this, player);
             await YukiCardPileService.AddGeneratedCardsToCombat([copy], PileType.Discard, player);
         }
 

@@ -50,7 +50,7 @@ public class PoBingZhan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon,
         var hitCount = YukiInspirationService.WillTriggerOnPlay(this) ? 2 : 1;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

@@ -54,12 +54,12 @@ dotnet build YukiMod.csproj -v:minimal
 
 `CheckDependencyPaths` 会在构建前检查：
 
-- `Sts2TargetVersion` 必须是 `107` 或 `108`，默认是 `108`。
+- `Sts2TargetVersion` 必须是 `107` 或 `108`，默认是 `107`。
 - 当前目标版本对应的 `Sts2Path107` 或 `Sts2Path108` 必须能解析到游戏安装目录。
 - `Sts2DataDir` 必须存在，即游戏数据目录。
 - `GodotPath` 必须存在。
 
-当前 YukiMod 默认支持 `108`，并保留 `107` 作为显式传参兼容构建目标；不要按旧模板传 `103`。
+当前 YukiMod 默认支持 `107`，并保留 `108` 作为显式传参兼容构建目标；不要按旧模板传 `103`。
 
 ### 复制 dll 和 manifest
 
@@ -130,7 +130,7 @@ D:\steam\steamapps\common\Slay the Spire 2
 如果你的游戏不在默认位置，推荐显式传参：
 
 ```powershell
-dotnet build YukiMod.csproj -v:minimal -p:Sts2Path108="D:\steam\steamapps\common\Slay the Spire 2"
+dotnet build YukiMod.csproj -v:minimal -p:Sts2Path107="D:\steam\steamapps\common\Slay the Spire 2"
 ```
 
 ## 手动导出兜底
@@ -264,13 +264,13 @@ Get-Item "D:\steam\steamapps\common\Slay the Spire 2\mods\YukiMod\YukiMod.pck" |
 报错类似：
 
 ```text
-Slay the Spire 2 108 data not found at path ...
+Slay the Spire 2 107 data not found at path ...
 ```
 
 处理方式：
 
 ```powershell
-dotnet build YukiMod.csproj -v:minimal -p:Sts2Path108="你的 Slay the Spire 2 安装目录"
+dotnet build YukiMod.csproj -v:minimal -p:Sts2Path107="你的 Slay the Spire 2 安装目录"
 ```
 
 目录里必须能找到：

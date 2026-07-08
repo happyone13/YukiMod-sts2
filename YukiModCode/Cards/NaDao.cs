@@ -52,7 +52,7 @@ public class NaDao() : YukiModTokenCard(1, CardType.Attack, CardRarity.Token, Ta
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(attacksPlayedThisTurn + 1)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

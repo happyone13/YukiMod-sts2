@@ -58,7 +58,7 @@ public class BaDao() : YukiModCard(0, CardType.Attack, CardRarity.Basic, TargetT
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hitCount)
-            .FromCard(this, cardPlay)
+            .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);

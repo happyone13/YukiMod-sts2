@@ -30,6 +30,6 @@ public class BingDianZhiRenPower : YukiModPower, IInspiredTriggeredListener
         }
 
         Flash();
-        return CreatureCmd.Damage(choiceContext, target, Amount, ValueProp.Move | ValueProp.Unpowered, sourceCard, null);
+        return CreatureCmd.Damage(choiceContext, target, Amount, ValueProp.Move | ValueProp.Unpowered, player.Creature, null);
     }
 }

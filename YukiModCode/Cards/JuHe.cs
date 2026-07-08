@@ -50,7 +50,7 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
         {
             var damage = DynamicVars.Damage.BaseValue + GetTenPercent(enemy.CurrentHp);
             await DamageCmd.Attack(damage)
-                .FromCard(this, cardPlay)
+                .FromCard(this)
                 .Targeting(enemy)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);

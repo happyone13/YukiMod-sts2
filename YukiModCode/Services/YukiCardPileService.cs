@@ -30,4 +30,11 @@ public static class YukiCardPileService
             YukiInspirationService.ActivateInspiration(card);
         }
     }
+
+    public static CardModel CloneForPlayer(CardModel card, Player owner)
+    {
+        var clone = card.CreateClone();
+        clone.Owner = owner;
+        return clone;
+    }
 }

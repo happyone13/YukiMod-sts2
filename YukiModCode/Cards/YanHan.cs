@@ -34,7 +34,7 @@ public class YanHan() : YukiModCard(1, CardType.Attack, CardRarity.Uncommon, Tar
         for (var i = 0; i < playCount; i++)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this, cardPlay)
+                .FromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
