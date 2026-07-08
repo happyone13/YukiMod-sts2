@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using YukiMod.YukiModCode.Character;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -41,7 +42,7 @@ public class ShouYu() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, Targ
 
         foreach (var selectedCard in selectedCards)
         {
-            await GiveHandCardToPlayer(selectedCard, targetPlayer);
+            await GiveCopyToPlayerAndExhaustSource(choiceContext, selectedCard, targetPlayer);
         }
     }
 
@@ -50,16 +51,13 @@ public class ShouYu() : YukiModCard(0, CardType.Skill, CardRarity.Uncommon, Targ
         DynamicVars.Cards.UpgradeValueBy(1m);
     }
 
-    private async Task GiveHandCardToPlayer(CardModel card, MegaCrit.Sts2.Core.Entities.Players.Player targetPlayer)
+    private async Task GiveCopyToPlayerAndExhaustSource(
+        PlayerChoiceContext choiceContext,
+        CardModel card,
+        MegaCrit.Sts2.Core.Entities.Players.Player targetPlayer)
     {
-        card.RemoveFromCurrentPile(false);
-        card.GiveToAnotherPlayer(targetPlayer);
-        await CardPileCmd.Add(
-            [card],
-            PileType.Hand.GetPile(targetPlayer),
-            CardPilePosition.Random,
-            this,
-            skipVisuals: false,
-            isChangingOwners: true);
+        var copy = card.CreateCloneForPlayer(targetPlayer);
+        await YukiCardPileService.AddGeneratedCardsToCombat([copy], PileType.Hand, targetPlayer);
+        await CardCmd.Exhaust(choiceContext, card);
     }
 }
