@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Services;
@@ -13,24 +11,44 @@ using YukiMod.YukiModCode.Services;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class MingDing() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+public class MingDing() : YukiModCard(-1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
 {
+    protected override bool HasEnergyCostX => true;
+
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
+    public override bool HasOwnInspirationEffect => true;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [YukiHoverTipFactory.FromForesee()];
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new CardsVar(3)];
+        [YukiHoverTipFactory.FromInspiration(), YukiHoverTipFactory.FromBlackCloud()];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await YukiForeseeService.ForeseeTopCards(choiceContext, Owner, DynamicVars.Cards.IntValue, SelectionScreenPrompt, this);
-        await CardPileCmd.Draw(choiceContext, 2m, Owner);
+        var combatState = CombatState;
+        if (combatState == null)
+            return;
+
+        var x = ResolveEnergyXValue();
+        var amount = x + (IsUpgraded ? 1 : 0);
+        var hitCount = amount;
+
+        if (YukiInspirationService.WillTriggerOnPlay(this))
+            amount *= 2;
+        if (YukiBlackCloudService.IsActive(Owner))
+            hitCount *= 2;
+
+        if (amount <= 0 || hitCount <= 0)
+            return;
+
+        await DamageCmd.Attack(amount)
+            .WithHitCount(hitCount)
+            .FromCard(this, cardPlay)
+            .TargetingAllOpponents(combatState)
+            .WithHitFx("vfx/vfx_giant_horizontal_slash")
+            .Execute(choiceContext);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(2m);
     }
 }

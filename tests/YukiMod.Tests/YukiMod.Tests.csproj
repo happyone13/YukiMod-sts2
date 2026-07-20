@@ -12,12 +12,103 @@
     <Sts2TestModId>YukiMod.Tests</Sts2TestModId>
     <Sts2TestModName>YukiMod.Tests</Sts2TestModName>
     <Sts2TestModAuthor>lozalia</Sts2TestModAuthor>
+    <Sts2TestMinGameVersion>v0.109.0</Sts2TestMinGameVersion>
+    <Sts2TestMainModMinVersion>v0.1.2</Sts2TestMainModMinVersion>
+    <Sts2TestTheSpireMinVersion>0.1.4</Sts2TestTheSpireMinVersion>
+    <Sts2XunitAssertMinVersion>3.2.2</Sts2XunitAssertMinVersion>
+    <Sts2TestAffectsGameplay>false</Sts2TestAffectsGameplay>
+    <Sts2RequiredModIds>STS2-RitsuLib</Sts2RequiredModIds>
     <Sts2TestDisabledModIds>Fei;KalipeiMod;KaylaMod;MeiLinMod;StS2_MeiLinTexturePack;BaseLib</Sts2TestDisabledModIds>
+    <Sts2TestXdgDataHome Condition="'$(Sts2TestXdgDataHome)' == ''">$(MSBuildProjectDirectory)/../../tmp/sts2-combat-tests/$(Sts2TestModId)</Sts2TestXdgDataHome>
+    <Sts2TestTempDir Condition="'$(Sts2TestTempDir)' == ''">$(Sts2TestXdgDataHome)/temp</Sts2TestTempDir>
+    <Sts2TestEnvironmentVariables Condition="'$(Sts2TestEnvironmentVariables)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">APPDATA=$(Sts2TestXdgDataHome);XDG_DATA_HOME=$(Sts2TestXdgDataHome);TEMP=$(Sts2TestTempDir);TMP=$(Sts2TestTempDir)</Sts2TestEnvironmentVariables>
+    <Sts2TestEnvironmentVariables Condition="'$(Sts2TestEnvironmentVariables)' == ''">XDG_DATA_HOME=$(Sts2TestXdgDataHome);TMPDIR=$(Sts2TestTempDir)</Sts2TestEnvironmentVariables>
+    <GodotProjectDir Condition="'$(GodotProjectDir)' == ''">$(MSBuildProjectDirectory)/../../</GodotProjectDir>
+    <GodotProjectDir>$([MSBuild]::EnsureTrailingSlash('$(GodotProjectDir)'))</GodotProjectDir>
+    <GodotProjectDirBase64 Condition="'$(GodotProjectDirBase64)' == '' and $([MSBuild]::VersionGreaterThanOrEquals($(MSBuildAssemblyVersion), '17.3'))">$([MSBuild]::ConvertToBase64('$(GodotProjectDir)'))</GodotProjectDirBase64>
+    <Sts2SteamAppsPath Condition="'$(Sts2SteamAppsPath)' == ''">$(Sts2Path)/../..</Sts2SteamAppsPath>
+    <Sts2WorkshopContentPath Condition="'$(Sts2WorkshopContentPath)' == ''">$(Sts2SteamAppsPath)/workshop/content/2868840</Sts2WorkshopContentPath>
+    <Sts2RitsuLibWorkshopPath Condition="'$(Sts2RitsuLibWorkshopPath)' == '' and Exists('$(Sts2WorkshopContentPath)/3747602295')">$(Sts2WorkshopContentPath)/3747602295</Sts2RitsuLibWorkshopPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <CompilerVisibleProperty Include="GodotDisabledSourceGenerators" />
+    <CompilerVisibleProperty Include="GodotProjectDir" />
+    <CompilerVisibleProperty Include="GodotProjectDirBase64" />
+    <CompilerVisibleProperty Include="GodotSourceGenerators" />
+    <CompilerVisibleProperty Include="IsGodotToolsProject" />
     <ProjectReference Include="../../YukiMod.csproj" />
-    <PackageReference Include="STS2.RitsuLib" Version="0.4.54" PrivateAssets="all" />
-    <PackageReference Include="TestTheSpire" Version="0.1.0" />
+    <PackageReference Include="STS2.RitsuLib" Version="0.4.59" PrivateAssets="all" />
+    <PackageReference Include="TestTheSpire" Version="0.1.4" />
   </ItemGroup>
+
+  <Target Name="MirrorYukiSts2RitsuLibForTests" BeforeTargets="RunSts2Tests;ListSts2Tests">
+    <ItemGroup>
+      <_YukiRitsuLibTestDependency Include="$(Sts2RitsuLibWorkshopPath)/**/*"
+                                   Condition="'$(Sts2RitsuLibWorkshopPath)' != '' and Exists('$(Sts2RitsuLibWorkshopPath)')" />
+    </ItemGroup>
+    <Error Condition="'@(_YukiRitsuLibTestDependency)' == ''"
+           Text="The 0.109-compatible Workshop RitsuLib loader was not found at $(Sts2RitsuLibWorkshopPath)." />
+    <Copy SourceFiles="@(_YukiRitsuLibTestDependency)"
+          DestinationFiles="@(_YukiRitsuLibTestDependency->'$(Sts2Path)/mods/RitsuLib/%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CleanYukiSts2TestHelperInstalls" BeforeTargets="InstallSts2TestDependencyMods">
+    <RemoveDir Directories="$(Sts2ModsDir)/$(Sts2XunitAssertModId);$(Sts2ModsDir)/$(TestTheSpireModId);$(Sts2ModsDir)/$(Sts2TestModId)" />
+  </Target>
+
+  <Target Name="NormalizeYukiSts2TestManifest" AfterTargets="GenerateSts2TestManifest">
+    <ItemGroup>
+      <_YukiTestManifestLine Include="{" />
+      <_YukiTestManifestLine Include="  &quot;id&quot;: &quot;$(Sts2TestModId)&quot;," />
+      <_YukiTestManifestLine Include="  &quot;name&quot;: &quot;$(Sts2TestModName)&quot;," />
+      <_YukiTestManifestLine Include="  &quot;author&quot;: &quot;$(Sts2TestModAuthor)&quot;," />
+      <_YukiTestManifestLine Include="  &quot;description&quot;: &quot;Headless combat assertion harness for YukiMod.&quot;," />
+      <_YukiTestManifestLine Include="  &quot;version&quot;: &quot;0.1.0&quot;," />
+      <_YukiTestManifestLine Include="  &quot;has_pck&quot;: false," />
+      <_YukiTestManifestLine Include="  &quot;has_dll&quot;: true," />
+      <_YukiTestManifestLine Include="  &quot;dependencies&quot;: [" />
+      <_YukiTestManifestLine Include="    { &quot;id&quot;: &quot;TestTheSpire&quot;, &quot;min_version&quot;: &quot;$(Sts2TestTheSpireMinVersion)&quot; }," />
+      <_YukiTestManifestLine Include="    { &quot;id&quot;: &quot;YukiMod&quot;, &quot;min_version&quot;: &quot;$(Sts2TestMainModMinVersion)&quot; }" />
+      <_YukiTestManifestLine Include="  ]," />
+      <_YukiTestManifestLine Include="  &quot;min_game_version&quot;: &quot;$(Sts2TestMinGameVersion)&quot;," />
+      <_YukiTestManifestLine Include="  &quot;affects_gameplay&quot;: false" />
+      <_YukiTestManifestLine Include="}" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(Sts2GeneratedManifestPath)" Lines="@(_YukiTestManifestLine)" Overwrite="true" />
+  </Target>
+
+  <Target Name="NormalizeYukiSts2DependencyManifests" AfterTargets="CopySts2TestDependencyMods">
+    <ItemGroup>
+      <_YukiXunitManifestLine Include="{" />
+      <_YukiXunitManifestLine Include="  &quot;id&quot;: &quot;$(Sts2XunitAssertModId)&quot;," />
+      <_YukiXunitManifestLine Include="  &quot;name&quot;: &quot;xUnit v3 Assert&quot;," />
+      <_YukiXunitManifestLine Include="  &quot;author&quot;: &quot;xUnit.net&quot;," />
+      <_YukiXunitManifestLine Include="  &quot;description&quot;: &quot;Assertion library dependency for STS2 combat tests.&quot;," />
+      <_YukiXunitManifestLine Include="  &quot;version&quot;: &quot;$(Sts2XunitAssertMinVersion)&quot;," />
+      <_YukiXunitManifestLine Include="  &quot;has_pck&quot;: false," />
+      <_YukiXunitManifestLine Include="  &quot;has_dll&quot;: true," />
+      <_YukiXunitManifestLine Include="  &quot;dependencies&quot;: []," />
+      <_YukiXunitManifestLine Include="  &quot;min_game_version&quot;: &quot;$(Sts2TestMinGameVersion)&quot;," />
+      <_YukiXunitManifestLine Include="  &quot;affects_gameplay&quot;: false" />
+      <_YukiXunitManifestLine Include="}" />
+      <_YukiRunnerManifestLine Include="{" />
+      <_YukiRunnerManifestLine Include="  &quot;id&quot;: &quot;$(TestTheSpireModId)&quot;," />
+      <_YukiRunnerManifestLine Include="  &quot;name&quot;: &quot;TestTheSpire&quot;," />
+      <_YukiRunnerManifestLine Include="  &quot;author&quot;: &quot;shadowversebydmod group&quot;," />
+      <_YukiRunnerManifestLine Include="  &quot;description&quot;: &quot;Reusable headless combat test runner for STS2 mods.&quot;," />
+      <_YukiRunnerManifestLine Include="  &quot;version&quot;: &quot;$(Sts2TestTheSpireMinVersion)&quot;," />
+      <_YukiRunnerManifestLine Include="  &quot;has_pck&quot;: false," />
+      <_YukiRunnerManifestLine Include="  &quot;has_dll&quot;: true," />
+      <_YukiRunnerManifestLine Include="  &quot;dependencies&quot;: [" />
+      <_YukiRunnerManifestLine Include="    { &quot;id&quot;: &quot;$(Sts2XunitAssertModId)&quot;, &quot;min_version&quot;: &quot;$(Sts2XunitAssertMinVersion)&quot; }" />
+      <_YukiRunnerManifestLine Include="  ]," />
+      <_YukiRunnerManifestLine Include="  &quot;min_game_version&quot;: &quot;$(Sts2TestMinGameVersion)&quot;," />
+      <_YukiRunnerManifestLine Include="  &quot;affects_gameplay&quot;: false" />
+      <_YukiRunnerManifestLine Include="}" />
+    </ItemGroup>
+    <WriteLinesToFile File="$(Sts2XunitAssertManifestPath)" Lines="@(_YukiXunitManifestLine)" Overwrite="true" />
+    <WriteLinesToFile File="$(TestTheSpireManifestPath)" Lines="@(_YukiRunnerManifestLine)" Overwrite="true" />
+  </Target>
 </Project>

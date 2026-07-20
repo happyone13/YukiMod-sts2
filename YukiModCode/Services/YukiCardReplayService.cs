@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
@@ -18,7 +19,9 @@ public static class YukiCardReplayService
 
     public static Task AutoPlayDupe(PlayerChoiceContext choiceContext, CardPlay previousPlay)
     {
-        var replayCard = previousPlay.Card.CreateDupe();
+        var owner = previousPlay.Card.Owner
+                    ?? throw new InvalidOperationException("Cannot duplicate a replay card without an owner.");
+        var replayCard = previousPlay.Card.CreateDupe(owner);
         return CardCmd.AutoPlay(choiceContext, replayCard, GetReplayTarget(previousPlay, replayCard));
     }
 

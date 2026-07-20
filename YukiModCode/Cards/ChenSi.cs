@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Powers;
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class ChenSi() : YukiModCard(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+public class ChenSi() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
 

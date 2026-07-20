@@ -58,7 +58,8 @@ public static class YukiCardCustomFramePatch
         ['6'] = new Rect2(79.0f, 96.0f, 78.0f, 87.0f),
         ['7'] = new Rect2(158.0f, 96.0f, 78.0f, 87.0f),
         ['8'] = new Rect2(237.0f, 96.0f, 78.0f, 87.0f),
-        ['9'] = new Rect2(316.0f, 96.0f, 78.0f, 87.0f)
+        ['9'] = new Rect2(316.0f, 96.0f, 78.0f, 87.0f),
+        ['X'] = new Rect2(395.0f, 96.0f, 74.0f, 83.0f)
     };
     private static readonly Dictionary<char, Rect2> GreenDigitRegions = new()
     {
@@ -515,12 +516,16 @@ public static class YukiCardCustomFramePatch
         if (preview == null || fallbackLabel == null)
             return;
 
-        if (!string.IsNullOrWhiteSpace(displayText) && IsDigitsOnly(displayText))
+        if (!string.IsNullOrWhiteSpace(displayText) && IsAtlasCostText(displayText))
         {
-            RenderCostDigits(preview, displayText, costVariant);
-            preview.Show();
-            fallbackLabel.Hide();
-            return;
+            // X has only a normal atlas glyph and intentionally never changes color.
+            var renderVariant = displayText.Contains('X') ? CostAtlasVariant.Normal : costVariant;
+            if (renderVariant != CostAtlasVariant.Normal && RenderCostDigits(preview, displayText, renderVariant))
+            {
+                preview.Show();
+                fallbackLabel.Hide();
+                return;
+            }
         }
 
         ClearCostDigits(preview);
@@ -532,9 +537,19 @@ public static class YukiCardCustomFramePatch
             return;
         }
 
-        fallbackLabel.Text = displayText;
-        SyncFallbackCostTheme(fallbackLabel, energyLabelControl as Label);
+        bool isXCost = displayText.Contains('X');
+        // The BMFont stores the X artwork in the legacy lowercase-x slot (id 120),
+        // while the game emits uppercase X. The artwork itself is already uppercase.
+        fallbackLabel.Text = GetFallbackCostText(displayText);
+        SyncFallbackCostTheme(
+            fallbackLabel,
+            isXCost ? GetTemplateNode<Label>("CostText") : energyLabelControl as Label);
         fallbackLabel.Show();
+    }
+
+    private static string GetFallbackCostText(string displayText)
+    {
+        return displayText.Replace('X', 'x');
     }
 
     private static string GetControlText(Control? control)
@@ -547,14 +562,14 @@ public static class YukiCardCustomFramePatch
         };
     }
 
-    private static bool IsDigitsOnly(string text)
+    private static bool IsAtlasCostText(string text)
     {
         if (string.IsNullOrWhiteSpace(text))
             return false;
 
         foreach (char c in text)
         {
-            if (!char.IsDigit(c))
+            if (!char.IsDigit(c) && c != 'X')
                 return false;
         }
 
@@ -606,7 +621,7 @@ public static class YukiCardCustomFramePatch
         return color.R >= 0.6f && color.R >= color.G + 0.15f && color.R >= color.B + 0.15f;
     }
 
-    private static void RenderCostDigits(Control preview, string text, CostAtlasVariant variant)
+    private static bool RenderCostDigits(Control preview, string text, CostAtlasVariant variant)
     {
         ClearCostDigits(preview);
 
@@ -615,7 +630,7 @@ public static class YukiCardCustomFramePatch
         if (texture == null)
         {
             preview.Hide();
-            return;
+            return false;
         }
 
         var visibleDigits = new List<char>(text.Length);
@@ -635,14 +650,14 @@ public static class YukiCardCustomFramePatch
         if (visibleDigits.Count == 0 || totalSourceWidth <= 0.0f || maxSourceHeight <= 0.0f)
         {
             preview.Hide();
-            return;
+            return false;
         }
 
         float scale = MathF.Min(preview.Size.Y / maxSourceHeight, preview.Size.X / totalSourceWidth);
         if (scale <= 0.0f || float.IsNaN(scale) || float.IsInfinity(scale))
         {
             preview.Hide();
-            return;
+            return false;
         }
 
         float startX = (preview.Size.X - totalSourceWidth * scale) * 0.5f;
@@ -671,6 +686,7 @@ public static class YukiCardCustomFramePatch
         }
 
         preview.Show();
+        return true;
     }
 
     private static void ClearCostDigits(Control preview)

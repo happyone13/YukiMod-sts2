@@ -7,8 +7,8 @@
     <DefaultItemExcludes>packages/**</DefaultItemExcludes>
     <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
     <PathMap>$(AppOutputBase)=.\</PathMap>
-    <Sts2TargetVersion Condition="'$(Sts2TargetVersion)' == ''">108</Sts2TargetVersion>
-    <RitsuLibVersion Condition="'$(RitsuLibVersion)' == ''">0.4.54</RitsuLibVersion>
+    <Sts2TargetVersion Condition="'$(Sts2TargetVersion)' == ''">109</Sts2TargetVersion>
+    <RitsuLibVersion Condition="'$(RitsuLibVersion)' == ''">0.4.59</RitsuLibVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -32,8 +32,12 @@
     <Sts2Path108 Condition="'$(Sts2Path108)' == '' and '$(STS2_108_PATH)' != ''">$(STS2_108_PATH)</Sts2Path108>
     <Sts2Path108 Condition="'$(Sts2Path108)' == '' and Exists('H:/SteamLibrary/steamapps/common/Slay the Spire 2')">H:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path108>
     <Sts2Path108 Condition="'$(Sts2Path108)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path108>
+    <Sts2Path109 Condition="'$(Sts2Path109)' == '' and '$(STS2_109_PATH)' != ''">$(STS2_109_PATH)</Sts2Path109>
+    <Sts2Path109 Condition="'$(Sts2Path109)' == '' and Exists('H:/SteamLibrary/steamapps/common/Slay the Spire 2')">H:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path109>
+    <Sts2Path109 Condition="'$(Sts2Path109)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path109>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '107'">$(Sts2Path107)</Sts2Path>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '108'">$(Sts2Path108)</Sts2Path>
+    <Sts2Path Condition="'$(Sts2TargetVersion)' == '109'">$(Sts2Path109)</Sts2Path>
     <LocalModsDirName Condition="'$(LocalModsDirName)' == '' and Exists('$(Sts2Path)/mods2')">mods2</LocalModsDirName>
     <LocalModsDirName Condition="'$(LocalModsDirName)' == ''">mods</LocalModsDirName>
     <ModsPath>$(Sts2Path)/$(LocalModsDirName)/</ModsPath>
@@ -61,6 +65,7 @@
     <NoWarn>$(NoWarn);MSB3270</NoWarn>
     <DefineConstants Condition="'$(Sts2TargetVersion)' == '107'">$(DefineConstants);STS2_107</DefineConstants>
     <DefineConstants Condition="'$(Sts2TargetVersion)' == '108'">$(DefineConstants);STS2_108</DefineConstants>
+    <DefineConstants Condition="'$(Sts2TargetVersion)' == '109'">$(DefineConstants);STS2_109</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(Sts2DataDir)') and '$(Configuration)' == 'Debug'">
@@ -120,14 +125,17 @@
 
   <Target Name="CheckDependencyPaths">
     <Error
-      Text=" Unsupported Sts2TargetVersion '$(Sts2TargetVersion)'. Use 107 or 108."
-      Condition="'$(Sts2TargetVersion)' != '107' and '$(Sts2TargetVersion)' != '108'" />
+      Text=" Unsupported Sts2TargetVersion '$(Sts2TargetVersion)'. Use 107, 108, or 109."
+      Condition="'$(Sts2TargetVersion)' != '107' and '$(Sts2TargetVersion)' != '108' and '$(Sts2TargetVersion)' != '109'" />
     <Error
       Text=" Sts2Path107 is not configured. Pass -p:Sts2Path107=&lt;path&gt; or set STS2_107_PATH when building 107."
       Condition="'$(Sts2TargetVersion)' == '107' and '$(Sts2Path107)' == ''" />
     <Error
       Text=" Sts2Path108 is not configured. Pass -p:Sts2Path108=&lt;path&gt; or set STS2_108_PATH when building 108."
       Condition="'$(Sts2TargetVersion)' == '108' and '$(Sts2Path108)' == ''" />
+    <Error
+      Text=" Sts2Path109 is not configured. Pass -p:Sts2Path109=&lt;path&gt; or set STS2_109_PATH when building 109."
+      Condition="'$(Sts2TargetVersion)' == '109' and '$(Sts2Path109)' == ''" />
     <Error
       Text=" Slay the Spire 2 $(Sts2TargetVersion) data not found at path '$(Sts2DataDir)'"
       Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
@@ -156,7 +164,7 @@
     <Message Text="Exporting Godot .pck to mods folder on Build" Importance="high" />
     <Exec
       Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108)"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108);STS2_109_PATH=$(Sts2Path109)"
       ContinueOnError="WarnAndContinue" />
   </Target>
 
@@ -164,7 +172,7 @@
     <Message Text="Exporting Godot .pck to mods folder" Importance="high" />
     <Exec
       Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108)"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108);STS2_109_PATH=$(Sts2Path109)"
       ContinueOnError="WarnAndContinue" />
   </Target>
 

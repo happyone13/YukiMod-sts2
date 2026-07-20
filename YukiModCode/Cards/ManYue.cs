@@ -14,11 +14,15 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class ManYue() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => IsUpgraded
+        ? [CardKeyword.Innate]
+        : [];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [HoverTipFactory.FromCard<YueYing>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DynamicVar("MoonshadowDamage", 2m)];
+        [new DynamicVar("MoonshadowDamage", 1m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -27,6 +31,6 @@ public class ManYue() : YukiModCard(1, CardType.Power, CardRarity.Uncommon, Targ
 
     protected override void OnUpgrade()
     {
-        DynamicVars["MoonshadowDamage"].UpgradeValueBy(1m);
+        AddKeyword(CardKeyword.Innate);
     }
 }

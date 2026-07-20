@@ -5,7 +5,9 @@ using MegaCrit.Sts2.Core.Modding;
 using YukiMod.YukiModCode.Infrastructure;
 using YukiMod.YukiModCode.Migration;
 using YukiMod.YukiModCode.Mechanics.Animation;
+using YukiMod.YukiModCode.Mechanics.Settings;
 using YukiMod.YukiModCode.Mechanics.Vfx;
+using YukiMod.YukiModCode.Monsters.Gloomy;
 using YukiMod.YukiModCode.Telemetry;
 
 namespace YukiMod;
@@ -23,6 +25,8 @@ public static class MainFile
         YukiRitsuMigration.Initialize();
         YukiTelemetryBootstrap.Initialize();
         ScriptManagerBridge.LookupScriptsInAssembly(assembly);
+        GloomyEncounterSharedSettings.RegisterProvider(ModId);
+        GloomyMonsterVfx.Prewarm();
         ChaosOneShotVfx.Prewarm(YukiMeleeTeleportAttackPatch.GetPreloadScenePaths());
         ChaosSpineVfxInstance.Prewarm(YukiMeleeTeleportAttackPatch.GetPreloadScenePaths());
 

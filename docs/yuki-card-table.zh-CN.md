@@ -18,11 +18,11 @@
 | 防御 | 1 | 初始 | 技能 | 获得5/8点格挡。 | 其他 | ID: YUKIMOD_DEFEND_YUKI；类: DefendYuki；牌池: 主牌池 |  |
 | 偷袭斩 | 2 | 通常 | 攻击 | 对所有敌人造成15点伤害。；灵感：这张牌费用减少1/2。 | 灵感 | ID: YUKIMOD_TOU_XI_ZHAN；类: TouXiZhan；牌池: 主牌池 |  |
 | 冰封 | 1 | 通常 | 攻击 | 造成8/11点伤害。；施加1层虚弱。；灵感：额外打出1次。 | 灵感 | ID: YUKIMOD_BING_FENG；类: BingFeng；牌池: 主牌池 |  |
-| 快速斩 | 1 | 通常 | 攻击 | 造成3/4点伤害3次。；灵感：这张牌费用减少1。；黑云：抽1张牌。 | 灵感 | ID: YUKIMOD_KUAI_SU_ZHAN；类: KuaiSuZhan；牌池: 主牌池 |  |
-| 斩破命运 | 1 | 通常 | 攻击 | 造成7/9点伤害。；预见2/3。；抽1张牌。 | 灵感 | ID: YUKIMOD_ZHAN_PO_MING_YUN；类: ZhanPoMingYun；牌池: 主牌池 |  |
+| 快速斩 | 1 | 通常 | 攻击 | 造成3/4点伤害2次。；灵感：这张牌费用减少1。；黑云：抽1张牌。 | 灵感 | ID: YUKIMOD_KUAI_SU_ZHAN；类: KuaiSuZhan；牌池: 主牌池 |  |
+| 斩破命运 | X | 罕见 | 攻击 | 造成5/7点伤害X次。；抽X张牌，以此法抽到的攻击牌会自动打出。 | 其他 | ID: YUKIMOD_ZHAN_PO_MING_YUN；类: ZhanPoMingYun；牌池: 主牌池 |  |
 | 迷惑一击 | 1 | 通常 | 攻击 | 造成8/10点伤害。；{IfUpgraded:show:选择1张牌触发灵感。\|随机1张牌触发灵感。} | 灵感 | ID: YUKIMOD_MI_HUO_YI_JI；类: MiHuoYiJi；牌池: 主牌池 |  |
 | 雪 | 1 | 通常 | 攻击 | 造成6/8点伤害。；获得1层雪。；灵感：抽1张牌。 | 灵感 | ID: YUKIMOD_XUE；类: Xue；牌池: 主牌池 |  |
-| 天眼 | 1 | 通常 | 技能 | 获得7/9点格挡。；预见3/5。 | 灵感 | ID: YUKIMOD_TIAN_YAN；类: TianYan；牌池: 主牌池 |  |
+| 天眼 | 0 | 通常 | 技能 | 抽2/3张牌。；同一张天眼下次使用时抽牌数-1，不影响其他天眼。 | 灵感 | ID: YUKIMOD_TIAN_YAN；类: TianYan；牌池: 主牌池；单卡状态可保存 |  |
 | 月光 | 1 | 通常 | 技能 | 凝聚1。 | 月影 | ID: YUKIMOD_YUE_GUANG；类: YueGuang；牌池: 主牌池；源码关键词: Exhaust；升级费用变化: -1 |  |
 | 花 | 1 | 通常 | 攻击 | 造成6/8点伤害。；获得1层花。；黑云：减少1费。 | 黑云 | ID: YUKIMOD_HUA；类: Hua；牌池: 主牌池 |  |
 | 黑云奥义：影 | 1 | 通常 | 攻击 | 造成4/5点伤害2次。；黑云：额外攻击2次；否则，获得2层无明。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_YING_FU；类: HeiYunMiFaYingFu；牌池: 主牌池 |  |
@@ -34,20 +34,19 @@
 | 月 | 1 | 通常 | 攻击 | 造成6/8点伤害。；额外攻击1次。；获得1层月。 | 其他 | ID: YUKIMOD_YUE；类: Yue；牌池: 主牌池 |  |
 | 一击必杀！居合抽卡 | 0 | 通常 | 技能 | 选择1张手牌弃掉。；抽1张牌。；如果抽到的是一击必杀！居合抽卡，将{IfUpgraded:show:1张居合+\|1张居合}加入手中。 | 其他 | ID: YUKIMOD_YI_JI_BI_SHA_JU_HE_CHOU_KA；类: YiJiBiShaJuHeChouKa；牌池: 主牌池 |  |
 | 人剑合一 | 1 | 通常 | 技能 | 获得8/11点格挡。；在接下来的2个回合开始时，各额外抽1张牌。 | 其他 | ID: YUKIMOD_REN_JIAN_HE_YI；类: RenJianHeYi；牌池: 主牌池 |  |
-| 回念 | 1 | 通常 | 技能 | 获得7/10点格挡。；将你弃牌堆中的1张牌放到抽牌堆顶部。 | 其他 | ID: YUKIMOD_HUI_NIAN；类: HuiNian；牌池: 主牌池 |  |
+| 回念 | 1 | 通常 | 技能 | 获得8/11点格挡。；将你弃牌堆中的1张牌放到抽牌堆顶部。 | 其他 | ID: YUKIMOD_HUI_NIAN；类: HuiNian；牌池: 主牌池 |  |
 | 未雨绸缪 | 1 | 通常 | 技能 | 获得5/8点格挡。；抽2张牌。；将1张手牌置于抽牌堆顶部。 | 其他 | ID: YUKIMOD_WEI_YU_CHOU_MOU；类: WeiYuChouMou；牌池: 主牌池 |  |
 | 一现 | 0 | 罕见 | 攻击 | 造成4/7点伤害。；灵感：获得1。 | 灵感 | ID: YUKIMOD_YI_XIAN；类: YiXian；牌池: 主牌池 |  |
 | 严寒 | 1 | 罕见 | 攻击 | 造成8/11点伤害。；抽1张牌。；灵感：额外释放1次。 | 灵感 | ID: YUKIMOD_YAN_HAN；类: YanHan；牌池: 主牌池 |  |
 | 冰雪 | 1 | 罕见 | 攻击 | 造成4点伤害2/3次。；抽1张牌，优先抽灵感牌。 | 灵感 | ID: YUKIMOD_BING_XUE；类: BingXue；牌池: 主牌池 |  |
 | 破冰斩 | 1 | 罕见 | 攻击 | 选择1张手牌消耗。；对所有敌人造成7/10点伤害。；灵感：额外攻击一次。 | 灵感 | ID: YUKIMOD_PO_BING_ZHAN；类: PoBingZhan；牌池: 主牌池 |  |
 | 高速斩击 | 2 | 罕见 | 攻击 | 对所有敌人造成12/15点伤害。；抽2/3张牌。；灵感：这张牌费用减少1。 | 灵感 | ID: YUKIMOD_GAO_SU_ZHAN_JI；类: GaoSuZhanJi；牌池: 主牌池 |  |
-| 命定 | 1 | 罕见 | 技能 | 预见3/5。；抽2张牌。 | 灵感 | ID: YUKIMOD_MING_DING；类: MingDing；牌池: 主牌池 |  |
+| 命定 | X | 稀有 | 攻击 | 对所有敌人造成X（升级后X+1）次X（升级后X+1）点伤害。；灵感：伤害翻倍。；黑云：攻击次数翻倍。 | 灵感 | ID: YUKIMOD_MING_DING；类: MingDing；牌池: 主牌池 |  |
 | 天际 | 0 | 罕见 | 技能 | 把你的手牌放到抽牌堆顶部。；抽等量的牌。；灵感：抽1张牌。 | 灵感 | ID: YUKIMOD_TIAN_JI；类: TianJi；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 寒冰庇护 | 2 | 罕见 | 技能 | 获得12/16点格挡。；在你的下回合开始时，抽2张牌。；灵感：这张牌费用减少1。 | 灵感 | ID: YUKIMOD_HAN_BING_BI_HU；类: HanBingBiHu；牌池: 主牌池 |  |
 | 拔刀斩 | 1 | 罕见 | 技能 | 抽1张牌并打出。；灵感：这张牌费用减少1。 | 灵感 | ID: YUKIMOD_BA_DAO_ZHAN；类: BaDaoZhan；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 灵光 | 0 | 罕见 | 技能 | 抽2/3张牌。 | 灵感 | ID: YUKIMOD_LING_GUANG；类: LingGuang；牌池: 主牌池；源码关键词: Exhaust |  |
-| 先见之明 | 1 | 罕见 | 能力 | 回合开始时，预见3/4。 | 灵感 | ID: YUKIMOD_XIAN_JIAN_ZHI_MING；类: XianJianZhiMing；牌池: 主牌池 |  |
-| 冰点之刃 | 1 | 罕见 | 能力 | 当灵感触发时，对随机敌人造成4/6点伤害。 | 灵感 | ID: YUKIMOD_BING_DIAN_ZHI_REN；类: BingDianZhiRen；牌池: 主牌池 |  |
+| 冰点之刃 | 1 | 罕见 | 能力 | 当灵感触发时，对所有敌人造成4/6点伤害。 | 灵感 | ID: YUKIMOD_BING_DIAN_ZHI_REN；类: BingDianZhiRen；牌池: 主牌池 |  |
 | 咒术 | 1 | 罕见 | 技能 | 升级你手中的月影。；你手中的月影伤害+5。 | 月影 | ID: YUKIMOD_ZHOU_SHU；类: ZhouShu；牌池: 主牌池；源码关键词: Exhaust；升级费用变化: -1 |  |
 | 圆舞 | 2 | 罕见 | 技能 | 获得12/16点格挡。；凝聚1。；选择1张手牌消耗。 | 月影 | ID: YUKIMOD_YUAN_WU；类: YuanWu；牌池: 主牌池 |  |
 | 拨云见日 | 1 | 罕见 | 技能 | 获得3/4层无明。；在你的下回合开始时，进入黑云姿态。；选择1张手牌保留1回合。 | 黑云 | ID: YUKIMOD_BO_RI_JIAN_YUN；类: BoRiJianYun；牌池: 主牌池 |  |
@@ -58,7 +57,7 @@
 | 剑舞 | 1 | 罕见 | 攻击 | 根据本回合额外抽牌的数量造成5/7点伤害（当前{CurrentHitCount}次）。 | 其他 | ID: YUKIMOD_JIAN_WU；类: JianWu；牌池: 主牌池 |  |
 | 妖怪狩猎 | 1 | 罕见 | 攻击 | 造成2点伤害2/3次。；凝聚1。 | 其他 | ID: YUKIMOD_YAO_GUAI_SHOU_LIE；类: YaoGuaiShouLie；牌池: 主牌池 |  |
 | 幻变斩 | 1 | 罕见 | 攻击 | 造成3点伤害2/3次。；消耗1张手牌。；抽1张牌。 | 其他 | ID: YUKIMOD_HUAN_BIAN_ZHAN；类: HuanBianZhan；牌池: 主牌池 |  |
-| 彼岸花 | 1 | 罕见 | 攻击 | 造成6/9点伤害。\n在接下来的2个回合开始时，造成6/9点伤害。 | 其他 | ID: YUKIMOD_BI_AN_HUA；类: BiAnHua；牌池: 主牌池 |  |
+| 彼岸花 | 1 | 通常 | 攻击 | 造成6/9点伤害。\n在接下来的2个回合开始时，造成6/9点伤害。 | 其他 | ID: YUKIMOD_BI_AN_HUA；类: BiAnHua；牌池: 主牌池 |  |
 | 看破 | 1 | 罕见 | 攻击 | 造成9/12点伤害。；将抽牌堆中的1张牌放入你的手牌。 | 其他 | ID: YUKIMOD_KAN_PO；类: KanPo；牌池: 主牌池 |  |
 | 轮回斩 | 3 | 罕见 | 攻击 | 对所有敌人造成5点伤害3/4次。\n每次加入手牌时，费用在本场战斗中减少1。 | 其他 | ID: YUKIMOD_LUN_HUI_ZHAN；类: LunHuiZhan；牌池: 主牌池 |  |
 | 人格切换 | 0 | 罕见 | 技能 | 将2/1张手牌放回抽牌堆顶部。；抽2张牌。 | 其他 | ID: YUKIMOD_REN_GE_QIE_HUAN；类: RenGeQieHuan；牌池: 主牌池 |  |
@@ -68,12 +67,13 @@
 | 背水 | 0 | 罕见 | 技能 | 获得2/3。；你在本回合内不能再抽任何牌。 | 其他 | ID: YUKIMOD_BEI_SHUI；类: BeiShui；牌池: 主牌池 |  |
 | 起手式 | 0 | 罕见 | 技能 | 获得1。 | 其他 | ID: YUKIMOD_QI_SHOU_SHI；类: QiShouShi；牌池: 主牌池；源码关键词: Retain, Exhaust；升级移除消耗 |  |
 | 踏前斩 | 0 | 罕见 | 技能 | 选择1名队友。；该队友凝聚1。 | 其他 | ID: YUKIMOD_TA_QIAN_ZHAN；类: TaQianZhan；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
-| 满月 | 1 | 罕见 | 能力 | 每当你使用1张牌，你手中的月影伤害+2/3。 | 其他 | ID: YUKIMOD_MAN_YUE；类: ManYue；牌池: 主牌池 |  |
+| 满月 | 1 | 罕见 | 能力 | 每当你使用1张牌，你手中的月影伤害+1。；升级后获得固有，伤害不再增加。 | 其他 | ID: YUKIMOD_MAN_YUE；类: ManYue；牌池: 主牌池 |  |
 | 盈月 | 1 | 罕见 | 能力 | 回合结束时，你手中的月影伤害增加5/7。 | 其他 | ID: YUKIMOD_YING_YUE；类: YingYue；牌池: 主牌池 |  |
 | 蓝月 | 1 | 罕见 | 能力 | 当灵感触发时，你手中的月影伤害+3/5。 | 其他 | ID: YUKIMOD_LAN_YUE；类: LanYue；牌池: 主牌池 |  |
 | 血月 | 1 | 罕见 | 能力 | 当你在黑云姿态下使用牌时，你手中的月影伤害+3/5。 | 其他 | ID: YUKIMOD_XUE_YUE；类: XueYue；牌池: 主牌池 |  |
 | 寒霜 | 1 | 稀有 | 能力 | 回合开始时，随机触发1/2张手中的灵感。 | 灵感 | ID: YUKIMOD_HAN_SHUANG；类: HanShuang；牌池: 主牌池 |  |
-| 沉思 | 1 | 稀有 | 能力 | 当灵感触发时，获得2/3点格挡。 | 灵感 | ID: YUKIMOD_CHEN_SI；类: ChenSi；牌池: 主牌池 |  |
+| 沉思 | 1 | 罕见 | 能力 | 当灵感触发时，获得2/3点格挡。 | 灵感 | ID: YUKIMOD_CHEN_SI；类: ChenSi；牌池: 主牌池 |  |
+| 刀上舞 | 0 | 稀有 | 攻击 | 造成6/9点伤害。；同一场战斗内所有刀上舞共享累计：第一次攻击1次，第二次2次，第三次3次，依次增加。 | 其他 | ID: YUKIMOD_DAO_SHANG_WU；类: DaoShangWu；牌池: 主牌池 |  |
 | 瞬念 | 1 | 稀有 | 能力 | 回合开始时，将1张随机的{IfUpgraded:show:升级过的}灵感牌加入手中。它获得消耗。 | 灵感 | ID: YUKIMOD_SHUN_NIAN；类: ShunNian；牌池: 主牌池 |  |
 | 零度 | 1 | 稀有 | 能力 | 当你触发12/9次灵感时，将1张居合加入手中。 | 灵感 | ID: YUKIMOD_LING_DU；类: LingDu；牌池: 主牌池 |  |
 | 黑云奥义：黑雾 | 1 | 稀有 | 攻击 | 造成8/10点伤害。；黑云：消耗手牌中所有非黑云的牌，每消耗1张，额外攻击1次；否则，获得2/3层无明。 | 黑云 | ID: YUKIMOD_HEI_YUN_AO_YI_HEI_WU；类: HeiYunAoYiHeiWu；牌池: 主牌池 |  |

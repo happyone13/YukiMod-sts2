@@ -18,7 +18,7 @@ public class HuiNian() : YukiModCard(1, CardType.Skill, CardRarity.Common, Targe
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(7m, ValueProp.Move)];
+        [new BlockVar(8m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

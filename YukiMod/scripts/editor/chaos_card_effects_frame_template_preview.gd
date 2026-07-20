@@ -152,11 +152,15 @@ func _get_digit_regions(fnt_path: String) -> Dictionary:
 				fields[parts[0]] = parts[1]
 
 		var id := int(fields.get("id", "-1"))
-		if id < 48 or id > 57:
+		var glyph := ""
+		if id >= 48 and id <= 57:
+			glyph = "%d" % [id - 48]
+		elif id == 88 or id == 120:
+			glyph = "X"
+		else:
 			continue
 
-		var digit := "%d" % [id - 48]
-		result[digit] = Rect2(
+		result[glyph] = Rect2(
 			float(fields.get("x", "0")),
 			float(fields.get("y", "0")),
 			float(fields.get("width", "0")),

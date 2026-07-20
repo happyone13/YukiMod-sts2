@@ -101,6 +101,11 @@ public static class YukiAudioService
         return TryPlay(RestSiteVoicePath, linearVolume);
     }
 
+    public static bool TryPlayResource(string resourcePath, float linearVolume = 1f)
+    {
+        return TryPlay(resourcePath, linearVolume);
+    }
+
     public static bool TryPlayCustomCardClip(string clipKey, Player? player = null, float linearVolume = 1f)
     {
         if (!IsYukiPlayer(player))

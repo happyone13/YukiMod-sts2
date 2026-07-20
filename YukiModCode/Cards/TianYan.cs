@@ -1,40 +1,46 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using BaseLib.Utils;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
-using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using YukiMod.YukiModCode.Character;
-using YukiMod.YukiModCode.HoverTips;
-using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(YukiModCardPool))]
-public class TianYan() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+public class TianYan() : YukiModCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
+    private int _currentDraw = 2;
+
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
 
-    public override bool GainsBlock => true;
+    [SavedProperty]
+    public int CurrentDraw
+    {
+        get => _currentDraw;
+        set
+        {
+            AssertMutable();
+            _currentDraw = Math.Max(0, value);
+            DynamicVars.Cards.BaseValue = _currentDraw;
+        }
+    }
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [YukiHoverTipFactory.FromForesee()];
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(7m, ValueProp.Move), new CardsVar(3)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new CardsVar(CurrentDraw)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await YukiForeseeService.ForeseeTopCards(choiceContext, Owner, DynamicVars.Cards.IntValue, SelectionScreenPrompt, this);
+        var drawCount = CurrentDraw;
+        if (drawCount > 0)
+            await CardPileCmd.Draw(choiceContext, drawCount, Owner);
+
+        CurrentDraw = drawCount - 1;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(2m);
-        DynamicVars.Cards.UpgradeValueBy(2m);
+        CurrentDraw++;
     }
 }

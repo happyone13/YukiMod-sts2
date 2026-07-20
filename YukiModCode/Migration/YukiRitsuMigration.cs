@@ -1,6 +1,8 @@
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
+using STS2RitsuLib.Patching.Core;
 using STS2RitsuLib.Settings;
+using YukiMod.YukiModCode.Encounters;
 using YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 using YukiMod.YukiModCode.Mechanics.Settings;
 
@@ -17,7 +19,16 @@ internal static class YukiRitsuMigration
         ModTypeDiscoveryHub.RegisterModAssembly(MainFile.ModId, assembly);
         YukiRitsuContentRegistration.Register(assembly);
         RegisterSettingsPage();
+        RegisterOptionalPatchers();
         MainFile.Logger.Info("[YukiRitsuMigration] RitsuLib integration initialized.");
+    }
+
+    private static void RegisterOptionalPatchers()
+    {
+        var contentPatcher = RitsuLibFramework.CreatePatcher(MainFile.ModId, "optional-content", "optional content");
+        contentPatcher.RegisterPatch<GloomyEscapeCardBeforeCombatStartPatch>();
+        contentPatcher.PatchAll();
+        MainFile.Logger.Info("[YukiRitsuMigration] Optional content patches registered.");
     }
 
     private static void RegisterSettingsPage()
@@ -62,6 +73,19 @@ internal static class YukiRitsuMigration
                                 "dynamic_card_portraits",
                                 () => YukiModSharedSettings.DynamicCardPortraitsEnabled,
                                 value => YukiModSharedSettings.SetDynamicCardPortraitsEnabled(value, persist: true)));
+                });
+
+                page.AddSection("gameplay", section =>
+                {
+                    section.WithTitle(ModSettingsText.Literal("游戏内容"));
+                    section.AddToggle(
+                        "gloomy_encounter",
+                        ModSettingsText.Literal("一位旧识"),
+                        BoolBinding(
+                            "gloomy_encounter",
+                            () => GloomyEncounterSharedSettings.Enabled,
+                            value => GloomyEncounterSharedSettings.SetEnabled(value, persist: true)),
+                        ModSettingsText.Literal("一位旧识，开启后你可能会遇到他"));
                 });
             },
             SettingsPageId);

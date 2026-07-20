@@ -3,11 +3,12 @@
 "name": "TestTheSpire",
 "author": "shadowversebydmod group",
 "description": "Reusable headless combat test runner for STS2 mods.",
-"version": "0.1.0",
+"version": "0.1.4",
 "has_pck": false,
 "has_dll": true,
 "dependencies": [
-"xunit.v3.assert"
+{ "id": "xunit.v3.assert", "min_version": "3.2.2" }
 ],
+"min_game_version": "v0.109.0",
 "affects_gameplay": false
 }

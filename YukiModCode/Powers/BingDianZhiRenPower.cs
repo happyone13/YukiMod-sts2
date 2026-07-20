@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.Linq;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -23,13 +24,22 @@ public class BingDianZhiRenPower : YukiModPower, IInspiredTriggeredListener
             return Task.CompletedTask;
         }
 
-        var target = player.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
-        if (target == null)
+        var targets = CombatState.HittableEnemies.ToList();
+        if (targets.Count == 0)
         {
             return Task.CompletedTask;
         }
 
         Flash();
-        return CreatureCmd.Damage(choiceContext, target, Amount, ValueProp.Move | ValueProp.Unpowered, sourceCard, null);
+        return DamageAll(choiceContext, targets, sourceCard);
+    }
+
+    private async Task DamageAll(
+        PlayerChoiceContext choiceContext,
+        IEnumerable<MegaCrit.Sts2.Core.Entities.Creatures.Creature> targets,
+        CardModel sourceCard)
+    {
+        foreach (var target in targets)
+            await CreatureCmd.Damage(choiceContext, target, Amount, ValueProp.Move | ValueProp.Unpowered, sourceCard, null);
     }
 }
