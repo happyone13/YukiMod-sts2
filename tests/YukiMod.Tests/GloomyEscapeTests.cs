@@ -6,6 +6,7 @@ using TestTheSpire;
 using Xunit;
 using YukiMod.YukiModCode.Cards;
 using YukiMod.YukiModCode.Encounters;
+using YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 using YukiCharacter = YukiMod.YukiModCode.Character.YukiMod;
 
 namespace YukiMod.Tests;
@@ -74,6 +75,12 @@ public sealed class GloomyEscapeTests : CombatTestSuite
         Assert.False(GloomyEscapeCardBeforeCombatStartPatch.IsCritical);
         Assert.Equal("YukiMod.GloomyEscapeCard.BeforeCombatStart", GloomyEscapeCardBeforeCombatStartPatch.PatchId);
         Assert.NotEmpty(GloomyEscapeCardBeforeCombatStartPatch.GetTargets());
+        Assert.False(YukiBattleReadyBeforeCombatStartPatch.IsCritical);
+        Assert.False(YukiBattleReadyAfterCombatVictoryPatch.IsCritical);
+        Assert.False(YukiBattleReadyAfterDeathPatch.IsCritical);
+        Assert.NotEmpty(YukiBattleReadyBeforeCombatStartPatch.GetTargets());
+        Assert.NotEmpty(YukiBattleReadyAfterCombatVictoryPatch.GetTargets());
+        Assert.NotEmpty(YukiBattleReadyAfterDeathPatch.GetTargets());
 
         await Play(await AddToHand<DefendYuki>());
     }

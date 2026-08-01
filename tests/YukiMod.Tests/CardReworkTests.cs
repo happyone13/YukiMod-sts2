@@ -48,6 +48,8 @@ public sealed class CardReworkTests : CombatTestSuite
         Assert.Equal(CardType.Attack, ModelDb.Card<MingDing>().Type);
         Assert.Equal(CardRarity.Rare, ModelDb.Card<MingDing>().Rarity);
         Assert.Equal(TargetType.AllEnemies, ModelDb.Card<MingDing>().TargetType);
+        Assert.IsType<YukiMod.YukiModCode.Character.YukiModCardPool>(ModelDb.Card<YiShan>().Pool);
+        Assert.Equal(CardMultiplayerConstraint.MultiplayerOnly, ModelDb.Card<YiShan>().MultiplayerConstraint);
 
         var normalRegionsField = typeof(YukiCardCustomFramePatch).GetField(
             "NormalDigitRegions",

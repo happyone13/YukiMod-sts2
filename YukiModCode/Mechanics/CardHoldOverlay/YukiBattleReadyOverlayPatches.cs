@@ -29,9 +29,7 @@ public static class YukiBattleReadyOverlayPatches
 	private static readonly string[] VictoryIdleCandidates = ["victory_loop", "b_idle", "idle_loop", "idle"];
 	private static readonly string[] DefendCandidates = ["defend"];
 
-	[HarmonyPatch(typeof(Hook), nameof(Hook.BeforeCombatStart))]
-	[HarmonyPostfix]
-	public static void AfterBeforeCombatStart(IRunState runState, CombatState? combatState)
+	public static void AfterBeforeCombatStart(IRunState runState, ICombatState? combatState)
 	{
 		try
 		{
@@ -51,9 +49,7 @@ public static class YukiBattleReadyOverlayPatches
 		}
 	}
 
-	[HarmonyPatch(typeof(Hook), nameof(Hook.AfterCombatVictory))]
-	[HarmonyPostfix]
-	public static void AfterCombatVictory(IRunState runState, CombatState? combatState)
+	public static void AfterCombatVictory(IRunState runState, ICombatState? combatState)
 	{
 		try
 		{
@@ -149,9 +145,7 @@ public static class YukiBattleReadyOverlayPatches
 		}
 	}
 
-	[HarmonyPatch(typeof(Hook), nameof(Hook.AfterDeath))]
-	[HarmonyPostfix]
-	public static void AfterDeathPostfix(IRunState runState, CombatState? combatState, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+	public static void AfterDeathPostfix(IRunState runState, ICombatState? combatState, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
 	{
 		try
 		{
@@ -295,8 +289,6 @@ public static class YukiBattleReadyOverlayPatches
 		}
 	}
 
-	[HarmonyPatch(typeof(Hook), nameof(Hook.BeforeCardPlayed))]
-	[HarmonyPrefix]
 	public static void BeforeCardPlayedPrefix(CombatState combatState, CardPlay cardPlay)
 	{
 		try
@@ -314,8 +306,6 @@ public static class YukiBattleReadyOverlayPatches
 		}
 	}
 
-	[HarmonyPatch(typeof(Hook), nameof(Hook.BeforeCardPlayed))]
-	[HarmonyPostfix]
 	public static void AfterBeforeCardPlayedPostfix(CombatState combatState, CardPlay cardPlay)
 	{
 		try

@@ -1248,13 +1248,18 @@ public static class YukiCardCustomFramePatch
 
         Texture2D? texture = LoadResource<Texture2D>(texturePath);
         if (texture != null)
+        {
             textureRect.Texture = texture;
+            if (show)
+                textureRect.Show();
+        }
+        else if (show)
+        {
+            textureRect.Hide();
+        }
 
         if (material != null)
             textureRect.Material = material;
-
-        if (show)
-            textureRect.Show();
     }
 
     private static string GetCategoryIconPath(CardType type)
@@ -1344,9 +1349,20 @@ public static class YukiCardCustomFramePatch
             return null;
         }
 
-        T? resource = ResourceLoader.Load<T>(path, "", ResourceLoader.CacheMode.Reuse);
-        ResourceCache[path] = resource;
-        return resource;
+        try
+        {
+            T? resource = ResourceLoader.Load<T>(path, "", ResourceLoader.CacheMode.Reuse);
+            ResourceCache[path] = resource;
+            return resource;
+        }
+        catch (Exception ex)
+        {
+            ResourceCache[path] = null;
+            if (MissingResourceWarnings.Add(path))
+                GD.PushWarning($"[YukiCardCustomFrame] Failed to load resource {path}: {ex.Message}");
+
+            return null;
+        }
     }
 
     private static T? Get<T>(FieldInfo? field, NCard cardNode) where T : GodotObject

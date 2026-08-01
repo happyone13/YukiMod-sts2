@@ -28,6 +28,17 @@ internal static class YukiRitsuMigration
         var contentPatcher = RitsuLibFramework.CreatePatcher(MainFile.ModId, "optional-content", "optional content");
         contentPatcher.RegisterPatch<GloomyEscapeCardBeforeCombatStartPatch>();
         contentPatcher.PatchAll();
+
+        var presentationPatcher = RitsuLibFramework.CreatePatcher(
+            MainFile.ModId,
+            "optional-presentation",
+            "optional presentation hooks");
+        presentationPatcher.RegisterPatch<YukiBattleReadyBeforeCombatStartPatch>();
+        presentationPatcher.RegisterPatch<YukiBattleReadyAfterCombatVictoryPatch>();
+        presentationPatcher.RegisterPatch<YukiBattleReadyAfterDeathPatch>();
+        presentationPatcher.RegisterPatch<YukiBattleReadyBeforeCardPlayedPrefixPatch>();
+        presentationPatcher.RegisterPatch<YukiBattleReadyBeforeCardPlayedPostfixPatch>();
+        presentationPatcher.PatchAll();
         MainFile.Logger.Info("[YukiRitsuMigration] Optional content patches registered.");
     }
 

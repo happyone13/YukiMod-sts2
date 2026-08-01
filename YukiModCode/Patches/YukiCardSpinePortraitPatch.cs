@@ -208,6 +208,11 @@ public static class YukiCardSpinePortraitPatch
         if (cardNode == null || !GodotObject.IsInstanceValid(cardNode))
             return;
 
+        bool ownsModel = cardNode.Model is IYukiCardVisualProfile;
+        bool hasOwnedOverlay = HasActiveSpineOverlay(cardNode);
+        if (!ownsModel && !hasOwnedOverlay)
+            return;
+
         RemoveAllSpineOverlays(cardNode);
 
         if (PortraitField?.GetValue(cardNode) is TextureRect portraitRect)
@@ -216,8 +221,15 @@ public static class YukiCardSpinePortraitPatch
         if (AncientPortraitField?.GetValue(cardNode) is TextureRect ancientPortraitRect)
             RemoveAllSpineOverlays(ancientPortraitRect);
 
-        RestorePortraitTextures(cardNode);
-        RestorePortraitVisibility(cardNode);
+        if (ownsModel)
+        {
+            RestorePortraitTextures(cardNode);
+            RestorePortraitVisibility(cardNode);
+        }
+        else
+        {
+            VisibilityStates.Remove(cardNode);
+        }
     }
 
     public static bool HasActiveSpineOverlay(NCard? cardNode)
@@ -450,7 +462,25 @@ public static class YukiCardSpinePortraitPatch
         if (SceneCache.TryGetValue(scenePath, out PackedScene? cachedScene))
             return cachedScene;
 
-        PackedScene? scene = GD.Load<PackedScene>(scenePath);
+        if (!ResourceLoader.Exists(scenePath))
+        {
+            if (MissingResourceWarnings.Add(scenePath))
+                GD.PushWarning($"[YukiCardSpinePortrait] Scene path missing or not found: {scenePath}");
+            return null;
+        }
+
+        PackedScene? scene;
+        try
+        {
+            scene = ResourceLoader.Load<PackedScene>(scenePath, "", ResourceLoader.CacheMode.Reuse);
+        }
+        catch (System.Exception ex)
+        {
+            if (MissingResourceWarnings.Add(scenePath))
+                GD.PushWarning($"[YukiCardSpinePortrait] Failed to load {scenePath}: {ex.Message}");
+            return null;
+        }
+
         if (scene == null)
         {
             GD.PushWarning($"[YukiCardSpinePortrait] Failed to load PackedScene: {scenePath}");
@@ -547,7 +577,19 @@ public static class YukiCardSpinePortraitPatch
 
     private static void RestorePortraitTextures(NCard cardNode)
     {
-        Texture2D? portraitTexture = cardNode.Model?.Portrait;
+        if (cardNode.Model is not IYukiCardVisualProfile)
+            return;
+
+        Texture2D? portraitTexture;
+        try
+        {
+            portraitTexture = cardNode.Model.Portrait;
+        }
+        catch
+        {
+            return;
+        }
+
         if (portraitTexture == null)
             return;
 

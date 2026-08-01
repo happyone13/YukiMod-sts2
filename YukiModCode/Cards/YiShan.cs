@@ -14,7 +14,7 @@ using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
-[Pool(typeof(YukiHiddenCardPool))]
+[Pool(typeof(YukiModCardPool))]
 public class YiShan() : YukiModCard(0, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies), IYukiMeleeAttackCard
 {
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;

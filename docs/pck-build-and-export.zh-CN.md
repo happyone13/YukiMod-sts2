@@ -54,12 +54,12 @@ dotnet build YukiMod.csproj -v:minimal
 
 `CheckDependencyPaths` 会在构建前检查：
 
-- `Sts2TargetVersion` 必须是 `107` 或 `108`，默认是 `108`。
-- 当前目标版本对应的 `Sts2Path107` 或 `Sts2Path108` 必须能解析到游戏安装目录。
+- `Sts2TargetVersion` 必须是 `107`、`108`、`109` 或 `110`，默认是 `110`。
+- 当前目标版本对应的 `Sts2Path107`、`Sts2Path108`、`Sts2Path109` 或 `Sts2Path110` 必须能解析到游戏安装目录。
 - `Sts2DataDir` 必须存在，即游戏数据目录。
 - `GodotPath` 必须存在。
 
-当前 YukiMod 默认支持 `108`，并保留 `107` 作为显式传参兼容构建目标；不要按旧模板传 `103`。
+当前 YukiMod 默认支持 `110`，并保留 `107`、`108`、`109` 作为显式传参兼容构建目标；不要按旧模板传 `103`。
 
 ### 复制 dll 和 manifest
 
@@ -87,6 +87,8 @@ IsInnerGodotExport=true
 MSBUILDDISABLENODEREUSE=1
 STS2_107_PATH=$(Sts2Path107)
 STS2_108_PATH=$(Sts2Path108)
+STS2_109_PATH=$(Sts2Path109)
+STS2_110_PATH=$(Sts2Path110)
 ```
 
 `IsInnerGodotExport=true` 用来避免 Godot 导出过程中再次触发外层导出，造成递归构建。

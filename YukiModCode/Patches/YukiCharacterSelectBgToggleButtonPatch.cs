@@ -29,6 +29,7 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 	private static bool _toggleButtonVisibleLogged;
 	private static bool _bgContainerMissingWarned;
 	private static bool _bgPairInjectedLogged;
+	private static bool _bgLoadFailedWarned;
 
 	[HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen._Ready))]
 	[HarmonyPostfix]
@@ -255,25 +256,57 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 			return;
 		}
 
+		Control? bg1 = null;
+		Control? bg2 = null;
+		if (!TryInstantiateBackground(Bg1Path, Bg1NodeName, out bg1) ||
+		    !TryInstantiateBackground(Bg2Path, Bg2NodeName, out bg2))
+		{
+			bg1?.QueueFreeSafely();
+			bg2?.QueueFreeSafely();
+			LogBgLoadFailedOnce();
+			return;
+		}
+
 		foreach (Node child in bgContainer.GetChildren())
 		{
 			bgContainer.RemoveChildSafely(child);
 			child.QueueFreeSafely();
 		}
 
-		PackedScene bg1Scene = PreloadManager.Cache.GetScene(Bg1Path);
-		Control bg1 = bg1Scene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
-		bg1.Name = Bg1NodeName;
-		bgContainer.AddChildSafely(bg1);
-
-		PackedScene bg2Scene = PreloadManager.Cache.GetScene(Bg2Path);
-		Control bg2 = bg2Scene.Instantiate<Control>(PackedScene.GenEditState.Disabled);
-		bg2.Name = Bg2NodeName;
-		bgContainer.AddChildSafely(bg2);
+		bgContainer.AddChildSafely(bg1!);
+		bgContainer.AddChildSafely(bg2!);
 
 		LogBgPairInjectedOnce(bgContainer);
 
-		StartForceLoopRetry(screen, bg1, maxFrames: 90);
+		StartForceLoopRetry(screen, bg1!, maxFrames: 90);
+	}
+
+	private static bool TryInstantiateBackground(string path, string nodeName, out Control? background)
+	{
+		background = null;
+		try
+		{
+			if (!ResourceLoader.Exists(path))
+			{
+				return false;
+			}
+
+			PackedScene? scene = PreloadManager.Cache.GetScene(path);
+			background = scene?.Instantiate<Control>(PackedScene.GenEditState.Disabled);
+			if (background == null)
+			{
+				return false;
+			}
+
+			background.Name = nodeName;
+			return true;
+		}
+		catch
+		{
+			background?.QueueFreeSafely();
+			background = null;
+			return false;
+		}
 	}
 
 	private static void LogBgContainerMissingOnce()
@@ -285,6 +318,17 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 
 		_bgContainerMissingWarned = true;
 		Log.Warn($"[{YukiModInfo.ModId}] CharacterSelect bg container missing: {BgContainerNodeName}");
+	}
+
+	private static void LogBgLoadFailedOnce()
+	{
+		if (_bgLoadFailedWarned)
+		{
+			return;
+		}
+
+		_bgLoadFailedWarned = true;
+		Log.Warn($"[{YukiModInfo.ModId}] CharacterSelect background resources are unavailable; keeping the existing background.");
 	}
 
 	private static void LogBgPairInjectedOnce(Node bgContainer)

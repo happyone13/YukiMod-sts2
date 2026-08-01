@@ -7,18 +7,18 @@ using YukiCharacter = YukiMod.YukiModCode.Character.YukiMod;
 
 namespace YukiMod.Tests;
 
-public sealed class Migration109Tests : CombatTestSuite
+public sealed class Migration110Tests : CombatTestSuite
 {
     protected override void ConfigureBattle(CombatTestBattleBuilder battle)
     {
         battle
             .Player<YukiCharacter>()
             .AddEnemy<BigDummy>()
-            .WithSeed("yukimod-109-migration");
+            .WithSeed("yukimod-110-migration");
     }
 
     [Fact]
-    public async Task Card_dupe_preserves_owner_with_the_109_api()
+    public async Task Card_dupe_preserves_owner_with_the_110_api()
     {
         var card = await AddToHand<DefendYuki>();
         Assert.NotNull(card.Owner);
