@@ -1,14 +1,14 @@
 {
-  "YUKIMOD_YUKI_MOD.aromaPrinciple": "A quiet, unfinished presence.",
-  "YUKIMOD_YUKI_MOD.banter.alive.endTurnPing": "Waiting on you.",
-  "YUKIMOD_YUKI_MOD.banter.dead.endTurnPing": "Still not done yet.",
-  "YUKIMOD_YUKI_MOD.cardsModifierDescription": "__ cards will now appear in rewards and shops.",
-  "YUKIMOD_YUKI_MOD.cardsModifierTitle": "__ Cards",
-  "YUKIMOD_YUKI_MOD.description": "Template character based on MeiLinMod.",
-  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-0r.char": "This role is still only a template.",
-  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-0r.next": "Build the mechanics next.",
-  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-1r.ancient": "Even a skeleton can become a character.",
-  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-attack": "Placeholder attack line.",
+  "YUKIMOD_YUKI_MOD.aromaPrinciple": "A lone figure.",
+  "YUKIMOD_YUKI_MOD.banter.alive.endTurnPing": "It's your turn.",
+  "YUKIMOD_YUKI_MOD.banter.dead.endTurnPing": "It's not over yet.",
+  "YUKIMOD_YUKI_MOD.cardsModifierDescription": "Yuki cards will now appear in rewards and shops.",
+  "YUKIMOD_YUKI_MOD.cardsModifierTitle": "Yuki Cards",
+  "YUKIMOD_YUKI_MOD.description": "Yuki does not stand here alone; she also carries the hopes entrusted to her by Rin and Chizuru.",
+  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-0r.char": "Are you... Chaos?",
+  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-0r.next": "Continue.",
+  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-1r.ancient": "Chaos? Never heard of it.",
+  "THE_ARCHITECT.talk.YUKIMOD_YUKI_MOD.0-attack": "Ha!",
   "YUKIMOD_YUKI_MOD.eventDeathPrevention": "This run is not over.",
   "YUKIMOD_YUKI_MOD.goldMonologue": "Useful, but not the goal.",
   "YUKIMOD_YUKI_MOD.possessiveAdjective": "her",
@@ -17,5 +17,5 @@
   "YUKIMOD_YUKI_MOD.pronounSubject": "she",
   "YUKIMOD_YUKI_MOD.title": "Yuki",
   "YUKIMOD_YUKI_MOD.titleObject": "Yuki",
-  "YUKIMOD_YUKI_MOD.unlockText": "Template placeholder character."
+  "YUKIMOD_YUKI_MOD.unlockText": "Yuki."
 }

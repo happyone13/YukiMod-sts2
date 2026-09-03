@@ -49,16 +49,18 @@ internal static class YukiRitsuMigration
             page =>
             {
                 page
-                    .WithTitle(ModSettingsText.Literal("Yuki Settings"))
+                    .WithTitle(SettingsText("YUKIMOD_RITSU_PAGE.title", "Yuki Settings"))
                     .WithModDisplayName(ModSettingsText.Literal("YukiMod"))
-                    .WithDescription(ModSettingsText.Literal("YukiMod settings registered through RitsuLib."));
+                    .WithDescription(SettingsText(
+                        "YUKIMOD_RITSU_PAGE.description",
+                        "YukiMod settings registered through RitsuLib."));
 
                 page.AddSection("visuals", section =>
                 {
-                    section.WithTitle(ModSettingsText.Literal("Visuals"));
+                    section.WithTitle(SettingsText("YUKIMOD_RITSU_SECTION_VISUALS.title", "Visuals"));
                     section.AddToggle(
                             "battle_ready_overlay",
-                            ModSettingsText.Literal("Battle ready overlay"),
+                            SettingsText("YUKIMOD_RITSU_BATTLE_READY_OVERLAY.title", "Back-Facing Portrait"),
                             BoolBinding(
                                 "battle_ready_overlay",
                                 () => YukiModSharedSettings.BattleReadyOverlayEnabled,
@@ -72,14 +74,14 @@ internal static class YukiRitsuMigration
                                 }))
                         .AddToggle(
                             "combat_effects",
-                            ModSettingsText.Literal("Combat effects"),
+                            SettingsText("YUKIMOD_RITSU_COMBAT_EFFECTS.title", "Combat Effects"),
                             BoolBinding(
                                 "combat_effects",
                                 () => YukiModSharedSettings.CombatEffectsEnabled,
                                 value => YukiModSharedSettings.SetCombatEffectsEnabled(value, persist: true)))
                         .AddToggle(
                             "dynamic_card_portraits",
-                            ModSettingsText.Literal("Dynamic card portraits"),
+                            SettingsText("YUKIMOD_RITSU_DYNAMIC_CARD_PORTRAITS.title", "Dynamic Card Art"),
                             BoolBinding(
                                 "dynamic_card_portraits",
                                 () => YukiModSharedSettings.DynamicCardPortraitsEnabled,
@@ -88,18 +90,25 @@ internal static class YukiRitsuMigration
 
                 page.AddSection("gameplay", section =>
                 {
-                    section.WithTitle(ModSettingsText.Literal("游戏内容"));
+                    section.WithTitle(SettingsText("YUKIMOD_RITSU_SECTION_GAMEPLAY.title", "Gameplay"));
                     section.AddToggle(
                         "gloomy_encounter",
-                        ModSettingsText.Literal("一位旧识"),
+                        SettingsText("YUKIMOD_RITSU_GLOOMY_ENCOUNTER.title", "An Old Acquaintance"),
                         BoolBinding(
                             "gloomy_encounter",
                             () => GloomyEncounterSharedSettings.Enabled,
                             value => GloomyEncounterSharedSettings.SetEnabled(value, persist: true)),
-                        ModSettingsText.Literal("一位旧识，开启后你可能会遇到他"));
+                        SettingsText(
+                            "YUKIMOD_RITSU_GLOOMY_ENCOUNTER.description",
+                            "Enable this option and you may encounter an old acquaintance."));
                 });
             },
             SettingsPageId);
+    }
+
+    private static ModSettingsText SettingsText(string key, string fallback)
+    {
+        return ModSettingsText.LocString("settings_ui", key, fallback);
     }
 
     private static IModSettingsValueBinding<bool> BoolBinding(

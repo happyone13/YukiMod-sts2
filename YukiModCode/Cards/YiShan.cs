@@ -44,7 +44,7 @@ public class YiShan() : YukiModCard(0, CardType.Attack, CardRarity.Rare, TargetT
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        foreach (var player in CombatState.Players)
+        foreach (var player in CombatState.Players.Where(player => player.NetId != Owner.NetId))
         {
             var copy = CreateCloneForPlayer(player);
             await YukiCardPileService.AddGeneratedCardsToCombat([copy], PileType.Discard, player);

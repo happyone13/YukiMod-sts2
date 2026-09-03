@@ -7,9 +7,9 @@
     <DefaultItemExcludes>packages/**</DefaultItemExcludes>
     <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
     <PathMap>$(AppOutputBase)=.\</PathMap>
-    <Sts2TargetVersion Condition="'$(Sts2TargetVersion)' == ''">110</Sts2TargetVersion>
-    <!-- RitsuLib 0.5.0 supplies the STS2 0.110 runtime variant and matching compile-time API. -->
-    <RitsuLibVersion Condition="'$(RitsuLibVersion)' == ''">0.5.0</RitsuLibVersion>
+    <Sts2TargetVersion Condition="'$(Sts2TargetVersion)' == ''">111</Sts2TargetVersion>
+    <!-- RitsuLib 0.5.11 adds the STS2 0.111 runtime variant and matching compile-time API. -->
+    <RitsuLibVersion Condition="'$(RitsuLibVersion)' == ''">0.5.11</RitsuLibVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -39,10 +39,14 @@
     <Sts2Path110 Condition="'$(Sts2Path110)' == '' and '$(STS2_110_PATH)' != ''">$(STS2_110_PATH)</Sts2Path110>
     <Sts2Path110 Condition="'$(Sts2Path110)' == '' and Exists('H:/SteamLibrary/steamapps/common/Slay the Spire 2')">H:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path110>
     <Sts2Path110 Condition="'$(Sts2Path110)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path110>
+    <Sts2Path111 Condition="'$(Sts2Path111)' == '' and '$(STS2_111_PATH)' != ''">$(STS2_111_PATH)</Sts2Path111>
+    <Sts2Path111 Condition="'$(Sts2Path111)' == '' and Exists('H:/SteamLibrary/steamapps/common/Slay the Spire 2')">H:/SteamLibrary/steamapps/common/Slay the Spire 2</Sts2Path111>
+    <Sts2Path111 Condition="'$(Sts2Path111)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path111>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '107'">$(Sts2Path107)</Sts2Path>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '108'">$(Sts2Path108)</Sts2Path>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '109'">$(Sts2Path109)</Sts2Path>
     <Sts2Path Condition="'$(Sts2TargetVersion)' == '110'">$(Sts2Path110)</Sts2Path>
+    <Sts2Path Condition="'$(Sts2TargetVersion)' == '111'">$(Sts2Path111)</Sts2Path>
     <LocalModsDirName Condition="'$(LocalModsDirName)' == '' and Exists('$(Sts2Path)/mods2')">mods2</LocalModsDirName>
     <LocalModsDirName Condition="'$(LocalModsDirName)' == ''">mods</LocalModsDirName>
     <ModsPath>$(Sts2Path)/$(LocalModsDirName)/</ModsPath>
@@ -72,6 +76,7 @@
     <DefineConstants Condition="'$(Sts2TargetVersion)' == '108'">$(DefineConstants);STS2_108</DefineConstants>
     <DefineConstants Condition="'$(Sts2TargetVersion)' == '109'">$(DefineConstants);STS2_109</DefineConstants>
     <DefineConstants Condition="'$(Sts2TargetVersion)' == '110'">$(DefineConstants);STS2_110</DefineConstants>
+    <DefineConstants Condition="'$(Sts2TargetVersion)' == '111'">$(DefineConstants);STS2_111</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(Sts2DataDir)') and '$(Configuration)' == 'Debug'">
@@ -131,8 +136,8 @@
 
   <Target Name="CheckDependencyPaths">
     <Error
-      Text=" Unsupported Sts2TargetVersion '$(Sts2TargetVersion)'. Use 107, 108, 109, or 110."
-      Condition="'$(Sts2TargetVersion)' != '107' and '$(Sts2TargetVersion)' != '108' and '$(Sts2TargetVersion)' != '109' and '$(Sts2TargetVersion)' != '110'" />
+      Text=" Unsupported Sts2TargetVersion '$(Sts2TargetVersion)'. Use 107, 108, 109, 110, or 111."
+      Condition="'$(Sts2TargetVersion)' != '107' and '$(Sts2TargetVersion)' != '108' and '$(Sts2TargetVersion)' != '109' and '$(Sts2TargetVersion)' != '110' and '$(Sts2TargetVersion)' != '111'" />
     <Error
       Text=" Sts2Path107 is not configured. Pass -p:Sts2Path107=&lt;path&gt; or set STS2_107_PATH when building 107."
       Condition="'$(Sts2TargetVersion)' == '107' and '$(Sts2Path107)' == ''" />
@@ -145,6 +150,9 @@
     <Error
       Text=" Sts2Path110 is not configured. Pass -p:Sts2Path110=&lt;path&gt; or set STS2_110_PATH when building 110."
       Condition="'$(Sts2TargetVersion)' == '110' and '$(Sts2Path110)' == ''" />
+    <Error
+      Text=" Sts2Path111 is not configured. Pass -p:Sts2Path111=&lt;path&gt; or set STS2_111_PATH when building 111."
+      Condition="'$(Sts2TargetVersion)' == '111' and '$(Sts2Path111)' == ''" />
     <Error
       Text=" Slay the Spire 2 $(Sts2TargetVersion) data not found at path '$(Sts2DataDir)'"
       Condition="'$(Sts2DataDir)' == '' or !Exists('$(Sts2DataDir)')" />
@@ -173,7 +181,7 @@
     <Message Text="Exporting Godot .pck to mods folder on Build" Importance="high" />
     <Exec
       Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108);STS2_109_PATH=$(Sts2Path109);STS2_110_PATH=$(Sts2Path110)"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108);STS2_109_PATH=$(Sts2Path109);STS2_110_PATH=$(Sts2Path110);STS2_111_PATH=$(Sts2Path111)"
       ContinueOnError="WarnAndContinue" />
   </Target>
 
@@ -181,7 +189,7 @@
     <Message Text="Exporting Godot .pck to mods folder" Importance="high" />
     <Exec
       Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;"
-      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108);STS2_109_PATH=$(Sts2Path109);STS2_110_PATH=$(Sts2Path110)"
+      EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1;STS2_107_PATH=$(Sts2Path107);STS2_108_PATH=$(Sts2Path108);STS2_109_PATH=$(Sts2Path109);STS2_110_PATH=$(Sts2Path110);STS2_111_PATH=$(Sts2Path111)"
       ContinueOnError="WarnAndContinue" />
   </Target>
 

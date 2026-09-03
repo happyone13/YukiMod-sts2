@@ -222,7 +222,7 @@
     "YUKIMOD_YONG_YE.title": "Endless Night",
     "YUKIMOD_YONG_YE.description": "All allies gain {BlackCloud:diff()} [gold]Ignorance[/gold].\nAt the start of their next turn, they enter [gold]Black Cloud Stance[/gold].",
     "YUKIMOD_YI_SHAN.title": "Flash",
-    "YUKIMOD_YI_SHAN.description": "Deal {Damage:diff()} damage to all enemies.\nAdd 1 copy of this card to everyone's [gold]Discard Pile[/gold].\n[gold]Inspiration[/gold]: Draw 1 card.\nWhen drawn, play this automatically.",
+    "YUKIMOD_YI_SHAN.description": "Deal {Damage:diff()} damage to all enemies.\nAdd 1 copy of this card to each other ally's [gold]Discard Pile[/gold].\n[gold]Inspiration[/gold]: Draw 1 card.\nWhen drawn, play this automatically.",
     "YUKIMOD_SHOU_YU.title": "Bestow",
     "YUKIMOD_SHOU_YU.description": "Choose 1 ally. Exhaust up to {Cards:diff()} cards from your hand, and the target ally gains copies of them.",
     "YUKIMOD_SHOU_YU.selectionScreenPrompt": "Choose up to {MaxCount} cards to exhaust and copy to the target ally.",

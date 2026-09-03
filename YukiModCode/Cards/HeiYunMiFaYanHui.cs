@@ -44,7 +44,7 @@ public class HeiYunMiFaYanHui() : YukiModCard(0, CardType.Skill, CardRarity.Rare
             return;
         }
 
-        await YukiCardReplayService.AutoPlayClone(choiceContext, previousBlackCloud.CardPlay);
+        await YukiCardReplayService.AutoPlayDupe(choiceContext, previousBlackCloud.CardPlay);
     }
 
     protected override void OnUpgrade()

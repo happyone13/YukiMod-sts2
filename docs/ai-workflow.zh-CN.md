@@ -38,8 +38,8 @@
 - 先确认改动是模板迁移，还是友纪新内容，还是工程修复
 - 先看已有代码和路径，不用记忆代替检查
 - 涉及 `YukiMod.csproj`、构建目标版本、RitsuLib 版本或导出流程时，先对照兄弟仓库 `E:\DATA\GODOT\MyMod\MeiLinMod-sts2` 中的 `MeiLinMod.csproj`，再决定 YukiMod 是否需要同步适配
-- 涉及原版 `104` 行为时，优先查看解包目录 `E:\DATA\GODOT\MyMod\sts104` 作为旧版参考；涉及当前 110 构建的 API 签名时，以配置的 110 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
-- 涉及“回合开始”“抽牌前/后”“重抽整手牌”“是否计入起手抽牌”等效果时，先对照对应目标版本的 `CombatManager.cs` 实际调用顺序；只有 104 资料时可先参考 `sts104/src/Core/Combat/CombatManager.cs`，再用 110 API 校验
+- 涉及原版 `104` 行为时，优先查看解包目录 `E:\DATA\GODOT\MyMod\sts104` 作为旧版参考；涉及当前 111 构建的 API 签名时，以配置的 111 游戏目录中的 `data_sts2_windows_x86_64/sts2.dll` 为准
+- 涉及“回合开始”“抽牌前/后”“重抽整手牌”“是否计入起手抽牌”等效果时，先对照对应目标版本的 `CombatManager.cs` 实际调用顺序；只有 104 资料时可先参考 `sts104/src/Core/Combat/CombatManager.cs`，再用 111 API 校验
 - 如果碰到 `meilin` 命名的资源，先判断它是暂时沿用还是准备迁移，不要自动重命名
 - 运行时报错优先查看 `C:\Users\lozalia\AppData\Roaming\SlayTheSpire2\logs` 下最新的 `godot.log` 或时间戳日志，再决定修复方向
 - 如果 Godot 编辑器里出现 `SpineAtlasResource` / `SpineSkeletonFileResource` 依赖损坏，先检查仓库根目录 `spine_godot_extension.gdextension` 及对应 `windows/libspine_godot...dll` 是否存在；缺这层时，编辑器会把 `.atlas/.skel` 误判成坏依赖

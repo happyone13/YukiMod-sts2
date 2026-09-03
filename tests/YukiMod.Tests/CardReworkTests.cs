@@ -88,6 +88,32 @@ public sealed class CardReworkTests : CombatTestSuite
     }
 
     [Fact]
+    public async Task Yan_hui_fan_replay_does_not_add_a_copy_to_the_discard_pile()
+    {
+        var enemy = EnemyAt(0);
+        var hpBefore = enemy.CurrentHp;
+        await Play(await AddToHand<StrikeYuki>(), enemy);
+
+        var discardPile = PileType.Discard.GetPile(Player);
+        var strikesBeforeReplay = discardPile.Cards.OfType<StrikeYuki>().Count();
+
+        await Play(await AddToHand<YanHuiFan>());
+
+        Assert.Equal(hpBefore - 12, enemy.CurrentHp);
+        Assert.Equal(strikesBeforeReplay, discardPile.Cards.OfType<StrikeYuki>().Count());
+    }
+
+    [Fact]
+    public async Task Yi_shan_does_not_copy_itself_to_its_owners_discard_pile()
+    {
+        var discardPile = PileType.Discard.GetPile(Player);
+
+        await Play(await AddToHand<YiShan>());
+
+        Assert.Empty(discardPile.Cards.OfType<YiShan>());
+    }
+
+    [Fact]
     public async Task Tian_yan_reduces_only_the_card_instance_that_was_played()
     {
         var first = await AddToHand<TianYan>();
@@ -148,5 +174,28 @@ public sealed class CardReworkTests : CombatTestSuite
 
         Assert.Equal(before[0] - 4, EnemyAt(0).CurrentHp);
         Assert.Equal(before[1] - 4, EnemyAt(1).CurrentHp);
+    }
+}
+
+public sealed class YiShanMultiplayerTests : CombatTestSuite
+{
+    protected override void ConfigureBattle(CombatTestBattleBuilder battle)
+    {
+        battle
+            .Player<YukiCharacter>()
+            .AddRemotePlayer<YukiCharacter>(2)
+            .AddEnemy<BigDummy>()
+            .WithSeed("yukimod-yi-shan-multiplayer");
+    }
+
+    [Fact]
+    public async Task Yi_shan_copies_only_to_other_allies_discard_piles()
+    {
+        var ally = PlayerWithNetId(2);
+
+        await Play(await AddToHand<YiShan>());
+
+        Assert.Empty(PileType.Discard.GetPile(Player).Cards.OfType<YiShan>());
+        Assert.Single(PileType.Discard.GetPile(ally).Cards.OfType<YiShan>());
     }
 }

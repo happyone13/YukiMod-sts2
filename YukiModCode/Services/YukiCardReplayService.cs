@@ -11,12 +11,6 @@ namespace YukiMod.YukiModCode.Services;
 
 public static class YukiCardReplayService
 {
-    public static Task AutoPlayClone(PlayerChoiceContext choiceContext, CardPlay previousPlay)
-    {
-        var replayCard = previousPlay.Card.CreateClone();
-        return CardCmd.AutoPlay(choiceContext, replayCard, GetReplayTarget(previousPlay, replayCard));
-    }
-
     public static Task AutoPlayDupe(PlayerChoiceContext choiceContext, CardPlay previousPlay)
     {
         var owner = previousPlay.Card.Owner
