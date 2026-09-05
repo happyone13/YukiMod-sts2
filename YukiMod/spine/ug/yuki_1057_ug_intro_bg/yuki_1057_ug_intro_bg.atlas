@@ -1,0 +1,160 @@
+
+yuki_1057_ug_intro_bg.png
+size: 1992,1152
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bigWind1
+  rotate: true
+  xy: 794, 751
+  size: 113, 677
+  orig: 113, 677
+  offset: 0, 0
+  index: -1
+bigWind2
+  rotate: true
+  xy: 794, 866
+  size: 283, 692
+  orig: 283, 692
+  offset: 0, 0
+  index: -1
+bigWind3
+  rotate: false
+  xy: 439, 18
+  size: 417, 542
+  orig: 417, 542
+  offset: 0, 0
+  index: -1
+bigWind4
+  rotate: false
+  xy: 2, 28
+  size: 435, 532
+  orig: 435, 532
+  offset: 0, 0
+  index: -1
+black1
+  rotate: false
+  xy: 2, 562
+  size: 790, 225
+  orig: 790, 225
+  offset: 0, 0
+  index: -1
+black2
+  rotate: false
+  xy: 1473, 608
+  size: 502, 252
+  orig: 502, 252
+  offset: 0, 0
+  index: -1
+gr_glass_dust211
+  rotate: false
+  xy: 1527, 132
+  size: 281, 265
+  orig: 281, 265
+  offset: 0, 0
+  index: -1
+gray1
+  rotate: false
+  xy: 2, 789
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+gray2
+  rotate: false
+  xy: 1527, 399
+  size: 386, 207
+  orig: 386, 207
+  offset: 0, 0
+  index: -1
+snow_long_01
+  rotate: false
+  xy: 1286, 640
+  size: 144, 109
+  orig: 144, 109
+  offset: 0, 0
+  index: -1
+snow_long_02
+  rotate: false
+  xy: 1527, 63
+  size: 134, 67
+  orig: 134, 67
+  offset: 0, 0
+  index: -1
+snow_long_03
+  rotate: true
+  xy: 1810, 129
+  size: 268, 109
+  orig: 268, 109
+  offset: 0, 0
+  index: -1
+solid
+  rotate: false
+  xy: 1488, 933
+  size: 474, 216
+  orig: 474, 216
+  offset: 0, 0
+  index: -1
+speed_01
+  rotate: true
+  xy: 794, 615
+  size: 134, 490
+  orig: 134, 490
+  offset: 0, 0
+  index: -1
+speed_02
+  rotate: false
+  xy: 1338, 84
+  size: 93, 522
+  orig: 93, 522
+  offset: 0, 0
+  index: -1
+speed_03
+  rotate: true
+  xy: 1298, 2
+  size: 59, 444
+  orig: 59, 444
+  offset: 0, 0
+  index: -1
+speed_04
+  rotate: false
+  xy: 1433, 98
+  size: 92, 508
+  orig: 92, 508
+  offset: 0, 0
+  index: -1
+speed_05
+  rotate: true
+  xy: 1488, 862
+  size: 69, 495
+  orig: 69, 495
+  offset: 0, 0
+  index: -1
+speed_06
+  rotate: true
+  xy: 858, 2
+  size: 92, 438
+  orig: 92, 438
+  offset: 0, 0
+  index: -1
+speed_07
+  rotate: false
+  xy: 858, 104
+  size: 256, 509
+  orig: 256, 509
+  offset: 0, 0
+  index: -1
+speed_08
+  rotate: false
+  xy: 1116, 96
+  size: 220, 517
+  orig: 220, 517
+  offset: 0, 0
+  index: -1
+speed_09
+  rotate: false
+  xy: 1921, 143
+  size: 65, 463
+  orig: 65, 463
+  offset: 0, 0
+  index: -1

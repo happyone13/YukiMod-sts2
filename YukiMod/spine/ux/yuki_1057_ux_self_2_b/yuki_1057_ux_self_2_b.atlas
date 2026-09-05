@@ -1,0 +1,97 @@
+
+yuki_1057_ux_self_2_b.png
+size: 1928,944
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ember2
+  rotate: false
+  xy: 1613, 599
+  size: 303, 336
+  orig: 303, 336
+  offset: 0, 0
+  index: -1
+ember3
+  rotate: true
+  xy: 2, 12
+  size: 518, 377
+  orig: 518, 377
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: true
+  xy: 2, 532
+  size: 403, 407
+  orig: 403, 407
+  offset: 0, 0
+  index: -1
+obk1_2_0001
+  rotate: false
+  xy: 381, 47
+  size: 700, 125
+  orig: 700, 125
+  offset: 0, 0
+  index: -1
+obk1_2_0002
+  rotate: false
+  xy: 411, 377
+  size: 1126, 201
+  orig: 1126, 201
+  offset: 0, 0
+  index: -1
+obk1_2_0003
+  rotate: false
+  xy: 381, 174
+  size: 1126, 201
+  orig: 1126, 201
+  offset: 0, 0
+  index: -1
+obk1_3
+  rotate: false
+  xy: 411, 580
+  size: 1200, 355
+  orig: 1200, 355
+  offset: 0, 0
+  index: -1
+part_1
+  rotate: false
+  xy: 1714, 26
+  size: 212, 168
+  orig: 212, 168
+  offset: 0, 0
+  index: -1
+part_2
+  rotate: false
+  xy: 1509, 2
+  size: 203, 192
+  orig: 203, 192
+  offset: 0, 0
+  index: -1
+part_3
+  rotate: true
+  xy: 1083, 58
+  size: 114, 163
+  orig: 114, 163
+  offset: 0, 0
+  index: -1
+shadow5
+  rotate: true
+  xy: 1539, 451
+  size: 127, 52
+  orig: 127, 52
+  offset: 0, 0
+  index: -1
+shadow_light
+  rotate: false
+  xy: 1509, 196
+  size: 400, 99
+  orig: 400, 99
+  offset: 0, 0
+  index: -1
+snow2
+  rotate: false
+  xy: 1613, 297
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1

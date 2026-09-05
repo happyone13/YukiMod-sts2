@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_cutin2_b2/yuki_1057_ug_cutin2_b2.tres" id="0"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_eff2_f/yuki_1057_ug_eff2_f.tres" id="1"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_cutin2_b/yuki_1057_ug_cutin2_b.tres" id="2"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_cutin1_m/yuki_1057_ug_cutin1_m.tres" id="3"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_portrait_eff_b/yuki_1057_ug_portrait_eff_b.tres" id="4"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_cutin1_f/yuki_1057_ug_cutin1_f.tres" id="5"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_portrait/yuki_1057_ug_portrait.tres" id="6"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_portrait_eff_f/yuki_1057_ug_portrait_eff_f.tres" id="7"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_cutin2_f/yuki_1057_ug_cutin2_f.tres" id="8"]
+[node name="yuki_1057_ug_cutin_eff_f" type="Node2D"]
+[node name="yuki_1057_ug_cutin2_b2" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 1
+skeleton_data_res = ExtResource("0")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 4.199999809265137
+[node name="yuki_1057_ug_eff2_f" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 1
+skeleton_data_res = ExtResource("1")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 1.4333000183105469
+[node name="yuki_1057_ug_cutin2_b" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 2
+skeleton_data_res = ExtResource("2")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 4.066699981689453
+[node name="yuki_1057_ug_cutin1_m" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 2
+skeleton_data_res = ExtResource("3")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 2.1666998863220215
+[node name="yuki_1057_ug_portrait_eff_b" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 2
+skeleton_data_res = ExtResource("4")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 4.133299827575684
+[node name="yuki_1057_ug_cutin1_f" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 3
+skeleton_data_res = ExtResource("5")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 2.266700029373169
+[node name="yuki_1057_ug_portrait" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 3
+skeleton_data_res = ExtResource("6")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 4.133299827575684
+[node name="yuki_1057_ug_portrait_eff_f" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 4
+skeleton_data_res = ExtResource("7")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 4.133299827575684
+[node name="yuki_1057_ug_cutin2_f" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 5
+skeleton_data_res = ExtResource("8")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 4.6666998863220215

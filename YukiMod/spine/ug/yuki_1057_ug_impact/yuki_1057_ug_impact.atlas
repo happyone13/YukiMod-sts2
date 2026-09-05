@@ -1,0 +1,62 @@
+
+yuki_1057_ug_impact.png
+size: 1592,1456
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+impact_1
+  rotate: false
+  xy: 2, 726
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+impact_2
+  rotate: false
+  xy: 794, 1088
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+impact_3
+  rotate: false
+  xy: 2, 364
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+impact_4
+  rotate: false
+  xy: 794, 726
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+impact_5
+  rotate: false
+  xy: 2, 2
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+impact_6
+  rotate: false
+  xy: 794, 364
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+impact_7
+  rotate: false
+  xy: 794, 2
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1
+impact_8
+  rotate: false
+  xy: 2, 1088
+  size: 790, 360
+  orig: 790, 360
+  offset: 0, 0
+  index: -1

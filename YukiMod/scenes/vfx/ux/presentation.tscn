@@ -1,0 +1,46 @@
+[gd_scene format=3]
+[ext_resource type="Script" path="res://YukiMod/scenes/vfx/ux/ug_stage.gd" id="script"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/q/1057_skel_data.tres" id="actor"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_1.tscn" id="fx0"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_screen_1.tscn" id="fx1"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_self_1_f.tscn" id="fx2"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_self_1_b.tscn" id="fx3"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_self_2_b.tscn" id="fx4"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_self_2_f.tscn" id="fx5"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_screen_2.tscn" id="fx6"]
+[ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_2.tscn" id="fx7"]
+[node name="UgPresentation" type="CanvasLayer"]
+layer = 4090
+script = ExtResource("script")
+config_path = "res://YukiMod/scenes/vfx/ux/timeline.json"
+[node name="Stage" type="Node2D" parent="."]
+[node name="Blackout" type="ColorRect" parent="Stage"]
+offset_left = -4096.0
+offset_top = -4096.0
+offset_right = 4096.0
+offset_bottom = 4096.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+z_index = -4096
+[node name="World" type="Node2D" parent="Stage"]
+[node name="Actor" type="SpineSprite" parent="Stage/World"]
+skeleton_data_res = ExtResource("actor")
+position = Vector2(-320, 175)
+visible = false
+z_index = 0
+[node name="Fx0" parent="Stage/World" instance=ExtResource("fx0")]
+visible = false
+[node name="Fx1" parent="Stage" instance=ExtResource("fx1")]
+visible = false
+[node name="Fx2" parent="Stage/World" instance=ExtResource("fx2")]
+visible = false
+[node name="Fx3" parent="Stage/World" instance=ExtResource("fx3")]
+visible = false
+[node name="Fx4" parent="Stage/World" instance=ExtResource("fx4")]
+visible = false
+[node name="Fx5" parent="Stage/World" instance=ExtResource("fx5")]
+visible = false
+[node name="Fx6" parent="Stage" instance=ExtResource("fx6")]
+visible = false
+[node name="Fx7" parent="Stage/World" instance=ExtResource("fx7")]
+visible = false

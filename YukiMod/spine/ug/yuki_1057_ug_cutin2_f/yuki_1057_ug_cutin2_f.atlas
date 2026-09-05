@@ -1,0 +1,69 @@
+
+yuki_1057_ug_cutin2_f.png
+size: 1864,552
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow1
+  rotate: false
+  xy: 1178, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ug2_smoke1_0001
+  rotate: false
+  xy: 2, 260
+  size: 520, 288
+  orig: 520, 288
+  offset: 0, 0
+  index: -1
+ug2_smoke1_0002
+  rotate: false
+  xy: 524, 260
+  size: 520, 288
+  orig: 520, 288
+  offset: 0, 0
+  index: -1
+ug2_smoke1_0003
+  rotate: false
+  xy: 1046, 260
+  size: 520, 288
+  orig: 520, 288
+  offset: 0, 0
+  index: -1
+ug2_smoke1_0004
+  rotate: true
+  xy: 1568, 28
+  size: 520, 288
+  orig: 520, 288
+  offset: 0, 0
+  index: -1
+ug2_smoke2_0001
+  rotate: true
+  xy: 2, 15
+  size: 243, 292
+  orig: 243, 292
+  offset: 0, 0
+  index: -1
+ug2_smoke2_0002
+  rotate: true
+  xy: 296, 15
+  size: 243, 292
+  orig: 243, 292
+  offset: 0, 0
+  index: -1
+ug2_smoke2_0003
+  rotate: true
+  xy: 590, 15
+  size: 243, 292
+  orig: 243, 292
+  offset: 0, 0
+  index: -1
+ug2_smoke2_0004
+  rotate: true
+  xy: 884, 15
+  size: 243, 292
+  orig: 243, 292
+  offset: 0, 0
+  index: -1

@@ -16,6 +16,8 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.Mechanics.Animation;
+using YukiMod.YukiModCode.Mechanics.Settings;
+using YukiMod.YukiModCode.Mechanics.Vfx;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -50,13 +52,28 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
-        YukiAudioService.TryPlayCustomAttackCardClip("ba_dao", Owner);
+        if (YukiModSharedSettings.CombatEffectsEnabled && YukiModSharedSettings.UltimateCinematicsEnabled)
+        {
+            YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
+            YukiAudioService.TryPlayUxVoice(Owner);
+            YukiAudioService.TryPlayUxSound(Owner);
+        }
+        else
+        {
+            YukiAudioService.TryPlayCustomAttackCardClip("ba_dao", Owner);
+        }
 
-        await DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
-            .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        await YukiUxPresentation.PlayAsync(Owner.Creature, [cardPlay.Target], async cinematic =>
+        {
+            var attack = DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
+                .FromCard(this, cardPlay)
+                .Targeting(cardPlay.Target);
+            if (cinematic)
+                attack.WithNoAttackerAnim();
+            else
+                attack.WithHitFx("vfx/vfx_attack_slash");
+            await attack.Execute(choiceContext);
+        });
     }
 
     protected override void OnUpgrade()

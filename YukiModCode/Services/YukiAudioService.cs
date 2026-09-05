@@ -35,6 +35,10 @@ public static class YukiAudioService
     private const string CombatStartVoicePath = "res://YukiMod/ArtWorks/sound/chaos_yuki_v/vo_chaos_yuki_start_01.ogg";
     private const string VictoryVoicePath = "res://YukiMod/ArtWorks/sound/chaos_yuki_v/vo_chaos_yuki_victory_01.ogg";
     private const string RestSiteVoicePath = "res://YukiMod/ArtWorks/sound/chaos_yuki_v/vo_chaos_yuki_rest_01.ogg";
+    private const string UgVoicePath = "res://YukiMod/sound/vo_1057_ug.wav";
+    private const string UgSoundPath = "res://YukiMod/sound/se_1057_ug_all_attack.wav";
+    private const string UxVoicePath = "res://YukiMod/sound/vo_1057_ux.wav";
+    private const string UxSoundPath = "res://YukiMod/sound/se_1057_ux_all_attack.wav";
 
     private static readonly Dictionary<string, string> CustomCardClipMap = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -104,6 +108,25 @@ public static class YukiAudioService
     public static bool TryPlayResource(string resourcePath, float linearVolume = 1f)
     {
         return TryPlay(resourcePath, linearVolume);
+    }
+
+    public static bool TryPlayUgAttackVoice(Player? player = null, float linearVolume = 1f)
+    {
+        return IsYukiPlayer(player) && TryPlay(UgVoicePath, linearVolume);
+    }
+
+    public static bool TryPlayUgAttackSound(Player? player = null, float linearVolume = 1f)
+    {
+        return IsYukiPlayer(player) && TryPlay(UgSoundPath, linearVolume);
+    }
+    public static bool TryPlayUxVoice(Player? player = null, float linearVolume = 1f)
+    {
+        return IsYukiPlayer(player) && TryPlay(UxVoicePath, linearVolume);
+    }
+
+    public static bool TryPlayUxSound(Player? player = null, float linearVolume = 1f)
+    {
+        return IsYukiPlayer(player) && TryPlay(UxSoundPath, linearVolume);
     }
 
     public static bool TryPlayCustomCardClip(string clipKey, Player? player = null, float linearVolume = 1f)

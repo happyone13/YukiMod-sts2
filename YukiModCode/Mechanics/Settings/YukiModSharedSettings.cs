@@ -17,6 +17,7 @@ public static class YukiModSharedSettings
 	private static readonly string SharedBattleReadyOffsetYKey = SharedDomainKeyPrefix + "BATTLE_READY_OFFSET_Y";
 	private static readonly string SharedBattleReadyOverlayEnabledKey = SharedDomainKeyPrefix + "PORTRAITS_ENABLED";
 	private static readonly string SharedCombatEffectsEnabledKey = SharedDomainKeyPrefix + "ACTION_VFX_ENABLED";
+	private static readonly string SharedUltimateCinematicsEnabledKey = SharedDomainKeyPrefix + "ULTIMATE_CINEMATICS_ENABLED";
 	private static readonly string SharedDynamicCardPortraitsEnabledKey = SharedDomainKeyPrefix + "DYNAMIC_CARD_PORTRAITS_ENABLED";
 
 	private static int _settingsLoaded;
@@ -26,6 +27,7 @@ public static class YukiModSharedSettings
 	private static float _battleReadyOffsetY;
 	private static bool _battleReadyOverlayEnabled = true;
 	private static bool _combatEffectsEnabled = true;
+	private static bool _ultimateCinematicsEnabled = true;
 	private static bool _dynamicCardPortraitsEnabled = true;
 
 	public static event Action<bool>? CombatEffectsEnabledChanged;
@@ -81,6 +83,15 @@ public static class YukiModSharedSettings
 		{
 			EnsureSettingsLoaded();
 			return GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
+		}
+	}
+
+	public static bool UltimateCinematicsEnabled
+	{
+		get
+		{
+			EnsureSettingsLoaded();
+			return GetSharedBool(SharedUltimateCinematicsEnabledKey, _ultimateCinematicsEnabled);
 		}
 	}
 
@@ -170,6 +181,17 @@ public static class YukiModSharedSettings
 		}
 	}
 
+	public static void SetUltimateCinematicsEnabled(bool value, bool persist)
+	{
+		EnsureSettingsLoaded();
+		_ultimateCinematicsEnabled = value;
+		SetSharedBool(SharedUltimateCinematicsEnabledKey, value);
+		if (persist)
+		{
+			Save();
+		}
+	}
+
 	public static void SetDynamicCardPortraitsEnabled(bool value, bool persist)
 	{
 		EnsureSettingsLoaded();
@@ -199,6 +221,7 @@ public static class YukiModSharedSettings
 				_battleReadyOffsetY = 0f;
 				_battleReadyOverlayEnabled = true;
 				_combatEffectsEnabled = true;
+				_ultimateCinematicsEnabled = true;
 				_dynamicCardPortraitsEnabled = true;
 			}
 			else
@@ -213,6 +236,7 @@ public static class YukiModSharedSettings
 			SetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY);
 			SetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
 			SetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
+			SetSharedBool(SharedUltimateCinematicsEnabledKey, _ultimateCinematicsEnabled);
 			SetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled);
 		}
 		catch (Exception ex)
@@ -223,6 +247,7 @@ public static class YukiModSharedSettings
 			_battleReadyOffsetY = 0f;
 			_battleReadyOverlayEnabled = true;
 			_combatEffectsEnabled = true;
+			_ultimateCinematicsEnabled = true;
 			_dynamicCardPortraitsEnabled = true;
 			SetSharedFloat(SharedVoiceVolumeKey, _voiceVolume);
 			SetSharedFloat(SharedBattleReadyScaleKey, _battleReadyScale);
@@ -230,6 +255,7 @@ public static class YukiModSharedSettings
 			SetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY);
 			SetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled);
 			SetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled);
+			SetSharedBool(SharedUltimateCinematicsEnabledKey, _ultimateCinematicsEnabled);
 			SetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled);
 			Log.Warn($"[{YukiModInfo.ModId}] Shared settings load failed: {ex.Message}");
 		}
@@ -254,6 +280,7 @@ public static class YukiModSharedSettings
 				BattleReadyOffsetY = GetSharedFloat(SharedBattleReadyOffsetYKey, _battleReadyOffsetY),
 				PortraitsEnabled = GetSharedBool(SharedBattleReadyOverlayEnabledKey, _battleReadyOverlayEnabled),
 				ActionVfxEnabled = GetSharedBool(SharedCombatEffectsEnabledKey, _combatEffectsEnabled),
+				UltimateCinematicsEnabled = GetSharedBool(SharedUltimateCinematicsEnabledKey, _ultimateCinematicsEnabled),
 				DynamicCardPortraitsEnabled = GetSharedBool(SharedDynamicCardPortraitsEnabledKey, _dynamicCardPortraitsEnabled)
 			};
 			string json = JsonSerializer.Serialize(settings);
@@ -320,6 +347,7 @@ public static class YukiModSharedSettings
 		_battleReadyOffsetY = Mathf.Clamp(ReadFloat(root, "BattleReadyOffsetY", 0f), -400f, 400f);
 		_battleReadyOverlayEnabled = ReadBool(root, true, "PortraitsEnabled", "BattleReadyOverlayEnabled");
 		_combatEffectsEnabled = ReadBool(root, true, "ActionVfxEnabled", "CombatEffectsEnabled");
+		_ultimateCinematicsEnabled = ReadBool(root, true, "UltimateCinematicsEnabled", "UgUxCinematicsEnabled");
 		_dynamicCardPortraitsEnabled = ReadBool(root, true, "DynamicCardPortraitsEnabled", "UseDynamicCardPortraits");
 	}
 
@@ -452,6 +480,7 @@ public static class YukiModSharedSettings
 		public float BattleReadyOffsetY { get; set; }
 		public bool PortraitsEnabled { get; set; } = true;
 		public bool ActionVfxEnabled { get; set; } = true;
+		public bool UltimateCinematicsEnabled { get; set; } = true;
 		public bool DynamicCardPortraitsEnabled { get; set; } = true;
 	}
 }

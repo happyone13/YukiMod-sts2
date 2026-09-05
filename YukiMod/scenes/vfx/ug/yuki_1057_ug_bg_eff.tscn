@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_intro_bg/yuki_1057_ug_intro_bg.tres" id="0"]
+[node name="yuki_1057_ug_bg_eff" type="Node2D"]
+[node name="yuki_1057_ug_intro_bg" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = -10
+skeleton_data_res = ExtResource("0")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 1.5333000421524048

@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ux/yuki_1057_ux_impactframe2/yuki_1057_ux_impactframe2.tres" id="0"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ux/yuki_1057_ux_impactframe1_2/yuki_1057_ux_impactframe1_2.tres" id="1"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ux/yuki_1057_ux_impactframe1_1/yuki_1057_ux_impactframe1_1.tres" id="2"]
+[ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ux/yuki_1057_ux_screen2/yuki_1057_ux_screen2.tres" id="3"]
+[node name="yuki_1057_ux_screen_2" type="Node2D"]
+[node name="yuki_1057_ux_impactframe2" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+skeleton_data_res = ExtResource("0")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 3.0
+[node name="yuki_1057_ux_impactframe1_2" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+skeleton_data_res = ExtResource("1")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 0.6000000238418579
+[node name="yuki_1057_ux_impactframe1_1" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+skeleton_data_res = ExtResource("2")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 0.3666999936103821
+[node name="yuki_1057_ux_screen2" type="SpineSprite" parent="."]
+position = Vector2(0.0, -0.0)
+scale = Vector2(1.0, 1.0)
+z_index = 0
+skeleton_data_res = ExtResource("3")
+preview_animation = "animation"
+preview_frame = false
+metadata/ug_duration = 3.5

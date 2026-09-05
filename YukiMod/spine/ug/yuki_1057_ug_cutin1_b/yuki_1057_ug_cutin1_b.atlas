@@ -1,0 +1,139 @@
+
+yuki_1057_ug_cutin1_b.png
+size: 1968,1056
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ember2
+  rotate: true
+  xy: 2, 2
+  size: 303, 336
+  orig: 303, 336
+  offset: 0, 0
+  index: -1
+ember3
+  rotate: false
+  xy: 1292, 676
+  size: 518, 377
+  orig: 518, 377
+  offset: 0, 0
+  index: -1
+frost6
+  rotate: false
+  xy: 2, 366
+  size: 641, 687
+  orig: 641, 687
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: false
+  xy: 883, 32
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+gr_glass_dust221
+  rotate: false
+  xy: 600, 23
+  size: 281, 265
+  orig: 281, 265
+  offset: 0, 0
+  index: -1
+ice_link_6
+  rotate: false
+  xy: 2, 307
+  size: 600, 57
+  orig: 600, 57
+  offset: 0, 0
+  index: -1
+ice_snow03_0000
+  rotate: false
+  xy: 1443, 159
+  size: 91, 96
+  orig: 91, 96
+  offset: 0, 0
+  index: -1
+ice_snow03_0001
+  rotate: false
+  xy: 1812, 780
+  size: 91, 96
+  orig: 91, 96
+  offset: 0, 0
+  index: -1
+smoke1
+  rotate: false
+  xy: 1292, 465
+  size: 428, 209
+  orig: 428, 209
+  offset: 0, 0
+  index: -1
+smoke_real_01
+  rotate: true
+  xy: 1551, 169
+  size: 294, 182
+  orig: 294, 182
+  offset: 0, 0
+  index: -1
+smoke_real_02
+  rotate: true
+  xy: 1812, 878
+  size: 175, 149
+  orig: 175, 149
+  offset: 0, 0
+  index: -1
+voideater_smoke_01_05
+  rotate: false
+  xy: 645, 290
+  size: 300, 206
+  orig: 300, 206
+  offset: 0, 0
+  index: -1
+voideater_smoke_01_06
+  rotate: false
+  xy: 947, 290
+  size: 300, 206
+  orig: 300, 206
+  offset: 0, 0
+  index: -1
+voideater_smoke_01_07
+  rotate: false
+  xy: 1249, 257
+  size: 300, 206
+  orig: 300, 206
+  offset: 0, 0
+  index: -1
+voideater_smoke_02_04
+  rotate: false
+  xy: 1141, 54
+  size: 300, 201
+  orig: 300, 201
+  offset: 0, 0
+  index: -1
+voideater_smoke_02_05
+  rotate: true
+  xy: 1735, 374
+  size: 300, 201
+  orig: 300, 201
+  offset: 0, 0
+  index: -1
+voideater_smoke_02_06
+  rotate: true
+  xy: 1735, 72
+  size: 300, 201
+  orig: 300, 201
+  offset: 0, 0
+  index: -1
+yuki_ug_iceblock_b
+  rotate: false
+  xy: 645, 498
+  size: 645, 555
+  orig: 645, 555
+  offset: 0, 0
+  index: -1
+yuki_ug_iceblock_b_g
+  rotate: true
+  xy: 340, 5
+  size: 300, 258
+  orig: 300, 258
+  offset: 0, 0
+  index: -1

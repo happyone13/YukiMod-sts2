@@ -1,0 +1,9 @@
+[gd_resource type="SpineSkeletonDataResource" load_steps=3 format=3 uid="uid://de7nd318px7kp"]
+
+[ext_resource type="SpineAtlasResource" uid="uid://bbriodx5di3h3" path="res://YukiMod/spine/ug/yuki_1057_ug_portrait_eff_f/yuki_1057_ug_portrait_eff_f.atlas" id="1_8gnb5"]
+[ext_resource type="SpineSkeletonFileResource" uid="uid://2s7ch8w5gcso" path="res://YukiMod/spine/ug/yuki_1057_ug_portrait_eff_f/yuki_1057_ug_portrait_eff_f.skel" id="2_rd6xu"]
+
+[resource]
+atlas_res = ExtResource("1_8gnb5")
+skeleton_file_res = ExtResource("2_rd6xu")
+default_mix = 0.05

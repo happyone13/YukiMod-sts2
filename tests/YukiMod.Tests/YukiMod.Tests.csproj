@@ -19,7 +19,7 @@
     <Sts2TestAffectsGameplay>false</Sts2TestAffectsGameplay>
     <Sts2DisableOtherMods>true</Sts2DisableOtherMods>
     <Sts2RequiredModIds>STS2-RitsuLib</Sts2RequiredModIds>
-    <Sts2TestDisabledModIds>Fei;KalipeiMod;KaylaMod;MeiLinMod;MeiLinMod.Tests;GoldTransferMod;StS2_MeiLinTexturePack;BaseLib</Sts2TestDisabledModIds>
+    <Sts2TestDisabledModIds>Fei;KalipeiMod;KaylaMod;MeiLinMod;MeiLinMod.Tests;GoldTransferMod;StS2_MeiLinTexturePack;BaseLib;arabella</Sts2TestDisabledModIds>
     <Sts2TestXdgDataHome Condition="'$(Sts2TestXdgDataHome)' == ''">$(MSBuildProjectDirectory)/../../tmp/sts2-combat-tests/$(Sts2TestModId)</Sts2TestXdgDataHome>
     <Sts2TestTempDir Condition="'$(Sts2TestTempDir)' == ''">$(Sts2TestXdgDataHome)/temp</Sts2TestTempDir>
     <Sts2TestEnvironmentVariables Condition="'$(Sts2TestEnvironmentVariables)' == '' and $([MSBuild]::IsOSPlatform('Windows'))">APPDATA=$(Sts2TestXdgDataHome);XDG_DATA_HOME=$(Sts2TestXdgDataHome);TEMP=$(Sts2TestTempDir);TMP=$(Sts2TestTempDir)</Sts2TestEnvironmentVariables>

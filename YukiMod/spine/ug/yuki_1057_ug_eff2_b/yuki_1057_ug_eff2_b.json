@@ -1,0 +1,2404 @@
+{
+    "skeleton": {
+        "spine": "3.8.79",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 601.0,
+        "height": 586.0,
+        "hash": "bvMvQN6hmKHQeggXTabV3M2CsGg"
+    },
+    "bones": [
+        {
+            "name": "root",
+            "transform": "normal"
+        },
+        {
+            "name": "pivot",
+            "parent": "root",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_group",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_g2",
+            "parent": "ice_link_group",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link2",
+            "parent": "ice_link_group",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_g1",
+            "parent": "ice_link_group",
+            "transform": "normal"
+        },
+        {
+            "name": "snow",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "snow1",
+            "parent": "snow",
+            "transform": "normal"
+        },
+        {
+            "name": "snow2",
+            "parent": "snow",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line1",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line2",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line3",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line4",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line5",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line6",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line7",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line8",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line9",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line10",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line11",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "speed_line12",
+            "parent": "speed_line",
+            "transform": "normal"
+        },
+        {
+            "name": "snow3",
+            "parent": "snow",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_crack",
+            "parent": "ice_link_group",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_crack1",
+            "parent": "ice_link_crack",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_crack2",
+            "parent": "ice_link_crack",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_crack3",
+            "parent": "ice_link_crack",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_crack4",
+            "parent": "ice_link_crack",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_crack5",
+            "parent": "ice_link_crack",
+            "transform": "normal"
+        },
+        {
+            "name": "crack1",
+            "parent": "ice_link_group",
+            "transform": "normal"
+        },
+        {
+            "name": "crack2",
+            "parent": "ice_link_group",
+            "transform": "normal"
+        },
+        {
+            "name": "crack3",
+            "parent": "ice_link_group",
+            "transform": "normal"
+        }
+    ],
+    "ik": [],
+    "slots": [
+        {
+            "name": "frost1",
+            "bone": "ice_link_crack3"
+        },
+        {
+            "name": "frost2",
+            "bone": "ice_link_crack2"
+        },
+        {
+            "name": "crack1",
+            "bone": "crack1",
+            "attachment": "frost6",
+            "blend": "additive"
+        },
+        {
+            "name": "crack3",
+            "bone": "crack3",
+            "attachment": "frost6",
+            "blend": "additive"
+        },
+        {
+            "name": "crack2",
+            "bone": "crack2",
+            "attachment": "frost6"
+        },
+        {
+            "name": "g_ice1_1",
+            "bone": "ice_link_crack1"
+        },
+        {
+            "name": "g_ice1_2",
+            "bone": "ice_link_crack4"
+        },
+        {
+            "name": "g_ice1_3",
+            "bone": "ice_link_crack5"
+        },
+        {
+            "name": "ice_link_6",
+            "bone": "ice_link2",
+            "attachment": "ice_link_6"
+        },
+        {
+            "name": "glow1",
+            "bone": "ice_link_g2",
+            "blend": "additive"
+        },
+        {
+            "name": "glow2",
+            "bone": "ice_link_g1",
+            "blend": "additive"
+        },
+        {
+            "name": "gr_glass_dust221",
+            "bone": "snow1"
+        },
+        {
+            "name": "gr_glass_dust222",
+            "bone": "snow2"
+        },
+        {
+            "name": "gr_glass_dust223",
+            "bone": "snow3"
+        },
+        {
+            "name": "speed_01",
+            "bone": "speed_line1"
+        },
+        {
+            "name": "speed_02",
+            "bone": "speed_line2"
+        },
+        {
+            "name": "speed_03",
+            "bone": "speed_line3"
+        },
+        {
+            "name": "speed_3",
+            "bone": "speed_line10"
+        },
+        {
+            "name": "speed_04",
+            "bone": "speed_line4"
+        },
+        {
+            "name": "speed_4",
+            "bone": "speed_line11"
+        },
+        {
+            "name": "speed_05",
+            "bone": "speed_line5"
+        },
+        {
+            "name": "speed_5",
+            "bone": "speed_line12"
+        },
+        {
+            "name": "speed_06",
+            "bone": "speed_line6"
+        },
+        {
+            "name": "speed_07",
+            "bone": "speed_line7"
+        },
+        {
+            "name": "speed_08",
+            "bone": "speed_line8"
+        },
+        {
+            "name": "speed_09",
+            "bone": "speed_line9"
+        }
+    ],
+    "transform": [],
+    "path": [],
+    "skins": [
+        {
+            "name": "default",
+            "attachments": {
+                "frost1": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            78.0,
+                            -73.0,
+                            -78.0,
+                            -73.0,
+                            -78.0,
+                            74.0,
+                            78.0,
+                            74.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "frost2": {
+                    "frost2": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            76.0,
+                            -75.0,
+                            -76.0,
+                            -75.0,
+                            -76.0,
+                            76.0,
+                            76.0,
+                            76.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost2"
+                    }
+                },
+                "crack1": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            301.0,
+                            -293.0,
+                            -300.0,
+                            -293.0,
+                            -300.0,
+                            293.0,
+                            301.0,
+                            293.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "crack3": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            301.0,
+                            -293.0,
+                            -300.0,
+                            -293.0,
+                            -300.0,
+                            293.0,
+                            301.0,
+                            293.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "crack2": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            301.0,
+                            -293.0,
+                            -300.0,
+                            -293.0,
+                            -300.0,
+                            293.0,
+                            301.0,
+                            293.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "g_ice1_1": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            256.0,
+                            -64.0,
+                            -256.0,
+                            -64.0,
+                            -256.0,
+                            64.0,
+                            256.0,
+                            64.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "g_ice1_2": {
+                    "g_ice1_2": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            256.0,
+                            -64.0,
+                            -256.0,
+                            -64.0,
+                            -256.0,
+                            64.0,
+                            256.0,
+                            64.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "g_ice1_2"
+                    }
+                },
+                "g_ice1_3": {
+                    "g_ice1_2": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            256.0,
+                            -64.0,
+                            -256.0,
+                            -64.0,
+                            -256.0,
+                            64.0,
+                            256.0,
+                            64.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "g_ice1_2"
+                    }
+                },
+                "ice_link_6": {
+                    "ice_link_6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            300.0,
+                            -28.5,
+                            -300.0,
+                            -28.5,
+                            -300.0,
+                            28.5,
+                            300.0,
+                            28.5
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "ice_link_6"
+                    }
+                },
+                "glow1": {
+                    "glow1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 256.0,
+                        "path": "glow1"
+                    }
+                },
+                "glow2": {
+                    "glow1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 256.0,
+                        "path": "glow1"
+                    }
+                },
+                "gr_glass_dust221": {
+                    "gr_glass_dust221": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 281.0,
+                        "height": 265.0,
+                        "path": "gr_glass_dust221"
+                    }
+                },
+                "gr_glass_dust222": {
+                    "gr_glass_dust221": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 281.0,
+                        "height": 265.0,
+                        "path": "gr_glass_dust221"
+                    }
+                },
+                "gr_glass_dust223": {
+                    "gr_glass_dust211": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 281.0,
+                        "height": 265.0,
+                        "path": "gr_glass_dust211"
+                    }
+                },
+                "speed_01": {
+                    "speed_01": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 134.0,
+                        "height": 490.0,
+                        "path": "speed_01"
+                    }
+                },
+                "speed_02": {
+                    "speed_02": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 93.0,
+                        "height": 522.0,
+                        "path": "speed_02"
+                    }
+                },
+                "speed_03": {
+                    "speed_03": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 59.0,
+                        "height": 444.0,
+                        "path": "speed_03"
+                    }
+                },
+                "speed_3": {
+                    "speed_03": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 59.0,
+                        "height": 444.0,
+                        "path": "speed_03"
+                    }
+                },
+                "speed_04": {
+                    "speed_04": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 92.0,
+                        "height": 508.0,
+                        "path": "speed_04"
+                    }
+                },
+                "speed_4": {
+                    "speed_04": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 92.0,
+                        "height": 508.0,
+                        "path": "speed_04"
+                    }
+                },
+                "speed_05": {
+                    "speed_05": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 69.0,
+                        "height": 495.0,
+                        "path": "speed_05"
+                    }
+                },
+                "speed_5": {
+                    "speed_05": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 69.0,
+                        "height": 495.0,
+                        "path": "speed_05"
+                    }
+                },
+                "speed_06": {
+                    "speed_06": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 92.0,
+                        "height": 438.0,
+                        "path": "speed_06"
+                    }
+                },
+                "speed_07": {
+                    "speed_07": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 509.0,
+                        "path": "speed_07"
+                    }
+                },
+                "speed_08": {
+                    "speed_08": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 220.0,
+                        "height": 517.0,
+                        "path": "speed_08"
+                    }
+                },
+                "speed_09": {
+                    "speed_09": {
+                        "type": "region",
+                        "x": 0.5,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 65.0,
+                        "height": 463.0,
+                        "path": "speed_09"
+                    }
+                }
+            }
+        }
+    ],
+    "events": {},
+    "animations": {
+        "animation": {
+            "bones": {
+                "ice_link_g2": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -31.3799991607666,
+                            "y": 2.3399999141693115,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -957.5499877929688,
+                            "y": -130.80999755859375,
+                            "curve": 0.136,
+                            "c2": 0.579999,
+                            "c3": 0.415001,
+                            "c4": 0.909998
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -776.1099853515625,
+                            "y": -132.75999450683594
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 3.2739999294281006,
+                            "y": 0.5350000262260437,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 10.35200023651123,
+                            "y": 0.7110000252723694,
+                            "curve": 0.136,
+                            "c2": 0.579999,
+                            "c3": 0.415001,
+                            "c4": 0.909998
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 19.083999633789063,
+                            "y": 1.1169999837875366
+                        }
+                    ]
+                },
+                "ice_link2": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -986.010009765625,
+                            "y": -136.89999389648438,
+                            "curve": 0.136,
+                            "c2": 0.579999,
+                            "c3": 0.415001,
+                            "c4": 0.909998
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 18.43000030517578,
+                            "y": -112.16000366210938,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -986.010009765625,
+                            "y": -136.89999389648438,
+                            "curve": 0.136,
+                            "c2": 0.579999,
+                            "c3": 0.415001,
+                            "c4": 0.909998
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -383.8599853515625,
+                            "y": -136.89999389648438
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.6000000238418579,
+                            "y": 0.5139999985694885,
+                            "curve": 0.136,
+                            "c2": 0.579999,
+                            "c3": 0.415001,
+                            "c4": 0.909998
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 1.3270000219345093,
+                            "y": 0.6349999904632568,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 0.6000000238418579,
+                            "y": 0.5139999985694885,
+                            "curve": 0.136,
+                            "c2": 0.579999,
+                            "c3": 0.415001,
+                            "c4": 0.909998
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.8669999837875366,
+                            "y": 0.5590000152587891
+                        }
+                    ]
+                },
+                "ice_link_g1": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -91.86000061035156,
+                            "y": -110.05000305175781
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 48.10300064086914,
+                            "y": 1.1169999837875366
+                        }
+                    ]
+                },
+                "snow1": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 2672.330078125,
+                            "y": 160.8000030517578,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.100000023841858,
+                            "x": 2672.330078125,
+                            "y": 160.8000030517578
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "x": -2512.4599609375,
+                            "y": 160.8000030517578
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 12.142000198364258,
+                            "y": 3.3320000171661377
+                        }
+                    ]
+                },
+                "snow2": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1854.280029296875,
+                            "y": 160.8000030517578,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2000000476837158,
+                            "x": 1854.280029296875,
+                            "y": 160.8000030517578
+                        },
+                        {
+                            "time": 1.3667000532150269,
+                            "x": -2512.4599609375,
+                            "y": 160.8000030517578
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 12.142000198364258,
+                            "y": 3.3320000171661377
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": -180.0
+                        }
+                    ]
+                },
+                "speed_line1": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -563.5499877929688,
+                            "y": 149.1999969482422,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": -563.5499877929688,
+                            "y": 149.1999969482422
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -1643.8699951171875,
+                            "y": 149.1999969482422
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.8119999766349792,
+                            "y": 3.4619998931884766
+                        }
+                    ]
+                },
+                "speed_line2": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 782.7899780273438,
+                            "y": 432.17999267578125,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 782.7899780273438,
+                            "y": 432.17999267578125
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -228.61000061035156,
+                            "y": 432.17999267578125
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.5830000042915344,
+                            "y": 2.9709999561309814
+                        }
+                    ]
+                },
+                "speed_line3": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -790.469970703125,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": -790.469970703125,
+                            "y": 0.0
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -1521.02001953125,
+                            "y": 0.0
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.555999994277954,
+                            "y": 3.127000093460083
+                        }
+                    ]
+                },
+                "speed_line4": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 231.89999389648438,
+                            "y": 293.510009765625,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 231.89999389648438,
+                            "y": 293.510009765625
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -521.0499877929688,
+                            "y": 293.510009765625
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.6240000128746033,
+                            "y": 3.2260000705718994
+                        }
+                    ]
+                },
+                "speed_line5": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -646.02001953125,
+                            "y": 391.0199890136719,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": -646.02001953125,
+                            "y": 391.0199890136719
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -1495.4599609375,
+                            "y": 391.0199890136719
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 2.0139999389648438,
+                            "y": 2.5950000286102295
+                        }
+                    ]
+                },
+                "speed_line6": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1602.800048828125,
+                            "y": 195.52999877929688,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 1602.800048828125,
+                            "y": 195.52999877929688
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 601.739990234375,
+                            "y": 195.52999877929688
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.7929999828338623,
+                            "y": 3.559999942779541
+                        }
+                    ]
+                },
+                "speed_line7": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -33.97999954223633,
+                            "y": 105.0999984741211,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -33.97999954223633,
+                            "y": 105.0999984741211
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -1383.0899658203125,
+                            "y": 105.0999984741211
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.3680000305175781,
+                            "y": 2.947000026702881
+                        }
+                    ]
+                },
+                "speed_line8": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 689.969970703125,
+                            "y": 446.8599853515625,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 689.969970703125,
+                            "y": 446.8599853515625
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -800.4299926757813,
+                            "y": 446.8599853515625
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.5910000205039978,
+                            "y": 2.2019999027252197
+                        }
+                    ]
+                },
+                "speed_line9": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1824.760009765625,
+                            "y": -56.59000015258789,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "x": 1824.760009765625,
+                            "y": -56.59000015258789
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -1644.280029296875,
+                            "y": -56.599998474121094
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.9179999828338623,
+                            "y": 3.2330000400543213
+                        }
+                    ]
+                },
+                "speed_line10": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 894.0999755859375,
+                            "y": -188.5800018310547,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 894.0999755859375,
+                            "y": -188.5800018310547
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -564.1300048828125,
+                            "y": -188.5800018310547
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.9570000171661377,
+                            "y": 3.127000093460083
+                        }
+                    ]
+                },
+                "speed_line11": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1258.449951171875,
+                            "y": 147.42999267578125,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "x": 1258.449951171875,
+                            "y": 147.42999267578125
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 130.97000122070313,
+                            "y": 147.42999267578125
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.6240000128746033,
+                            "y": 3.2260000705718994
+                        }
+                    ]
+                },
+                "speed_line12": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1465.1800537109375,
+                            "y": 391.0199890136719,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "x": 1465.1800537109375,
+                            "y": 391.0199890136719
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 513.6300048828125,
+                            "y": 391.0199890136719
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 2.0139999389648438,
+                            "y": 2.5950000286102295
+                        }
+                    ]
+                },
+                "snow3": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 76.16999816894531,
+                            "y": 160.8000030517578,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 76.16999816894531,
+                            "y": 160.8000030517578
+                        },
+                        {
+                            "time": 1.4666999578475952,
+                            "x": -2512.4599609375,
+                            "y": 160.8000030517578
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 19.61400032043457,
+                            "y": 3.3320000171661377
+                        }
+                    ]
+                },
+                "ice_link_crack1": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 576.5499877929688,
+                            "y": -121.70999908447266
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 3.0999999046325684,
+                            "y": 2.003999948501587
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 0.0,
+                            "y": 48.33000183105469
+                        }
+                    ]
+                },
+                "ice_link_crack2": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 185.67999267578125,
+                            "y": -111.56999969482422
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 7.36899995803833,
+                            "y": 0.9729999899864197
+                        }
+                    ]
+                },
+                "ice_link_crack3": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": -324.2799987792969,
+                            "y": -110.83000183105469
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 10.227999687194824,
+                            "y": 1.9040000438690186
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 0.0,
+                            "y": -43.08000183105469
+                        }
+                    ]
+                },
+                "ice_link_crack4": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": -416.6300048828125,
+                            "y": -111.18000030517578
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 3.986999988555908,
+                            "y": 1.3480000495910645
+                        }
+                    ]
+                },
+                "ice_link_crack5": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 489.5400085449219,
+                            "y": -101.33999633789063
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "x": 2.7990000247955322,
+                            "y": 1.3480000495910645
+                        }
+                    ]
+                },
+                "crack1": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -380.7699890136719,
+                            "y": -148.9499969482422
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 0.8960000276565552,
+                            "y": 0.328000009059906
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 0.0,
+                            "y": -45.43000030517578
+                        }
+                    ]
+                },
+                "crack2": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -90.0
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -817.1199951171875,
+                            "y": -154.02000427246094
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.27799999713897705,
+                            "y": 1.440999984741211
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": -39.16999816894531,
+                            "y": 0.0
+                        }
+                    ]
+                },
+                "crack3": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -3.319999933242798
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -43.61000061035156,
+                            "y": -152.0500030517578
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0219999551773071,
+                            "y": 0.2879999876022339
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 147.22999572753906
+                        }
+                    ]
+                },
+                "pivot": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": -143.3699951171875
+                        }
+                    ]
+                }
+            },
+            "slots": {
+                "crack1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "0086FF00"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "0086FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "0086FF00"
+                        }
+                    ]
+                },
+                "crack2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "4A8EFFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "0086FF00"
+                        }
+                    ]
+                },
+                "crack3": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "0086FF00"
+                        },
+                        {
+                            "time": 1.3667000532150269,
+                            "color": "0086FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "0086FF00"
+                        }
+                    ]
+                },
+                "frost1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "5DD5FFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "frost6"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "frost2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "5DD5FFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "frost2"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "g_ice1_1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "5DD5FFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "frost6"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "g_ice1_2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "5DD5FFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "g_ice1_2"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "g_ice1_3": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "5DD5FFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "g_ice1_2"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "glow1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "5397FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "5397FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "glow1"
+                        }
+                    ]
+                },
+                "glow2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "295EFFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "5397FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "glow1"
+                        }
+                    ]
+                },
+                "gr_glass_dust221": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF81"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.100000023841858,
+                            "name": "gr_glass_dust221"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "name": null
+                        }
+                    ]
+                },
+                "gr_glass_dust222": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF81"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.233299970626831,
+                            "name": "gr_glass_dust221"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "gr_glass_dust223": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF81"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.2999999523162842,
+                            "name": "gr_glass_dust211"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "ice_link_6": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "62C7FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "61C6FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "FFFFFF00"
+                        }
+                    ]
+                },
+                "speed_01": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_01"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_02": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_02"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_03": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_03"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_3": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_03"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_04": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_04"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_4": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_04"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_05": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_05"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_5": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_05"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_06": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.233299970626831,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_06"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_07": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_07"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_08": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_08"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "speed_09": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "C2DDFFFF"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "speed_09"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                }
+            },
+            "ik": {},
+            "transform": {},
+            "path": {},
+            "deform": {
+                "default": {
+                    "frost2": {
+                        "frost2": [
+                            {
+                                "time": 1.233299970626831,
+                                "vertices": [
+                                    23.6640625,
+                                    0.0,
+                                    0.0,
+                                    5.340576171875e-05,
+                                    -19.035770416259766,
+                                    6.103515625e-05,
+                                    -17.12085723876953
+                                ],
+                                "offset": 1
+                            }
+                        ]
+                    },
+                    "g_ice1_2": {
+                        "g_ice1_2": [
+                            {
+                                "time": 1.233299970626831,
+                                "vertices": [
+                                    12.157878875732422,
+                                    0.0,
+                                    -9.498420715332031,
+                                    0.0,
+                                    -9.498470306396484,
+                                    0.0,
+                                    -26.04022216796875
+                                ],
+                                "offset": 1
+                            }
+                        ]
+                    },
+                    "g_ice1_3": {
+                        "g_ice1_2": [
+                            {
+                                "time": 1.233299970626831,
+                                "vertices": [
+                                    12.80086898803711,
+                                    0.0,
+                                    0.0,
+                                    -0.000335693359375,
+                                    -14.149368286132813,
+                                    -0.0009918212890625,
+                                    -37.70404052734375
+                                ],
+                                "offset": 1
+                            }
+                        ]
+                    },
+                    "ice_link_6": {
+                        "ice_link_6": [
+                            {
+                                "time": 1.233299970626831,
+                                "vertices": [
+                                    430.490478515625,
+                                    -40.89653015136719,
+                                    -430.49078369140625,
+                                    -40.89653015136719,
+                                    -430.49078369140625,
+                                    40.896636962890625,
+                                    430.490478515625,
+                                    40.896636962890625
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "duration": 1.4666999578475952
+        }
+    }
+}

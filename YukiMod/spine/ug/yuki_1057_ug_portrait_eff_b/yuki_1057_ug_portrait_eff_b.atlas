@@ -1,0 +1,34 @@
+
+yuki_1057_ug_portrait_eff_b.png
+size: 1456,1040
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+wind2_0001
+  rotate: true
+  xy: 2, 2
+  size: 1031, 361
+  orig: 1031, 361
+  offset: 0, 0
+  index: -1
+wind2_0002
+  rotate: true
+  xy: 365, 2
+  size: 1031, 361
+  orig: 1031, 361
+  offset: 0, 0
+  index: -1
+wind2_0003
+  rotate: true
+  xy: 728, 2
+  size: 1031, 361
+  orig: 1031, 361
+  offset: 0, 0
+  index: -1
+wind2_0004
+  rotate: true
+  xy: 1091, 2
+  size: 1031, 361
+  orig: 1031, 361
+  offset: 0, 0
+  index: -1

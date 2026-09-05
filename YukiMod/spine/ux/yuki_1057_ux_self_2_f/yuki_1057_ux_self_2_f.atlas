@@ -1,0 +1,146 @@
+
+yuki_1057_ux_self_2_f.png
+size: 1848,1056
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+flash_bend
+  rotate: true
+  xy: 1676, 9
+  size: 200, 132
+  orig: 200, 132
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: false
+  xy: 859, 340
+  size: 403, 407
+  orig: 403, 407
+  offset: 0, 0
+  index: -1
+ice1
+  rotate: true
+  xy: 1447, 823
+  size: 224, 396
+  orig: 224, 396
+  offset: 0, 0
+  index: -1
+ice2
+  rotate: false
+  xy: 1529, 211
+  size: 270, 218
+  orig: 270, 218
+  offset: 0, 0
+  index: -1
+ice3
+  rotate: false
+  xy: 1264, 234
+  size: 263, 513
+  orig: 263, 513
+  offset: 0, 0
+  index: -1
+ice4
+  rotate: true
+  xy: 600, 16
+  size: 162, 258
+  orig: 162, 258
+  offset: 0, 0
+  index: -1
+obk_blur1
+  rotate: true
+  xy: 623, 180
+  size: 705, 234
+  orig: 705, 234
+  offset: 0, 0
+  index: -1
+obk_blur2
+  rotate: false
+  xy: 2, 887
+  size: 876, 160
+  orig: 876, 160
+  offset: 0, 0
+  index: -1
+trail1
+  rotate: true
+  xy: 880, 749
+  size: 298, 565
+  orig: 298, 565
+  offset: 0, 0
+  index: -1
+trail2
+  rotate: false
+  xy: 321, 229
+  size: 300, 656
+  orig: 300, 656
+  offset: 0, 0
+  index: -1
+trail3
+  rotate: false
+  xy: 2, 230
+  size: 317, 655
+  orig: 317, 655
+  offset: 0, 0
+  index: -1
+yuki_sword
+  rotate: false
+  xy: 859, 206
+  size: 330, 132
+  orig: 330, 132
+  offset: 0, 0
+  index: -1
+yuki_ux2_light11
+  rotate: false
+  xy: 2, 34
+  size: 297, 194
+  orig: 297, 194
+  offset: 0, 0
+  index: -1
+yuki_ux2_light12
+  rotate: false
+  xy: 301, 33
+  size: 297, 194
+  orig: 297, 194
+  offset: 0, 0
+  index: -1
+yuki_ux2_light13
+  rotate: false
+  xy: 1529, 627
+  size: 297, 194
+  orig: 297, 194
+  offset: 0, 0
+  index: -1
+yuki_ux2_light14
+  rotate: false
+  xy: 1529, 431
+  size: 297, 194
+  orig: 297, 194
+  offset: 0, 0
+  index: -1
+yuki_ux2_light21
+  rotate: false
+  xy: 860, 2
+  size: 202, 202
+  orig: 202, 202
+  offset: 0, 0
+  index: -1
+yuki_ux2_light22
+  rotate: false
+  xy: 1064, 2
+  size: 202, 202
+  orig: 202, 202
+  offset: 0, 0
+  index: -1
+yuki_ux2_light23
+  rotate: false
+  xy: 1268, 30
+  size: 202, 202
+  orig: 202, 202
+  offset: 0, 0
+  index: -1
+yuki_ux2_light24
+  rotate: false
+  xy: 1472, 7
+  size: 202, 202
+  orig: 202, 202
+  offset: 0, 0
+  index: -1

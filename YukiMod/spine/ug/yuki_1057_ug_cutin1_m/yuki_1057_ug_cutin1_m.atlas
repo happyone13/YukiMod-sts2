@@ -1,0 +1,97 @@
+
+yuki_1057_ug_cutin1_m.png
+size: 1712,1104
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+beam_out_pati2
+  rotate: false
+  xy: 1283, 303
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+beam_out_pati3
+  rotate: false
+  xy: 747, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: false
+  xy: 1005, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ice_smoke1_0001
+  rotate: false
+  xy: 747, 818
+  size: 534, 277
+  orig: 534, 277
+  offset: 0, 0
+  index: -1
+ice_smoke1_0002
+  rotate: false
+  xy: 747, 539
+  size: 534, 277
+  orig: 534, 277
+  offset: 0, 0
+  index: -1
+ice_smoke1_0003
+  rotate: true
+  xy: 1283, 561
+  size: 534, 277
+  orig: 534, 277
+  offset: 0, 0
+  index: -1
+ice_smoke1_0004
+  rotate: false
+  xy: 747, 260
+  size: 534, 277
+  orig: 534, 277
+  offset: 0, 0
+  index: -1
+ice_snow04
+  rotate: false
+  xy: 1541, 393
+  size: 166, 166
+  orig: 166, 166
+  offset: 0, 0
+  index: -1
+ice_snow05
+  rotate: true
+  xy: 1283, 100
+  size: 201, 223
+  orig: 201, 223
+  offset: 0, 0
+  index: -1
+part_2b
+  rotate: true
+  xy: 1508, 98
+  size: 203, 192
+  orig: 203, 192
+  offset: 0, 0
+  index: -1
+part_3b
+  rotate: false
+  xy: 1562, 932
+  size: 114, 163
+  orig: 114, 163
+  offset: 0, 0
+  index: -1
+yuki_ug_iceblock_f
+  rotate: false
+  xy: 2, 558
+  size: 743, 537
+  orig: 743, 537
+  offset: 0, 0
+  index: -1
+yuki_ug_iceblock_f_g
+  rotate: false
+  xy: 2, 19
+  size: 743, 537
+  orig: 743, 537
+  offset: 0, 0
+  index: -1

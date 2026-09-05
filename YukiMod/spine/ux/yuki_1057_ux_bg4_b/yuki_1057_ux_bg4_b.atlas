@@ -1,0 +1,167 @@
+
+yuki_1057_ux_bg4_b.png
+size: 2040,2016
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+circle1_0001
+  rotate: false
+  xy: 1683, 1241
+  size: 347, 334
+  orig: 347, 334
+  offset: 0, 0
+  index: -1
+circle1_0002
+  rotate: false
+  xy: 1681, 905
+  size: 347, 334
+  orig: 347, 334
+  offset: 0, 0
+  index: -1
+circle1_0003
+  rotate: false
+  xy: 1681, 569
+  size: 347, 334
+  orig: 347, 334
+  offset: 0, 0
+  index: -1
+cross1_0001
+  rotate: false
+  xy: 2, 2
+  size: 350, 49
+  orig: 350, 49
+  offset: 0, 0
+  index: -1
+cross1_0002
+  rotate: false
+  xy: 354, 2
+  size: 350, 49
+  orig: 350, 49
+  offset: 0, 0
+  index: -1
+cross2_0001
+  rotate: false
+  xy: 706, 11
+  size: 371, 40
+  orig: 371, 40
+  offset: 0, 0
+  index: -1
+cross2_0002
+  rotate: false
+  xy: 661, 761
+  size: 371, 40
+  orig: 371, 40
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: true
+  xy: 661, 1089
+  size: 403, 407
+  orig: 403, 407
+  offset: 0, 0
+  index: -1
+melt1_0001
+  rotate: false
+  xy: 661, 1634
+  size: 409, 68
+  orig: 409, 68
+  offset: 0, 0
+  index: -1
+melt1_0002
+  rotate: false
+  xy: 661, 1564
+  size: 409, 68
+  orig: 409, 68
+  offset: 0, 0
+  index: -1
+melt1_0003
+  rotate: false
+  xy: 661, 1494
+  size: 409, 68
+  orig: 409, 68
+  offset: 0, 0
+  index: -1
+yuki_bg2_0
+  rotate: true
+  xy: 423, 53
+  size: 700, 396
+  orig: 700, 396
+  offset: 0, 0
+  index: -1
+yuki_bg2_4
+  rotate: false
+  xy: 1079, 1006
+  size: 600, 558
+  orig: 600, 558
+  offset: 0, 0
+  index: -1
+yuki_bg2_4_2_1
+  rotate: true
+  xy: 1669, 178
+  size: 389, 360
+  orig: 389, 360
+  offset: 0, 0
+  index: -1
+yuki_bg2_4_2_2
+  rotate: false
+  xy: 1683, 1577
+  size: 350, 437
+  orig: 350, 437
+  offset: 0, 0
+  index: -1
+yuki_bg2_4_2_3
+  rotate: true
+  xy: 1079, 175
+  size: 395, 588
+  orig: 395, 588
+  offset: 0, 0
+  index: -1
+yuki_bg2_5
+  rotate: false
+  xy: 821, 301
+  size: 210, 458
+  orig: 210, 458
+  offset: 0, 0
+  index: -1
+yuki_bg2_5_2_1
+  rotate: true
+  xy: 661, 1704
+  size: 310, 415
+  orig: 310, 415
+  offset: 0, 0
+  index: -1
+yuki_bg2_5_2_2
+  rotate: true
+  xy: 2, 755
+  size: 1259, 657
+  orig: 1259, 657
+  offset: 0, 0
+  index: -1
+yuki_bg2_6
+  rotate: true
+  xy: 2, 53
+  size: 700, 419
+  orig: 700, 419
+  offset: 0, 0
+  index: -1
+yuki_bg2_7_1
+  rotate: false
+  xy: 1079, 572
+  size: 600, 432
+  orig: 600, 432
+  offset: 0, 0
+  index: -1
+yuki_bg2_7_2
+  rotate: false
+  xy: 661, 803
+  size: 397, 284
+  orig: 397, 284
+  offset: 0, 0
+  index: -1
+yuki_bg2_light
+  rotate: false
+  xy: 1079, 1566
+  size: 602, 448
+  orig: 602, 448
+  offset: 0, 0
+  index: -1

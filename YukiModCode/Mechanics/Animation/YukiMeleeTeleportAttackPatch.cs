@@ -47,6 +47,11 @@ public static class YukiMeleeTeleportAttackPatch
 	{
 		public bool HasOrigin;
 		public Vector2 OriginGlobalPos;
+		public bool HasOriginalLayer;
+		public int OriginalZIndex;
+		public bool OriginalZAsRelative;
+		public Node? OriginalParent;
+		public int OriginalSiblingIndex;
 		public bool HasOriginFoot;
 		public Vector2 OriginFootPos;
 		public int LastRequestId;
@@ -455,6 +460,7 @@ public static class YukiMeleeTeleportAttackPatch
 					return;
 				}
 
+				RestoreLayer(attackerNode, s);
 				attackerNode.GlobalPosition = pendingOrigin;
 				attackerNode.GlobalPosition = pendingOrigin;
 				TryAddIdleLoop(attackerNode);
@@ -800,7 +806,7 @@ public static class YukiMeleeTeleportAttackPatch
 					session.HasPlannedTeleport = true;
 					session.PlannedTeleportGlobalPos = plannedPos;
 					attackerNode.SpineAnimation.SetAnimation(profile.ReadyAnim, loop: false);
-					StartReadyWatcher(attacker, watchId);
+					StartReadyWatcher(attacker, requestId, watchId);
 				}
 			}
 			else
@@ -832,7 +838,7 @@ public static class YukiMeleeTeleportAttackPatch
 		}
 	}
 
-	private static void StartReadyWatcher(Creature attacker, int watchId)
+	private static void StartReadyWatcher(Creature attacker, int requestId, int watchId)
 	{
 		try
 		{
@@ -862,7 +868,7 @@ public static class YukiMeleeTeleportAttackPatch
 			if (spine == null)
 			{
 				float len = Mathf.Max(attackerNode.GetCurrentAnimationLength(), 0.01f);
-				StartReadyFallbackByTime(attacker, watchId, len);
+				StartReadyFallbackByTime(attacker, requestId, watchId, len);
 				return;
 			}
 
@@ -895,7 +901,8 @@ public static class YukiMeleeTeleportAttackPatch
 							{
 								return;
 							}
-							if (!session.ReadyPlaying || session.ReadyWatchId != watchId)
+							if (session.LastRequestId != requestId ||
+							    !session.ReadyPlaying || session.ReadyWatchId != watchId)
 							{
 								return;
 							}
@@ -992,7 +999,8 @@ public static class YukiMeleeTeleportAttackPatch
 						return;
 					}
 
-					if (!session.ReadyPlaying || session.ReadyWatchId != watchId || session.Teleported)
+					if (session.LastRequestId != requestId ||
+					    !session.ReadyPlaying || session.ReadyWatchId != watchId || session.Teleported)
 					{
 						return;
 					}
@@ -1029,6 +1037,7 @@ public static class YukiMeleeTeleportAttackPatch
 					session.HasPlannedTeleport = true;
 					session.PlannedTeleportGlobalPos = plannedPos;
 
+					RaiseAboveCombatants(room, attackerNode, session);
 					attackerNode.GlobalPosition = plannedPos;
 					string playAnim = GetActivePlayAnim(attackerNode, activeProfile, session);
 					attackerNode.SpineAnimation.SetAnimation(playAnim, loop: false);
@@ -1066,7 +1075,11 @@ public static class YukiMeleeTeleportAttackPatch
 		}
 	}
 
-	private static async void StartReadyFallbackByTime(Creature attacker, int watchId, float readyLen)
+	private static async void StartReadyFallbackByTime(
+		Creature attacker,
+		int requestId,
+		int watchId,
+		float readyLen)
 	{
 		try
 		{
@@ -1082,7 +1095,8 @@ public static class YukiMeleeTeleportAttackPatch
 				return;
 			}
 
-			if (!session.ReadyPlaying || session.ReadyWatchId != watchId || session.Teleported)
+			if (session.LastRequestId != requestId ||
+			    !session.ReadyPlaying || session.ReadyWatchId != watchId || session.Teleported)
 			{
 				return;
 			}
@@ -1102,6 +1116,7 @@ public static class YukiMeleeTeleportAttackPatch
 			session.HasPlannedTeleport = true;
 			session.PlannedTeleportGlobalPos = plannedPos;
 
+			RaiseAboveCombatants(room, attackerNode, session);
 			attackerNode.GlobalPosition = plannedPos;
 			string playAnim = GetActivePlayAnim(attackerNode, activeProfile, session);
 			attackerNode.SpineAnimation.SetAnimation(playAnim, loop: false);
@@ -1186,6 +1201,7 @@ public static class YukiMeleeTeleportAttackPatch
 			catch
 			{
 			}
+			RestoreLayer(attackerNode, session);
 			session.Teleported = false;
 			session.HasOrigin = false;
 			session.HasOriginFoot = false;
@@ -1280,6 +1296,7 @@ public static class YukiMeleeTeleportAttackPatch
 					catch
 					{
 					}
+					RestoreLayer(attackerNode, session);
 					session.Teleported = false;
 					session.HasOrigin = false;
 					session.HasOriginFoot = false;
@@ -1786,6 +1803,7 @@ public static class YukiMeleeTeleportAttackPatch
 				: ComputeDesiredGlobalPos(attackerNode, session.LatestTargetCenter, distance: profile.TeleportDistance, attacker.Side);
 			session.HasPlannedTeleport = true;
 			session.PlannedTeleportGlobalPos = pos;
+			RaiseAboveCombatants(room, attackerNode, session);
 			attackerNode.GlobalPosition = pos;
 			attackerNode.GlobalPosition = pos;
 			Vector2 targetFoot = GetFootPos(attackerNode);
@@ -1830,6 +1848,7 @@ public static class YukiMeleeTeleportAttackPatch
 			PlayReturnVfxAtPlayEnd(room, playEndFoot, profile, uniformScale);
 
 			Vector2 origin = session.OriginGlobalPos;
+			RestoreLayer(attackerNode, session);
 			session.Teleported = false;
 			session.HasOrigin = false;
 			session.ReadyPlaying = false;
@@ -1972,6 +1991,90 @@ public static class YukiMeleeTeleportAttackPatch
 
 		s = Mathf.Max(s, 0.01f);
 		return multiplier * s;
+	}
+
+	private static void RaiseAboveCombatants(
+		NCombatRoom room,
+		NCreature attackerNode,
+		MeleeSession session)
+	{
+		try
+		{
+			if (!session.HasOriginalLayer)
+			{
+				session.HasOriginalLayer = true;
+				session.OriginalZIndex = attackerNode.ZIndex;
+				session.OriginalZAsRelative = attackerNode.ZAsRelative;
+				session.OriginalParent = attackerNode.GetParent();
+				session.OriginalSiblingIndex = attackerNode.GetIndex();
+			}
+
+			Node? parent = attackerNode.GetParent();
+			int attackerIndex = attackerNode.GetIndex();
+			int highestCombatantIndex = attackerIndex;
+			int highestCombatantZ = attackerNode.ZIndex;
+			foreach (NCreature creatureNode in room.CreatureNodes)
+			{
+				if (ReferenceEquals(creatureNode, attackerNode) ||
+				    !GodotObject.IsInstanceValid(creatureNode))
+				{
+					continue;
+				}
+
+				highestCombatantZ = Math.Max(highestCombatantZ, creatureNode.ZIndex);
+				if (parent != null && creatureNode.GetParent() == parent)
+					highestCombatantIndex = Math.Max(highestCombatantIndex, creatureNode.GetIndex());
+			}
+
+			if (parent != null && GodotObject.IsInstanceValid(parent) && highestCombatantIndex > attackerIndex)
+			{
+				parent.MoveChild(
+					attackerNode,
+					Math.Min(highestCombatantIndex, parent.GetChildCount() - 1));
+				return;
+			}
+
+			attackerNode.ZAsRelative = true;
+			attackerNode.ZIndex = Math.Max(attackerNode.ZIndex, highestCombatantZ + 1);
+		}
+		catch
+		{
+		}
+	}
+
+	private static void RestoreLayer(NCreature attackerNode, MeleeSession session)
+	{
+		if (!session.HasOriginalLayer)
+			return;
+
+		try
+		{
+			Node? originalParent = session.OriginalParent;
+			if (originalParent != null &&
+			    GodotObject.IsInstanceValid(originalParent) &&
+			    attackerNode.GetParent() == originalParent)
+			{
+				int restoreIndex = Math.Clamp(
+					session.OriginalSiblingIndex,
+					0,
+					Math.Max(0, originalParent.GetChildCount() - 1));
+				originalParent.MoveChild(attackerNode, restoreIndex);
+			}
+
+			attackerNode.ZAsRelative = session.OriginalZAsRelative;
+			attackerNode.ZIndex = session.OriginalZIndex;
+		}
+		catch
+		{
+		}
+		finally
+		{
+			session.HasOriginalLayer = false;
+			session.OriginalParent = null;
+			session.OriginalSiblingIndex = 0;
+			session.OriginalZIndex = 0;
+			session.OriginalZAsRelative = true;
+		}
 	}
 
 	private static List<Creature> GetAliveTargets(AttackCommand command)

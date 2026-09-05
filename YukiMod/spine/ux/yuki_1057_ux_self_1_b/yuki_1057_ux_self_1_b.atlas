@@ -1,0 +1,48 @@
+
+yuki_1057_ux_self_1_b.png
+size: 824,792
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ember2
+  rotate: true
+  xy: 407, 384
+  size: 303, 336
+  orig: 303, 336
+  offset: 0, 0
+  index: -1
+ember3
+  rotate: false
+  xy: 2, 2
+  size: 518, 377
+  orig: 518, 377
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: false
+  xy: 2, 381
+  size: 403, 407
+  orig: 403, 407
+  offset: 0, 0
+  index: -1
+shadow5
+  rotate: true
+  xy: 745, 560
+  size: 127, 52
+  orig: 127, 52
+  offset: 0, 0
+  index: -1
+shadow_light
+  rotate: false
+  xy: 407, 689
+  size: 400, 99
+  orig: 400, 99
+  offset: 0, 0
+  index: -1
+snow2
+  rotate: false
+  xy: 522, 82
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1

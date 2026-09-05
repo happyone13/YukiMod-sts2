@@ -1,0 +1,132 @@
+
+yuki_1057_ux_bg3.png
+size: 1832,1168
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow1
+  rotate: true
+  xy: 1422, 760
+  size: 403, 407
+  orig: 403, 407
+  offset: 0, 0
+  index: -1
+yuki_bg3_1
+  rotate: true
+  xy: 334, 500
+  size: 663, 558
+  orig: 663, 558
+  offset: 0, 0
+  index: -1
+yuki_bg3_2
+  rotate: true
+  xy: 2, 2
+  size: 413, 546
+  orig: 413, 546
+  offset: 0, 0
+  index: -1
+yuki_bg3_3
+  rotate: false
+  xy: 2, 417
+  size: 330, 746
+  orig: 330, 746
+  offset: 0, 0
+  index: -1
+yuki_bg3_4
+  rotate: true
+  xy: 894, 543
+  size: 620, 526
+  orig: 620, 526
+  offset: 0, 0
+  index: -1
+yuki_bg3_5
+  rotate: true
+  xy: 1028, 36
+  size: 505, 280
+  orig: 505, 280
+  offset: 0, 0
+  index: -1
+yuki_bg3_6
+  rotate: false
+  xy: 550, 10
+  size: 476, 488
+  orig: 476, 488
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_1
+  rotate: false
+  xy: 1422, 544
+  size: 259, 214
+  orig: 259, 214
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_10
+  rotate: false
+  xy: 485, 467
+  size: 63, 31
+  orig: 63, 31
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_2
+  rotate: false
+  xy: 1683, 635
+  size: 139, 123
+  orig: 139, 123
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_3
+  rotate: false
+  xy: 1310, 28
+  size: 168, 261
+  orig: 168, 261
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_4
+  rotate: false
+  xy: 334, 431
+  size: 90, 67
+  orig: 90, 67
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_5
+  rotate: true
+  xy: 1683, 544
+  size: 89, 109
+  orig: 89, 109
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_6
+  rotate: false
+  xy: 1564, 50
+  size: 102, 103
+  orig: 102, 103
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_7
+  rotate: true
+  xy: 1480, 96
+  size: 193, 82
+  orig: 193, 82
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_8
+  rotate: true
+  xy: 1564, 155
+  size: 134, 177
+  orig: 134, 177
+  offset: 0, 0
+  index: -1
+yuki_bg3_7_9
+  rotate: false
+  xy: 426, 432
+  size: 57, 66
+  orig: 57, 66
+  offset: 0, 0
+  index: -1
+yuki_light_bg
+  rotate: false
+  xy: 1310, 291
+  size: 442, 250
+  orig: 442, 250
+  offset: 0, 0
+  index: -1

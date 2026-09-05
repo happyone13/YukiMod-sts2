@@ -1,0 +1,41 @@
+
+yuki_1057_ux_impactframe2.png
+size: 1344,1480
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+imp1
+  rotate: true
+  xy: 2, 20
+  size: 1454, 385
+  orig: 1454, 385
+  offset: 0, 0
+  index: -1
+imp_frame_resized2_1
+  rotate: false
+  xy: 389, 1042
+  size: 948, 432
+  orig: 948, 432
+  offset: 0, 0
+  index: -1
+imp_frame_resized2_2
+  rotate: false
+  xy: 389, 608
+  size: 948, 432
+  orig: 948, 432
+  offset: 0, 0
+  index: -1
+imp_frame_resized2_3
+  rotate: false
+  xy: 389, 174
+  size: 948, 432
+  orig: 948, 432
+  offset: 0, 0
+  index: -1
+rect1
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1

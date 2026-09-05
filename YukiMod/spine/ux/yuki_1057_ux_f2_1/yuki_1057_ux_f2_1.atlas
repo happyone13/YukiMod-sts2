@@ -1,0 +1,76 @@
+
+yuki_1057_ux_f2_1.png
+size: 1560,416
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+exp4
+  rotate: false
+  xy: 1305, 9
+  size: 253, 198
+  orig: 253, 198
+  offset: 0, 0
+  index: -1
+fire_ptc_2
+  rotate: true
+  xy: 2, 11
+  size: 41, 69
+  orig: 41, 69
+  offset: 0, 0
+  index: -1
+fire_ptc_3
+  rotate: false
+  xy: 73, 4
+  size: 42, 48
+  orig: 42, 48
+  offset: 0, 0
+  index: -1
+fire_spot_4
+  rotate: true
+  xy: 1194, 113
+  size: 94, 109
+  orig: 94, 109
+  offset: 0, 0
+  index: -1
+fire_spot_5
+  rotate: false
+  xy: 1225, 47
+  size: 76, 64
+  orig: 76, 64
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: false
+  xy: 487, 2
+  size: 403, 407
+  orig: 403, 407
+  offset: 0, 0
+  index: -1
+grad1
+  rotate: false
+  xy: 892, 109
+  size: 300, 300
+  orig: 300, 300
+  offset: 0, 0
+  index: -1
+impact2
+  rotate: true
+  xy: 2, 54
+  size: 355, 483
+  orig: 355, 483
+  offset: 0, 0
+  index: -1
+ma_x_impact02_0001
+  rotate: true
+  xy: 1194, 209
+  size: 200, 360
+  orig: 200, 360
+  offset: 0, 0
+  index: -1
+ma_x_impact06_0001
+  rotate: true
+  xy: 892, 7
+  size: 100, 331
+  orig: 100, 331
+  offset: 0, 0
+  index: -1

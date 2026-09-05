@@ -1,0 +1,2875 @@
+{
+    "skeleton": {
+        "spine": "3.8.79",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 601.0,
+        "height": 586.0,
+        "hash": "yZHxZoC01u9G4pR/dM1Jl4yoG1M"
+    },
+    "bones": [
+        {
+            "name": "root",
+            "transform": "normal"
+        },
+        {
+            "name": "pivot",
+            "parent": "root",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_block",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_block_g",
+            "parent": "ice_block",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_block_clip",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_g",
+            "parent": "ice_link",
+            "transform": "normal"
+        },
+        {
+            "name": "smoke",
+            "parent": "ice_block",
+            "transform": "normal"
+        },
+        {
+            "name": "smoke1",
+            "parent": "smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "smoke2",
+            "parent": "smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_g2",
+            "parent": "ice_link",
+            "transform": "normal"
+        },
+        {
+            "name": "glow16",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "crack1",
+            "parent": "ice_link",
+            "transform": "normal"
+        },
+        {
+            "name": "crack2",
+            "parent": "ice_link",
+            "transform": "normal"
+        },
+        {
+            "name": "crack3",
+            "parent": "ice_link",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_block_g3",
+            "parent": "ice_block",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke1",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke2",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke3",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke4",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke5",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke6",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke7",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke8",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke9",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke10",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke11",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        },
+        {
+            "name": "ice_link_smoke12",
+            "parent": "ice_link_smoke",
+            "transform": "normal"
+        }
+    ],
+    "ik": [],
+    "slots": [
+        {
+            "name": "crack1",
+            "bone": "crack1",
+            "attachment": "frost6"
+        },
+        {
+            "name": "crack2",
+            "bone": "crack2",
+            "attachment": "frost6"
+        },
+        {
+            "name": "crack3",
+            "bone": "crack3",
+            "attachment": "frost6"
+        },
+        {
+            "name": "voideater_smoke_01_05",
+            "bone": "smoke1"
+        },
+        {
+            "name": "voideater_smoke_02_04",
+            "bone": "smoke2"
+        },
+        {
+            "name": "ice_link_5",
+            "bone": "ice_link",
+            "attachment": "ice_link_6"
+        },
+        {
+            "name": "glow2",
+            "bone": "ice_link_g",
+            "blend": "additive"
+        },
+        {
+            "name": "glow14",
+            "bone": "ice_link_g2",
+            "blend": "additive"
+        },
+        {
+            "name": "ice_block_clip",
+            "bone": "ice_block_clip",
+            "attachment": "ice_block_clip"
+        },
+        {
+            "name": "yuki_ug_iceblock_b",
+            "bone": "ice_block"
+        },
+        {
+            "name": "yuki_ug_iceblock_b2",
+            "bone": "ice_block",
+            "color": "FFFFFF59",
+            "blend": "additive"
+        },
+        {
+            "name": "glow1",
+            "bone": "ice_block_g",
+            "blend": "additive"
+        },
+        {
+            "name": "glow4",
+            "bone": "ice_block_g3",
+            "blend": "additive"
+        },
+        {
+            "name": "glow16",
+            "bone": "glow16",
+            "blend": "additive"
+        },
+        {
+            "name": "mist1",
+            "bone": "ice_link_smoke3",
+            "blend": "additive"
+        },
+        {
+            "name": "mist3",
+            "bone": "ice_link_smoke5",
+            "blend": "additive"
+        },
+        {
+            "name": "cloud10_1",
+            "bone": "ice_link_smoke1",
+            "blend": "additive"
+        },
+        {
+            "name": "cloud10_2",
+            "bone": "ice_link_smoke2",
+            "blend": "additive"
+        },
+        {
+            "name": "cloud10_3",
+            "bone": "ice_link_smoke6",
+            "attachment": "ice_snow03_0001",
+            "blend": "additive"
+        },
+        {
+            "name": "mist2",
+            "bone": "ice_link_smoke4",
+            "blend": "additive"
+        },
+        {
+            "name": "mist6",
+            "bone": "ice_link_smoke9",
+            "attachment": "ember2",
+            "blend": "additive"
+        },
+        {
+            "name": "mist7",
+            "bone": "ice_link_smoke10",
+            "attachment": "ember2",
+            "blend": "additive"
+        },
+        {
+            "name": "mist8",
+            "bone": "ice_link_smoke11",
+            "attachment": "ember3",
+            "blend": "additive"
+        },
+        {
+            "name": "mist9",
+            "bone": "ice_link_smoke12",
+            "attachment": "gr_glass_dust221",
+            "blend": "additive"
+        },
+        {
+            "name": "mist4",
+            "bone": "ice_link_smoke7",
+            "blend": "additive"
+        },
+        {
+            "name": "mist5",
+            "bone": "ice_link_smoke8",
+            "blend": "additive"
+        }
+    ],
+    "transform": [],
+    "path": [],
+    "skins": [
+        {
+            "name": "default",
+            "attachments": {
+                "crack1": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            301.0,
+                            -293.0,
+                            -300.0,
+                            -293.0,
+                            -300.0,
+                            293.0,
+                            301.0,
+                            293.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "crack2": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            301.0,
+                            -293.0,
+                            -300.0,
+                            -293.0,
+                            -300.0,
+                            293.0,
+                            301.0,
+                            293.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "crack3": {
+                    "frost6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            301.0,
+                            -293.0,
+                            -300.0,
+                            -293.0,
+                            -300.0,
+                            293.0,
+                            301.0,
+                            293.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "frost6"
+                    }
+                },
+                "voideater_smoke_01_05": {
+                    "voideater_smoke_01_05": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 300.0,
+                        "height": 206.0,
+                        "path": "voideater_smoke_01_05"
+                    },
+                    "voideater_smoke_01_06": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 300.0,
+                        "height": 206.0,
+                        "path": "voideater_smoke_01_06"
+                    },
+                    "voideater_smoke_01_07": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 300.0,
+                        "height": 206.0,
+                        "path": "voideater_smoke_01_07"
+                    }
+                },
+                "voideater_smoke_02_04": {
+                    "voideater_smoke_02_04": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.5,
+                        "rotation": 18.979999542236328,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 300.0,
+                        "height": 201.0,
+                        "path": "voideater_smoke_02_04"
+                    },
+                    "voideater_smoke_02_05": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 300.0,
+                        "height": 201.0,
+                        "path": "voideater_smoke_02_05"
+                    },
+                    "voideater_smoke_02_06": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 300.0,
+                        "height": 201.0,
+                        "path": "voideater_smoke_02_06"
+                    }
+                },
+                "ice_link_5": {
+                    "ice_link_6": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            300.0,
+                            -28.5,
+                            -300.0,
+                            -28.5,
+                            -300.0,
+                            28.5,
+                            300.0,
+                            28.5
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "ice_link_6"
+                    }
+                },
+                "glow2": {
+                    "glow1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 256.0,
+                        "path": "glow1"
+                    }
+                },
+                "glow14": {
+                    "glow1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 256.0,
+                        "path": "glow1"
+                    }
+                },
+                "ice_block_clip": {
+                    "ice_block_clip": {
+                        "type": "clipping",
+                        "end": "glow1",
+                        "vertexCount": 4,
+                        "vertices": [
+                            -828.8900146484375,
+                            -274.30999755859375,
+                            854.760009765625,
+                            -273.260009765625,
+                            856.8599853515625,
+                            423.2699890136719,
+                            -843.5700073242188,
+                            430.6199951171875
+                        ],
+                        "path": "ice_block_clip"
+                    }
+                },
+                "yuki_ug_iceblock_b": {
+                    "yuki_ug_iceblock_b": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            1503.0,
+                            -1292.0,
+                            -1503.0,
+                            -1292.0,
+                            -1503.0,
+                            1293.0,
+                            1503.0,
+                            1293.0
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "yuki_ug_iceblock_b"
+                    }
+                },
+                "yuki_ug_iceblock_b2": {
+                    "yuki_ug_iceblock_b_g": {
+                        "type": "mesh",
+                        "uvs": [
+                            1.0,
+                            1.0,
+                            0.0,
+                            1.0,
+                            0.0,
+                            0.0,
+                            1.0,
+                            0.0
+                        ],
+                        "triangles": [
+                            1,
+                            2,
+                            3,
+                            1,
+                            3,
+                            0
+                        ],
+                        "vertices": [
+                            1503.0,
+                            -1292.5,
+                            -1503.0,
+                            -1292.5,
+                            -1503.0,
+                            1292.5,
+                            1503.0,
+                            1292.5
+                        ],
+                        "hull": 4,
+                        "edges": [],
+                        "width": 32.0,
+                        "height": 32.0,
+                        "path": "yuki_ug_iceblock_b_g"
+                    }
+                },
+                "glow1": {
+                    "glow1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 256.0,
+                        "path": "glow1"
+                    }
+                },
+                "glow4": {
+                    "glow1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 256.0,
+                        "path": "glow1"
+                    }
+                },
+                "glow16": {
+                    "glow1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 256.0,
+                        "height": 256.0,
+                        "path": "glow1"
+                    }
+                },
+                "mist1": {
+                    "smoke1": {
+                        "type": "region",
+                        "x": -14.5600004196167,
+                        "y": 51.88999938964844,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 428.0,
+                        "height": 209.0,
+                        "path": "smoke1"
+                    }
+                },
+                "mist3": {
+                    "smoke1": {
+                        "type": "region",
+                        "x": -14.5600004196167,
+                        "y": 51.88999938964844,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 428.0,
+                        "height": 209.0,
+                        "path": "smoke1"
+                    }
+                },
+                "cloud10_1": {
+                    "smoke1": {
+                        "type": "region",
+                        "x": 34.599998474121094,
+                        "y": 58.099998474121094,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 428.0,
+                        "height": 209.0,
+                        "path": "smoke1"
+                    }
+                },
+                "cloud10_2": {
+                    "smoke_real_02": {
+                        "type": "region",
+                        "x": 79.70999908447266,
+                        "y": 51.650001525878906,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 175.0,
+                        "height": 149.0,
+                        "path": "smoke_real_02"
+                    }
+                },
+                "cloud10_3": {
+                    "ice_snow03_0001": {
+                        "type": "region",
+                        "x": 36.619998931884766,
+                        "y": 16.8799991607666,
+                        "rotation": -90.73999786376953,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 91.0,
+                        "height": 96.0,
+                        "path": "ice_snow03_0001"
+                    }
+                },
+                "mist2": {
+                    "smoke_real_01": {
+                        "type": "region",
+                        "x": 57.290000915527344,
+                        "y": 56.61000061035156,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 294.0,
+                        "height": 182.0,
+                        "path": "smoke_real_01"
+                    }
+                },
+                "mist6": {
+                    "ember2": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 303.0,
+                        "height": 336.0,
+                        "path": "ember2"
+                    }
+                },
+                "mist7": {
+                    "ember2": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 303.0,
+                        "height": 336.0,
+                        "path": "ember2"
+                    }
+                },
+                "mist8": {
+                    "ember3": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 518.0,
+                        "height": 377.0,
+                        "path": "ember3"
+                    }
+                },
+                "mist9": {
+                    "gr_glass_dust221": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 281.0,
+                        "height": 265.0,
+                        "path": "gr_glass_dust221"
+                    }
+                },
+                "mist4": {
+                    "smoke_real_01": {
+                        "type": "region",
+                        "x": 57.290000915527344,
+                        "y": 56.61000061035156,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 294.0,
+                        "height": 182.0,
+                        "path": "smoke_real_01"
+                    }
+                },
+                "mist5": {
+                    "ice_snow03_0000": {
+                        "type": "region",
+                        "x": 50.790000915527344,
+                        "y": 30.59000015258789,
+                        "rotation": -98.19000244140625,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 91.0,
+                        "height": 96.0,
+                        "path": "ice_snow03_0000"
+                    }
+                }
+            }
+        }
+    ],
+    "events": {},
+    "animations": {
+        "animation": {
+            "bones": {
+                "ice_block": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -876.3400268554688,
+                            "y": -732.7100219726563,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "x": -876.3400268554688,
+                            "y": -732.7100219726563,
+                            "curve": 0.573,
+                            "c2": 0.09,
+                            "c3": 0.848,
+                            "c4": 0.37
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": -611.0900268554688,
+                            "y": -510.42999267578125,
+                            "curve": 0.155999,
+                            "c2": 0.669999,
+                            "c3": 0.482998,
+                            "c4": 0.899998
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": -577.4600219726563,
+                            "y": -478.4599914550781,
+                            "curve": 0.706,
+                            "c2": 0.07,
+                            "c3": 0.903001,
+                            "c4": 0.07
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 103.5,
+                            "y": 288.6499938964844
+                        },
+                        {
+                            "time": 1.766700029373169,
+                            "x": -27.25,
+                            "y": 193.42999267578125
+                        },
+                        {
+                            "time": 1.7999999523162842,
+                            "x": -47.099998474121094,
+                            "y": 162.0800018310547
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 0.40700000524520874,
+                            "y": 0.40700000524520874,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "x": 0.40700000524520874,
+                            "y": 0.40700000524520874,
+                            "curve": 0.573,
+                            "c2": 0.09,
+                            "c3": 0.848,
+                            "c4": 0.37
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 0.4650000035762787,
+                            "y": 0.4650000035762787,
+                            "curve": 0.155999,
+                            "c2": 0.669999,
+                            "c3": 0.482998,
+                            "c4": 0.899998
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 0.49799999594688416,
+                            "y": 0.49799999594688416,
+                            "curve": 0.706,
+                            "c2": 0.07,
+                            "c3": 0.903001,
+                            "c4": 0.07
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 0.5839999914169312,
+                            "y": 0.5839999914169312
+                        },
+                        {
+                            "time": 1.766700029373169,
+                            "x": 0.4819999933242798,
+                            "y": 0.4819999933242798
+                        },
+                        {
+                            "time": 1.7999999523162842,
+                            "x": 0.5,
+                            "y": 0.5
+                        }
+                    ]
+                },
+                "pivot": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -43.900001525878906,
+                            "y": 0.0,
+                            "curve": 0.301001,
+                            "c2": 0.630004,
+                            "c3": 0.611002,
+                            "c4": 0.970009
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 0.0,
+                            "y": 0.0
+                        }
+                    ]
+                },
+                "ice_block_g": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -40.119998931884766
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1048.9000244140625,
+                            "y": 694.1599731445313,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 1048.9000244140625,
+                            "y": 694.1599731445313
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 984.5,
+                            "y": 674.6099853515625,
+                            "curve": 0.780999,
+                            "c2": 0.04,
+                            "c3": 0.896997,
+                            "c4": 0.100001
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 207.35000610351563,
+                            "y": -96.91000366210938
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 8.244000434875488,
+                            "y": 15.980999946594238,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 8.244000434875488,
+                            "y": 15.980999946594238
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 12.871000289916992,
+                            "y": 20.753999710083008,
+                            "curve": 0.780999,
+                            "c2": 0.04,
+                            "c3": 0.896997,
+                            "c4": 0.100001
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 16.792999267578125,
+                            "y": 24.79400062561035
+                        }
+                    ]
+                },
+                "ice_link": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": -281.05999755859375
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 0.2329999953508377
+                        }
+                    ]
+                },
+                "ice_link_g": {
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 51.529998779296875,
+                            "y": 3.3380000591278076,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 51.529998779296875,
+                            "y": 3.3380000591278076,
+                            "curve": 0.247,
+                            "c2": 0.82,
+                            "c3": 0.672999,
+                            "c4": 0.99
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 51.529998779296875,
+                            "y": 2.5950000286102295
+                        }
+                    ]
+                },
+                "smoke1": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -123.98999786376953
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 418.4100036621094,
+                            "y": -1499.6400146484375,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 418.4100036621094,
+                            "y": -1499.6400146484375,
+                            "curve": 0.129,
+                            "c2": 0.769999,
+                            "c3": 0.335999,
+                            "c4": 0.899998
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "x": 1305.06005859375,
+                            "y": -184.82000732421875
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 3.6029999256134033,
+                            "y": 2.319000005722046
+                        }
+                    ]
+                },
+                "smoke2": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -120.73999786376953
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -1211.8699951171875,
+                            "y": -1436.1199951171875,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": -1211.8699951171875,
+                            "y": -1436.1199951171875,
+                            "curve": 0.129,
+                            "c2": 0.769999,
+                            "c3": 0.335999,
+                            "c4": 0.899998
+                        },
+                        {
+                            "time": 2.066699981689453,
+                            "x": -847.5,
+                            "y": -823.469970703125
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 2.7990000247955322,
+                            "y": 2.7990000247955322,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 2.7990000247955322,
+                            "y": 2.7990000247955322,
+                            "curve": 0.129,
+                            "c2": 0.769997,
+                            "c3": 0.335999,
+                            "c4": 0.909993
+                        },
+                        {
+                            "time": 2.066699981689453,
+                            "x": 6.855000019073486,
+                            "y": 6.855000019073486
+                        }
+                    ]
+                },
+                "ice_link_g2": {
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 51.529998779296875,
+                            "y": 3.3380000591278076
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 51.529998779296875,
+                            "y": 4.618000030517578,
+                            "curve": 0.247,
+                            "c2": 0.82,
+                            "c3": 0.672999,
+                            "c4": 0.99
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 51.529998779296875,
+                            "y": 4.938000202178955
+                        }
+                    ]
+                },
+                "glow16": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -40.119998931884766,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4666999578475952,
+                            "angle": -20.389999389648438
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1048.9000244140625,
+                            "y": 694.1599731445313,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4666999578475952,
+                            "x": -319.7799987792969,
+                            "y": -262.4200134277344
+                        },
+                        {
+                            "time": 1.5666999816894531,
+                            "x": -238.97000122070313,
+                            "y": -259.30999755859375
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": -92.88999938964844,
+                            "y": -206.47999572753906
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": -50.939998626708984,
+                            "y": -195.60000610351563
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 8.244000434875488,
+                            "y": 15.980999946594238,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4666999578475952,
+                            "x": 2.247999906539917,
+                            "y": 2.138000011444092
+                        },
+                        {
+                            "time": 1.5666999816894531,
+                            "x": 6.140999794006348,
+                            "y": 5.841000080108643
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 10.220999717712402,
+                            "y": 9.720999717712402
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 13.496000289916992,
+                            "y": 12.836000442504883
+                        }
+                    ]
+                },
+                "crack1": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": -625.6400146484375,
+                            "y": -61.08000183105469
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -547.3800048828125,
+                            "y": -27.3700008392334
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 2.2090001106262207,
+                            "y": 1.6440000534057617
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 1.6169999837875366,
+                            "y": 1.11899995803833
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 174.0500030517578,
+                            "y": -41.15999984741211
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.0,
+                            "y": 0.0
+                        }
+                    ]
+                },
+                "crack2": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -9.0
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -13.390000343322754
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 635.5999755859375,
+                            "y": -10.859999656677246
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 488.239990234375,
+                            "y": -14.640000343322754
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.6670000553131104,
+                            "y": -1.4500000476837158
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 1.6670000553131104,
+                            "y": -0.9700000286102295
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": -26.600000381469727
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.0,
+                            "y": 2.559999942779541
+                        }
+                    ]
+                },
+                "crack3": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 60.66999816894531,
+                            "y": -29.899999618530273
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 5.590000152587891,
+                            "y": -20.270000457763672
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.4490000009536743,
+                            "y": -1.5199999809265137
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 1.4490000009536743,
+                            "y": -0.906000018119812
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": -6.349999904632568,
+                            "y": -26.59000015258789
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -6.349999904632568,
+                            "y": 0.03999999910593033
+                        }
+                    ]
+                },
+                "ice_block_g3": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": -40.119998931884766
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 1048.9000244140625,
+                            "y": 694.1599731445313,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 1048.9000244140625,
+                            "y": 694.1599731445313
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 902.3900146484375,
+                            "y": 592.5,
+                            "curve": 0.780999,
+                            "c2": 0.04,
+                            "c3": 0.896997,
+                            "c4": 0.100001
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 291.3599853515625,
+                            "y": 71.11000061035156
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 13.468000411987305,
+                            "y": 26.107999801635742,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "x": 13.468000411987305,
+                            "y": 26.107999801635742
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 24.60700035095215,
+                            "y": 39.678001403808594,
+                            "curve": 0.780999,
+                            "c2": 0.04,
+                            "c3": 0.896997,
+                            "c4": 0.100001
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 28.222000122070313,
+                            "y": 41.667999267578125
+                        }
+                    ]
+                },
+                "ice_link_smoke": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": -141.77000427246094
+                        }
+                    ]
+                },
+                "ice_link_smoke1": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -236.60000610351563,
+                            "y": -178.4199981689453,
+                            "curve": 0.14,
+                            "c2": 0.68,
+                            "c3": 0.31,
+                            "c4": 0.94
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 82.36000061035156,
+                            "y": -178.4199981689453
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 1.1039999723434448,
+                            "y": 0.5419999957084656,
+                            "curve": 0.14,
+                            "c2": 0.68,
+                            "c3": 0.31,
+                            "c4": 0.94
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 1.38100004196167,
+                            "y": 0.6779999732971191
+                        }
+                    ]
+                },
+                "ice_link_smoke2": {
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 113.02999877929688,
+                            "y": -189.08999633789063,
+                            "curve": 0.139999,
+                            "c2": 0.660001,
+                            "c3": 0.419998,
+                            "c4": 0.960002
+                        },
+                        {
+                            "time": 1.6332999467849731,
+                            "x": 661.5800170898438,
+                            "y": -177.57000732421875
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.828000009059906,
+                            "y": 0.6499999761581421,
+                            "curve": 0.139999,
+                            "c2": 0.660001,
+                            "c3": 0.419998,
+                            "c4": 0.960002
+                        },
+                        {
+                            "time": 1.6332999467849731,
+                            "x": 1.88100004196167,
+                            "y": 1.4769999980926514
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.0,
+                            "y": -25.799999237060547
+                        }
+                    ]
+                },
+                "ice_link_smoke3": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -1.2799999713897705
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -520.1900024414063,
+                            "y": -114.97000122070313,
+                            "curve": 0.095,
+                            "c2": 0.720001,
+                            "c3": 0.271001,
+                            "c4": 0.900001
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": -364.3800048828125,
+                            "y": -118.45999908447266
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 1.062999963760376,
+                            "y": 0.289000004529953,
+                            "curve": 0.095,
+                            "c2": 0.720001,
+                            "c3": 0.271001,
+                            "c4": 0.900001
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 1.621999979019165,
+                            "y": 0.4399999976158142
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.0,
+                            "y": -34.7400016784668
+                        }
+                    ]
+                },
+                "ice_link_smoke4": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -3.130000114440918
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 289.07000732421875,
+                            "y": -167.1999969482422,
+                            "curve": 0.159,
+                            "c2": 0.720001,
+                            "c3": 0.317001,
+                            "c4": 0.930002
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 483.1000061035156,
+                            "y": -181.3800048828125
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 1.3029999732971191,
+                            "y": 0.7549999952316284,
+                            "curve": 0.159,
+                            "c2": 0.720001,
+                            "c3": 0.317001,
+                            "c4": 0.930002
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 3.562999963760376,
+                            "y": 2.065000057220459
+                        }
+                    ]
+                },
+                "ice_link_smoke5": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -1.2799999713897705
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 319.5899963378906,
+                            "y": -121.27999877929688,
+                            "curve": 0.095,
+                            "c2": 0.720001,
+                            "c3": 0.271001,
+                            "c4": 0.900001
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 449.010009765625,
+                            "y": -124.18000030517578
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.8370000123977661,
+                            "y": 0.5049999952316284,
+                            "curve": 0.095,
+                            "c2": 0.720001,
+                            "c3": 0.271001,
+                            "c4": 0.900001
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "x": 1.5449999570846558,
+                            "y": 1.2610000371932983
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.0,
+                            "y": -34.7400016784668
+                        }
+                    ]
+                },
+                "ice_link_smoke6": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "angle": 5.630000114440918
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -529.27001953125,
+                            "y": -177.3000030517578,
+                            "curve": 0.560999,
+                            "c2": 0.109999,
+                            "c3": 0.597998,
+                            "c4": 0.989998
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -789.02001953125,
+                            "y": -187.5
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 2.0880000591278076,
+                            "y": 1.2450000047683716,
+                            "curve": 0.560999,
+                            "c2": 0.109999,
+                            "c3": 0.597998,
+                            "c4": 0.989998
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 2.2320001125335693,
+                            "y": 1.3300000429153442
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 174.6999969482422,
+                            "y": 0.0
+                        }
+                    ]
+                },
+                "ice_link_smoke7": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "angle": -2.3299999237060547
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -260.3399963378906,
+                            "y": -164.6300048828125,
+                            "curve": 0.543001,
+                            "c2": 0.24,
+                            "c3": 0.359002,
+                            "c4": 0.920001
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -454.6000061035156,
+                            "y": -173.77000427246094
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": 1.5609999895095825,
+                            "y": 0.7549999952316284,
+                            "curve": 0.543001,
+                            "c2": 0.24,
+                            "c3": 0.317003,
+                            "c4": 0.930001
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 3.562999963760376,
+                            "y": 2.065000057220459
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "x": -172.7899932861328,
+                            "y": 0.0
+                        }
+                    ]
+                },
+                "ice_link_smoke8": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "angle": -2.3299999237060547
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "x": 98.19000244140625,
+                            "y": -176.00999450683594,
+                            "curve": 0.505999,
+                            "c2": 0.23,
+                            "c3": 0.784998,
+                            "c4": 0.599999
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "x": 9.680000305175781,
+                            "y": -192.3800048828125
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "x": 3.2119998931884766,
+                            "y": 1.5549999475479126,
+                            "curve": 0.543001,
+                            "c2": 0.24,
+                            "c3": 0.317003,
+                            "c4": 0.930001
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "x": 4.395999908447266,
+                            "y": 2.546999931335449
+                        }
+                    ],
+                    "shear": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "x": -172.7899932861328,
+                            "y": 0.0
+                        }
+                    ]
+                },
+                "ice_link_smoke9": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -154.91000366210938
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 372.989990234375,
+                            "y": -122.01000213623047,
+                            "curve": 0.159,
+                            "c2": 0.720001,
+                            "c3": 0.317001,
+                            "c4": 0.930002
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 637.6900024414063,
+                            "y": -98.33999633789063
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.6790000200271606,
+                            "y": 0.41600000858306885,
+                            "curve": 0.159,
+                            "c2": 0.720001,
+                            "c3": 0.317001,
+                            "c4": 0.930002
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 1.1399999856948853,
+                            "y": 0.6990000009536743
+                        }
+                    ]
+                },
+                "ice_link_smoke10": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -176.52999877929688
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -185.82000732421875,
+                            "y": -147.3000030517578,
+                            "curve": 0.159,
+                            "c2": 0.720001,
+                            "c3": 0.317001,
+                            "c4": 0.930002
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 285.2300109863281,
+                            "y": -118.7699966430664
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.5580000281333923,
+                            "y": 0.29600000381469727,
+                            "curve": 0.159,
+                            "c2": 0.720001,
+                            "c3": 0.317001,
+                            "c4": 0.930002
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 0.9480000138282776,
+                            "y": 0.5040000081062317
+                        }
+                    ]
+                },
+                "ice_link_smoke11": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -176.52999877929688
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": -447.2300109863281,
+                            "y": -104.18000030517578,
+                            "curve": 0.195999,
+                            "c2": 0.610002,
+                            "c3": 0.488997,
+                            "c4": 0.870005
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": -168.6999969482422,
+                            "y": -90.08999633789063
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.6309999823570251,
+                            "y": 0.27399998903274536,
+                            "curve": 0.195999,
+                            "c2": 0.610002,
+                            "c3": 0.488997,
+                            "c4": 0.870005
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 0.8930000066757202,
+                            "y": 0.24199999868869781
+                        }
+                    ]
+                },
+                "ice_link_smoke12": {
+                    "rotate": [
+                        {
+                            "time": 0.0,
+                            "angle": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "angle": -166.75999450683594
+                        }
+                    ],
+                    "translate": [
+                        {
+                            "time": 0.0,
+                            "x": 0.0,
+                            "y": 0.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 444.1700134277344,
+                            "y": -133.50999450683594,
+                            "curve": 0.209001,
+                            "c2": 0.580001,
+                            "c3": 0.512002,
+                            "c4": 0.860003
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 804.9400024414063,
+                            "y": -75.62000274658203
+                        }
+                    ],
+                    "scale": [
+                        {
+                            "time": 0.0,
+                            "x": 1.0,
+                            "y": 1.0,
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "x": 0.7089999914169312,
+                            "y": 0.4519999921321869,
+                            "curve": 0.209001,
+                            "c2": 0.580001,
+                            "c3": 0.512002,
+                            "c4": 0.860003
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "x": 1.2580000162124634,
+                            "y": 0.8019999861717224
+                        }
+                    ]
+                }
+            },
+            "slots": {
+                "cloud10_1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.5666999816894531,
+                            "color": "ACC0FF81"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "ACC0FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "smoke1"
+                        }
+                    ]
+                },
+                "cloud10_2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.6332999467849731,
+                            "color": "ACC0FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "smoke_real_02"
+                        }
+                    ]
+                },
+                "cloud10_3": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "A8D7FF00"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "A8D7FF89"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "crack1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "A3E1FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "338BFF00"
+                        }
+                    ]
+                },
+                "crack2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "A3E1FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "338BFF00"
+                        }
+                    ]
+                },
+                "crack3": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "5F7EFFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "338BFF00"
+                        }
+                    ]
+                },
+                "glow1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "51AAFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "color": "51AAFF00"
+                        },
+                        {
+                            "time": 1.5666999816894531,
+                            "color": "C6CFFF65"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "glow1"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "name": null
+                        }
+                    ]
+                },
+                "glow2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "67B7FF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "2E8BFFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "5397FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "glow1"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "name": null
+                        }
+                    ]
+                },
+                "glow4": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "51AAFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "color": "51AAFF00"
+                        },
+                        {
+                            "time": 1.5666999816894531,
+                            "color": "001AFF65"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "glow1"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "name": null
+                        }
+                    ]
+                },
+                "glow14": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "67B7FF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "0058FF52",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "5397FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "glow1"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "name": null
+                        }
+                    ]
+                },
+                "glow16": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "51AAFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4666999578475952,
+                            "color": "007CFF85",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.5666999816894531,
+                            "color": "007CFF85"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "color": "007CFF67"
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "color": "007CFF58"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "007CFF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "glow1"
+                        }
+                    ]
+                },
+                "ice_block_clip": {
+                    "attachment": [
+                        {
+                            "time": 1.733299970626831,
+                            "name": null
+                        }
+                    ]
+                },
+                "ice_link_5": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "61C5FFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "FFFFFF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 2.1333000659942627,
+                            "name": null
+                        }
+                    ]
+                },
+                "mist1": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "color": "ACC0FF6F"
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "color": "ACC0FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "smoke1"
+                        }
+                    ]
+                },
+                "mist2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "color": "ACC0FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "smoke_real_01"
+                        }
+                    ]
+                },
+                "mist3": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "color": "ACC0FF6E"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "ACC0FF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "smoke1"
+                        }
+                    ]
+                },
+                "mist4": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.2999999523162842,
+                            "color": "A8D7FF00"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "A8D7FF89"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "smoke_real_01"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "mist5": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.333299994468689,
+                            "color": "A8D7FF00"
+                        },
+                        {
+                            "time": 1.3667000532150269,
+                            "color": "C9EAFF89"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "ice_snow03_0000"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "name": null
+                        }
+                    ]
+                },
+                "mist6": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "color": "ACC0FF00"
+                        }
+                    ]
+                },
+                "mist7": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "color": "ACC0FF00"
+                        }
+                    ]
+                },
+                "mist8": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "color": "ACC0FF00"
+                        }
+                    ]
+                },
+                "mist9": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.399999976158142,
+                            "color": "ACC0FFFF"
+                        },
+                        {
+                            "time": 1.666700005531311,
+                            "color": "ACC0FF00"
+                        }
+                    ]
+                },
+                "voideater_smoke_01_05": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "618DAAA2"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "color": "1F2F4100"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.733299970626831,
+                            "name": "voideater_smoke_01_05"
+                        },
+                        {
+                            "time": 1.7999999523162842,
+                            "name": "voideater_smoke_01_06"
+                        },
+                        {
+                            "time": 1.899999976158142,
+                            "name": "voideater_smoke_01_07"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "name": null
+                        }
+                    ]
+                },
+                "voideater_smoke_02_04": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "color": "618DAAA2"
+                        },
+                        {
+                            "time": 2.066699981689453,
+                            "color": "618DAA6E"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 1.733299970626831,
+                            "name": "voideater_smoke_02_04"
+                        },
+                        {
+                            "time": 1.7999999523162842,
+                            "name": "voideater_smoke_02_05"
+                        },
+                        {
+                            "time": 1.8667000532150269,
+                            "name": "voideater_smoke_02_06"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "name": null
+                        }
+                    ]
+                },
+                "yuki_ug_iceblock_b": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "color": "FFFFFFFF",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "color": "FFFFFF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "yuki_ug_iceblock_b"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "name": null
+                        }
+                    ]
+                },
+                "yuki_ug_iceblock_b2": {
+                    "color": [
+                        {
+                            "time": 0.0,
+                            "color": "FFFFFF00",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.4333000183105469,
+                            "color": "FFFFFFFF"
+                        },
+                        {
+                            "time": 1.600000023841858,
+                            "color": "FFFFFFD7",
+                            "curve": "stepped"
+                        },
+                        {
+                            "time": 1.6332999467849731,
+                            "color": "FFFFFFD7",
+                            "curve": 0.666001,
+                            "c2": 0.08,
+                            "c3": 0.900003,
+                            "c4": 0.18
+                        },
+                        {
+                            "time": 1.7000000476837158,
+                            "color": "FFFFFF00"
+                        }
+                    ],
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": "yuki_ug_iceblock_b_g"
+                        },
+                        {
+                            "time": 2.1333000659942627,
+                            "name": null
+                        }
+                    ]
+                }
+            },
+            "ik": {},
+            "transform": {},
+            "path": {},
+            "deform": {
+                "default": {
+                    "ice_link_5": {
+                        "ice_link_6": [
+                            {
+                                "time": 1.399999976158142,
+                                "vertices": [
+                                    814.6763916015625,
+                                    -134.082763671875,
+                                    -814.67626953125,
+                                    -134.082763671875,
+                                    -814.67626953125,
+                                    134.08355712890625,
+                                    814.67626953125,
+                                    134.08355712890625
+                                ],
+                                "curve": 0.263001,
+                                "c2": 0.739999,
+                                "c3": 0.525001,
+                                "c4": 0.969998
+                            },
+                            {
+                                "time": 1.600000023841858,
+                                "vertices": [
+                                    814.6763916015625,
+                                    -56.46954345703125,
+                                    -814.67626953125,
+                                    -56.46954345703125,
+                                    -814.67626953125,
+                                    56.47015380859375,
+                                    814.67626953125,
+                                    56.47015380859375
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "duration": 2.1333000659942627
+        }
+    }
+}

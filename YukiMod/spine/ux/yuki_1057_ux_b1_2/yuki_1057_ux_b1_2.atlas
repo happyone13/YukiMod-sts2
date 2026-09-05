@@ -1,0 +1,146 @@
+
+yuki_1057_ux_b1_2.png
+size: 1920,656
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a_pat3_1
+  rotate: true
+  xy: 1133, 19
+  size: 209, 86
+  orig: 209, 86
+  offset: 0, 0
+  index: -1
+a_pat3_2
+  rotate: true
+  xy: 391, 10
+  size: 179, 83
+  orig: 179, 83
+  offset: 0, 0
+  index: -1
+a_pat3_3
+  rotate: true
+  xy: 716, 2
+  size: 76, 67
+  orig: 76, 67
+  offset: 0, 0
+  index: -1
+exp1
+  rotate: false
+  xy: 476, 45
+  size: 114, 144
+  orig: 114, 144
+  offset: 0, 0
+  index: -1
+exp2
+  rotate: false
+  xy: 592, 64
+  size: 122, 125
+  orig: 122, 125
+  offset: 0, 0
+  index: -1
+exp3
+  rotate: true
+  xy: 183, 16
+  size: 153, 206
+  orig: 153, 206
+  offset: 0, 0
+  index: -1
+exp4
+  rotate: false
+  xy: 1583, 26
+  size: 253, 198
+  orig: 253, 198
+  offset: 0, 0
+  index: -1
+exp6_0002
+  rotate: false
+  xy: 359, 191
+  size: 449, 463
+  orig: 449, 463
+  offset: 0, 0
+  index: -1
+fire_ptc_2
+  rotate: true
+  xy: 476, 2
+  size: 41, 69
+  orig: 41, 69
+  offset: 0, 0
+  index: -1
+fire_ptc_3
+  rotate: false
+  xy: 592, 14
+  size: 42, 48
+  orig: 42, 48
+  offset: 0, 0
+  index: -1
+fire_spot_4
+  rotate: false
+  xy: 716, 80
+  size: 94, 109
+  orig: 94, 109
+  offset: 0, 0
+  index: -1
+fire_spot_5
+  rotate: true
+  xy: 785, 2
+  size: 76, 64
+  orig: 76, 64
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: false
+  xy: 1178, 247
+  size: 403, 407
+  orig: 403, 407
+  offset: 0, 0
+  index: -1
+hit_impact_r2
+  rotate: true
+  xy: 810, 230
+  size: 424, 366
+  orig: 424, 366
+  offset: 0, 0
+  index: -1
+impact2
+  rotate: false
+  xy: 2, 171
+  size: 355, 483
+  orig: 355, 483
+  offset: 0, 0
+  index: -1
+ma_x_impact02_0001
+  rotate: true
+  xy: 1221, 45
+  size: 200, 360
+  orig: 200, 360
+  offset: 0, 0
+  index: -1
+ma_x_impact06_0001
+  rotate: true
+  xy: 1583, 226
+  size: 100, 331
+  orig: 100, 331
+  offset: 0, 0
+  index: -1
+shock_w_2
+  rotate: false
+  xy: 851, 11
+  size: 280, 217
+  orig: 280, 217
+  offset: 0, 0
+  index: -1
+smoke_5
+  rotate: false
+  xy: 2, 2
+  size: 179, 167
+  orig: 179, 167
+  offset: 0, 0
+  index: -1
+wind5
+  rotate: false
+  xy: 1583, 328
+  size: 335, 326
+  orig: 335, 326
+  offset: 0, 0
+  index: -1

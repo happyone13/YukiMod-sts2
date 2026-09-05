@@ -36,7 +36,7 @@ internal static class GloomyMonsterVfx
         BeastBuff, BeastAttack01, BeastAttack02, HitSlash, HitBlunt
     ];
 
-    public static void Prewarm() => GloomyVfxHelper.Prewarm(ScenePaths);
+    public static ChaosVfxPrewarmReport Prewarm() => GloomyVfxHelper.Prewarm(ScenePaths);
 
     public static bool PlaySfx(string soundPath, float volume = 1f) =>
         YukiAudioService.TryPlayResource(soundPath, volume);

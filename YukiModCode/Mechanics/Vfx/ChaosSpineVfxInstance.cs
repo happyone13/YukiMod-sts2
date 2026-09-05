@@ -66,22 +66,25 @@ public sealed class ChaosSpineVfxInstance
 		return true;
 	}
 
-	public static void Prewarm(IEnumerable<string> scenePaths)
+	public static ChaosVfxPrewarmReport Prewarm(IEnumerable<string> scenePaths)
 	{
 		if (scenePaths == null)
 		{
-			return;
+			return ChaosVfxPrewarmReport.Empty;
 		}
 
-		foreach (string? scenePath in scenePaths)
+		string[] paths = scenePaths
+			.Where(path => !string.IsNullOrWhiteSpace(path))
+			.Distinct(StringComparer.Ordinal)
+			.ToArray();
+		int loaded = 0;
+		foreach (string scenePath in paths)
 		{
-			if (string.IsNullOrWhiteSpace(scenePath))
-			{
-				continue;
-			}
-
-			_ = GetOrLoadScene(scenePath);
+			if (GetOrLoadScene(scenePath) != null)
+				loaded++;
 		}
+
+		return new ChaosVfxPrewarmReport(paths.Length, loaded);
 	}
 
 	private static PackedScene? GetOrLoadScene(string scenePath)

@@ -14,6 +14,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
+using YukiMod.YukiModCode.Mechanics.Settings;
+using YukiMod.YukiModCode.Mechanics.Vfx;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
@@ -45,11 +47,24 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Rare, Tar
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
-        await DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
-            .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_attack_slash")
-            .Execute(choiceContext);
+        if (YukiModSharedSettings.CombatEffectsEnabled && YukiModSharedSettings.UltimateCinematicsEnabled)
+        {
+            YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
+            YukiAudioService.TryPlayUxVoice(Owner);
+            YukiAudioService.TryPlayUxSound(Owner);
+        }
+
+        await YukiUxPresentation.PlayAsync(Owner.Creature, [cardPlay.Target], async cinematic =>
+        {
+            var attack = DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
+                .FromCard(this, cardPlay)
+                .Targeting(cardPlay.Target);
+            if (cinematic)
+                attack.WithNoAttackerAnim();
+            else
+                attack.WithHitFx("vfx/vfx_attack_slash");
+            await attack.Execute(choiceContext);
+        });
     }
 
     protected override void OnUpgrade()

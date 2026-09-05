@@ -26,9 +26,17 @@ public static class MainFile
         YukiTelemetryBootstrap.Initialize();
         ScriptManagerBridge.LookupScriptsInAssembly(assembly);
         GloomyEncounterSharedSettings.RegisterProvider(ModId);
-        GloomyMonsterVfx.Prewarm();
-        ChaosOneShotVfx.Prewarm(YukiMeleeTeleportAttackPatch.GetPreloadScenePaths());
-        ChaosSpineVfxInstance.Prewarm(YukiMeleeTeleportAttackPatch.GetPreloadScenePaths());
+        YukiUgPresentation.Preload();
+        string[] attackVfxPaths = YukiMeleeTeleportAttackPatch.GetPreloadScenePaths()
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        ChaosVfxPrewarmReport prewarm =
+            GloomyMonsterVfx.Prewarm() +
+            ChaosOneShotVfx.Prewarm(attackVfxPaths) +
+            ChaosSpineVfxInstance.Prewarm(attackVfxPaths);
+        Logger.Info(
+            $"[{ModId}] Startup VFX prewarm summary. loaded={prewarm.Loaded}/{prewarm.Requested}, " +
+            $"failed={prewarm.Failed}");
 
         Harmony harmony = new(ModId);
         harmony.PatchAll();

@@ -1,0 +1,132 @@
+
+yuki_1057_ug_cutin2_b2.png
+size: 2032,768
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow1
+  rotate: false
+  xy: 1545, 21
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+pati6
+  rotate: false
+  xy: 1545, 316
+  size: 86, 97
+  orig: 86, 97
+  offset: 0, 0
+  index: -1
+ug2_smoke3_0001
+  rotate: false
+  xy: 816, 28
+  size: 241, 353
+  orig: 241, 353
+  offset: 0, 0
+  index: -1
+ug2_smoke3_0002
+  rotate: false
+  xy: 1043, 409
+  size: 241, 353
+  orig: 241, 353
+  offset: 0, 0
+  index: -1
+ug2_smoke3_0003
+  rotate: false
+  xy: 1059, 54
+  size: 241, 353
+  orig: 241, 353
+  offset: 0, 0
+  index: -1
+ug2_smoke3_0004
+  rotate: false
+  xy: 1286, 409
+  size: 241, 353
+  orig: 241, 353
+  offset: 0, 0
+  index: -1
+ug2_smoke3_0005
+  rotate: false
+  xy: 1302, 54
+  size: 241, 353
+  orig: 241, 353
+  offset: 0, 0
+  index: -1
+ug2_smoke4_0001
+  rotate: true
+  xy: 135, 383
+  size: 379, 225
+  orig: 379, 225
+  offset: 0, 0
+  index: -1
+ug2_smoke4_0002
+  rotate: true
+  xy: 135, 2
+  size: 379, 225
+  orig: 379, 225
+  offset: 0, 0
+  index: -1
+ug2_smoke4_0003
+  rotate: true
+  xy: 362, 383
+  size: 379, 225
+  orig: 379, 225
+  offset: 0, 0
+  index: -1
+ug2_smoke4_0004
+  rotate: true
+  xy: 362, 2
+  size: 379, 225
+  orig: 379, 225
+  offset: 0, 0
+  index: -1
+ug2_smoke4_0005
+  rotate: true
+  xy: 589, 383
+  size: 379, 225
+  orig: 379, 225
+  offset: 0, 0
+  index: -1
+ug2_smoke5_0003
+  rotate: true
+  xy: 589, 2
+  size: 379, 225
+  orig: 379, 225
+  offset: 0, 0
+  index: -1
+ug2_smoke5_0004
+  rotate: true
+  xy: 816, 383
+  size: 379, 225
+  orig: 379, 225
+  offset: 0, 0
+  index: -1
+yuki_ug_ice_pat
+  rotate: true
+  xy: 1529, 415
+  size: 347, 186
+  orig: 347, 186
+  offset: 0, 0
+  index: -1
+yuki_ug_iceblock_front_d
+  rotate: false
+  xy: 1717, 279
+  size: 287, 208
+  orig: 287, 208
+  offset: 0, 0
+  index: -1
+yuki_ug_iceblock_front_u
+  rotate: true
+  xy: 1717, 489
+  size: 273, 313
+  orig: 273, 313
+  offset: 0, 0
+  index: -1
+yuki_ug_landcrack
+  rotate: true
+  xy: 2, 80
+  size: 682, 131
+  orig: 682, 131
+  offset: 0, 0
+  index: -1

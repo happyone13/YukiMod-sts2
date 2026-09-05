@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,16 +17,16 @@ using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Mechanics.Animation;
+using YukiMod.YukiModCode.Mechanics.Vfx;
+using YukiMod.YukiModCode.Mechanics.Settings;
 using YukiMod.YukiModCode.Powers;
 using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
 [Pool(typeof(TokenCardPool))]
-public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AllEnemies), IChaosTeleportAttackProfileOverride
+public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, TargetType.AllEnemies)
 {
-    public string TeleportAttackProfileId => ChaosTeleportAttackProfiles.U2Attack.Id;
-
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
         [YukiHoverTipFactory.FromJuHeKeyword()];
 
@@ -38,7 +38,12 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        YukiAudioService.TryPlayCustomAttackCardClip("ba_dao", Owner);
+        if (YukiModSharedSettings.CombatEffectsEnabled && YukiModSharedSettings.UltimateCinematicsEnabled)
+        {
+            YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
+            YukiAudioService.TryPlayUgAttackVoice(Owner);
+            YukiAudioService.TryPlayUgAttackSound(Owner);
+        }
 
         var combatState = CombatState;
         if (combatState == null)
@@ -46,22 +51,28 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
             return;
         }
 
-        foreach (var enemy in combatState.HittableEnemies.ToList())
+        await YukiUgPresentation.PlayAsync(Owner.Creature, combatState.HittableEnemies.ToList(), async cinematic =>
         {
-            var damage = DynamicVars.Damage.BaseValue + GetTenPercent(enemy.CurrentHp);
-            await DamageCmd.Attack(damage)
-                .FromCard(this, cardPlay)
-                .Targeting(enemy)
-                .WithHitFx("vfx/vfx_attack_slash")
-                .Execute(choiceContext);
-        }
+            foreach (var enemy in combatState.HittableEnemies.ToList())
+            {
+                var damage = DynamicVars.Damage.BaseValue + GetTenPercent(enemy.CurrentHp);
+                var attack = DamageCmd.Attack(damage)
+                    .FromCard(this, cardPlay)
+                    .Targeting(enemy);
+                if (cinematic)
+                    attack.WithNoAttackerAnim();
+                else
+                    attack.WithHitFx("vfx/vfx_attack_slash");
+                await attack.Execute(choiceContext);
+            }
 
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<JuHeEndTurnDamagePower>(
-            choiceContext,
-            Owner.Creature,
-            DynamicVars.Damage.BaseValue,
-            Owner.Creature,
-            this);
+            await YukiMod.YukiModCode.Services.YukiPowerService.Apply<JuHeEndTurnDamagePower>(
+                choiceContext,
+                Owner.Creature,
+                DynamicVars.Damage.BaseValue,
+                Owner.Creature,
+                this);
+        });
     }
 
     protected override void OnUpgrade()

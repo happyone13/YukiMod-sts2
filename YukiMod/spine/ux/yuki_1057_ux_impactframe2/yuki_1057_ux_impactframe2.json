@@ -1,0 +1,208 @@
+{
+    "skeleton": {
+        "spine": "3.8.79",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 1454.0,
+        "height": 385.0,
+        "hash": "hMpNzHYWm7W1ZxNjzJEJ5daS59E"
+    },
+    "bones": [
+        {
+            "name": "root",
+            "transform": "normal"
+        },
+        {
+            "name": "pivot",
+            "parent": "root",
+            "transform": "normal"
+        },
+        {
+            "name": "imp2",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "imp3",
+            "parent": "pivot",
+            "transform": "normal"
+        },
+        {
+            "name": "rect",
+            "parent": "pivot",
+            "transform": "normal"
+        }
+    ],
+    "ik": [],
+    "slots": [
+        {
+            "name": "imp2",
+            "bone": "imp2"
+        },
+        {
+            "name": "rect",
+            "bone": "rect"
+        },
+        {
+            "name": "imp3",
+            "bone": "imp3",
+            "attachment": "imp1"
+        }
+    ],
+    "transform": [],
+    "path": [],
+    "skins": [
+        {
+            "name": "default",
+            "attachments": {
+                "imp2": {
+                    "imp_frame_resized2_1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 948.0,
+                        "height": 432.0,
+                        "path": "imp_frame_resized2_1"
+                    },
+                    "imp_frame_resized2_2": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 948.0,
+                        "height": 432.0,
+                        "path": "imp_frame_resized2_2"
+                    },
+                    "imp_frame_resized2_3": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 948.0,
+                        "height": 432.0,
+                        "path": "imp_frame_resized2_3"
+                    }
+                },
+                "rect": {
+                    "rect1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.0,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 16.0,
+                        "height": 16.0,
+                        "path": "rect1"
+                    }
+                },
+                "imp3": {
+                    "imp1": {
+                        "type": "region",
+                        "x": 0.0,
+                        "y": 0.5,
+                        "rotation": 0.0,
+                        "scaleX": 1.0,
+                        "scaleY": 1.0,
+                        "width": 1454.0,
+                        "height": 385.0,
+                        "path": "imp1"
+                    }
+                }
+            }
+        }
+    ],
+    "events": {},
+    "animations": {
+        "animation": {
+            "bones": {
+                "imp2": {
+                    "scale": [
+                        {
+                            "time": 1.666700005531311,
+                            "x": 1.6660000085830688,
+                            "y": 1.6660000085830688
+                        }
+                    ]
+                },
+                "imp3": {
+                    "translate": [
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 63.90999984741211,
+                            "y": 13.09000015258789
+                        }
+                    ]
+                },
+                "rect": {
+                    "scale": [
+                        {
+                            "time": 1.7000000476837158,
+                            "x": 222.7259979248047,
+                            "y": 63.87099838256836
+                        }
+                    ]
+                },
+                "pivot": {
+                    "shear": [
+                        {
+                            "time": 3.0,
+                            "x": 0.0,
+                            "y": 0.0
+                        }
+                    ]
+                }
+            },
+            "slots": {
+                "imp2": {
+                    "attachment": [
+                        {
+                            "time": 1.666700005531311,
+                            "name": "imp_frame_resized2_1"
+                        },
+                        {
+                            "time": 1.733299970626831,
+                            "name": "imp_frame_resized2_2"
+                        },
+                        {
+                            "time": 1.766700029373169,
+                            "name": "imp_frame_resized2_3"
+                        },
+                        {
+                            "time": 1.833299994468689,
+                            "name": null
+                        }
+                    ]
+                },
+                "imp3": {
+                    "attachment": [
+                        {
+                            "time": 0.0,
+                            "name": null
+                        }
+                    ]
+                },
+                "rect": {
+                    "color": [
+                        {
+                            "time": 1.7000000476837158,
+                            "color": "000000FF"
+                        }
+                    ]
+                }
+            },
+            "ik": {},
+            "transform": {},
+            "path": {},
+            "deform": {},
+            "duration": 3.0
+        }
+    }
+}

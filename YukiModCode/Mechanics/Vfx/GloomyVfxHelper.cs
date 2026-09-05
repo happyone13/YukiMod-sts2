@@ -13,15 +13,20 @@ public static class GloomyVfxHelper
     private static readonly object SceneCacheLock = new();
     private static readonly Dictionary<string, PackedScene?> SceneCache = new(StringComparer.Ordinal);
 
-    public static void Prewarm(IEnumerable<string> scenePaths)
+    public static ChaosVfxPrewarmReport Prewarm(IEnumerable<string> scenePaths)
     {
-        foreach (var scenePath in scenePaths)
+        string[] paths = scenePaths
+            .Where(path => !string.IsNullOrWhiteSpace(path))
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        int loaded = 0;
+        foreach (string scenePath in paths)
         {
-            if (string.IsNullOrWhiteSpace(scenePath))
-                continue;
-
-            _ = GetOrLoadScene(scenePath);
+            if (GetOrLoadScene(scenePath) != null)
+                loaded++;
         }
+
+        return new ChaosVfxPrewarmReport(paths.Length, loaded);
     }
 
     public static Node2D? PlayAtCreature(

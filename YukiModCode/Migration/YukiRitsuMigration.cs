@@ -80,6 +80,13 @@ internal static class YukiRitsuMigration
                                 () => YukiModSharedSettings.CombatEffectsEnabled,
                                 value => YukiModSharedSettings.SetCombatEffectsEnabled(value, persist: true)))
                         .AddToggle(
+                            "ultimate_cinematics",
+                            SettingsText("YUKIMOD_RITSU_ULTIMATE_CINEMATICS.title", "UG / UX Cinematics"),
+                            BoolBinding(
+                                "ultimate_cinematics",
+                                () => YukiModSharedSettings.UltimateCinematicsEnabled,
+                                value => YukiModSharedSettings.SetUltimateCinematicsEnabled(value, persist: true)))
+                        .AddToggle(
                             "dynamic_card_portraits",
                             SettingsText("YUKIMOD_RITSU_DYNAMIC_CARD_PORTRAITS.title", "Dynamic Card Art"),
                             BoolBinding(

@@ -1,0 +1,132 @@
+
+yuki_1057_ug_portrait_eff_f.png
+size: 1760,1520
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+blur1
+  rotate: false
+  xy: 2, 858
+  size: 897, 653
+  orig: 897, 653
+  offset: 0, 0
+  index: -1
+blur2
+  rotate: false
+  xy: 2, 292
+  size: 790, 564
+  orig: 790, 564
+  offset: 0, 0
+  index: -1
+glow1
+  rotate: false
+  xy: 901, 678
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+rim1
+  rotate: false
+  xy: 1276, 18
+  size: 301, 108
+  orig: 301, 108
+  offset: 0, 0
+  index: -1
+rim2
+  rotate: false
+  xy: 1276, 128
+  size: 365, 249
+  orig: 365, 249
+  offset: 0, 0
+  index: -1
+rim3
+  rotate: false
+  xy: 1666, 428
+  size: 90, 237
+  orig: 90, 237
+  offset: 0, 0
+  index: -1
+rim4
+  rotate: false
+  xy: 1579, 2
+  size: 147, 124
+  orig: 147, 124
+  offset: 0, 0
+  index: -1
+rim6
+  rotate: true
+  xy: 1643, 190
+  size: 187, 90
+  orig: 187, 90
+  offset: 0, 0
+  index: -1
+rim7
+  rotate: true
+  xy: 794, 690
+  size: 166, 105
+  orig: 166, 105
+  offset: 0, 0
+  index: -1
+wind3_0001
+  rotate: false
+  xy: 2, 148
+  size: 870, 142
+  orig: 870, 142
+  offset: 0, 0
+  index: -1
+wind3_0002
+  rotate: false
+  xy: 2, 4
+  size: 870, 142
+  orig: 870, 142
+  offset: 0, 0
+  index: -1
+wind3_0003
+  rotate: false
+  xy: 794, 523
+  size: 870, 142
+  orig: 870, 142
+  offset: 0, 0
+  index: -1
+wind3_0004
+  rotate: false
+  xy: 794, 379
+  size: 870, 142
+  orig: 870, 142
+  offset: 0, 0
+  index: -1
+wind4_0001
+  rotate: false
+  xy: 901, 936
+  size: 280, 575
+  orig: 280, 575
+  offset: 0, 0
+  index: -1
+wind4_0002
+  rotate: true
+  xy: 1183, 1231
+  size: 280, 575
+  orig: 280, 575
+  offset: 0, 0
+  index: -1
+wind4_0003
+  rotate: true
+  xy: 1183, 949
+  size: 280, 575
+  orig: 280, 575
+  offset: 0, 0
+  index: -1
+wind4_0004
+  rotate: true
+  xy: 1183, 667
+  size: 280, 575
+  orig: 280, 575
+  offset: 0, 0
+  index: -1
+wind5
+  rotate: false
+  xy: 874, 16
+  size: 400, 361
+  orig: 400, 361
+  offset: 0, 0
+  index: -1
