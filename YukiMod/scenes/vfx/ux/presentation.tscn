@@ -1,6 +1,7 @@
 [gd_scene format=3]
 [ext_resource type="Script" path="res://YukiMod/scenes/vfx/ux/ug_stage.gd" id="script"]
 [ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/q/1057_skel_data.tres" id="actor"]
+[ext_resource type="Material" path="res://YukiMod/materials/spine_pma.tres" id="pma"]
 [ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_1.tscn" id="fx0"]
 [ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_screen_1.tscn" id="fx1"]
 [ext_resource type="PackedScene" path="res://YukiMod/scenes/vfx/ux/yuki_1057_ux_self_1_f.tscn" id="fx2"]
@@ -24,6 +25,7 @@ color = Color(0, 0, 0, 1)
 z_index = -4096
 [node name="World" type="Node2D" parent="Stage"]
 [node name="Actor" type="SpineSprite" parent="Stage/World"]
+normal_material = ExtResource("pma")
 skeleton_data_res = ExtResource("actor")
 position = Vector2(-320, 175)
 visible = false

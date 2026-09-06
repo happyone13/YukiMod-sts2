@@ -1,28 +1,32 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
+[ext_resource type="Material" path="res://YukiMod/materials/spine_pma.tres" id="pma"]
 [ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_eff2_b/yuki_1057_ug_eff2_b.tres" id="0"]
 [ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_cutin3/yuki_1057_ug_cutin3.tres" id="1"]
 [ext_resource type="SpineSkeletonDataResource" path="res://YukiMod/spine/ug/yuki_1057_ug_cutin1_b/yuki_1057_ug_cutin1_b.tres" id="2"]
 [node name="yuki_1057_ug_cutin_eff" type="Node2D"]
 [node name="yuki_1057_ug_eff2_b" type="SpineSprite" parent="."]
+normal_material = ExtResource("pma")
 position = Vector2(0.0, -0.0)
 scale = Vector2(1.0, 1.0)
-z_index = -5
+z_index = 0
 skeleton_data_res = ExtResource("0")
 preview_animation = "animation"
 preview_frame = false
 metadata/ug_duration = 1.4666999578475952
 [node name="yuki_1057_ug_cutin3" type="SpineSprite" parent="."]
+normal_material = ExtResource("pma")
 position = Vector2(0.0, -0.0)
 scale = Vector2(1.0, 1.0)
-z_index = -5
+z_index = 0
 skeleton_data_res = ExtResource("1")
 preview_animation = "animation"
 preview_frame = false
 metadata/ug_duration = 4.3333001136779785
 [node name="yuki_1057_ug_cutin1_b" type="SpineSprite" parent="."]
+normal_material = ExtResource("pma")
 position = Vector2(0.0, -0.0)
 scale = Vector2(1.0, 1.0)
-z_index = -1
+z_index = 0
 skeleton_data_res = ExtResource("2")
 preview_animation = "animation"
 preview_frame = false

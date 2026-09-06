@@ -10,6 +10,8 @@ namespace YukiMod.YukiModCode.Services;
 public static class YukiAudioService
 {
     private const float VolumeScale = 0.3f;
+    private const float UgEffectScale = 0.6f;
+    private const float UxEffectScale = 0.7f;
 
     private static readonly string[] FmodPrefixes = ["event:/", "snapshot:/", "bus:/", "vca:/", "parameter:/"];
 
@@ -117,7 +119,7 @@ public static class YukiAudioService
 
     public static bool TryPlayUgAttackSound(Player? player = null, float linearVolume = 1f)
     {
-        return IsYukiPlayer(player) && TryPlay(UgSoundPath, linearVolume);
+        return IsYukiPlayer(player) && TryPlay(UgSoundPath, linearVolume * UgEffectScale);
     }
     public static bool TryPlayUxVoice(Player? player = null, float linearVolume = 1f)
     {
@@ -126,7 +128,7 @@ public static class YukiAudioService
 
     public static bool TryPlayUxSound(Player? player = null, float linearVolume = 1f)
     {
-        return IsYukiPlayer(player) && TryPlay(UxSoundPath, linearVolume);
+        return IsYukiPlayer(player) && TryPlay(UxSoundPath, linearVolume * UxEffectScale);
     }
 
     public static bool TryPlayCustomCardClip(string clipKey, Player? player = null, float linearVolume = 1f)
