@@ -52,18 +52,12 @@ public class YueYing() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
-        if (YukiModSharedSettings.CombatEffectsEnabled && YukiModSharedSettings.UltimateCinematicsEnabled)
-        {
-            YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
-            YukiAudioService.TryPlayUxVoice(Owner);
-            YukiAudioService.TryPlayUxSound(Owner);
-        }
-        else
+        if (!YukiModSharedSettings.CombatEffectsEnabled || !YukiModSharedSettings.UltimateCinematicsEnabled)
         {
             YukiAudioService.TryPlayCustomAttackCardClip("ba_dao", Owner);
         }
 
-        await YukiUxPresentation.PlayAsync(Owner.Creature, [cardPlay.Target], async cinematic =>
+        await YukiUgPresentation.PlayAsync(Owner.Creature, [cardPlay.Target], async cinematic =>
         {
             var attack = DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
                 .FromCard(this, cardPlay)

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using YukiMod.YukiModCode.Mechanics.Settings;
+using YukiMod.YukiModCode.Services;
 using YukiCharacterModel = YukiMod.YukiModCode.Character.YukiMod;
 
 namespace YukiMod.YukiModCode.Mechanics.Vfx;
@@ -52,6 +53,10 @@ public static class YukiUxPresentation
                         if (node != null) visuals.Add(node);
                     }
                     stage.Call("begin", actor, visuals);
+                    // Voice, effects and visuals now share one authoritative T0.
+                    YukiAudioService.SuppressNextDefaultAttackSfx(caster.Player);
+                    YukiAudioService.TryPlayUxVoice(caster.Player);
+                    YukiAudioService.TryPlayUxSound(caster.Player);
                 }
             }
             catch (Exception ex)

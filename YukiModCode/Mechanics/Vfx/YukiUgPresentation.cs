@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using YukiMod.YukiModCode.Mechanics.Settings;
+using YukiMod.YukiModCode.Services;
 using YukiCharacterModel = YukiMod.YukiModCode.Character.YukiMod;
 
 namespace YukiMod.YukiModCode.Mechanics.Vfx;
@@ -53,6 +54,11 @@ public static class YukiUgPresentation
                         if (node != null) visuals.Add(node);
                     }
                     stage.Call("begin", actor, visuals);
+                    // Bind sound to the presentation epoch so resource loading
+                    // cannot make audio lead the visuals on first use.
+                    YukiAudioService.SuppressNextDefaultAttackSfx(caster.Player);
+                    YukiAudioService.TryPlayUgAttackVoice(caster.Player);
+                    YukiAudioService.TryPlayUgAttackSound(caster.Player);
                 }
             }
             catch (Exception ex)

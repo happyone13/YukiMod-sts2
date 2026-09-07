@@ -1214,7 +1214,8 @@
     }
   },
   "cutin": {
-    "at": 0.6,
+    "at": 0.0,
+    "before_timeline": true,
     "frames": [
       {
         "path": "res://YukiMod/images/vfx/ux_video/frame_000.png",

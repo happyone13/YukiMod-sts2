@@ -47,14 +47,7 @@ public class ShadowMoon() : YukiModCard(0, CardType.Attack, CardRarity.Rare, Tar
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
-        if (YukiModSharedSettings.CombatEffectsEnabled && YukiModSharedSettings.UltimateCinematicsEnabled)
-        {
-            YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
-            YukiAudioService.TryPlayUxVoice(Owner);
-            YukiAudioService.TryPlayUxSound(Owner);
-        }
-
-        await YukiUxPresentation.PlayAsync(Owner.Creature, [cardPlay.Target], async cinematic =>
+        await YukiUgPresentation.PlayAsync(Owner.Creature, [cardPlay.Target], async cinematic =>
         {
             var attack = DamageCmd.Attack(YukiMoonshadowService.GetCurrentAttackDamage(this))
                 .FromCard(this, cardPlay)

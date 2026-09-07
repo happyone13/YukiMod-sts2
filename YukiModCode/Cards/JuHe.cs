@@ -38,20 +38,13 @@ public class JuHe() : YukiModTokenCard(0, CardType.Attack, CardRarity.Token, Tar
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (YukiModSharedSettings.CombatEffectsEnabled && YukiModSharedSettings.UltimateCinematicsEnabled)
-        {
-            YukiAudioService.SuppressNextDefaultAttackSfx(Owner);
-            YukiAudioService.TryPlayUgAttackVoice(Owner);
-            YukiAudioService.TryPlayUgAttackSound(Owner);
-        }
-
         var combatState = CombatState;
         if (combatState == null)
         {
             return;
         }
 
-        await YukiUgPresentation.PlayAsync(Owner.Creature, combatState.HittableEnemies.ToList(), async cinematic =>
+        await YukiUxPresentation.PlayAsync(Owner.Creature, combatState.HittableEnemies.ToList(), async cinematic =>
         {
             foreach (var enemy in combatState.HittableEnemies.ToList())
             {

@@ -3,6 +3,8 @@ extends CanvasLayer
 @export var config_path: String
 var config: Dictionary
 var elapsed: float = 0.0
+var presentation_elapsed: float = 0.0
+var cutin_lead_in: float = 0.0
 var running: bool = false
 var event_index: int = 0
 var borrowed: Array = []
@@ -71,6 +73,8 @@ func begin_preview() -> void:
 
 func begin_clock() -> void:
     running = true
+    elapsed = 0.0
+    presentation_elapsed = 0.0
     started_usec = Time.get_ticks_usec()
     set_process(true)
     _process(0)
@@ -81,15 +85,22 @@ func _process(_delta: float) -> void:
     # Movie Maker can render faster than wall-clock time; previews advance by the
     # recorded frame delta while combat remains tied to real authored seconds.
     if preview_mode:
-        elapsed += _delta
+        presentation_elapsed += _delta
     else:
-        elapsed = (Time.get_ticks_usec() - started_usec) / 1000000.0
+        presentation_elapsed = (Time.get_ticks_usec() - started_usec) / 1000000.0
     fit_viewport()
+    # UX cut-ins are an opening phase. Keep every Spine timeline suspended until
+    # the final sequence frame has completed, then start the authored timeline at T0.
+    if presentation_elapsed < cutin_lead_in:
+        elapsed = 0.0
+        update_cutin(presentation_elapsed)
+        return
+    elapsed = presentation_elapsed - cutin_lead_in
     while event_index < config.events.size() and config.events[event_index].at <= elapsed:
         dispatch(config.events[event_index])
         event_index += 1
     apply_motion()
-    update_cutin()
+    update_cutin(presentation_elapsed if cutin_lead_in > 0.0 else elapsed)
     for item in fx:
         var e: Dictionary = item.event
         var node: Node2D = item.node
@@ -133,11 +144,13 @@ func prepare_cutin() -> void:
         var texture: Texture2D = load(str(frame.path))
         if texture != null:
             cutin_frames.append({"texture": texture, "duration": float(frame.duration)})
+            if bool(config.cutin.get("before_timeline", false)):
+                cutin_lead_in += float(frame.duration)
 
-func update_cutin() -> void:
+func update_cutin(clock: float) -> void:
     if cutin_sprite == null or cutin_frames.is_empty():
         return
-    var local_time: float = elapsed - float(config.cutin.at)
+    var local_time: float = clock - float(config.cutin.at)
     if local_time < 0.0:
         cutin_sprite.visible = false
         return
