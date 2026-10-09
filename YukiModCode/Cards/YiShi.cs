@@ -28,11 +28,11 @@ public class YiShi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Target
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YiShiNextAttackCostDownPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        var costReduction = IsUpgraded ? 2m : 1m;
+        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<YiShiNextAttackCostDownPower>(choiceContext, Owner.Creature, costReduction, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
     }
 }

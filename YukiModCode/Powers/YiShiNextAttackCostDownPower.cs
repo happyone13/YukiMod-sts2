@@ -33,7 +33,7 @@ public class YiShiNextAttackCostDownPower : YukiModPower
     {
         if (ShouldConsumeOnPlay(cardPlay.Card))
         {
-            await PowerCmd.Decrement(this);
+            await PowerCmd.Remove(this);
         }
     }
 

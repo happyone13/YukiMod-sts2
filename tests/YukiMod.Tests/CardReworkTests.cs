@@ -81,7 +81,7 @@ public sealed class CardReworkTests : CombatTestSuite
         await Play(await AddToHand<DaoShangWu>(), enemy);
         await Play(await AddToHand<DaoShangWu>(), enemy);
 
-        Assert.Equal(hpBefore - 36, enemy.CurrentHp);
+        Assert.Equal(hpBefore - 30, enemy.CurrentHp);
         var sequencePower = Player.Creature.GetPower<DaoShangWuPower>();
         Assert.NotNull(sequencePower);
         Assert.Equal(3, sequencePower.Amount);
@@ -130,6 +130,40 @@ public sealed class CardReworkTests : CombatTestSuite
         await Play(first);
         Assert.Equal(0, first.CurrentDraw);
         Assert.Equal(2, second.CurrentDraw);
+    }
+
+    [Fact]
+    public async Task Tian_yan_saved_draw_count_survives_repeated_deserialization()
+    {
+        var original = await AddToHand<TianYan>();
+        CardCmd.Upgrade(original);
+        original.CurrentDraw = 1;
+
+        var restored = Assert.IsType<TianYan>(CardModel.FromSerializable(original.ToSerializable()));
+        Assert.True(restored.IsUpgraded);
+        Assert.Equal(1, restored.CurrentDraw);
+
+        var restoredAgain = Assert.IsType<TianYan>(CardModel.FromSerializable(restored.ToSerializable()));
+        Assert.True(restoredAgain.IsUpgraded);
+        Assert.Equal(1, restoredAgain.CurrentDraw);
+
+        await Play(await AddToHand<DefendYuki>());
+    }
+
+    [Fact]
+    public async Task Tian_yan_can_still_be_upgraded_after_loading_an_unupgraded_copy()
+    {
+        var original = await AddToHand<TianYan>();
+        original.CurrentDraw = 1;
+
+        var restored = Assert.IsType<TianYan>(CardModel.FromSerializable(original.ToSerializable()));
+        restored.AfterCreated();
+        restored.UpgradeInternal();
+        restored.FinalizeUpgradeInternal();
+
+        Assert.Equal(2, restored.CurrentDraw);
+
+        await Play(await AddToHand<DefendYuki>());
     }
 
     [Fact]

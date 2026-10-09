@@ -129,7 +129,7 @@
     "YUKIMOD_WEI_YU_CHOU_MOU.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n抽{Cards}张牌。\n将1张[gold]手牌[/gold]置于[gold]抽牌堆[/gold]顶部。",
     "YUKIMOD_WEI_YU_CHOU_MOU.selectionScreenPrompt": "选择1张牌置于[gold]抽牌堆[/gold]顶部。",
     "YUKIMOD_YI_SHI.title": "明镜止水",
-    "YUKIMOD_YI_SHI.description": "造成{Damage:diff()}点伤害。\n你的下一张[gold]攻击[/gold]牌费用减少1。",
+    "YUKIMOD_YI_SHI.description": "造成{Damage:diff()}点伤害。\n你的下一张[gold]攻击[/gold]牌费用减少{IfUpgraded:show:2|1}。",
     "YUKIMOD_REN_JIAN_HE_YI.title": "人剑合一",
     "YUKIMOD_REN_JIAN_HE_YI.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n在接下来的2个回合开始时，各额外抽1张牌。",
     "YUKIMOD_ZHEN_DAO.title": "振刀",

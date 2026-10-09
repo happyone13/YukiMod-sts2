@@ -106,6 +106,79 @@ public static class YukiMeleeTeleportAttackPatch
 		yield return U2PlayTargetF2;
 	}
 
+	public static bool TryReturnToOriginForVictory(Creature attacker)
+	{
+		if (attacker == null)
+		{
+			return false;
+		}
+
+		try
+		{
+			if (!Sessions.TryGetValue(attacker, out MeleeSession? session) ||
+			    session == null ||
+			    !session.HasOrigin ||
+			    !TryGetRoomAndNode(attacker, out _, out NCreature attackerNode))
+			{
+				return false;
+			}
+
+			Vector2 origin = session.OriginGlobalPos;
+
+			// Invalidate every outstanding watcher/position lock before restoring the node.
+			// Otherwise a final process-frame callback can move Yuki back beside the target
+			// after the victory animation has already started.
+			session.LastRequestId++;
+			try
+			{
+				MegaSprite? spine = attackerNode.Visuals?.SpineBody;
+				if (spine != null)
+				{
+					if (session.ReadyEventConnected)
+					{
+						spine.DisconnectAnimationEvent(session.ReadyEventCb);
+					}
+					if (session.PlayEventConnected)
+					{
+						spine.DisconnectAnimationEvent(session.PlayEventCb);
+					}
+				}
+			}
+			catch
+			{
+			}
+
+			RestoreLayer(attackerNode, session);
+			session.Teleported = false;
+			session.HasOrigin = false;
+			session.HasOriginFoot = false;
+			session.OriginFootPos = Vector2.Zero;
+			session.ReadyPlaying = false;
+			session.TargetSignature = 0;
+			session.UseFootAnchor = false;
+			session.HasPlannedTeleport = false;
+			session.PlannedTeleportGlobalPos = Vector2.Zero;
+			session.ReadyTeleportedByEvent = false;
+			session.StepPlayerMovePlayed = false;
+			session.ReadyEventConnected = false;
+			session.ReadyEventCb = default;
+			session.PlayEventConnected = false;
+			session.PlayEventCb = default;
+			session.ActivePlayAnim = "";
+			session.ActiveAttackPlayB = "";
+			session.ActiveAttackPlayF = "";
+			session.PendingDeferredTeleportForRequestId = 0;
+
+			attackerNode.GlobalPosition = origin;
+			YukiVictoryAnimCoordinator.MarkTeleportEnd(attacker);
+			return true;
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
 	private static MethodBase? TargetMethod()
 	{
 		MethodInfo? execute = AccessTools.Method(typeof(AttackCommand), nameof(AttackCommand.Execute));

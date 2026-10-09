@@ -84,6 +84,7 @@ public static class YukiVictoryAnimCoordinator
 			if (s.TeleportActive)
 			{
 				s.PendingVictory = playVictory;
+				YukiMeleeTeleportAttackPatch.TryReturnToOriginForVictory(creature);
 				return;
 			}
 		}
@@ -94,5 +95,4 @@ public static class YukiVictoryAnimCoordinator
 		playVictory();
 	}
 }
-
 

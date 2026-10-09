@@ -13,7 +13,7 @@ namespace YukiMod.YukiModCode.Cards;
 [Pool(typeof(YukiModCardPool))]
 public class DaoShangWu() : YukiModCard(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(6m, ValueProp.Move)];
+    protected override IEnumerable<DynamicVar> CanonicalVars => [new DamageVar(5m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -33,6 +33,6 @@ public class DaoShangWu() : YukiModCard(0, CardType.Attack, CardRarity.Rare, Tar
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

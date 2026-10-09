@@ -126,7 +126,7 @@
     "YUKIMOD_TIAN_JI.title": "Heaven's Edge",
     "YUKIMOD_TIAN_JI.description": "Put your [gold]hand[/gold] on top of your draw pile.\nDraw that many cards.\n[gold]Inspiration[/gold]: Draw 1 card.",
     "YUKIMOD_YI_SHI.title": "Still Water",
-    "YUKIMOD_YI_SHI.description": "Deal {Damage:diff()} damage.\nYour next [gold]Attack[/gold] costs 1 less.",
+    "YUKIMOD_YI_SHI.description": "Deal {Damage:diff()} damage.\nYour next [gold]Attack[/gold] costs {IfUpgraded:show:2|1} less.",
     "YUKIMOD_REN_JIAN_HE_YI.title": "Unity of Sword and Self",
     "YUKIMOD_REN_JIAN_HE_YI.description": "Gain {Block:diff()} Block.\nAt the start of each of your next 2 turns, draw 1 additional card.",
     "YUKIMOD_ZHEN_DAO.title": "Blade Resonance",

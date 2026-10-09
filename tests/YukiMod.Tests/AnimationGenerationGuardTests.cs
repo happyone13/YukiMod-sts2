@@ -53,6 +53,24 @@ public sealed class AnimationGenerationGuardTests : CombatTestSuite
         Assert.Contains("session.OriginalSiblingIndex = attackerNode.GetIndex()", source);
         Assert.Contains("attackerNode.ZIndex = session.OriginalZIndex", source);
 
+        int victoryReturn = source.IndexOf("TryReturnToOriginForVictory", StringComparison.Ordinal);
+        int invalidateWatchers = source.IndexOf("session.LastRequestId++;", victoryReturn, StringComparison.Ordinal);
+        int restorePosition = source.IndexOf("attackerNode.GlobalPosition = origin;", invalidateWatchers, StringComparison.Ordinal);
+        int releaseVictory = source.IndexOf("YukiVictoryAnimCoordinator.MarkTeleportEnd(attacker);", restorePosition, StringComparison.Ordinal);
+        Assert.True(victoryReturn >= 0);
+        Assert.True(invalidateWatchers > victoryReturn);
+        Assert.True(restorePosition > invalidateWatchers);
+        Assert.True(releaseVictory > restorePosition);
+
+        string victoryCoordinator = File.ReadAllText(Path.Combine(
+            RepositoryRoot(),
+            "YukiModCode",
+            "Mechanics",
+            "Animation",
+            "YukiVictoryAnimCoordinator.cs"));
+        Assert.Contains("s.PendingVictory = playVictory;", victoryCoordinator);
+        Assert.Contains("TryReturnToOriginForVictory(creature)", victoryCoordinator);
+
         string prewarmer = File.ReadAllText(Path.Combine(
             RepositoryRoot(),
             "YukiModCode",

@@ -13,6 +13,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class TianYan() : YukiModCard(0, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     private int _currentDraw = 2;
+    private bool _skipNextUpgradeDrawIncrease;
 
     public override YukiCardSchool School => YukiCardSchool.Inspiration;
 
@@ -41,6 +42,24 @@ public class TianYan() : YukiModCard(0, CardType.Skill, CardRarity.Common, Targe
 
     protected override void OnUpgrade()
     {
+        if (_skipNextUpgradeDrawIncrease)
+        {
+            _skipNextUpgradeDrawIncrease = false;
+            return;
+        }
+
         CurrentDraw++;
+    }
+
+    protected override void AfterDeserialized()
+    {
+        base.AfterDeserialized();
+        _skipNextUpgradeDrawIncrease = true;
+    }
+
+    public override void AfterCreated()
+    {
+        base.AfterCreated();
+        _skipNextUpgradeDrawIncrease = false;
     }
 }

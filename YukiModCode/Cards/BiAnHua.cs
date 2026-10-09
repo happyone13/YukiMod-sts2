@@ -16,7 +16,7 @@ namespace YukiMod.YukiModCode.Cards;
 public class BiAnHua() : YukiModCard(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(6m, ValueProp.Move)];
+        [new DamageVar(8m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -33,6 +33,6 @@ public class BiAnHua() : YukiModCard(1, CardType.Attack, CardRarity.Common, Targ
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

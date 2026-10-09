@@ -32,7 +32,7 @@ public class MiHuoYiJi() : YukiModCard(1, CardType.Attack, CardRarity.Common, Ta
         [YukiHoverTipFactory.FromInspiration()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(8m, ValueProp.Move)];
+        [new DamageVar(10m, ValueProp.Move)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
