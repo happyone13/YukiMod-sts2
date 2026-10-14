@@ -35,7 +35,7 @@
     "YUKIMOD_HUA_POWER.title": "Flower",
     "YUKIMOD_HUA_POWER.description": "You have [gold]Flower[/gold].\nYour [gold]Snow[/gold] and [gold]Moon[/gold] gain [gold]Black Cloud[/gold]: reduce cost by 1.\nThe first time you have [gold]Snow[/gold], [gold]Moon[/gold], and [gold]Flower[/gold], add 1 [gold]Iai[/gold] to your [gold]Hand[/gold].",
     "YUKIMOD_HUA_POWER.smartDescription": "You have [gold]Flower[/gold].\nYour [gold]Snow[/gold] and [gold]Moon[/gold] gain [gold]Black Cloud[/gold]: reduce cost by 1.\nThe first time you have [gold]Snow[/gold], [gold]Moon[/gold], and [gold]Flower[/gold], add 1 [gold]Iai[/gold] to your [gold]Hand[/gold].",
-    "YUKIMOD_HEI_YUN_MI_FA_JIANG_LIN_POWER.title": "Black Cloud Art: Descent",
+    "YUKIMOD_HEI_YUN_MI_FA_JIANG_LIN_POWER.title": "Black Cloud Secret: Descent",
     "YUKIMOD_HEI_YUN_MI_FA_JIANG_LIN_POWER.description": "The next time you enter [gold]Black Cloud Stance[/gold], apply {Amount} [gold]Vulnerable[/gold] to all enemies.",
     "YUKIMOD_HEI_YUN_MI_FA_JIANG_LIN_POWER.smartDescription": "The next time you enter [gold]Black Cloud Stance[/gold], apply {Amount} [gold]Vulnerable[/gold] to all enemies.",
     "YUKIMOD_HEI_YUN_MI_FA_MU_LIN_POWER.title": "Black Cloud Art: Veilfall",

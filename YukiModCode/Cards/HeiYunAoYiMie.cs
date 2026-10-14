@@ -28,7 +28,7 @@ public class HeiYunAoYiMie() : YukiModCard(1, CardType.Attack, CardRarity.Common
         [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<WeakPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new DamageVar(9m, ValueProp.Move), new PowerVar<WeakPower>(1m)];
+        [new DamageVar(8m, ValueProp.Move), new PowerVar<WeakPower>(1m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -52,6 +52,7 @@ public class HeiYunAoYiMie() : YukiModCard(1, CardType.Attack, CardRarity.Common
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars.Weak.UpgradeValueBy(1m);
     }
 }

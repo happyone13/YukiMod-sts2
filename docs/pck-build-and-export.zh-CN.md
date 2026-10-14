@@ -221,19 +221,20 @@ YukiMod/images/powers/power.png
 
 ## 版本号修改
 
-版本号只改根目录：
+版本号需同步根目录的 Mod 清单和程序集版本：
 
 ```text
 YukiMod.json
+YukiMod.csproj 中的 <Version>
 ```
 
 例如：
 
 ```json
-"version": "v0.0.9"
+"version": "v0.1.6"
 ```
 
-不要改 `tmpmods/YukiMod/YukiMod.json`。那个目录是临时或旧副本，不是当前构建的权威来源。
+对应的项目配置为 `<Version>0.1.6</Version>`。不要改 `tmpmods/YukiMod/YukiMod.json`。那个目录是临时或旧副本，不是当前构建的权威来源。
 
 构建后可以检查游戏目录里的清单：
 

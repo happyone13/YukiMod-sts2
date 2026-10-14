@@ -17,24 +17,34 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunMiFaHuangHun() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     public override bool GainsBlock => true;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [YukiHoverTipFactory.FromNoMing()];
+        [YukiHoverTipFactory.FromBlackCloud(), YukiHoverTipFactory.FromNoMing()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(8m, ValueProp.Move), new DynamicVar("BlackCloud", 2m)];
+        [new BlockVar(8m, ValueProp.Move), new CardsVar(2), new DynamicVar("BlackCloud", 2m)];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var isBlackCloudActive = YukiBlackCloudService.IsActive(Owner);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["BlackCloud"].BaseValue, this);
+        if (isBlackCloudActive)
+        {
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+        }
+        else
+        {
+            await YukiBlackCloudService.GainBlackCloud(choiceContext, Owner, DynamicVars["BlackCloud"].BaseValue, this);
+        }
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(2m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
         DynamicVars["BlackCloud"].UpgradeValueBy(1m);
     }
 }

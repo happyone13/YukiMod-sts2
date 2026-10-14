@@ -26,9 +26,9 @@
 | 月光 | 1 | 通常 | 技能 | 凝聚1。 | 月影 | ID: YUKIMOD_YUE_GUANG；类: YueGuang；牌池: 主牌池；源码关键词: Exhaust；升级费用变化: -1 |  |
 | 花 | 1 | 通常 | 攻击 | 造成6/8点伤害。；获得1层花。；黑云：减少1费。 | 黑云 | ID: YUKIMOD_HUA；类: Hua；牌池: 主牌池 |  |
 | 黑云奥义：影 | 1 | 通常 | 攻击 | 造成4/5点伤害2次。；黑云：额外攻击2次；否则，获得2层无明。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_YING_FU；类: HeiYunMiFaYingFu；牌池: 主牌池 |  |
-| 黑云奥义：灭 | 1 | 通常 | 攻击 | 造成9/12点伤害。；黑云：额外攻击1次；否则，施加1层虚弱。 | 黑云 | ID: YUKIMOD_HEI_YUN_AO_YI_MIE；类: HeiYunAoYiMie；牌池: 主牌池 |  |
-| 黑云秘法：积雨 | 1 | 通常 | 技能 | 获得8/11点格挡。；在你的下回合开始时，进入黑云姿态。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_JI_YU；类: HeiYunMiFaJiYu；牌池: 主牌池 |  |
-| 黑云秘法：黄昏 | 1 | 通常 | 技能 | 获得8/10点格挡。；获得2/3层无明。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_HUANG_HUN；类: HeiYunMiFaHuangHun；牌池: 主牌池 |  |
+| 黑云奥义：灭 | 1 | 通常 | 攻击 | 造成8/10点伤害。；黑云：额外攻击1次；否则，施加1/2层虚弱。 | 黑云 | ID: YUKIMOD_HEI_YUN_AO_YI_MIE；类: HeiYunAoYiMie；牌池: 主牌池 |  |
+| 黑云秘法：积雨 | 1 | 通常 | 技能 | 获得8/11点格挡。；黑云：获得1费。否则，在你的下回合开始时，进入黑云姿态。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_JI_YU；类: HeiYunMiFaJiYu；牌池: 主牌池 |  |
+| 黑云秘法：黄昏 | 1 | 通常 | 技能 | 获得8/10点格挡。；黑云：抽2/3张牌。否则，获得2/3层无明。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_HUANG_HUN；类: HeiYunMiFaHuangHun；牌池: 主牌池 |  |
 | 刀鞘打击 | 1 | 通常 | 攻击 | 造成8点伤害。；在下个回合获得1/2。 | 其他 | ID: YUKIMOD_DAO_QIAO_DA_JI；类: DaoQiaoDaJi；牌池: 主牌池 |  |
 | 明镜止水 | 1 | 通常 | 攻击 | 造成9/12点伤害。；你的下一张攻击牌费用减少1。 | 其他 | ID: YUKIMOD_YI_SHI；类: YiShi；牌池: 主牌池 |  |
 | 月 | 1 | 通常 | 攻击 | 造成6/8点伤害。；额外攻击1次。；获得1层月。 | 其他 | ID: YUKIMOD_YUE；类: Yue；牌池: 主牌池 |  |
@@ -49,9 +49,9 @@
 | 冰点之刃 | 1 | 罕见 | 能力 | 当灵感触发时，对所有敌人造成4/6点伤害。 | 灵感 | ID: YUKIMOD_BING_DIAN_ZHI_REN；类: BingDianZhiRen；牌池: 主牌池 |  |
 | 咒术 | 1 | 罕见 | 技能 | 升级你手中的月影。；你手中的月影伤害+5。 | 月影 | ID: YUKIMOD_ZHOU_SHU；类: ZhouShu；牌池: 主牌池；源码关键词: Exhaust；升级费用变化: -1 |  |
 | 圆舞 | 2 | 罕见 | 技能 | 获得12/16点格挡。；凝聚1。；选择1张手牌消耗。 | 月影 | ID: YUKIMOD_YUAN_WU；类: YuanWu；牌池: 主牌池 |  |
-| 拨云见日 | 1 | 罕见 | 技能 | 获得3/4层无明。；在你的下回合开始时，进入黑云姿态。；选择1张手牌保留1回合。 | 黑云 | ID: YUKIMOD_BO_RI_JIAN_YUN；类: BoRiJianYun；牌池: 主牌池 |  |
+| 拨云见日 | 0 | 罕见 | 技能 | 获得2/3层无明。；在你的下回合开始时，进入黑云姿态。；选择1张手牌保留1回合。 | 黑云 | ID: YUKIMOD_BO_RI_JIAN_YUN；类: BoRiJianYun；牌池: 主牌池 |  |
 | 黑云奥义：残 | 0 | 罕见 | 技能 | 抽1张牌。；进入黑云姿态。；选择1张手牌消耗。 | 黑云 | ID: YUKIMOD_HEI_YUN_AO_YI_CAN；类: HeiYunAoYiCan；牌池: 主牌池；源码关键词: Retain |  |
-| 黑云秘法：降临 | 1 | 罕见 | 技能 | 获得9/12点格挡。；下次进入黑云姿态时，对所有敌人施加1层易伤。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_JIANG_LIN；类: HeiYunMiFaJiangLin；牌池: 主牌池 |  |
+| 黑云奥义：临 | 1 | 罕见 | 攻击 | 造成4/6点伤害。；黑云：额外攻击2次。否则，下次进入黑云姿态时，对所有敌人施加1层易伤。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_JIANG_LIN；类: HeiYunMiFaJiangLin；牌池: 主牌池 |  |
 | 黑云秘法：魂佑 | 2 | 罕见 | 技能 | 获得12点格挡。；黑云：获得12点格挡；否则，下次进入黑云姿态时获得1/2。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_HUN_YOU；类: HeiYunMiFaHunYou；牌池: 主牌池 |  |
 | 威压 | 1 | 罕见 | 能力 | 处于黑云姿态时，你的攻击命中会获得2/3点格挡。 | 黑云 | ID: YUKIMOD_WEI_YA；类: WeiYa；牌池: 主牌池 |  |
 | 剑舞 | 1 | 罕见 | 攻击 | 根据本回合额外抽牌的数量造成5/7点伤害（当前{CurrentHitCount}次）。 | 其他 | ID: YUKIMOD_JIAN_WU；类: JianWu；牌池: 主牌池 |  |
@@ -79,7 +79,7 @@
 | 黑云奥义：黑雾 | 1 | 稀有 | 攻击 | 造成8/10点伤害。；黑云：消耗手牌中所有非黑云的牌，每消耗1张，额外攻击1次；否则，获得2/3层无明。 | 黑云 | ID: YUKIMOD_HEI_YUN_AO_YI_HEI_WU；类: HeiYunAoYiHeiWu；牌池: 主牌池 |  |
 | 黑云心法 | 0 | 稀有 | 技能 | 本回合内保留黑云姿态。 | 黑云 | ID: YUKIMOD_HEI_YUN_XIN_FA；类: HeiYunXinFa；牌池: 主牌池；源码关键词: Retain |  |
 | 黑云秘法：幕临 | 1 | 稀有 | 技能 | 黑云：获得2，抽2张牌；否则，下次进入黑云姿态时获得{DelayedEnergy:energyIcons()}，抽2张牌。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_MU_LIN；类: HeiYunMiFaMuLin；牌池: 主牌池；源码关键词: Exhaust；升级费用变化: -1 |  |
-| 黑云秘法：燕返 | 0 | 稀有 | 技能 | 黑云：释放你上一次释放的黑云牌（自身除外）。否则，你下一张释放的黑云牌（自身除外）额外释放一次。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_YAN_HUI；类: HeiYunMiFaYanHui；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
+| 黑云秘法：燕返 | 0 | 稀有 | 技能 | 黑云：释放你上一次释放的黑云牌。否则，你下一张释放的黑云牌额外释放一次。（自身除外） | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_YAN_HUI；类: HeiYunMiFaYanHui；牌池: 主牌池；源码关键词: Exhaust；升级移除消耗 |  |
 | 漫天 | 2 | 稀有 | 能力 | 处于黑云姿态时，每当你使用黑云牌，抽1张牌。 | 黑云 | ID: YUKIMOD_MAN_TIAN；类: ManTian；牌池: 主牌池；升级费用变化: -1 |  |
 | 黑云秘法：出鞘 | 1 | 稀有 | 能力 | 每当你进入黑云姿态时，将1张{IfUpgraded:show:升级过的}具有虚无的随机黑云牌加入手中。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_CHU_QIAO；类: HeiYunMiFaChuQiao；牌池: 主牌池 |  |
 | 黑云秘法：霞阵 | 1 | 稀有 | 能力 | 回合开始时，获得2/3层无明。 | 黑云 | ID: YUKIMOD_HEI_YUN_MI_FA_XIA_ZHEN；类: HeiYunMiFaXiaZhen；牌池: 主牌池 |  |
@@ -142,6 +142,6 @@
 
 | 种类 | 数量 |
 | --- | ---: |
-| 攻击 | 38 |
-| 技能 | 39 |
+| 攻击 | 39 |
+| 技能 | 38 |
 | 能力 | 26 |

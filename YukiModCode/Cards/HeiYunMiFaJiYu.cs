@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using YukiMod.YukiModCode.Character;
 using YukiMod.YukiModCode.HoverTips;
 using YukiMod.YukiModCode.Powers;
+using YukiMod.YukiModCode.Services;
 
 namespace YukiMod.YukiModCode.Cards;
 
@@ -17,19 +18,28 @@ namespace YukiMod.YukiModCode.Cards;
 public class HeiYunMiFaJiYu() : YukiModCard(1, CardType.Skill, CardRarity.Common, TargetType.Self)
 {
     public override YukiCardSchool School => YukiCardSchool.BlackCloud;
+    public override bool HasOwnBlackCloudEffect => true;
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips =>
-        [HoverTipFactory.FromPower<BlackCloudEnterNextTurnPower>()];
+        [YukiHoverTipFactory.FromBlackCloud(), HoverTipFactory.FromPower<BlackCloudEnterNextTurnPower>()];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        [new BlockVar(8m, ValueProp.Move)];
+        [new BlockVar(8m, ValueProp.Move), new EnergyVar(1)];
 
     public override bool GainsBlock => true;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        var isBlackCloudActive = YukiBlackCloudService.IsActive(Owner);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await YukiMod.YukiModCode.Services.YukiPowerService.Apply<BlackCloudEnterNextTurnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        if (isBlackCloudActive)
+        {
+            await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
+        }
+        else
+        {
+            await YukiPowerService.Apply<BlackCloudEnterNextTurnPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+        }
     }
 
     protected override void OnUpgrade()

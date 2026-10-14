@@ -30,9 +30,9 @@ public sealed class CardBalanceSeptemberTests : CombatTestSuite
         AssertDamage<MiHuoYiJi>(10m, 12m);
 
         var boRiJianYun = (BoRiJianYun)ModelDb.Card<BoRiJianYun>().ToMutable();
-        Assert.Equal(4m, boRiJianYun.DynamicVars["BlackCloud"].BaseValue);
+        Assert.Equal(2m, boRiJianYun.DynamicVars["BlackCloud"].BaseValue);
         CardCmd.Upgrade(boRiJianYun);
-        Assert.Equal(6m, boRiJianYun.DynamicVars["BlackCloud"].BaseValue);
+        Assert.Equal(3m, boRiJianYun.DynamicVars["BlackCloud"].BaseValue);
 
         var yiShi = (YiShi)ModelDb.Card<YiShi>().ToMutable();
         Assert.Equal(9m, yiShi.DynamicVars.Damage.BaseValue);
