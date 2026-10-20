@@ -291,6 +291,9 @@ public static class YukiBattleReadyOverlayPatches
 
 	public static void BeforeCardPlayedPrefix(CombatState combatState, CardPlay cardPlay)
 	{
+		if (!cardPlay.IsFirstInSeries)
+			return;
+
 		try
 		{
 			CardModel? card = cardPlay.Card;
@@ -308,6 +311,9 @@ public static class YukiBattleReadyOverlayPatches
 
 	public static void AfterBeforeCardPlayedPostfix(CombatState combatState, CardPlay cardPlay)
 	{
+		if (!cardPlay.IsFirstInSeries)
+			return;
+
 		try
 		{
 			CardModel? maybeCard = cardPlay.Card;

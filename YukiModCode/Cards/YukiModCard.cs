@@ -48,6 +48,9 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
 
     protected Task PlayPowerCastAnim()
     {
+        if (YukiReplayVisuals.ShouldSkip(Owner?.Creature))
+            return Task.CompletedTask;
+
         if (Type != CardType.Power || Owner?.Creature == null || Owner.Character == null)
             return Task.CompletedTask;
 
@@ -56,7 +59,7 @@ public abstract class YukiModCard(int cost, CardType type, CardRarity rarity, Ta
 
     public override async Task BeforeCardPlayed(CardPlay cardPlay)
     {
-        if (cardPlay.Card != this)
+        if (cardPlay.Card != this || !cardPlay.IsFirstInSeries)
         {
             return;
         }

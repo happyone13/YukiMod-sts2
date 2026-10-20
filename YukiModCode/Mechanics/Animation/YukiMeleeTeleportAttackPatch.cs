@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using YukiMod.YukiModCode.Cards;
+using YukiMod.YukiModCode.Services;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -331,6 +332,9 @@ public static class YukiMeleeTeleportAttackPatch
 
 	public static Task TriggerAnimProxy(Creature creature, string triggerName, float waitTime, AttackCommand command)
 	{
+		if (IsAttackTrigger(triggerName) && YukiReplayVisuals.ShouldSkip(creature))
+			return Task.CompletedTask;
+
 		if (TriggerAnimMethod == null)
 		{
 			return Task.CompletedTask;

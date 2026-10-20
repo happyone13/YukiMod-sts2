@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using YukiMod.YukiModCode.Services;
 using YukiMod.YukiModCode.Mechanics.Vfx;
 using Godot;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -27,7 +28,7 @@ public static class YukiU1BuffAnim
 			return;
 		}
 
-		if (!TryGetNode(owner, out NCombatRoom room, out NCreature node))
+		if (YukiReplayVisuals.ShouldSkip(owner) || !TryGetNode(owner, out NCombatRoom room, out NCreature node))
 		{
 			await onPlay();
 			return;

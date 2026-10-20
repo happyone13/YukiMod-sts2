@@ -75,6 +75,9 @@ public static class YukiAudioService
         if (!TryResolvePath(lower, out var path))
             return false;
 
+        if (YukiReplayVisuals.ShouldSkip() && (lower.Contains("attack") || lower.Contains("cast")))
+            return true;
+
         return TryPlay(path, linearVolume);
     }
 
@@ -133,6 +136,9 @@ public static class YukiAudioService
 
     public static bool TryPlayCustomCardClip(string clipKey, Player? player = null, float linearVolume = 1f)
     {
+        if (YukiReplayVisuals.ShouldSkip(player?.Creature))
+            return false;
+
         if (!IsYukiPlayer(player))
             return false;
 
@@ -162,6 +168,9 @@ public static class YukiAudioService
 
     public static void SuppressNextDefaultAttackSfx(Player? player = null)
     {
+        if (YukiReplayVisuals.ShouldSkip(player?.Creature))
+            return;
+
         if (!IsYukiPlayer(player))
             return;
 
@@ -170,6 +179,9 @@ public static class YukiAudioService
 
     public static void SuppressNextDefaultCastSfx(Player? player = null)
     {
+        if (YukiReplayVisuals.ShouldSkip(player?.Creature))
+            return;
+
         if (!IsYukiPlayer(player))
             return;
 

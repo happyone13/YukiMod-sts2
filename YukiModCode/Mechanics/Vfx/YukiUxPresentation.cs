@@ -25,6 +25,12 @@ public static class YukiUxPresentation
 
     public static async Task PlayAsync(Creature caster, IEnumerable<Creature> targets, Func<bool, Task> onHit)
     {
+        if (YukiReplayVisuals.ShouldSkip(caster))
+        {
+            await onHit(false);
+            return;
+        }
+
         var room = NCombatRoom.Instance;
         var actor = room?.GetCreatureNode(caster)?.Visuals;
         if (!YukiModSharedSettings.CombatEffectsEnabled
