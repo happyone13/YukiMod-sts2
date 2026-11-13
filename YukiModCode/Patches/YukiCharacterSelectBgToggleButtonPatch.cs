@@ -41,8 +41,9 @@ public static class YukiCharacterSelectBgToggleButtonPatch
 	[HarmonyPatch(typeof(NCharacterSelectScreen), nameof(NCharacterSelectScreen.SelectCharacter))]
 	[HarmonyPostfix]
 	[HarmonyPriority(Priority.Last)]
-	public static void SelectCharacterPostfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton, CharacterModel characterModel)
+	public static void SelectCharacterPostfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton)
 	{
+		CharacterModel characterModel = charSelectButton.Character;
 		Button? btn = EnsureToggleButton(__instance);
 		if (btn == null)
 		{

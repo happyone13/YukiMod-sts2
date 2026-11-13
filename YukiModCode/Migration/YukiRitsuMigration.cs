@@ -5,6 +5,7 @@ using STS2RitsuLib.Settings;
 using YukiMod.YukiModCode.Encounters;
 using YukiMod.YukiModCode.Mechanics.CardHoldOverlay;
 using YukiMod.YukiModCode.Mechanics.Settings;
+using YukiMod.YukiModCode.Patches;
 
 namespace YukiMod.YukiModCode.Migration;
 
@@ -36,6 +37,7 @@ internal static class YukiRitsuMigration
         presentationPatcher.RegisterPatch<YukiBattleReadyBeforeCombatStartPatch>();
         presentationPatcher.RegisterPatch<YukiBattleReadyAfterCombatVictoryPatch>();
         presentationPatcher.RegisterPatch<YukiBattleReadyAfterDeathPatch>();
+        presentationPatcher.RegisterPatch<YukiDeathAnimationCuePatch>();
         presentationPatcher.RegisterPatch<YukiBattleReadyBeforeCardPlayedPrefixPatch>();
         presentationPatcher.RegisterPatch<YukiBattleReadyBeforeCardPlayedPostfixPatch>();
         presentationPatcher.PatchAll();

@@ -99,11 +99,13 @@ public class ZhaoJia() : YukiModCard(1, CardType.Skill, CardRarity.Uncommon, Tar
             PreviewValue = previewBlock;
         }
 
+#if !STS2_113
         protected override decimal GetBaseValueForIConvertible()
         {
             return _owner is ZhaoJia zhaoJia
                 ? zhaoJia.GetCurrentBlockGain()
                 : base.GetBaseValueForIConvertible();
         }
+#endif
     }
 }

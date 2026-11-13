@@ -19,8 +19,9 @@ public static class YukiCharacterSelectAnimLoopPatch
     private const string YukiCharacterId = YukiModInfo.CharacterId;
 
     [HarmonyPostfix]
-    public static void Postfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton, CharacterModel characterModel)
+    public static void Postfix(NCharacterSelectScreen __instance, NCharacterSelectButton charSelectButton)
     {
+        CharacterModel characterModel = charSelectButton.Character;
         if (charSelectButton.IsLocked || !IsYukiCharacter(characterModel))
         {
             return;

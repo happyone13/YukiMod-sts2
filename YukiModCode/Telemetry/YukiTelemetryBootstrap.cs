@@ -29,11 +29,16 @@ internal static class YukiTelemetryBootstrap
                 TelemetryRequest.BasicUsage("Session start, framework/game versions, platform, language, and anonymous install id."),
                 TelemetryRequest.ModInventory("Installed mod list, versions, and load states for compatibility analysis."),
                 TelemetryRequest.Diagnostics("Exception reports and runtime diagnostics."),
-                TelemetryRequest.RunHistory(
+                TelemetryRequest.RunHistoryFiltered(
                     "Complete Yuki run history after each run ends, including final deck, outcome, floor reached, ascension, and run duration for balance analysis.",
-                    captureFilter: IsYukiRun)
+                    captureFilter: IsYukiCapture)
             ]
         };
+    }
+
+    private static bool IsYukiCapture(TelemetryCaptureContext context)
+    {
+        return context.SourceData is RunEndedEvent evt && IsYukiRun(evt);
     }
 
     internal static bool IsYukiRun(RunEndedEvent evt)

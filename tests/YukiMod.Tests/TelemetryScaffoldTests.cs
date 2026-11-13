@@ -61,7 +61,8 @@ public sealed class TelemetryScaffoldTests : CombatTestSuite
         Assert.Contains("TelemetryRequest.ModInventory", bootstrapSource);
         Assert.Contains("TelemetryRequest.Diagnostics", bootstrapSource);
         Assert.Contains("TelemetryRequest.RunHistory", bootstrapSource);
-        Assert.Contains("captureFilter: IsYukiRun", bootstrapSource);
+        Assert.Contains("captureFilter: IsYukiCapture", bootstrapSource);
+        Assert.Contains("context.SourceData is RunEndedEvent evt && IsYukiRun(evt)", bootstrapSource);
         Assert.Contains("internal static bool IsYukiRun(RunEndedEvent evt)", bootstrapSource);
         Assert.DoesNotContain("TelemetryRequest.Custom", bootstrapSource);
         Assert.DoesNotContain("run_summary", bootstrapSource);
