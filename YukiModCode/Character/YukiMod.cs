@@ -64,6 +64,7 @@ public class YukiMod : ModCharacterTemplate<YukiModCardPool, YukiModRelicPool, Y
 
     protected override NCreatureVisuals? TryCreateCreatureVisuals()
     {
+        MainFile.PreloadCharacterEffects();
         return RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(CustomVisualsPath!);
     }
 

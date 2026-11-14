@@ -38,8 +38,9 @@ public sealed class YukiStanceVfxController
         var visuals = NCombatRoom.Instance?.GetCreatureNode(owner)?.Visuals;
         if (visuals == null)
             return;
+        var model = visuals.GetNodeOrNull<Node2D>("ModelRoot") ?? visuals;
 
-        var container = visuals.GetNodeOrNull<Node2D>(ContainerName);
+        var container = model.GetNodeOrNull<Node2D>(ContainerName);
         if (container == null)
         {
             container = new Node2D
@@ -47,7 +48,7 @@ public sealed class YukiStanceVfxController
                 Name = ContainerName,
                 Position = Vector2.Zero
             };
-            visuals.AddChild(container);
+            model.AddChild(container);
         }
 
         if (_currentAura != null &&

@@ -7,7 +7,9 @@
 script = ExtResource("2_visuals")
 metadata/_edit_group_ = true
 
-[node name="Visuals" type="SpineSprite" parent="."]
+[node name="ModelRoot" type="Node2D" parent="."]
+
+[node name="Visuals" type="SpineSprite" parent="ModelRoot"]
 skeleton_data_res = ExtResource("1_yuki_spine")
 preview_skin = "Default"
 preview_animation = "idle_loop"
@@ -30,7 +32,7 @@ mouse_filter = 2
 unique_name_in_owner = true
 position = Vector2(30, -310)
 
-[node name="CenterPos" type="Marker2D" parent="."]
+[node name="CenterPos" type="Marker2D" parent="ModelRoot"]
 unique_name_in_owner = true
 position = Vector2(4, -168)
 
@@ -40,4 +42,4 @@ position = Vector2(0, -132)
 
 [node name="TalkPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -208)
+position = Vector2(142, -325)

@@ -51,8 +51,6 @@ public static class YukiMeleeTeleportAttackPatch
 		public bool HasOriginalLayer;
 		public int OriginalZIndex;
 		public bool OriginalZAsRelative;
-		public Node? OriginalParent;
-		public int OriginalSiblingIndex;
 		public bool HasOriginFoot;
 		public Vector2 OriginFootPos;
 		public int LastRequestId;
@@ -170,7 +168,7 @@ public static class YukiMeleeTeleportAttackPatch
 			session.ActiveAttackPlayF = "";
 			session.PendingDeferredTeleportForRequestId = 0;
 
-			attackerNode.GlobalPosition = origin;
+			GetModelRoot(attackerNode).GlobalPosition = origin;
 			YukiVictoryAnimCoordinator.MarkTeleportEnd(attacker);
 			return true;
 		}
@@ -538,8 +536,8 @@ public static class YukiMeleeTeleportAttackPatch
 				}
 
 				RestoreLayer(attackerNode, s);
-				attackerNode.GlobalPosition = pendingOrigin;
-				attackerNode.GlobalPosition = pendingOrigin;
+				GetModelRoot(attackerNode).GlobalPosition = pendingOrigin;
+				GetModelRoot(attackerNode).GlobalPosition = pendingOrigin;
 				TryAddIdleLoop(attackerNode);
 
 				float uniformScale = GetChaosEffUniformScale(attackerNode, pendingReturnProfile.UniformScaleMultiplier);
@@ -757,11 +755,11 @@ public static class YukiMeleeTeleportAttackPatch
 
 					if (eff != null && GodotObject.IsInstanceValid(eff))
 					{
-						Log.Info($"[{YukiModInfo.ModId}] ChaosEff: found=true scene='{scenePath}' local={eff.Position} global={eff.GlobalPosition} visualsGlobal={visualsGlobal} creatureGlobal={attackerNode.GlobalPosition}");
+						Log.Info($"[{YukiModInfo.ModId}] ChaosEff: found=true scene='{scenePath}' local={eff.Position} global={eff.GlobalPosition} visualsGlobal={visualsGlobal} creatureGlobal={GetModelRoot(attackerNode).GlobalPosition}");
 					}
 					else
 					{
-						Log.Info($"[{YukiModInfo.ModId}] ChaosEff: found=false scene='{scenePath}' visualsGlobal={visualsGlobal} creatureGlobal={attackerNode.GlobalPosition}");
+						Log.Info($"[{YukiModInfo.ModId}] ChaosEff: found=false scene='{scenePath}' visualsGlobal={visualsGlobal} creatureGlobal={GetModelRoot(attackerNode).GlobalPosition}");
 					}
 				}
 			}
@@ -832,14 +830,14 @@ public static class YukiMeleeTeleportAttackPatch
 				Vector2 newPos = session.UseFootAnchor
 					? ComputeDesiredGlobalPosByFoot(attackerNode, session.LatestTargetCenter, distance: profile.TeleportDistance, attacker.Side)
 					: ComputeDesiredGlobalPos(attackerNode, session.LatestTargetCenter, distance: profile.TeleportDistance, attacker.Side);
-				attackerNode.GlobalPosition = newPos;
+				GetModelRoot(attackerNode).GlobalPosition = newPos;
 			}
 			session.TargetSignature = signature;
 
 			if (!session.HasOrigin)
 			{
 				session.HasOrigin = true;
-				session.OriginGlobalPos = attackerNode.GlobalPosition;
+				session.OriginGlobalPos = GetModelRoot(attackerNode).GlobalPosition;
 			}
 
 			try
@@ -1026,7 +1024,7 @@ public static class YukiMeleeTeleportAttackPatch
 							session.HasPlannedTeleport = true;
 							session.PlannedTeleportGlobalPos = plannedGround;
 
-							n.GlobalPosition = plannedGround + activeProfile.ReadyTeleportOffset;
+							GetModelRoot(n).GlobalPosition = plannedGround + activeProfile.ReadyTeleportOffset;
 							session.ReadyTeleportedByEvent = true;
 
 							try
@@ -1115,10 +1113,10 @@ public static class YukiMeleeTeleportAttackPatch
 					session.PlannedTeleportGlobalPos = plannedPos;
 
 					RaiseAboveCombatants(room, attackerNode, session);
-					attackerNode.GlobalPosition = plannedPos;
+					GetModelRoot(attackerNode).GlobalPosition = plannedPos;
 					string playAnim = GetActivePlayAnim(attackerNode, activeProfile, session);
 					attackerNode.SpineAnimation.SetAnimation(playAnim, loop: false);
-					attackerNode.GlobalPosition = plannedPos;
+					GetModelRoot(attackerNode).GlobalPosition = plannedPos;
 
 					Vector2 targetFoot = GetFootPos(attackerNode);
 					PlayOneShotLayers(room, targetFoot, vfx.StepTargetArriveB, vfx.StepAnimBack, vfx.StepTargetArriveF, vfx.StepAnimFront, uniformScale);
@@ -1194,10 +1192,10 @@ public static class YukiMeleeTeleportAttackPatch
 			session.PlannedTeleportGlobalPos = plannedPos;
 
 			RaiseAboveCombatants(room, attackerNode, session);
-			attackerNode.GlobalPosition = plannedPos;
+			GetModelRoot(attackerNode).GlobalPosition = plannedPos;
 			string playAnim = GetActivePlayAnim(attackerNode, activeProfile, session);
 			attackerNode.SpineAnimation.SetAnimation(playAnim, loop: false);
-			attackerNode.GlobalPosition = plannedPos;
+			GetModelRoot(attackerNode).GlobalPosition = plannedPos;
 
 			Vector2 targetFoot = GetFootPos(attackerNode);
 			PlayOneShotLayers(room, targetFoot, vfx.StepTargetArriveB, vfx.StepAnimBack, vfx.StepTargetArriveF, vfx.StepAnimFront, uniformScale);
@@ -1298,9 +1296,9 @@ public static class YukiMeleeTeleportAttackPatch
 			session.ActiveAttackPlayB = "";
 			session.ActiveAttackPlayF = "";
 			session.PendingDeferredTeleportForRequestId = 0;
-			attackerNode.GlobalPosition = origin;
+			GetModelRoot(attackerNode).GlobalPosition = origin;
 			attackerNode.SpineAnimation.SetAnimation(activeProfile.EndAnim, loop: false);
-			attackerNode.GlobalPosition = origin;
+			GetModelRoot(attackerNode).GlobalPosition = origin;
 			TryAddIdleLoop(attackerNode);
 
 			Vector2 endFoot = GetFootPos(attackerNode);
@@ -1394,9 +1392,9 @@ public static class YukiMeleeTeleportAttackPatch
 					session.ActiveAttackPlayF = "";
 					session.PendingDeferredTeleportForRequestId = 0;
 
-					attackerNode.GlobalPosition = origin;
+					GetModelRoot(attackerNode).GlobalPosition = origin;
 					attackerNode.SpineAnimation.SetAnimation(activeProfile.EndAnim, loop: false);
-					attackerNode.GlobalPosition = origin;
+					GetModelRoot(attackerNode).GlobalPosition = origin;
 					TryAddIdleLoop(attackerNode);
 
 					Vector2 endFoot = GetFootPos(attackerNode);
@@ -1881,8 +1879,8 @@ public static class YukiMeleeTeleportAttackPatch
 			session.HasPlannedTeleport = true;
 			session.PlannedTeleportGlobalPos = pos;
 			RaiseAboveCombatants(room, attackerNode, session);
-			attackerNode.GlobalPosition = pos;
-			attackerNode.GlobalPosition = pos;
+			GetModelRoot(attackerNode).GlobalPosition = pos;
+			GetModelRoot(attackerNode).GlobalPosition = pos;
 			Vector2 targetFoot = GetFootPos(attackerNode);
 			PlayOneShotLayers(room, targetFoot, vfx.StepTargetArriveB, vfx.StepAnimBack, vfx.StepTargetArriveF, vfx.StepAnimFront, uniformScale);
 				PlayAttackPlayVfx(room, targetFoot, profile, session, uniformScale);
@@ -1936,8 +1934,8 @@ public static class YukiMeleeTeleportAttackPatch
 			session.PendingDeferredTeleportForRequestId = 0;
 			session.PendingDeferredTeleportForRequestId = 0;
 
-			attackerNode.GlobalPosition = origin;
-			attackerNode.GlobalPosition = origin;
+			GetModelRoot(attackerNode).GlobalPosition = origin;
+			GetModelRoot(attackerNode).GlobalPosition = origin;
 			Vector2 endFoot = GetFootPos(attackerNode);
 			PlayReturnVfxAtOrigin(room, endFoot, profile, uniformScale);
 			YukiVictoryAnimCoordinator.MarkTeleportEnd(attacker);
@@ -1995,7 +1993,7 @@ public static class YukiMeleeTeleportAttackPatch
 					return;
 				}
 
-				attackerNode.GlobalPosition = plannedGlobalPos;
+				GetModelRoot(attackerNode).GlobalPosition = plannedGlobalPos;
 				float dt = await attackerNode.AwaitProcessFrame(CancellationToken.None);
 				remaining -= Mathf.Max(dt, 0.0f);
 			}
@@ -2015,7 +2013,7 @@ public static class YukiMeleeTeleportAttackPatch
 				return null;
 			}
 
-			Marker2D? marker = visualsRoot.GetNodeOrNull<Marker2D>("Visuals/ChaosEff");
+			Marker2D? marker = visualsRoot.GetNodeOrNull<Marker2D>("ModelRoot/Visuals/ChaosEff");
 			if (marker != null && GodotObject.IsInstanceValid(marker))
 			{
 				return marker;
@@ -2077,18 +2075,14 @@ public static class YukiMeleeTeleportAttackPatch
 	{
 		try
 		{
+			Node2D model = GetModelRoot(attackerNode);
 			if (!session.HasOriginalLayer)
 			{
 				session.HasOriginalLayer = true;
-				session.OriginalZIndex = attackerNode.ZIndex;
-				session.OriginalZAsRelative = attackerNode.ZAsRelative;
-				session.OriginalParent = attackerNode.GetParent();
-				session.OriginalSiblingIndex = attackerNode.GetIndex();
+				session.OriginalZIndex = model.ZIndex;
+				session.OriginalZAsRelative = model.ZAsRelative;
 			}
 
-			Node? parent = attackerNode.GetParent();
-			int attackerIndex = attackerNode.GetIndex();
-			int highestCombatantIndex = attackerIndex;
 			int highestCombatantZ = attackerNode.ZIndex;
 			foreach (NCreature creatureNode in room.CreatureNodes)
 			{
@@ -2099,20 +2093,10 @@ public static class YukiMeleeTeleportAttackPatch
 				}
 
 				highestCombatantZ = Math.Max(highestCombatantZ, creatureNode.ZIndex);
-				if (parent != null && creatureNode.GetParent() == parent)
-					highestCombatantIndex = Math.Max(highestCombatantIndex, creatureNode.GetIndex());
 			}
 
-			if (parent != null && GodotObject.IsInstanceValid(parent) && highestCombatantIndex > attackerIndex)
-			{
-				parent.MoveChild(
-					attackerNode,
-					Math.Min(highestCombatantIndex, parent.GetChildCount() - 1));
-				return;
-			}
-
-			attackerNode.ZAsRelative = true;
-			attackerNode.ZIndex = Math.Max(attackerNode.ZIndex, highestCombatantZ + 1);
+			model.ZAsRelative = false;
+			model.ZIndex = Math.Clamp(highestCombatantZ + 1, -4096, 4096);
 		}
 		catch
 		{
@@ -2126,20 +2110,9 @@ public static class YukiMeleeTeleportAttackPatch
 
 		try
 		{
-			Node? originalParent = session.OriginalParent;
-			if (originalParent != null &&
-			    GodotObject.IsInstanceValid(originalParent) &&
-			    attackerNode.GetParent() == originalParent)
-			{
-				int restoreIndex = Math.Clamp(
-					session.OriginalSiblingIndex,
-					0,
-					Math.Max(0, originalParent.GetChildCount() - 1));
-				originalParent.MoveChild(attackerNode, restoreIndex);
-			}
-
-			attackerNode.ZAsRelative = session.OriginalZAsRelative;
-			attackerNode.ZIndex = session.OriginalZIndex;
+			Node2D model = GetModelRoot(attackerNode);
+			model.ZAsRelative = session.OriginalZAsRelative;
+			model.ZIndex = session.OriginalZIndex;
 		}
 		catch
 		{
@@ -2147,8 +2120,6 @@ public static class YukiMeleeTeleportAttackPatch
 		finally
 		{
 			session.HasOriginalLayer = false;
-			session.OriginalParent = null;
-			session.OriginalSiblingIndex = 0;
 			session.OriginalZIndex = 0;
 			session.OriginalZAsRelative = true;
 		}
@@ -2226,6 +2197,8 @@ public static class YukiMeleeTeleportAttackPatch
 			{
 				return Vector2.Zero;
 			}
+			if (node.Visuals.GetNodeOrNull<Node2D>("ModelRoot") != null)
+				return GetFootPos(node);
 			FootAnchorCache cache = TargetFootCache.GetOrCreateValue(target);
 			float scale = GetVisualScaleX(node);
 			if (!cache.Initialized)
@@ -2270,7 +2243,7 @@ public static class YukiMeleeTeleportAttackPatch
 		}
 
 		Vector2 desiredCenter = targetCenter - dir * distance;
-		Vector2 anchorOffset = attackerCenter - attackerNode.GlobalPosition;
+		Vector2 anchorOffset = attackerCenter - GetModelRoot(attackerNode).GlobalPosition;
 		return Snap(desiredCenter - anchorOffset);
 	}
 
@@ -2288,7 +2261,7 @@ public static class YukiMeleeTeleportAttackPatch
 		}
 
 		Vector2 desiredAnchor = targetFoot - dir * distance;
-		Vector2 anchorOffset = attackerAnchor - attackerNode.GlobalPosition;
+		Vector2 anchorOffset = attackerAnchor - GetModelRoot(attackerNode).GlobalPosition;
 		return Snap(desiredAnchor - anchorOffset);
 	}
 
@@ -2339,6 +2312,9 @@ public static class YukiMeleeTeleportAttackPatch
 		return new Vector2(Mathf.Round(pos.X), Mathf.Round(pos.Y));
 	}
 
+	internal static Node2D GetModelRoot(NCreature creatureNode) =>
+		creatureNode.Visuals.GetNodeOrNull<Node2D>("ModelRoot") ?? creatureNode.Body;
+
 	private static Vector2 GetFootPos(NCreature creatureNode)
 	{
 		try
@@ -2349,7 +2325,7 @@ public static class YukiMeleeTeleportAttackPatch
 				return chaosEff.GlobalPosition;
 			}
 
-			Node2D? visuals = creatureNode.Visuals;
+			Node2D? visuals = GetModelRoot(creatureNode);
 			if (visuals != null && GodotObject.IsInstanceValid(visuals))
 			{
 				return visuals.GlobalPosition;

@@ -16,6 +16,7 @@ namespace YukiMod;
 public static class MainFile
 {
     public const string ModId = "YukiMod";
+    private static bool _characterEffectsPreloaded;
 
     public static MegaCrit.Sts2.Core.Logging.Logger Logger { get; } = new(ModId, LogType.Generic);
 
@@ -26,20 +27,22 @@ public static class MainFile
         YukiTelemetryBootstrap.Initialize();
         ScriptManagerBridge.LookupScriptsInAssembly(assembly);
         GloomyEncounterSharedSettings.RegisterProvider(ModId);
-        YukiUgPresentation.Preload();
-        string[] attackVfxPaths = YukiMeleeTeleportAttackPatch.GetPreloadScenePaths()
-            .Distinct(StringComparer.Ordinal)
-            .ToArray();
-        ChaosVfxPrewarmReport prewarm =
-            GloomyMonsterVfx.Prewarm() +
-            ChaosOneShotVfx.Prewarm(attackVfxPaths) +
-            ChaosSpineVfxInstance.Prewarm(attackVfxPaths);
-        Logger.Info(
-            $"[{ModId}] Startup VFX prewarm summary. loaded={prewarm.Loaded}/{prewarm.Requested}, " +
-            $"failed={prewarm.Failed}");
+        GloomyMonsterVfx.Prewarm();
 
         Harmony harmony = new(ModId);
         harmony.PatchAll();
         ModelIdDeduplicator.DeduplicateForMod("YUKIMOD_");
+    }
+
+    internal static void PreloadCharacterEffects()
+    {
+        if (_characterEffectsPreloaded || !YukiModSharedSettings.CombatEffectsEnabled)
+            return;
+        YukiUgPresentation.Preload();
+        YukiUxPresentation.Preload();
+        string[] paths = YukiMeleeTeleportAttackPatch.GetPreloadScenePaths().Distinct(StringComparer.Ordinal).ToArray();
+        ChaosVfxPrewarmReport prewarm = ChaosOneShotVfx.Prewarm(paths) + ChaosSpineVfxInstance.Prewarm(paths);
+        Logger.Info($"[{ModId}] Character VFX prewarm summary. loaded={prewarm.Loaded}/{prewarm.Requested}, failed={prewarm.Failed}");
+        _characterEffectsPreloaded = true;
     }
 }

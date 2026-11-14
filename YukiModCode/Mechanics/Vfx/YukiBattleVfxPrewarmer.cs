@@ -3,6 +3,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using YukiMod.YukiModCode.Mechanics.Animation;
 using YukiMod.YukiModCode.Mechanics.Settings;
+using YukiCharacter = YukiMod.YukiModCode.Character.YukiMod;
 
 namespace YukiMod.YukiModCode.Mechanics.Vfx;
 
@@ -10,12 +11,12 @@ namespace YukiMod.YukiModCode.Mechanics.Vfx;
 public static class YukiBattleVfxPrewarmer
 {
     private const float WarmAlpha = 0.001f;
-    private static readonly string[] CandidateAnimations = ["animation", "eff_b", "eff_f"];
     private static int _generation;
 
     [HarmonyPostfix]
     public static void Postfix(NCombatRoom __instance)
     {
+        int generation = Interlocked.Increment(ref _generation);
         if (!YukiModSharedSettings.CombatEffectsEnabled ||
             __instance == null ||
             !GodotObject.IsInstanceValid(__instance))
@@ -23,55 +24,70 @@ public static class YukiBattleVfxPrewarmer
             return;
         }
 
-        int generation = Interlocked.Increment(ref _generation);
-        string[] scenePaths = YukiMeleeTeleportAttackPatch.GetPreloadScenePaths()
-            .Where(path => !string.IsNullOrWhiteSpace(path))
-            .Distinct(StringComparer.Ordinal)
-            .ToArray();
-        RunAsync(__instance, generation, scenePaths);
+        RunAsync(__instance, generation);
     }
 
-    private static async void RunAsync(NCombatRoom room, int generation, IReadOnlyList<string> scenePaths)
+    private static async void RunAsync(NCombatRoom room, int generation)
     {
         int warmed = 0;
         int failed = 0;
         try
         {
             await NextFrame(room);
+            if (!IsCurrent(room, generation))
+                return;
             await NextFrame(room);
+            if (!IsCurrent(room, generation) ||
+                !room.CreatureNodes.Any(node => node.Entity?.Player?.Character is YukiCharacter))
+                return;
+
+            string[] scenePaths = YukiMeleeTeleportAttackPatch.GetPreloadScenePaths()
+                .Where(path => !string.IsNullOrWhiteSpace(path))
+                .Distinct(StringComparer.Ordinal)
+                .ToArray();
 
             foreach (string scenePath in scenePaths)
             {
                 if (!IsCurrent(room, generation))
                     return;
 
-                if (!ChaosSpineVfxInstance.TryCreate(scenePath, out ChaosSpineVfxInstance? instance) || instance == null)
+                bool back = scenePath.EndsWith("_b.tscn", StringComparison.Ordinal) ||
+                            scenePath.EndsWith("/step_target_move.tscn", StringComparison.Ordinal);
+                Node parent = back ? room.BackCombatVfxContainer : room.CombatVfxContainer;
+                var instance = ChaosOneShotVfx.WarmInstance(scenePath, parent, WarmAlpha);
+                if (instance == null)
                 {
                     failed++;
                     await NextFrame(room);
                     continue;
                 }
 
-                room.CombatVfxContainer.AddChild(instance.Node);
-                instance.Node.GlobalPosition = Vector2.Zero;
-                instance.Node.Modulate = new Color(1f, 1f, 1f, WarmAlpha);
+                int instanceGeneration = instance.Generation;
+                try
+                {
+                    if (instance.Spines.Count > 0)
+                        warmed++;
+                    else
+                        failed++;
 
-                bool playing = CandidateAnimations.Any(animation => instance.TryPlay(animation, loop: false));
-                if (playing)
-                    warmed++;
-                else
-                    failed++;
-
-                await NextFrame(room);
-                await NextFrame(room);
-                instance.QueueFree();
+                    await NextFrame(room);
+                    if (!IsCurrent(room, generation))
+                        return;
+                    await NextFrame(room);
+                    if (!IsCurrent(room, generation))
+                        return;
+                }
+                finally
+                {
+                    instance.Return(instanceGeneration);
+                }
                 await NextFrame(room);
             }
 
             if (IsCurrent(room, generation))
             {
                 MainFile.Logger.Info(
-                    $"[{YukiModInfo.ModId}] Battle deep VFX prewarm complete. warmed={warmed}/{scenePaths.Count}, failed={failed}.");
+                    $"[{YukiModInfo.ModId}] Battle deep VFX prewarm complete. warmed={warmed}/{scenePaths.Length}, failed={failed}.");
             }
         }
         catch (Exception ex)

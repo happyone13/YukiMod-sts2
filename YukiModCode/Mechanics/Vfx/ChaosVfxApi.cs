@@ -318,7 +318,7 @@ public static partial class ChaosVfxApi
 
 		if (handle.Spec.Layer == ChaosVfxLayer.CreatureBelow || handle.Spec.Layer == ChaosVfxLayer.CreatureAbove)
 		{
-			Node2D parent = creatureNode.Visuals;
+			Node2D parent = creatureNode.Visuals.VfxSpawnPosition.GetParent() as Node2D ?? creatureNode.Visuals;
 			Node2D vfxNode = handle.Instance.Node;
 			if (vfxNode.GetParent() != parent)
 			{

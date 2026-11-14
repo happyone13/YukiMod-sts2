@@ -43,6 +43,7 @@ public static class YukiUxPresentation
         }
 
         Node? stage = null;
+        bool prepared = false;
         try
         {
             try
@@ -52,17 +53,25 @@ public static class YukiUxPresentation
                 if (stage != null)
                 {
                     room.AddChild(stage);
-                    var visuals = new Godot.Collections.Array<GodotObject>();
-                    foreach (var target in targets.Where(t => t.IsAlive).OrderBy(t => room.GetCreatureNode(t)?.GlobalPosition.X))
+                    prepared = await CinematicFirstDraw.PrepareAsync(stage, () =>
+                            GodotObject.IsInstanceValid(room) && NCombatRoom.Instance == room &&
+                            !CombatManager.Instance.IsOverOrEnding &&
+                            YukiModSharedSettings.CombatEffectsEnabled &&
+                            YukiModSharedSettings.UltimateCinematicsEnabled);
+                    if (prepared)
                     {
-                        var node = room.GetCreatureNode(target)?.Visuals;
-                        if (node != null) visuals.Add(node);
+                        var visuals = new Godot.Collections.Array<GodotObject>();
+                        foreach (var target in targets.Where(t => t.IsAlive).OrderBy(t => room.GetCreatureNode(t)?.GlobalPosition.X))
+                        {
+                            var node = room.GetCreatureNode(target)?.Visuals;
+                            if (node != null) visuals.Add(node);
+                        }
+                        stage.Call("begin", actor, visuals);
+                        // Voice, effects and visuals now share one authoritative T0.
+                        YukiAudioService.SuppressNextDefaultAttackSfx(caster.Player);
+                        YukiAudioService.TryPlayUxVoice(caster.Player);
+                        YukiAudioService.TryPlayUxSound(caster.Player);
                     }
-                    stage.Call("begin", actor, visuals);
-                    // Voice, effects and visuals now share one authoritative T0.
-                    YukiAudioService.SuppressNextDefaultAttackSfx(caster.Player);
-                    YukiAudioService.TryPlayUxVoice(caster.Player);
-                    YukiAudioService.TryPlayUxSound(caster.Player);
                 }
             }
             catch (Exception ex)
@@ -72,7 +81,7 @@ public static class YukiUxPresentation
                 stage = null;
             }
 
-            if (stage == null)
+            if (stage == null || !prepared)
             {
                 await onHit(false);
                 return;

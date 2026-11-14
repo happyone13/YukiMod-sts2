@@ -370,19 +370,16 @@ public static class YukiCardSpinePortraitPatch
             return;
         }
 
-        var parentPortrait = ResolveOverlayTargetPortrait(cardNode, container);
-        if (parentPortrait != null)
-            SyncOverlayLayout(cardNode, parentPortrait, container, subViewport);
-
-        if (framesSinceCreated < WarmUpFrames)
+        bool active = DynamicPortraitActivity.ShouldRender(container);
+        DynamicPortraitActivity.SetActive(subViewport, active);
+        if (!active)
         {
-            if (subViewport.RenderTargetUpdateMode != SubViewport.UpdateMode.Always)
-                subViewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
             return;
         }
 
-        if (subViewport.RenderTargetUpdateMode != SubViewport.UpdateMode.Always)
-            subViewport.RenderTargetUpdateMode = SubViewport.UpdateMode.Always;
+        var parentPortrait = ResolveOverlayTargetPortrait(cardNode, container);
+        if (parentPortrait != null)
+            SyncOverlayLayout(cardNode, parentPortrait, container, subViewport);
     }
 
     public static void UpdateOverlay(NCard cardNode, TextureRect? portrait)
