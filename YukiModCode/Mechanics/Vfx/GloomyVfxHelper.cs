@@ -1,4 +1,5 @@
 using Godot;
+using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Combat;
@@ -10,8 +11,6 @@ public static class GloomyVfxHelper
 {
     private const string DelayMeta = "meilin_vfx_delay_sec";
     private const string PreviewAnimationProperty = "preview_animation";
-    private static readonly object SceneCacheLock = new();
-    private static readonly Dictionary<string, PackedScene?> SceneCache = new(StringComparer.Ordinal);
 
     public static ChaosVfxPrewarmReport Prewarm(IEnumerable<string> scenePaths)
     {
@@ -97,16 +96,13 @@ public static class GloomyVfxHelper
 
     private static PackedScene? GetOrLoadScene(string scenePath)
     {
-        lock (SceneCacheLock)
-        {
-            if (SceneCache.TryGetValue(scenePath, out var cachedScene))
-                return cachedScene;
-        }
-
         PackedScene? scene;
         try
         {
-            scene = ResourceLoader.Load<PackedScene>(scenePath, "", ResourceLoader.CacheMode.Reuse);
+            // The combat loader owns the scene in a real Gloomy room. Previews can still load it on demand.
+            scene = PreloadManager.Cache.ContainsKey(scenePath)
+                ? PreloadManager.Cache.GetScene(scenePath)
+                : ResourceLoader.Load<PackedScene>(scenePath, "", ResourceLoader.CacheMode.Reuse);
         }
         catch (Exception ex)
         {
@@ -118,11 +114,6 @@ public static class GloomyVfxHelper
         {
             MainFile.Logger.Info($"[YukiMod.GloomyVfx] Scene missing: {scenePath}");
             return null;
-        }
-
-        lock (SceneCacheLock)
-        {
-            SceneCache[scenePath] = scene;
         }
 
         return scene;

@@ -14,8 +14,30 @@ namespace YukiMod.YukiModCode.Mechanics.Vfx;
 
 public static class YukiUxPresentation
 {
-    public const string ScenePath = "res://YukiMod/scenes/vfx/ux/presentation.tscn";
+    private const string SceneDir = "res://YukiMod/scenes/vfx/ux/";
+    private const string OpeningNode = "YukiUxOpening";
+    private const ulong FirstFrameBudgetMs = 100;
+    public const string ScenePath = SceneDir + "presentation.tscn";
     private static PackedScene? _scene;
+
+    private static bool CanPresent(NCombatRoom room) =>
+        GodotObject.IsInstanceValid(room) && !room.IsQueuedForDeletion() && NCombatRoom.Instance == room &&
+        !CombatManager.Instance.IsOverOrEnding && YukiModSharedSettings.CombatEffectsEnabled &&
+        YukiModSharedSettings.UltimateCinematicsEnabled;
+
+    internal static Node? PrefetchOpening(NCombatRoom room)
+    {
+        if (!CanPresent(room)) return null;
+        if (room.GetNodeOrNull<Node>(OpeningNode) is { } existing)
+            return existing.IsQueuedForDeletion() ? null : existing;
+        var script = ResourceLoader.Load<GDScript>(SceneDir + "cutin_window.gd");
+        if (script == null || !script.CanInstantiate()) return null;
+        var opening = new Node { Name = OpeningNode };
+        opening.SetScript(script);
+        room.AddChild(opening);
+        opening.Call("warm_opening", SceneDir + "timeline.json", Callable.From(() => CanPresent(room)));
+        return opening;
+    }
 
     public static void Preload()
     {
@@ -52,12 +74,13 @@ public static class YukiUxPresentation
                 stage = _scene?.Instantiate();
                 if (stage != null)
                 {
+                    if (PrefetchOpening(room) is { } opening)
+                        stage.Set("opening", opening);
+                    stage.Set("keep_cutin", Callable.From(() => CanPresent(room)));
                     room.AddChild(stage);
-                    prepared = await CinematicFirstDraw.PrepareAsync(stage, () =>
-                            GodotObject.IsInstanceValid(room) && NCombatRoom.Instance == room &&
-                            !CombatManager.Instance.IsOverOrEnding &&
-                            YukiModSharedSettings.CombatEffectsEnabled &&
-                            YukiModSharedSettings.UltimateCinematicsEnabled);
+                    bool Current() => CanPresent(room);
+                    await WaitForOpeningAsync(stage, Current);
+                    prepared = await CinematicFirstDraw.PrepareAsync(stage, Current);
                     if (prepared)
                     {
                         var visuals = new Godot.Collections.Array<GodotObject>();
@@ -108,6 +131,26 @@ public static class YukiUxPresentation
         finally
         {
             Cleanup(stage);
+        }
+    }
+
+    internal static async Task WaitForOpeningAsync(Node stage, Func<bool> isCurrent)
+    {
+        static bool Live(Node node) =>
+            GodotObject.IsInstanceValid(node) && !node.IsQueuedForDeletion() && node.IsInsideTree();
+
+        if (!Live(stage) || !isCurrent() || stage.Get("window").AsGodotObject() is not Node window || !Live(window))
+            return;
+        var tree = stage.GetTree();
+        // The stage and its clock stay stopped. Already-warm or failed frame 0 takes no extra frame.
+        ulong deadline = Time.GetTicksMsec() + FirstFrameBudgetMs;
+        using var textures = window.Get("textures").AsGodotDictionary();
+        using var failed = window.Get("failed").AsGodotDictionary();
+        while (window.Get("limit").AsInt32() > 0 && !textures.ContainsKey(0) && !failed.ContainsKey(0)
+               && Time.GetTicksMsec() < deadline)
+        {
+            await tree.ToSignal(tree, SceneTree.SignalName.ProcessFrame);
+            if (!Live(stage) || !Live(window) || !isCurrent()) return;
         }
     }
 

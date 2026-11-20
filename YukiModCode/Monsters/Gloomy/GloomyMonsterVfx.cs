@@ -30,13 +30,11 @@ internal static class GloomyMonsterVfx
     public const string BeastAttack01Sfx = $"{SoundRoot}/se_gloomy_beast_normal_m_attack_01.wav";
     public const string BeastAttack02Sfx = $"{SoundRoot}/se_gloomy_beast_normal_m_attack_02.wav";
 
-    private static readonly string[] ScenePaths =
+    internal static readonly string[] ScenePaths =
     [
         PrimeAttackPlay1, PrimeAttackPlay2, PrimeBuff, PrimeUnique, PrimeUniqueTarget,
         BeastBuff, BeastAttack01, BeastAttack02, HitSlash, HitBlunt
     ];
-
-    public static ChaosVfxPrewarmReport Prewarm() => GloomyVfxHelper.Prewarm(ScenePaths);
 
     public static bool PlaySfx(string soundPath, float volume = 1f) =>
         YukiAudioService.TryPlayResource(soundPath, volume);

@@ -42,7 +42,8 @@ public sealed class GloomyPackEncounter : ModEncounterTemplate
     ];
 
     public override EncounterAssetProfile AssetProfile => new(
-        EncounterScenePath: "res://YukiMod/scenes/monsters/gloomy/encounters/monster_encounter.tscn"
+        EncounterScenePath: "res://YukiMod/scenes/monsters/gloomy/encounters/monster_encounter.tscn",
+        ExtraAssetPaths: GloomyMonsterVfx.ScenePaths
     );
 
     public override IEnumerable<MonsterModel> AllPossibleMonsters =>

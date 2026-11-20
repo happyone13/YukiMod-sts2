@@ -21,8 +21,6 @@ public static class YukiCardSpinePortraitPatch
 {
     public const string SpineOverlayNodeName = "YukiSpinePortraitOverlay";
     internal const string SpineViewportContainerNodeName = "ViewportContainer";
-    private const string OverlayScenePathMetaKey = "yuki_spine_scene_path";
-    private const string OverlayModelIdentityMetaKey = "yuki_spine_model_identity";
     private const string OverlayTargetSlotMetaKey = "yuki_target_slot";
     private const string OverlayTargetSlotAncient = "ancient";
     private const string OverlayTargetSlotNormal = "normal";
@@ -101,18 +99,12 @@ public static class YukiCardSpinePortraitPatch
         if (portrait == null || !GodotObject.IsInstanceValid(portrait))
             return false;
 
-        string? activeScenePath = GetActiveSpineOverlayScenePath(portrait);
-        int currentModelIdentity = GetModelIdentity(cardNode.Model);
-        int? activeModelIdentity = GetActiveSpineOverlayModelIdentity(portrait);
-        if (HasActiveSpineOverlay(cardNode) &&
-            (!string.Equals(activeScenePath, scenePath, System.StringComparison.Ordinal) ||
-             activeModelIdentity != currentModelIdentity))
+        if (VisibilityStates.TryGetValue(cardNode, out var owned))
         {
+            if (owned.ScenePath == scenePath && owned.Target == portrait && HasActiveSpineOverlay(cardNode))
+                return true;
             RemoveSpineOverlay(cardNode);
         }
-
-        if (HasActiveSpineOverlay(cardNode))
-            return true;
 
         PackedScene? scene = GetOrCreateSpineScene(scenePath);
         if (scene == null)
@@ -141,9 +133,6 @@ public static class YukiCardSpinePortraitPatch
         if (viewportContainer.GetParent() != null)
             viewportContainer.GetParent()?.RemoveChild(viewportContainer);
 
-        RemoveOverlayFromPortrait(portrait);
-        portrait.Texture = cardNode.Model?.Portrait;
-
         var overlay = new Control
         {
             Name = SpineOverlayNodeName,
@@ -157,14 +146,16 @@ public static class YukiCardSpinePortraitPatch
             Modulate = Colors.White,
             SelfModulate = Colors.White
         };
-        overlay.SetMeta(OverlayScenePathMetaKey, scenePath);
-        overlay.SetMeta(OverlayModelIdentityMetaKey, currentModelIdentity.ToString());
         overlay.SetMeta(
             OverlayTargetSlotMetaKey,
             ReferenceEquals(AncientPortraitField?.GetValue(cardNode), portrait)
                 ? OverlayTargetSlotAncient
                 : OverlayTargetSlotNormal);
 
+        YukiCardCustomFramePatch.CaptureBeforePortrait(cardNode);
+        var state = new PortraitVisibilityState(cardNode.Model!, portrait, overlay, subViewport, scenePath);
+        VisibilityStates.Add(cardNode, state);
+        portrait.Texture = state.AppliedTexture;
         portrait.ClipContents = true;
         overlay.AddChild(viewportContainer);
         portrait.AddChild(overlay);
@@ -191,68 +182,44 @@ public static class YukiCardSpinePortraitPatch
 
     public static void PrepareForBaseVisuals(NCard? cardNode)
     {
-        if (!YukiModConfig.UseDynamicCardPortraits)
-        {
-            RemoveSpineOverlay(cardNode);
+        if (cardNode == null || !VisibilityStates.TryGetValue(cardNode, out var state))
             return;
-        }
-
-        if (TryGetSpineScenePath(cardNode, out _))
-            return;
-
-        RemoveSpineOverlay(cardNode);
+        if (!ReferenceEquals(state.Model, cardNode.Model) || !YukiModConfig.UseDynamicCardPortraits ||
+            !TryGetSpineScenePath(cardNode, out _))
+            RemoveSpineOverlay(cardNode, beforeModelDraw: true);
     }
 
-    public static void RemoveSpineOverlay(NCard? cardNode)
+    public static void RemoveSpineOverlay(NCard? cardNode, bool beforeModelDraw = false)
     {
-        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode))
+        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) ||
+            !VisibilityStates.TryGetValue(cardNode, out var state))
             return;
 
-        bool ownsModel = cardNode.Model is IYukiCardVisualProfile;
-        bool hasOwnedOverlay = HasActiveSpineOverlay(cardNode);
-        if (!ownsModel && !hasOwnedOverlay)
+        VisibilityStates.Remove(cardNode);
+        if (GodotObject.IsInstanceValid(state.Overlay))
+            state.Overlay.Free();
+        if (!beforeModelDraw && !ReferenceEquals(state.Model, cardNode.Model))
             return;
-
-        RemoveAllSpineOverlays(cardNode);
-
-        if (PortraitField?.GetValue(cardNode) is TextureRect portraitRect)
-            RemoveAllSpineOverlays(portraitRect);
-
-        if (AncientPortraitField?.GetValue(cardNode) is TextureRect ancientPortraitRect)
-            RemoveAllSpineOverlays(ancientPortraitRect);
-
-        if (ownsModel)
+        if (GodotObject.IsInstanceValid(state.Target))
         {
-            RestorePortraitTextures(cardNode);
-            RestorePortraitVisibility(cardNode);
+            if (state.Target.ClipContents)
+                state.Target.ClipContents = state.OriginalClip;
+            if (state.Target.Texture == state.AppliedTexture)
+                state.Target.Texture = state.OriginalTexture;
         }
-        else
-        {
-            VisibilityStates.Remove(cardNode);
-        }
+        if (state.ForcedAncient is not bool ancient)
+            return;
+        if (PortraitField?.GetValue(cardNode) is TextureRect normal && normal.Visible == !ancient)
+            normal.Visible = state.PortraitVisible;
+        if (AncientPortraitField?.GetValue(cardNode) is TextureRect special && special.Visible == ancient)
+            special.Visible = state.AncientPortraitVisible;
     }
 
     public static bool HasActiveSpineOverlay(NCard? cardNode)
     {
-        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode))
-            return false;
-
-        if (cardNode.GetNodeOrNull<Control>(SpineOverlayNodeName) != null)
-            return true;
-
-        if (PortraitField?.GetValue(cardNode) is TextureRect portrait &&
-            portrait.GetNodeOrNull<Control>(SpineOverlayNodeName) != null)
-        {
-            return true;
-        }
-
-        if (AncientPortraitField?.GetValue(cardNode) is TextureRect ancientPortrait &&
-            ancientPortrait.GetNodeOrNull<Control>(SpineOverlayNodeName) != null)
-        {
-            return true;
-        }
-
-        return false;
+        return cardNode != null && VisibilityStates.TryGetValue(cardNode, out var state) &&
+               ReferenceEquals(state.Model, cardNode.Model) && GodotObject.IsInstanceValid(state.Overlay) &&
+               state.Overlay.GetParent() == state.Target;
     }
 
     public static bool ShouldDisplayCustomUi(NCard? cardNode)
@@ -335,24 +302,16 @@ public static class YukiCardSpinePortraitPatch
         TextureRect? ancientPortrait,
         YukiSpinePortraitSlot slot)
     {
-        if (portrait == null || ancientPortrait == null)
+        if (portrait == null || ancientPortrait == null ||
+            !VisibilityStates.TryGetValue(cardNode, out var state) || !HasActiveSpineOverlay(cardNode))
             return;
 
-        if (slot == YukiSpinePortraitSlot.Ancient && !HasActiveSpineOverlay(cardNode))
-        {
-            portrait.Visible = true;
-            ancientPortrait.Visible = false;
-            return;
-        }
-
-        var state = VisibilityStates.GetOrCreateValue(cardNode);
-        if (!state.HasSnapshot)
+        if (!state.ForcedAncient.HasValue)
         {
             state.PortraitVisible = portrait.Visible;
             state.AncientPortraitVisible = ancientPortrait.Visible;
-            state.HasSnapshot = true;
         }
-
+        state.ForcedAncient = slot == YukiSpinePortraitSlot.Ancient;
         portrait.Visible = slot != YukiSpinePortraitSlot.Ancient;
         ancientPortrait.Visible = slot == YukiSpinePortraitSlot.Ancient;
     }
@@ -384,14 +343,11 @@ public static class YukiCardSpinePortraitPatch
 
     public static void UpdateOverlay(NCard cardNode, TextureRect? portrait)
     {
-        if (portrait == null)
+        if (portrait == null || !VisibilityStates.TryGetValue(cardNode, out var state) ||
+            !ReferenceEquals(state.Model, cardNode.Model) || state.Target != portrait)
             return;
 
-        var container = cardNode.GetNodeOrNull<Control>(SpineOverlayNodeName)
-                        ?? portrait.GetNodeOrNull<Control>(SpineOverlayNodeName);
-        var subViewport = container?.GetNodeOrNull<SubViewport>($"{SpineViewportContainerNodeName}/SubViewport");
-        if (container != null && subViewport != null)
-            UpdateSpineAnimationState(cardNode, container, subViewport, int.MaxValue);
+        UpdateSpineAnimationState(cardNode, state.Overlay, state.Viewport, int.MaxValue);
     }
 
     internal static bool TryGetSpineScenePath(NCard? cardNode, out string? scenePath)
@@ -414,44 +370,6 @@ public static class YukiCardSpinePortraitPatch
         }
 
         return true;
-    }
-
-    private static void RemoveOverlayFromPortrait(TextureRect? portrait)
-    {
-        if (portrait == null || !GodotObject.IsInstanceValid(portrait))
-            return;
-
-        var overlay = portrait.GetNodeOrNull<Control>(SpineOverlayNodeName);
-        if (overlay != null)
-        {
-            overlay.GetParent()?.RemoveChild(overlay);
-            overlay.QueueFree();
-        }
-    }
-
-    private static string? GetActiveSpineOverlayScenePath(TextureRect? portrait)
-    {
-        if (portrait == null || !GodotObject.IsInstanceValid(portrait))
-            return null;
-
-        var overlay = portrait.GetNodeOrNull<Control>(SpineOverlayNodeName);
-        if (overlay == null || !overlay.HasMeta(OverlayScenePathMetaKey))
-            return null;
-
-        return overlay.GetMeta(OverlayScenePathMetaKey).AsString();
-    }
-
-    private static int? GetActiveSpineOverlayModelIdentity(TextureRect? portrait)
-    {
-        if (portrait == null || !GodotObject.IsInstanceValid(portrait))
-            return null;
-
-        var overlay = portrait.GetNodeOrNull<Control>(SpineOverlayNodeName);
-        if (overlay == null || !overlay.HasMeta(OverlayModelIdentityMetaKey))
-            return null;
-
-        string meta = overlay.GetMeta(OverlayModelIdentityMetaKey).AsString();
-        return int.TryParse(meta, out int value) ? value : null;
     }
 
     private static PackedScene? GetOrCreateSpineScene(string scenePath)
@@ -563,54 +481,6 @@ public static class YukiCardSpinePortraitPatch
         }
     }
 
-    private static void RemoveAllSpineOverlays(Node parent)
-    {
-        foreach (Node child in parent.GetChildren())
-        {
-            if (child.Name == SpineOverlayNodeName && GodotObject.IsInstanceValid(child))
-                child.Free();
-        }
-    }
-
-    private static void RestorePortraitTextures(NCard cardNode)
-    {
-        if (cardNode.Model is not IYukiCardVisualProfile)
-            return;
-
-        Texture2D? portraitTexture;
-        try
-        {
-            portraitTexture = cardNode.Model.Portrait;
-        }
-        catch
-        {
-            return;
-        }
-
-        if (portraitTexture == null)
-            return;
-
-        if (PortraitField?.GetValue(cardNode) is TextureRect portrait && portrait.Texture == null)
-            portrait.Texture = portraitTexture;
-
-        if (AncientPortraitField?.GetValue(cardNode) is TextureRect ancientPortrait && ancientPortrait.Texture == null)
-            ancientPortrait.Texture = portraitTexture;
-    }
-
-    private static void RestorePortraitVisibility(NCard cardNode)
-    {
-        if (!VisibilityStates.TryGetValue(cardNode, out PortraitVisibilityState? state) || !state.HasSnapshot)
-            return;
-
-        if (PortraitField?.GetValue(cardNode) is TextureRect portrait)
-            portrait.Visible = state.PortraitVisible;
-
-        if (AncientPortraitField?.GetValue(cardNode) is TextureRect ancientPortrait)
-            ancientPortrait.Visible = state.AncientPortraitVisible;
-
-        VisibilityStates.Remove(cardNode);
-    }
-
     private static void CollectPresentationState(
         NCard cardNode,
         ref bool hasHolderAncestor,
@@ -695,14 +565,17 @@ public static class YukiCardSpinePortraitPatch
             : PortraitField?.GetValue(cardNode) as TextureRect;
     }
 
-    private static int GetModelIdentity(CardModel? model)
+    private sealed class PortraitVisibilityState(CardModel model, TextureRect target, Control overlay, SubViewport viewport, string scenePath)
     {
-        return model == null ? 0 : RuntimeHelpers.GetHashCode(model);
-    }
-
-    private sealed class PortraitVisibilityState
-    {
-        public bool HasSnapshot { get; set; }
+        public CardModel Model { get; } = model;
+        public TextureRect Target { get; } = target;
+        public Control Overlay { get; } = overlay;
+        public SubViewport Viewport { get; } = viewport;
+        public string ScenePath { get; } = scenePath;
+        public Texture2D? OriginalTexture { get; } = target.Texture;
+        public Texture2D? AppliedTexture { get; } = model.Portrait;
+        public bool OriginalClip { get; } = target.ClipContents;
+        public bool? ForcedAncient { get; set; }
         public bool PortraitVisible { get; set; }
         public bool AncientPortraitVisible { get; set; }
     }

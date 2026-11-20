@@ -41,6 +41,7 @@ public static class YukiBattleVfxPrewarmer
                 !room.CreatureNodes.Any(node => node.Entity?.Player?.Character is YukiCharacter))
                 return;
 
+            YukiUxPresentation.PrefetchOpening(room);
             string[] scenePaths = YukiMeleeTeleportAttackPatch.GetPreloadScenePaths()
                 .Where(path => !string.IsNullOrWhiteSpace(path))
                 .Distinct(StringComparer.Ordinal)

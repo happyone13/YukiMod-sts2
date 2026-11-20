@@ -127,6 +127,7 @@ public static class YukiCardCustomFramePatch
     private static readonly HashSet<string> MissingResourceWarnings = new();
     private static readonly Dictionary<CostAtlasVariant, Texture2D?> CostAtlasTextures = new();
     private static readonly ConditionalWeakTable<NCard, OriginalCardVisualState> OriginalStates = new();
+    private static readonly ConditionalWeakTable<Control, CostDigits> DrawnDigits = new();
     private static Control? _templateRoot;
     private static Control? _templateCardContainer;
 
@@ -135,16 +136,27 @@ public static class YukiCardCustomFramePatch
         if (cardNode == null || !GodotObject.IsInstanceValid(cardNode) || !cardNode.IsNodeReady())
             return;
 
-        if (!TryGetCustomFrameCard(cardNode, out _) && !HasYukiVisualState(cardNode))
+        YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
+        if (!OriginalStates.TryGetValue(cardNode, out var state))
             return;
 
-        if (YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode) ||
-            cardNode.Model is IYukiCardVisualProfile)
+        if (ReferenceEquals(state.CapturedModel, cardNode.Model) && TryGetCustomFrameCard(cardNode, out _))
         {
-            YukiCardSpinePortraitPatch.PrepareForBaseVisuals(cardNode);
+            RestoreOriginalState(cardNode, removeState: false);
+            return;
         }
 
+        // The incoming model has not drawn yet; a later postfix must never restore the old skin.
         RemoveChaosEffects(cardNode, restoreOriginalState: true);
+    }
+
+    public static void CleanupPooledCard(NCard? cardNode)
+    {
+        if (cardNode == null || !GodotObject.IsInstanceValid(cardNode))
+            return;
+        YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
+        if (OriginalStates.TryGetValue(cardNode, out _))
+            RemoveChaosEffects(cardNode, restoreOriginalState: true);
     }
 
     public static void Apply(NCard? cardNode)
@@ -153,16 +165,9 @@ public static class YukiCardCustomFramePatch
             return;
 
         if (!TryGetCustomFrameCard(cardNode, out CardModel? cardModel))
-        {
-            if (HasYukiVisualState(cardNode))
-            {
-                RemoveChaosEffects(cardNode, restoreOriginalState: true);
-                YukiCardSpinePortraitPatch.RemoveSpineOverlay(cardNode);
-            }
-
             return;
-        }
 
+        CaptureOriginalState(cardNode);
         var frame = Get<TextureRect>(FrameField, cardNode!);
         var portrait = Get<TextureRect>(PortraitField, cardNode!);
         var ancientPortrait = Get<TextureRect>(AncientPortraitField, cardNode!);
@@ -184,7 +189,7 @@ public static class YukiCardCustomFramePatch
 
         if (hasDynamicSpineScene && !YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
         {
-            RemoveChaosEffects(cardNode, restoreOriginalState: true);
+            RemoveChaosEffects(cardNode, restoreOriginalState: false);
             frame?.Show();
             portrait?.Show();
             portraitBorder?.Show();
@@ -216,8 +221,6 @@ public static class YukiCardCustomFramePatch
                 bannerMaterial);
             return;
         }
-
-        CaptureOriginalState(cardNode!);
 
         frame?.Hide();
         portrait?.Hide();
@@ -270,7 +273,6 @@ public static class YukiCardCustomFramePatch
         Material? frameMaterial,
         Material? bannerMaterial)
     {
-        CaptureOriginalState(cardNode);
         RemoveChaosEffects(cardNode, restoreOriginalState: false);
         RestoreOriginalState(cardNode, removeState: false);
 
@@ -623,6 +625,9 @@ public static class YukiCardCustomFramePatch
 
     private static bool RenderCostDigits(Control preview, string text, CostAtlasVariant variant)
     {
+        if (DrawnDigits.TryGetValue(preview, out var drawn) &&
+            drawn.Text == text && drawn.Variant == variant && drawn.Size == preview.Size)
+            return true;
         ClearCostDigits(preview);
 
         Dictionary<char, Rect2> digitRegions = GetDigitRegions(variant);
@@ -685,12 +690,15 @@ public static class YukiCardCustomFramePatch
             cursorX += region.Size.X * scale;
         }
 
+        DrawnDigits.Add(preview, new CostDigits(text, variant, preview.Size));
         preview.Show();
         return true;
     }
 
     private static void ClearCostDigits(Control preview)
     {
+        if (!DrawnDigits.Remove(preview))
+            return;
         foreach (Node child in preview.GetChildren())
         {
             if (child.Name.ToString().StartsWith("CostDigit", StringComparison.Ordinal))
@@ -764,6 +772,7 @@ public static class YukiCardCustomFramePatch
 
             control.Name = runtimeNodeName;
             overlayParent.AddChild(control);
+            OriginalStates.GetOrCreateValue(cardNode).Nodes[runtimeNodeName] = control;
         }
         else if (control.GetParent() != overlayParent)
         {
@@ -891,39 +900,20 @@ public static class YukiCardCustomFramePatch
             node.GetParent().MoveChild(node, referenceIndex);
     }
 
-    private static void RemoveNode(Node parent, string nodeName)
+    private static void RemoveNode(NCard cardNode, string nodeName)
     {
-        DestroyNodeImmediately(parent.GetNodeOrNull<Node>(nodeName));
-
-        if (parent is NCard cardNode)
-        {
-            Node overlayParent = GetOverlayParent(cardNode);
-            if (overlayParent != parent)
-                DestroyNodeImmediately(overlayParent.GetNodeOrNull<Node>(nodeName));
-        }
+        if (OriginalStates.TryGetValue(cardNode, out var state) && state.Nodes.Remove(nodeName, out var owned))
+            DestroyNodeImmediately(owned);
     }
 
-    private static Control? GetOverlayNode(Node parent, string nodeName)
+    private static Control? GetOverlayNode(NCard cardNode, string nodeName)
     {
-        Control? control = null;
-        if (parent is NCard cardNode)
-        {
-            Node overlayParent = GetOverlayParent(cardNode);
-            control = overlayParent.GetNodeOrNull<Control>(nodeName);
-            if (control == null && overlayParent != parent)
-                control = parent.GetNodeOrNull<Control>(nodeName);
-        }
-        else
-        {
-            control = parent.GetNodeOrNull<Control>(nodeName);
-        }
-
-        if (control == null)
+        if (!OriginalStates.TryGetValue(cardNode, out var state) ||
+            !state.Nodes.TryGetValue(nodeName, out var node) || node is not Control control)
             return null;
-
         if (!GodotObject.IsInstanceValid(control) || control.IsQueuedForDeletion())
         {
-            DestroyNodeImmediately(control);
+            RemoveNode(cardNode, nodeName);
             return null;
         }
 
@@ -955,6 +945,7 @@ public static class YukiCardCustomFramePatch
             return;
 
         state.CapturedModel = cardNode.Model;
+        state.PortraitCanvasGroupVisible = Get<CanvasGroup>(PortraitCanvasGroupField, cardNode)?.Visible;
         state.Banner = CaptureControlSnapshot(Get<Control>(BannerField, cardNode));
         state.Frame = CaptureControlSnapshot(Get<Control>(FrameField, cardNode));
         state.Portrait = CaptureControlSnapshot(Get<Control>(PortraitField, cardNode));
@@ -978,7 +969,10 @@ public static class YukiCardCustomFramePatch
         if (!OriginalStates.TryGetValue(cardNode, out OriginalCardVisualState? state) || !state.HasSnapshot)
             return;
 
-        bool restoreTextures = ReferenceEquals(state.CapturedModel, cardNode.Model);
+        const bool restoreTextures = true;
+        if (state.PortraitCanvasGroupVisible is bool canvasVisible &&
+            Get<CanvasGroup>(PortraitCanvasGroupField, cardNode) is { Visible: true } canvas)
+            canvas.Visible = canvasVisible;
         RestoreControlSnapshot(Get<Control>(BannerField, cardNode), state.Banner, restoreTextures);
         RestoreControlSnapshot(Get<Control>(FrameField, cardNode), state.Frame, restoreTextures);
         RestoreControlSnapshot(Get<Control>(PortraitField, cardNode), state.Portrait, restoreTextures);
@@ -994,6 +988,8 @@ public static class YukiCardCustomFramePatch
         RestoreControlSnapshot(Get<Control>(EnergyLabelField, cardNode), state.EnergyLabel, restoreTextures);
         RestoreControlSnapshot(Get<Control>(TypeLabelField, cardNode), state.TypeLabel, restoreTextures);
         RestoreControlSnapshot(Get<Control>(TypePlaqueField, cardNode), state.TypePlaque, restoreTextures);
+        if (!removeState)
+            return;
         RestoreControlSiblingOrder(new List<(Control? Control, ControlSnapshot? Snapshot)>
         {
             (Get<Control>(BannerField, cardNode), state.Banner),
@@ -1012,8 +1008,7 @@ public static class YukiCardCustomFramePatch
             (Get<Control>(TypeLabelField, cardNode), state.TypeLabel),
             (Get<Control>(TypePlaqueField, cardNode), state.TypePlaque)
         });
-        if (removeState)
-            OriginalStates.Remove(cardNode);
+        OriginalStates.Remove(cardNode);
     }
 
     private static ControlSnapshot? CaptureControlSnapshot(Control? control)
@@ -1375,26 +1370,10 @@ public static class YukiCardCustomFramePatch
         return TryGetCustomFrameCard(cardNode, out _);
     }
 
-    private static bool HasYukiVisualState(NCard cardNode)
+    internal static void CaptureBeforePortrait(NCard cardNode)
     {
-        if (OriginalStates.TryGetValue(cardNode, out OriginalCardVisualState? state) && state.HasSnapshot)
-            return true;
-
-        if (YukiCardSpinePortraitPatch.HasActiveSpineOverlay(cardNode))
-            return true;
-
-        return GetOverlayNode(cardNode, RarityBaseNodeName) != null ||
-               GetOverlayNode(cardNode, RaritySubNodeName) != null ||
-               GetOverlayNode(cardNode, EgoBadgeNodeName) != null ||
-               GetOverlayNode(cardNode, EgoBadge2NodeName) != null ||
-               GetOverlayNode(cardNode, FrameSparkNodeName) != null ||
-               GetOverlayNode(cardNode, CostLineNodeName) != null ||
-               GetOverlayNode(cardNode, CategoryIconNodeName) != null ||
-               GetOverlayNode(cardNode, CategoryTextNodeName) != null ||
-               GetOverlayNode(cardNode, CostTextNodeName) != null ||
-               GetOverlayNode(cardNode, CostTextFallbackNodeName) != null ||
-               GetOverlayNode(cardNode, UpgradeIconNodeName) != null ||
-               GetOverlayNode(cardNode, DescriptionMaskNodeName) != null;
+        if (TryGetCustomFrameCard(cardNode, out _))
+            CaptureOriginalState(cardNode);
     }
 
     private static void SetPortraitTextureForOverlayState(TextureRect portrait, Texture2D? fallbackTexture)
@@ -1460,13 +1439,11 @@ public static class YukiCardCustomFramePatch
     [HarmonyPatch(typeof(NCard), nameof(NCard.OnFreedToPool))]
     public static class OnFreedToPoolPatch
     {
-        [HarmonyPostfix]
-        [HarmonyPriority(Priority.Last)]
-        public static void Postfix(NCard __instance)
+        [HarmonyPrefix]
+        [HarmonyPriority(Priority.First)]
+        public static void Prefix(NCard __instance)
         {
-            RemoveChaosEffects(__instance, restoreOriginalState: true);
-            YukiCardSpinePortraitPatch.RemoveSpineOverlay(__instance);
-            OriginalStates.Remove(__instance);
+            CleanupPooledCard(__instance);
         }
     }
 
@@ -1524,6 +1501,8 @@ public static class YukiCardCustomFramePatch
 
     private sealed class OriginalCardVisualState
     {
+        public readonly Dictionary<string, Node> Nodes = new();
+        public bool? PortraitCanvasGroupVisible;
         public bool HasSnapshot { get; set; }
         public CardModel? CapturedModel { get; set; }
         public ControlSnapshot? Banner { get; set; }
@@ -1542,6 +1521,8 @@ public static class YukiCardCustomFramePatch
         public ControlSnapshot? TypeLabel { get; set; }
         public ControlSnapshot? TypePlaque { get; set; }
     }
+
+    private sealed record CostDigits(string Text, CostAtlasVariant Variant, Vector2 Size);
 
     private sealed class ControlSnapshot
     {

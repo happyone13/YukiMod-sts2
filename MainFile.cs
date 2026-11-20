@@ -7,7 +7,6 @@ using YukiMod.YukiModCode.Migration;
 using YukiMod.YukiModCode.Mechanics.Animation;
 using YukiMod.YukiModCode.Mechanics.Settings;
 using YukiMod.YukiModCode.Mechanics.Vfx;
-using YukiMod.YukiModCode.Monsters.Gloomy;
 using YukiMod.YukiModCode.Telemetry;
 
 namespace YukiMod;
@@ -27,7 +26,6 @@ public static class MainFile
         YukiTelemetryBootstrap.Initialize();
         ScriptManagerBridge.LookupScriptsInAssembly(assembly);
         GloomyEncounterSharedSettings.RegisterProvider(ModId);
-        GloomyMonsterVfx.Prewarm();
 
         Harmony harmony = new(ModId);
         harmony.PatchAll();
