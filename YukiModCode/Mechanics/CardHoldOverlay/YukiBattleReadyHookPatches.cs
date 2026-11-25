@@ -58,7 +58,7 @@ public sealed class YukiBattleReadyAfterDeathPatch : IPatchMethod
             typeof(IRunState),
             typeof(ICombatState),
             typeof(Creature),
-#if STS2_113
+#if STS2_113 || STS2_114
             typeof(CardModel),
 #endif
             typeof(bool),

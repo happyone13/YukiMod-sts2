@@ -12,9 +12,9 @@
     <Sts2TestModId>YukiMod.Tests</Sts2TestModId>
     <Sts2TestModName>YukiMod.Tests</Sts2TestModName>
     <Sts2TestModAuthor>lozalia</Sts2TestModAuthor>
-    <Sts2TestMinGameVersion>v0.113.0</Sts2TestMinGameVersion>
-    <Sts2TestMainModMinVersion>v0.1.9</Sts2TestMainModMinVersion>
-    <TestTheSpireAssemblyPath Condition="'$(TestTheSpireAssemblyPath)' == '' and Exists('$(MSBuildProjectDirectory)/../../tmp/testthespire-113/bin/Debug/net9.0/TestTheSpire.dll')">$(MSBuildProjectDirectory)/../../tmp/testthespire-113/bin/Debug/net9.0/TestTheSpire.dll</TestTheSpireAssemblyPath>
+    <Sts2TestMinGameVersion>v0.114.0</Sts2TestMinGameVersion>
+    <Sts2TestMainModMinVersion>v0.1.10</Sts2TestMainModMinVersion>
+    <TestTheSpireAssemblyPath Condition="'$(TestTheSpireAssemblyPath)' == '' and Exists('$(MSBuildProjectDirectory)/../../tmp/testthespire-114/bin/Debug/net9.0/TestTheSpire.dll')">$(MSBuildProjectDirectory)/../../tmp/testthespire-114/bin/Debug/net9.0/TestTheSpire.dll</TestTheSpireAssemblyPath>
     <Sts2TestTheSpireMinVersion>0.1.2</Sts2TestTheSpireMinVersion>
     <Sts2XunitAssertMinVersion>3.2.2</Sts2XunitAssertMinVersion>
     <Sts2TestAffectsGameplay>false</Sts2TestAffectsGameplay>
@@ -40,7 +40,7 @@
     <CompilerVisibleProperty Include="GodotSourceGenerators" />
     <CompilerVisibleProperty Include="IsGodotToolsProject" />
     <ProjectReference Include="../../YukiMod.csproj" />
-    <PackageReference Include="STS2.RitsuLib" Version="0.6.11" PrivateAssets="all" />
+    <PackageReference Include="STS2.RitsuLib" Version="0.6.16" PrivateAssets="all" />
     <PackageReference Include="TestTheSpire" Version="0.1.2">
       <ExcludeAssets Condition="'$(TestTheSpireAssemblyPath)' != ''">compile;runtime</ExcludeAssets>
     </PackageReference>
@@ -61,18 +61,18 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="ValidateYukiTestFramework113" BeforeTargets="ValidateSts2TestPaths">
+  <Target Name="ValidateYukiTestFramework114" BeforeTargets="ValidateSts2TestPaths">
     <Error Condition="'$(TestTheSpireAssemblyPath)' == '' or !Exists('$(TestTheSpireAssemblyPath)')"
-           Text="Build the 0.113 test framework with tools/build_testthespire_113.ps1, or set TestTheSpireAssemblyPath to a compatible DLL." />
+           Text="Build the 0.114 test framework with tools/build_testthespire_114.ps1, or set TestTheSpireAssemblyPath to a compatible DLL." />
   </Target>
 
-  <Target Name="MirrorYukiSts2RitsuLibForTests" BeforeTargets="RunSts2Tests;ListSts2Tests">
+  <Target Name="MirrorYukiSts2RitsuLibForTests" BeforeTargets="RunSts2Tests;ListSts2Tests" Condition="!Exists('$(Sts2Path)/mods/STS2-RitsuLib.0.6.16.variant-pack/mod_manifest.json')">
     <ItemGroup>
       <_YukiRitsuLibTestDependency Include="$(Sts2RitsuLibWorkshopPath)/**/*"
                                    Condition="'$(Sts2RitsuLibWorkshopPath)' != '' and Exists('$(Sts2RitsuLibWorkshopPath)')" />
     </ItemGroup>
     <Error Condition="'@(_YukiRitsuLibTestDependency)' == ''"
-           Text="The 0.113-compatible Workshop RitsuLib loader was not found at $(Sts2RitsuLibWorkshopPath)." />
+           Text="The 0.114-compatible RitsuLib loader was not found in mods/ or at $(Sts2RitsuLibWorkshopPath)." />
     <Copy SourceFiles="@(_YukiRitsuLibTestDependency)"
           DestinationFiles="@(_YukiRitsuLibTestDependency->'$(Sts2Path)/mods/RitsuLib/%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />

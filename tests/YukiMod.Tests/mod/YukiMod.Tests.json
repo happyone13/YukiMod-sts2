@@ -8,8 +8,8 @@
 "has_dll": true,
 "dependencies": [
 { "id": "TestTheSpire", "min_version": "0.1.2" },
-{ "id": "YukiMod", "min_version": "v0.1.9" }
+{ "id": "YukiMod", "min_version": "v0.1.10" }
 ],
-"min_game_version": "v0.113.0",
+"min_game_version": "v0.114.0",
 "affects_gameplay": false
 }
